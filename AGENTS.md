@@ -11,5 +11,5 @@ methodology it ships.
   (`work on task <file>` / `work on slice <file>`); plan approved by the human
   and PERSISTED into the file before any code; two-axis review at completion.
 - New task file names: `scripts/task-id.sh <intention>`.
-- The reference for the methodology being packaged here lives (until slice 01
-  imports it) in `music-downloader/doc/agents/`.
+- The canonical socle now lives in `socle/` (imported from the music-downloader
+  pilot at slice 01).
