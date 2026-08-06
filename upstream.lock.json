@@ -1,0 +1,77 @@
+{
+  "code-review": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/code-review",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "codebase-design": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/codebase-design",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "diagnosing-bugs": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/diagnosing-bugs",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "domain-modeling": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/domain-modeling",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "grill-with-docs": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/grill-with-docs",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "grilling": {
+    "repo": "mattpocock/skills",
+    "path": "skills/productivity/grilling",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "handoff": {
+    "repo": "mattpocock/skills",
+    "path": "skills/productivity/handoff",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "improve-codebase-architecture": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/improve-codebase-architecture",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "prototype": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/prototype",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "research": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/research",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "slice-task": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/to-tickets",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "tdd": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/tdd",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "triage": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/triage",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "wayfinder": {
+    "repo": "mattpocock/skills",
+    "path": "skills/engineering/wayfinder",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  },
+  "writing-great-skills": {
+    "repo": "mattpocock/skills",
+    "path": "skills/productivity/writing-great-skills",
+    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
+  }
+}

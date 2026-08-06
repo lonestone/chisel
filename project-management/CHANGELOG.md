@@ -5,6 +5,35 @@ ships.
 
 ---
 
+## 2. 2026-08-06
+
+Summary of the session:
+
+1. Slice 01 (repo skeleton + socle import) completed: `socle/` now holds the
+   canonical methodology content, copied (not moved) from music-downloader's
+   `doc/agents/` at current HEAD.
+
+Project management:
+
+- Completed **Slice 01 — repo-skeleton-import** of Task
+  20260806-0959-chisel-v1: populated `socle/agents/{skills,rules}/`,
+  `socle/templates/`, `socle/scripts/`; added `upstream.lock.json` at the
+  repo root.
+
+Key architectural and technical decisions:
+
+- All 15 Pocock-forked skills copied into `socle/agents/skills/`, each
+  gaining `x-upstream: {repo, path, sha, changes}` frontmatter (SHA
+  `2ab958093e83e0ec752e6c1c5932da465bf23e0c`, current HEAD of the local
+  `pocock-skills` clone); `upstream.lock.json` mirrors the same 15
+  names/SHAs.
+- The 3 Cursor task rules (`task-creation`, `task-progressing`,
+  `task-completion`) ported to tool-agnostic `socle/agents/rules/*.md`: the
+  `alwaysApply` Cursor frontmatter stripped, `.mdc` → `.md`, content
+  otherwise byte-identical (hardcoded paths stay for slice 02).
+- music-downloader was only ever read from (copy, never move) — verified via
+  unchanged `git status` before/after.
+
 ## 1. 2026-08-06
 
 Summary of the session:
