@@ -83,5 +83,5 @@ declared in `.agents/project.md` (default `/project-management/`), including
 any rewrite baseline folders. Active execution tasks live in the tasks
 directory declared there (default `/project-management/tasks/`). Evergreen
 as-built docs live under the documentation reference declared in
-`.agents/project.md` (default `doc/**`), outside the task workspace — see
-`doc/architecture/ARCHITECTURE.md`.
+`.agents/project.md` (default `doc/**`), outside the task workspace — default
+index: `doc/architecture/ARCHITECTURE.md`.

@@ -91,7 +91,7 @@ at its plan gate**, with the real code in view.
 
 But that plan must not die with the conversation. Once approved, the
 implementing session **persists it into the slice file's Design section**
-(rule: `task-progressing.mdc`). Three reasons:
+(rule: `task-progressing.md`). Three reasons:
 
 1. **The completion review reads the file.** `code-review`'s Spec axis treats
    the task file as the requirements; a design that lives only in chat is

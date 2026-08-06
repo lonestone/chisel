@@ -254,3 +254,24 @@ decisions and gate commands through `.agents/project.md` (the glue). Write
 - No other deviations. The 20-file inventory, the two-level link convention,
   the issue-tracker absorption, the 7-section template, and the frontmatter
   extension were all executed as specified.
+
+### Planner review (2026-08-06, Fable)
+
+Commit `304a005` reviewed green: scope exactly the 20 expected files, diffs
+per category match the Design, `upstream.lock.json` untouched, staging
+discipline held (the concurrently-edited slice 05 file was correctly left
+out). The typist's conservative deviations were the right calls; two of them
+were real leaks caused by a hole in the Design's inventory grep (it didn't
+cover `.mdc` mentions or `doc/architecture`), fixed by the planner in a
+follow-up commit:
+
+- `workflows.md` ambient table + `methodology.md`: `.mdc` filenames → `.md`;
+  the nonexistent `0_common.mdc` row now points at the project.md reading
+  list (§C).
+- `task-completion.md` + `task-progressing.md`: the dangling
+  `../../doc/architecture/ARCHITECTURE.md` link became plain-text "default:
+  `doc/architecture/ARCHITECTURE.md`" wording (the location is a default
+  under the Section D doc reference, not a resolvable socle link).
+
+The remaining `doc/architecture/`/`doc/domain/`/`docs/adr/` mentions are
+kept intentionally: they are the DEFAULTS the glue declares, named as such.

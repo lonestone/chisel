@@ -69,10 +69,10 @@ The agent silently applies the same discipline as for a task, minus the files:
 
 | What the agent does | Comes from |
 |---|---|
-| Reads README, INDEX, recent CHANGELOG before acting | ⚙️ `0_common.mdc`, `task-progressing.mdc` |
-| Proposes a plan and waits for your OK | ⚙️ `task-progressing.mdc` |
-| Works in small verifiable steps; checks lint/tests before saying "done" | ⚙️ `task-progressing.mdc` / `task-completion.mdc` |
-| If the conversation turns into real work: says so and suggests a task — never forces it | ⚙️ `task-creation.mdc` |
+| Reads the reading list declared in `.agents/project.md` (§C — default: README + recent CHANGELOG) before acting | ⚙️ `task-progressing.md` |
+| Proposes a plan and waits for your OK | ⚙️ `task-progressing.md` |
+| Works in small verifiable steps; checks lint/tests before saying "done" | ⚙️ `task-progressing.md` / `task-completion.md` |
+| If the conversation turns into real work: says so and suggests a task — never forces it | ⚙️ `task-creation.md` |
 
 **In short: ambient = a task without the file.** Same discipline, no artifact.
 

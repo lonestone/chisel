@@ -35,8 +35,8 @@ state machines, and integration diagrams; create `doc/domain/` only when the
 glossary / domain model needs a home. Promote decision-rich diagrams and seam
 contracts from the task/slice Design into those pages so they reflect the
 current code — do not leave them only in plans or archived tasks. Start from
-the index at [ARCHITECTURE.md](../../doc/architecture/ARCHITECTURE.md). Also
-update [README.md](../../README.md) when the change is relevant to it.
+the architecture index (default: `doc/architecture/ARCHITECTURE.md`). Also
+update the repo `README.md` when the change is relevant to it.
 
 Protocol and evergreen pages must not brand temporary rewrite labels (e.g.
 “v2”) as if they were part of the generic work system.
