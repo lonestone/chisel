@@ -1,0 +1,18 @@
+{
+  "name": "@lonestone/chisel",
+  "version": "0.1.0",
+  "description": "Lonestone's dev-workflow socle, installable in any repo via `npx @lonestone/chisel init`.",
+  "bin": {
+    "chisel": "bin/chisel.sh"
+  },
+  "files": [
+    "bin",
+    "socle",
+    "upstream.lock.json"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lonestone/chisel.git"
+  }
+}

@@ -5,6 +5,47 @@ ships.
 
 ---
 
+## 5. 2026-08-06
+
+Summary of the session:
+
+1. Slice 03 (installer CLI) completed: `npx @lonestone/chisel init|update|
+   check` now exists as `bin/chisel.sh` behind a zero-dependency
+   `package.json`, tested end-to-end against two committed fixture repos.
+
+Project management:
+
+- Completed **Slice 03 — installer-cli** of Task 20260806-0959-chisel-v1:
+  added `package.json` (`@lonestone/chisel`, `bin.chisel`), `bin/chisel.sh`
+  (`init [target-dir]` / `update` / `check`, portable macOS bash 3.2 +
+  Linux bash 4/5), `socle/templates/AGENTS-block.md` (the canonical,
+  self-documenting source text of the AGENTS.md managed block), and
+  `test/fixtures/{brownfield,boilerplate}/` + `test/run.sh` (71 plain-sh
+  assertions, no bats).
+- `test/run.sh` real run: 71 passed, 0 failed — full target layout on both
+  fixtures, idempotent `init`, `update` refreshing a hand-edited managed
+  skill while leaving `.agents/project.md` and `CHANGELOG.md`
+  byte-identical, `check` exit 0→1 across a hand-edit, and package-root
+  resolution through a symlink (Decision 2's `readlink` loop).
+
+Key architectural and technical decisions:
+
+- The AGENTS.md managed block is delimited by `<!-- chisel:begin -->` /
+  `<!-- chisel:end -->` markers, rewritten via an `awk`-into-temp-file +
+  `mv` (no `sed -i` anywhere — not portable across BSD/GNU); its content
+  lives in `socle/templates/AGENTS-block.md`, diffable and reviewed like
+  any other source, not hardcoded in the installer script.
+- `update` re-renders managed files and the AGENTS.md block, then diffs
+  the manifest before vs. after the run to report what the socle itself
+  changed — it never touches `.agents/project.md`, `CHANGELOG.md`,
+  `tasks/`, `archive/`, or CLAUDE.md/the skills symlink beyond their
+  one-time creation. `check` is the only command that detects *local*
+  divergence from the manifest, and performs zero writes.
+- `bin/chisel.sh` has one dependency beyond a POSIX toolchain: `python3`,
+  used solely for the `.agents/.chisel.json` manifest's JSON, mirroring
+  `sync-upstream.sh`'s existing precedent; `sha256sum`/`shasum` are
+  tried in that order for file hashing.
+
 ## 4. 2026-08-06
 
 Summary of the session:
