@@ -224,3 +224,16 @@ before/after: only this slice file + the new skill directory).
   (walking the protocol as the agent), matching the slice file's own
   "Verification (prompt-driven skill — verified by execution, not asserts)"
   framing — not a gap, just naming the tradeoff Decision 1 already made.
+
+### Planner review (2026-08-06, Fable)
+
+Commit `4e57a5b` reviewed green — first slice needing zero planner fixup.
+Scope exactly the 3 intended files. SKILL.md maps one-to-one onto the 7
+locked decisions, plus one genuine improvement from the typist: "write it
+immediately — do not batch writes" (a batched write at the end would
+reintroduce the full-file-rewrite risk Step 4 exists to prevent). The AC-3
+surgical-write proof was replayed independently by the planner (fresh tpl
+copy + hand edits above §A and a custom `## H`, §A-only rewrite): prefix,
+§B–§G and §H byte-identical, both hand edits survived. Both deviations
+accepted — the CLAUDE.md gate-command fact on brownfield is exactly the
+fact-vs-decision discipline working as intended.
