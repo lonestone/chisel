@@ -6,7 +6,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/triage
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "adapted: tracker reference adapted; dormant until an external tracker"
+  changes: "adapted: tracker reference adapted; dormant until an external tracker; project paths resolve via .agents/project.md"
 ---
 
 # Triage
@@ -45,7 +45,7 @@ For a PR, the same states read against the attached code: `ready-for-agent` mean
 
 Every triaged issue should carry exactly one category role and one state role. If state roles conflict, flag it and ask the maintainer before doing anything else.
 
-These are canonical role names — the actual label strings used in the issue tracker may differ. The mapping lives in `doc/agents/issue-tracker.md` (no external tracker is wired up yet — this skill stays dormant until one is; see that file).
+These are canonical role names — the actual label strings used in the issue tracker may differ. The mapping lives in `.agents/project.md`, Tracker section (no external tracker is wired up yet — this skill stays dormant until one is; see that section).
 
 State transitions: an unlabeled issue normally goes to `needs-triage` first; from there it moves to `needs-info`, `ready-for-agent`, `ready-for-human`, or `wontfix`. `needs-info` returns to `needs-triage` once the reporter replies. The maintainer can override at any time — flag transitions that look unusual and ask before proceeding.
 

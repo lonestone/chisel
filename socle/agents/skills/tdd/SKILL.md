@@ -5,12 +5,14 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/tdd
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "verbatim fork"
+  changes: "verbatim fork; project paths resolve via .agents/project.md"
 ---
 
 # Test-Driven Development
 
 TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle — consult them before and during the loop, not after.
+
+Glossary and ADR locations resolve via `.agents/project.md` (defaults: root `CONTEXT.md`, `docs/adr/`).
 
 When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
 

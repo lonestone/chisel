@@ -1,7 +1,7 @@
 # Task File Template & Standards
 
 **Status:** 🟢 Complete
-**Version:** 2 (reading-gradient template — fused with Matt Pocock's skills patterns; see [doc/agents/methodology.md](../agents/methodology.md))
+**Version:** 2 (reading-gradient template — fused with Matt Pocock's skills patterns; see [.agents/methodology.md](/.agents/methodology.md))
 
 ## Context
 
@@ -31,7 +31,7 @@ Rules:
 
 For where each kind of content lives depending on the task shape (task alone
 vs task + slices), see the "where lives what" section and diagrams in
-[doc/agents/workflows.md](../agents/workflows.md).
+[.agents/workflows.md](/.agents/workflows.md).
 
 ## Task File Template
 
@@ -157,7 +157,9 @@ numbers. Generate the name with the script:
 scripts/task-id.sh <intention>   # -> 20260803-1445-<intention>
 ```
 
-`doc/project-management/tasks/<YYYYMMDD-HHmm>-<intention-in-kebab-case>.md`
+the task workspace declared in `.agents/project.md` (default
+`/project-management/tasks/`), as
+`<YYYYMMDD-HHmm>-<intention-in-kebab-case>.md`
 
 Examples:
 
@@ -181,7 +183,8 @@ from `01` in dependency order (blockers first).
 | Deferred | ⚪ | Postponed |
 | Cancelled | ⚫ | No longer needed |
 
-Completed tasks are moved to `doc/project-management/archive/`.
+Completed tasks are moved to the archive declared in `.agents/project.md`
+(default `/project-management/archive/`).
 
 ## When Creating New Tasks
 

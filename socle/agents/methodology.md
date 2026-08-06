@@ -2,10 +2,10 @@
 
 This document explains the reasoning behind the task workflow so that humans
 and agents apply it with judgement, not cargo-cult. The **what/where** lives in
-the rules (`.cursor/rules/task-*.mdc`) and the template
-(`doc/project-management/000-task-file-template.md`); the **when/how it
-chains** is the visual guide in [workflows.md](./workflows.md); this is the
-**why**.
+the rules (`.agents/rules/task-*.md`) and the task file template declared in
+`.agents/project.md` (default `/project-management/000-task-file-template.md`);
+the **when/how it chains** is the visual guide in
+[workflows.md](./workflows.md); this is the **why**.
 
 Provenance: fusion of the Lonestone task lifecycle (creation → work →
 completion, dated CHANGELOG) with patterns from
@@ -18,7 +18,7 @@ completion, dated CHANGELOG) with patterns from
 
 | Term | Meaning |
 |---|---|
-| **Task** | The unit of work AND its artifact: one markdown file in `doc/project-management/tasks/`, named `<time-id>-<intention>.md`. Self-contained, review-gradient structured. |
+| **Task** | The unit of work AND its artifact: one markdown file in the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`), named `<time-id>-<intention>.md`. Self-contained, review-gradient structured. |
 | **Slice** | A child task produced by decomposing a large task: a tracer-bullet vertical cut through every layer, demoable on its own, sized for a single fresh context window. Lives as `tasks/<time-id>-<feature>/<NN>-<slug>.md`. A small task IS its own single slice — no slice files are created for it. |
 | **Seam** | The public boundary where a feature is tested — agreed with the human BEFORE implementation. Tests live at seams, never against internals. Fewer is better (ideal: one). |
 | **Reading gradient** | The ordering of a task file by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich) → 🧑 REVIEW IF RELEVANT (program design) → 🤖 AGENT ZONE (verbose working space). Detail is never cut, it is ordered. |
@@ -29,7 +29,7 @@ completion, dated CHANGELOG) with patterns from
 
 We do NOT use the word "ticket" for local work. It is reserved for items in an
 external tracker (Linear, GitHub Issues), if/when one is wired up — see
-[issue-tracker.md](./issue-tracker.md).
+`.agents/project.md`, Tracker section.
 
 ---
 
@@ -200,12 +200,14 @@ crystallize what must survive it.
 
 Working designs and mermaid diagrams start in task/slice files (and Cursor
 plans). At completion they must be **promoted** into evergreen product docs
-under `doc/**` **except** `doc/project-management/` (tasks, changelog,
-temporary baselines, archive). Prefer `doc/architecture/` for as-built seams
-and integration diagrams; add `doc/domain/` when the glossary needs a home.
-`doc/project-management/` is narrative and planning — not the living
-architecture. Protocol wording stays generic: do not brand temporary rewrite
-labels as if they were part of the work system.
+under the documentation reference declared in `.agents/project.md` (default
+`doc/**`) **except** the task workspace declared there (default
+`/project-management/`: tasks, changelog, temporary baselines, archive).
+Prefer `doc/architecture/` for as-built seams and integration diagrams; add
+`doc/domain/` when the glossary needs a home. The task workspace is narrative
+and planning — not the living architecture. Protocol wording stays generic:
+do not brand temporary rewrite labels as if they were part of the work
+system.
 
 ## The bridge rule (default behaviour)
 

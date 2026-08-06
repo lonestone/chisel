@@ -6,7 +6,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/to-tickets
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "adapted: publishes slices into the task folder; 'ticket' reserved for external trackers"
+  changes: "adapted: publishes slices into the task folder; 'ticket' reserved for external trackers; project paths resolve via .agents/project.md"
 ---
 
 # Slice Task
@@ -14,7 +14,7 @@ x-upstream:
 Break a plan, task, or conversation into **slices** — tracer-bullet vertical
 slices, each declaring the slices that **block** it.
 
-Where slices are published is defined in `doc/agents/issue-tracker.md`.
+Where slices are published is defined in `.agents/project.md`, Tracker section.
 
 ## Process
 
@@ -79,8 +79,9 @@ Iterate until the user approves the breakdown.
 
 ### 5. Publish the slices
 
-Write one file per slice under
-`doc/project-management/tasks/<time-id>-<feature-slug>/<NN>-<slug>.md`, where
+Write one file per slice under the task workspace declared in
+`.agents/project.md` (default
+`/project-management/tasks/<time-id>-<feature-slug>/<NN>-<slug>.md`), where
 `<time-id>` comes from `scripts/task-id.sh` and `<NN>` numbers the slices from
 `01` in dependency order (blockers first). The parent task file (if one exists)
 stays in place and links to the slice folder.

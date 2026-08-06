@@ -6,12 +6,14 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/improve-codebase-architecture
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "verbatim fork"
+  changes: "verbatim fork; project paths resolve via .agents/project.md"
 ---
 
 # Improve Codebase Architecture
 
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
+
+Glossary and ADR locations resolve via `.agents/project.md` (defaults: root `CONTEXT.md`, `docs/adr/`).
 
 This command is _informed_ by the project's domain model and built on a shared design vocabulary:
 

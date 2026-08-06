@@ -2,7 +2,7 @@
 
 How work gets done in this repo, for agents AND humans. Symbols:
 
-- ⚙️ = always-on rule (`.cursor/rules/`) · 🧰 = skill (`doc/agents/skills/`)
+- ⚙️ = always-on rule (`.agents/rules/`, referenced from `AGENTS.md`) · 🧰 = skill (`.agents/skills/`)
 - 🧑 = **you decide** — the agent stops and waits
 - 🤖 = the agent works on its own
 
@@ -11,7 +11,7 @@ How work gets done in this repo, for agents AND humans. Symbols:
 
 | Word | Means |
 |---|---|
-| **task** | one unit of work = one markdown file in `doc/project-management/tasks/` |
+| **task** | one unit of work = one markdown file in the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`) |
 | **slice** | a piece of a big task, small enough to build and demo in one session; one file each |
 | **seam** | the public interface we test the feature through (a service class, an HTTP endpoint, a CLI command). Agreed with you before any code, so tests survive refactors |
 | **plan approval** | the moment you say "yes" to the agent's implementation plan; the approved plan is then SAVED into the task/slice file |

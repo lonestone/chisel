@@ -5,12 +5,14 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/diagnosing-bugs
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "verbatim fork"
+  changes: "verbatim fork; project paths resolve via .agents/project.md"
 ---
 
 # Diagnosing Bugs
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
+
+Glossary and ADR locations resolve via `.agents/project.md` (defaults: root `CONTEXT.md`, `docs/adr/`).
 
 When exploring the codebase, read `CONTEXT.md` (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.
 

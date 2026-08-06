@@ -6,8 +6,9 @@ The only difference is that you will not update the task file in @tasks folder.
 Always read the [README.md](../../README.md) file to get an overview of the
 project and the tasks and our work history.
 
-Also, read the [CHANGELOG.md](../../doc/project-management/CHANGELOG.md) file to
-get an overview of the project and the tasks and our work history.
+Also, read the changelog declared in `.agents/project.md` (default
+`/project-management/CHANGELOG.md`) to get an overview of the project and the
+tasks and our work history.
 
 When the user says `work on task <file>` or `work on slice <file>` (the
 normal way a build session starts — fresh context, working from the file):
@@ -23,7 +24,8 @@ Implementation Decisions / Notes zones otherwise: decisions locked, target
 shape (file tree), seam methods, state diagrams, migration notes, TDD order.
 Include a short **Architecture docs (evergreen)** subsection listing the
 `doc/architecture/` (or later `doc/domain/`) paths to create or update at
-completion — never `doc/project-management/`. A plan that lives only in the
+completion — never inside the task workspace declared in `.agents/project.md`.
+A plan that lives only in the
 conversation is invisible to the completion review (its Spec axis reads the
 file), to dependent slices, and to re-runs. Then you can start working on the
 task (Agent mode in Cursor).
@@ -32,7 +34,7 @@ task (Agent mode in Cursor).
 sub-agents. **Composer 2.5** is OK only for simple typist-only diffs. Do
 **not** spawn Sonnet / Opus / other expensive tiers when context or tokens
 are large. Policy SSOT:
-[doc/agents/workflows.md §0](../../doc/agents/workflows.md#0-model-policy-cursor).
+[workflows.md §0](../workflows.md#0-model-policy-cursor).
 
 **Delegation — offer it, user decides:** once the plan is persisted, OFFER
 the user the choice of typist before writing code: (a) keep typing in this
@@ -69,15 +71,17 @@ While implementing:
   layer-by-layer. Something must be demoable/verifiable at each step.
 - Prefer **test-driven development at the seams agreed in the task file** —
   use the `tdd` skill
-  ([doc/agents/skills/tdd/SKILL.md](../../doc/agents/skills/tdd/SKILL.md)): red
+  ([../skills/tdd/SKILL.md](../skills/tdd/SKILL.md)): red
   before green, one seam / one test / one minimal implementation per cycle.
   Tests verify behavior through public interfaces, never implementation
   details.
 - Run typechecking regularly, single test files regularly, and the full test
   suite once at the end.
 
-Product baselines and planning drafts (temporary) live under
-`doc/project-management/` (including any rewrite baseline folders). Active
-execution tasks live in `doc/project-management/tasks/`. Evergreen as-built
-docs live under `doc/**` outside `doc/project-management/` — see
+Product baselines and planning drafts (temporary) live in the task workspace
+declared in `.agents/project.md` (default `/project-management/`), including
+any rewrite baseline folders. Active execution tasks live in the tasks
+directory declared there (default `/project-management/tasks/`). Evergreen
+as-built docs live under the documentation reference declared in
+`.agents/project.md` (default `doc/**`), outside the task workspace — see
 `doc/architecture/ARCHITECTURE.md`.

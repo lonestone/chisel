@@ -4,13 +4,13 @@
 ## When the user asks to create a task
 
 1. **Interview first — use the `grilling` skill**
-   ([doc/agents/skills/grilling/SKILL.md](../../doc/agents/skills/grilling/SKILL.md)):
+   ([../skills/grilling/SKILL.md](../skills/grilling/SKILL.md)):
    one question at a time, provide your recommended answer with each question,
    look up facts yourself, put decisions to the user. Do not write the task
    file until the user confirms shared understanding.
 
    Run the **`domain-modeling` skill**
-   ([doc/agents/skills/domain-modeling/SKILL.md](../../doc/agents/skills/domain-modeling/SKILL.md))
+   ([../skills/domain-modeling/SKILL.md](../skills/domain-modeling/SKILL.md))
    underneath the interview: challenge fuzzy terms against `CONTEXT.md`, update
    the glossary the moment a term is resolved, and offer an ADR only when a
    decision is hard to reverse, surprising without context, AND a real
@@ -19,17 +19,19 @@
 
 2. **Sketch the seams.** Identify the public boundaries where the feature will
    be tested (see the `tdd` skill,
-   [doc/agents/skills/tdd/SKILL.md](../../doc/agents/skills/tdd/SKILL.md)). Prefer
+   [../skills/tdd/SKILL.md](../skills/tdd/SKILL.md)). Prefer
    existing seams over new ones; the fewer the better (ideal: one). Confirm
    them with the user.
 
-3. **Write the task file** following the template in
-   [000-task-file-template.md](../../doc/project-management/000-task-file-template.md).
+3. **Write the task file** following the task file template declared in
+   `.agents/project.md` (default `/project-management/000-task-file-template.md`).
    Respect the reading gradient: 🧑 zones short and decision-rich, detail in the
    🤖 zone. Generate the file name with `scripts/task-id.sh <intention>` →
-   `doc/project-management/tasks/<time-id>-<intention>.md` (sortable by
-   creation time, named by intention, no incremental numbers). Historical
-   tasks live in `doc/project-management/archive/`.
+   `<time-id>-<intention>.md`, created in the task workspace declared in
+   `.agents/project.md` (default `/project-management/tasks/`) — sortable by
+   creation time, named by intention, no incremental numbers. Historical
+   tasks live in the archive declared there (default
+   `/project-management/archive/`).
 
 4. **Sizing check (ALWAYS, for every task).** Ask yourself: does this task fit
    in a single fresh context window AND end in one demoable/verifiable pass?
@@ -38,15 +40,15 @@
    - **Yes** → the task is its own single slice; no breakdown artifact. Do NOT
      create a slice folder for it.
    - **No** → slice it with the `slice-task` skill
-     ([doc/agents/skills/slice-task/SKILL.md](../../doc/agents/skills/slice-task/SKILL.md)):
+     ([../skills/slice-task/SKILL.md](../skills/slice-task/SKILL.md)):
      tracer-bullet vertical slices with blocking edges, granularity approved by
      the user, one file per slice in the task folder.
 
    The user arbitrates in both cases.
 
-5. **Update the changelog.** Add a dated line to
-   [CHANGELOG.md](../../doc/project-management/CHANGELOG.md) reflecting the
-   task creation.
+5. **Update the changelog.** Add a dated line to the changelog declared in
+   `.agents/project.md` (default `/project-management/CHANGELOG.md`)
+   reflecting the task creation.
 
 6. **Stop — do NOT start implementing in this session.** Tell the user to
    open a FRESH session and say `work on task <file>` (or, for a sliced task,

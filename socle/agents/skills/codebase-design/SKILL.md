@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/codebase-design
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "verbatim fork"
+  changes: "verbatim fork; project paths resolve via .agents/project.md"
 ---
 
 # Codebase Design

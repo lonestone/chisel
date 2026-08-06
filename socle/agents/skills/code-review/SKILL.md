@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/code-review
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "adapted: spec source is the task file, not the originating issue/PRD"
+  changes: "adapted: spec source is the task file, not the originating issue/PRD; project paths resolve via .agents/project.md"
 ---
 
 Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
@@ -15,7 +15,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
-In this repo, work is tracked as task files under `doc/project-management/tasks/` (completed tasks in `doc/project-management/archive/`) — see `doc/agents/issue-tracker.md`.
+In this repo, work is tracked as task files under the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`; completed tasks in the archive, default `/project-management/archive/`) — see `.agents/project.md`, Tracker section.
 
 ## Process
 
@@ -32,8 +32,9 @@ Before going further, confirm the fixed point resolves (`git rev-parse <fixed-po
 Look for the originating spec, in this order:
 
 1. A path the user passed as an argument.
-2. The task file for the current work under `doc/project-management/tasks/` (or
-   `doc/project-management/archive/`) matching the branch name or feature. The
+2. The task file for the current work under the task workspace declared in
+   `.agents/project.md` (default `/project-management/tasks/`, or its archive
+   `/project-management/archive/`) matching the branch name or feature. The
    task file's 🧑 zones (Context, Scope, Acceptance Criteria, Seams) are the
    spec; its 🤖 agent zone is context, not requirements.
 3. Task references in the commit messages.
