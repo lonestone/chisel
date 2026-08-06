@@ -141,11 +141,17 @@ cache_dir_for() {
 ensure_cache() {
   repo="$1"
   dir="$(cache_dir_for "$repo")"
-  if [ ! -d "$dir/.git" ]; then
-    mkdir -p "$cache_root"
-    git clone --quiet "https://github.com/${repo}.git" "$dir" >&2
-  else
-    git -C "$dir" fetch --quiet origin >&2
+  # Clone/fetch a given upstream at most once per run (15 lock entries
+  # usually share one repo — don't hit the network 15 times).
+  marker="$tmp_dir/fetched-$(printf '%s' "$repo" | tr '/' '-')"
+  if [ ! -f "$marker" ]; then
+    if [ ! -d "$dir/.git" ]; then
+      mkdir -p "$cache_root"
+      git clone --quiet "https://github.com/${repo}.git" "$dir" >&2
+    else
+      git -C "$dir" fetch --quiet origin >&2
+    fi
+    : >"$marker"
   fi
   printf '%s\n' "$dir"
 }

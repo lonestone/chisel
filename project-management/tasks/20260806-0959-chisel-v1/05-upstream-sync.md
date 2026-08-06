@@ -214,3 +214,18 @@ auto-applied.
   SUBJECTS`) rather than literally joining fields with "·" — read the
   Design's `skill · commits-behind · latest subjects` as naming the three
   data fields, not a literal separator character to reproduce.
+
+### Planner review (2026-08-06, Fable)
+
+Commit `7d32a63` reviewed green: scope exactly the 4 expected files, script
+portable and zero-write as designed, SKILL.md protocol faithful to D3 (per-
+skill validation, unanswered = rejected, heavy-divergence clause, atomic
+frontmatter+lock+CHANGELOG updates). All 5 typist deviations accepted — they
+are interpretive, not redesigns. One planner fixup on top: `ensure_cache` now
+clones/fetches a given upstream at most once per run (it previously fetched
+per lock entry — 15 network round-trips per `--check`). Re-verified after the
+fixup: `bash -n` OK, real `--check` in 1.7s, same table, exit 1.
+
+First real drift report (2026-08-06): 9/15 skills behind upstream, including
+`writing-great-skills` which upstream renamed/restructured (`feat!:` →
+`writing-for-agents`) — a good first candidate for a real sync session.
