@@ -5,6 +5,39 @@ ships.
 
 ---
 
+## 4. 2026-08-06
+
+Summary of the session:
+
+1. Slice 05 (upstream sync) completed: a mechanical `sync-upstream.sh` script
+   plus a `sync-upstream` skill give this repo a controlled path back to
+   `mattpocock/skills` — drift detection and per-skill diffs are scripted;
+   reading diffs and proposing merges is the agent's job; approving them is
+   always the human's.
+
+Project management:
+
+- Completed **Slice 05 — upstream-sync** of Task 20260806-0959-chisel-v1:
+  added `socle/scripts/sync-upstream.sh` (`--check` reports drifted skills
+  with commit counts and frontmatter/lock SHA mismatches, zero writes beyond
+  the upstream cache; `--diff <skill>` prints the raw upstream diff for one
+  skill) and `socle/agents/skills/sync-upstream/SKILL.md` (the
+  agent-proposes/human-validates loop, one skill at a time, with a
+  heavy-divergence clause that proposes `x-upstream: none` instead of forcing
+  a merge).
+
+Key architectural and technical decisions:
+
+- The script never applies anything, in either mode — its only side effect,
+  ever, is cloning/fetching the upstream cache under
+  `~/.cache/chisel/<owner>-<repo>/`. Reading a diff, proposing a merge that
+  preserves a fork's documented `changes:`, and deciding to unplug a skill
+  (`x-upstream: none`) all live in the skill's protocol, validated by the
+  human skill by skill; an unanswered proposal counts as rejected.
+- Real `--check` run against the live `upstream.lock.json` found 9 of the 15
+  forked skills already drifted from the SHA recorded at slice 01 — none
+  synced yet by design; this slice ships the tool, not the sync itself.
+
 ## 3. 2026-08-06
 
 Summary of the session:
