@@ -5,6 +5,43 @@ ships.
 
 ---
 
+## 6. 2026-08-06
+
+Summary of the session:
+
+1. Slice 04 (setup questionnaire) completed: `chisel-setup`, the prompt-driven
+   skill that turns `.agents/project.md.tpl`'s defaults into a repo's actual
+   glue — silent exploration, sections A–G walked one at a time with a
+   recommendation first, surgical section-scoped writes that never touch
+   anything outside their own heading's span.
+
+Project management:
+
+- Completed **Slice 04 — setup-questionnaire** of Task
+  20260806-0959-chisel-v1: added `socle/agents/skills/chisel-setup/SKILL.md`
+  (pure protocol, no script, no `x-upstream` block — this is OUR skill).
+- Verified by execution on temp copies of both committed fixtures (real
+  `bin/chisel.sh init`, then the protocol walked by hand in
+  accept-every-recommendation mode): boilerplate → §D/§G point into
+  `apps/documentation`, §F filled from the fixture's `package.json` scripts,
+  §A/§B left at the scan-confirmed defaults; brownfield → §C became a
+  scan-derived draft (README-only, explicitly refined with the user), §F
+  picked up a real fact from `CLAUDE.md` (`bundle exec rspec`) instead of
+  staying blank. AC-3 surgical-write proof: a hand-added `## H · Local
+  notes` section and a hand-added line above §A both came back
+  byte-identical (`sha256` match, `diff` exit 0) after re-running only §A's
+  write.
+
+Key architectural and technical decisions:
+
+- §E (Adapters) is read-back-only in the questionnaire — it is `init`-written
+  inventory, never asked; a missing adapter is flagged as a `chisel check`
+  matter, not fixed by this skill.
+- The surgical write is scoped strictly to one section's heading span
+  (`## <letter> · ...` up to the next `## ` heading or EOF) — the skill never
+  rewrites the whole file, so hand-added sections and content above §A/below
+  §G survive every re-run untouched.
+
 ## 5. 2026-08-06
 
 Summary of the session:
