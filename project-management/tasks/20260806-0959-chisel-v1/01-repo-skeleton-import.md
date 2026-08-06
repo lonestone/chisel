@@ -19,13 +19,17 @@ frontmatter.
 - [ ] The 3 task rules exist as tool-agnostic `socle/agents/rules/*.md`
       (content still with hardcoded paths — slice 02's job)
 
-<!-- 🧑 REVIEW IF RELEVANT — design, persisted from the approved plan -->
+---
+
+> 🧑 **REVIEW IF RELEVANT** — design, persisted from the approved plan (empty at slicing time).
 
 ## Design — persisted at plan time
 
 _To be filled by the implementing session when its plan is approved._
 
-<!-- 🤖 AGENT ZONE -->
+---
+
+> 🤖 **AGENT ZONE** — working space; humans skim or skip.
 
 ## Notes
 

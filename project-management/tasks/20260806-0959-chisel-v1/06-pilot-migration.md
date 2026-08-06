@@ -19,13 +19,17 @@ gating test: verify in real Cursor sessions that the task rules fire from
 - [ ] Cursor verdict documented in the chisel README (AGENTS.md-only, or shim
       fallback shipped and enabled)
 
-<!-- 🧑 REVIEW IF RELEVANT — design, persisted from the approved plan -->
+---
+
+> 🧑 **REVIEW IF RELEVANT** — design, persisted from the approved plan (empty at slicing time).
 
 ## Design — persisted at plan time
 
 _To be filled by the implementing session when its plan is approved._
 
-<!-- 🤖 AGENT ZONE -->
+---
+
+> 🤖 **AGENT ZONE** — working space; humans skim or skip.
 
 ## Notes
 

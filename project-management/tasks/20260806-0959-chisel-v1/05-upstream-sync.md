@@ -16,13 +16,17 @@ validates, nothing auto-applied. Updates frontmatter SHAs + lock + CHANGELOG.
       applies ONLY after explicit approval, preserving `changes:` adaptations
 - [ ] A skill marked `upstream: none` is skipped and reported as unplugged
 
-<!-- 🧑 REVIEW IF RELEVANT — design, persisted from the approved plan -->
+---
+
+> 🧑 **REVIEW IF RELEVANT** — design, persisted from the approved plan (empty at slicing time).
 
 ## Design — persisted at plan time
 
 _To be filled by the implementing session when its plan is approved._
 
-<!-- 🤖 AGENT ZONE -->
+---
+
+> 🤖 **AGENT ZONE** — working space; humans skim or skip.
 
 ## Notes
 

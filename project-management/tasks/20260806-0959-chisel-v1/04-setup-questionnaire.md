@@ -19,13 +19,17 @@ minimal reading list instead of just asking.
 - [ ] Re-running the skill updates `project.md` in place without losing
       manual edits outside its sections
 
-<!-- 🧑 REVIEW IF RELEVANT — design, persisted from the approved plan -->
+---
+
+> 🧑 **REVIEW IF RELEVANT** — design, persisted from the approved plan (empty at slicing time).
 
 ## Design — persisted at plan time
 
 _To be filled by the implementing session when its plan is approved._
 
-<!-- 🤖 AGENT ZONE -->
+---
+
+> 🤖 **AGENT ZONE** — working space; humans skim or skip.
 
 ## Notes
 

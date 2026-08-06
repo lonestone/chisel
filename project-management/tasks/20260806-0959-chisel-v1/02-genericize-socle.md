@@ -17,13 +17,17 @@ decisions and gate commands through `.agents/project.md` (the glue). Write
       glossary/tasks/prior-art through the glue
 - [ ] `project.md.tpl` covers questionnaire sections A–G with defaults
 
-<!-- 🧑 REVIEW IF RELEVANT — design, persisted from the approved plan -->
+---
+
+> 🧑 **REVIEW IF RELEVANT** — design, persisted from the approved plan (empty at slicing time).
 
 ## Design — persisted at plan time
 
 _To be filled by the implementing session when its plan is approved._
 
-<!-- 🤖 AGENT ZONE -->
+---
+
+> 🤖 **AGENT ZONE** — working space; humans skim or skip.
 
 ## Notes
 

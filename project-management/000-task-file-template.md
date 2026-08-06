@@ -42,9 +42,9 @@ All task files MUST follow this structure:
 
 **Status:** [Status Emoji & Text]
 
-<!-- ────────────────────────────────────────────────
-     🧑 REVIEW CAREFULLY — human surface, keep short
-     ──────────────────────────────────────────────── -->
+---
+
+> 🧑 **REVIEW CAREFULLY** — human decision surface. Read it all before any code. Keep it short.
 
 ## Context
 
@@ -86,9 +86,9 @@ stores, and the relationships between them. Prefer diagrams over prose:
 sequence diagrams, contract shapes, data models (mermaid). This is a human
 decision surface — it must be reviewed before any slicing.
 
-<!-- ────────────────────────────────────────────────
-     🧑 REVIEW IF RELEVANT — program design (medium/large tasks)
-     ──────────────────────────────────────────────── -->
+---
+
+> 🧑 **REVIEW IF RELEVANT** — program design (medium/large tasks).
 
 ## Implementation Decisions
 
@@ -126,9 +126,9 @@ Related tasks (links to the task files, including archived ones):
 - **Blocks:** tasks that cannot start until this is done
 - **Related:** tasks that interact with this one
 
-<!-- ────────────────────────────────────────────────
-     🤖 AGENT ZONE — working space, human skims at most
-     ──────────────────────────────────────────────── -->
+---
+
+> 🤖 **AGENT ZONE** — working space; humans skim or skip.
 
 ## Deliverables
 
