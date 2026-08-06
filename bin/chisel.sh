@@ -178,7 +178,10 @@ render_agents_md() {
       printf '%s\n' "$BLOCK_END"
     } >>"$tmp"
   fi
-  mv "$tmp" "$agents_md"
+  # cat-into-place (not mv): mktemp files are mode 600, and mv would stamp
+  # that onto an existing AGENTS.md; redirection keeps the target's perms.
+  cat "$tmp" >"$agents_md"
+  rm -f "$tmp"
 }
 
 # Ensure CLAUDE.md has a literal `@AGENTS.md` line; never touch anything else.

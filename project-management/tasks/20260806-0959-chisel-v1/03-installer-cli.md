@@ -294,3 +294,17 @@ committed fixture repos.
   path) — Decision 2's claim about following npx's symlink would
   otherwise go completely unverified until slice 07's real `npx` test.
   Cheap to add, so it stayed in rather than being spun off.
+
+### Planner review (2026-08-06, Fable)
+
+Commit `08a2773` reviewed green. `test/run.sh` re-run by the planner
+independently: 71/71 pass. `AGENTS-block.md`'s opening comment covers the
+mechanism, the ownership contract, and where to edit — exactly the
+user-facing doc requested at the plan gate. All 7 typist deviations
+accepted (the extra symlink-invocation test scenario is a genuine
+improvement; the MIT-license-without-LICENSE-file flag is carried to
+slice 07). One planner fixup: `render_agents_md` wrote the final file with
+`mv "$tmp"`, which stamps mktemp's mode 600 onto an existing AGENTS.md —
+replaced with cat-into-place to preserve the target's permissions (a class
+of defect the black-box tests can't see). Full suite re-run green after
+the fixup.
