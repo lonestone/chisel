@@ -5,6 +5,23 @@ ships.
 
 ---
 
+## 7. 2026-08-10 — Field-test fixes (first real-world dry-run)
+
+First full install dry-run on a real untouched pnpm monorepo (gcs-monorepo):
+`init` → `check` → `chisel-setup` questionnaire worked end-to-end. Two chisel
+defects found and fixed (task `20260810-1037-field-test-fixes`):
+
+- `AGENTS-block.md`'s self-doc comment leaked socle-meta wording into
+  equipped projects' AGENTS.md — rewritten context-neutral.
+- `init` never filled the §E adapter inventory it poses — it now ticks the
+  adapters actually in place, only when it CREATES `project.md` (a
+  pre-existing glue stays untouched; new ownership test proves it).
+- Test-harness fix found on the way: `grep -qF` without `--` swallowed
+  needles starting with `-`. Suite now at 79 asserts.
+
+Open decision reopened by the field test: GitLab Issues as a wired §B
+tracker option (gcs is GitLab-hosted; D5-B offered local | GitHub | Plane).
+
 ## 6. 2026-08-06
 
 Summary of the session:

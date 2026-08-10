@@ -238,13 +238,52 @@ copy_managed_files() {
   cp "$TASK_TEMPLATE_SRC" "$target_dir/project-management/000-task-file-template.md"
 }
 
-# Project-owned: written once, never again.
+# Project-owned: written once, never again. Prints "created" when this run
+# wrote the file, so init knows it may fill the §E adapter inventory below.
 ensure_project_md() {
   target_dir="$1"
   project_md="$target_dir/.agents/project.md"
   if [ ! -f "$project_md" ]; then
     cp "$PROJECT_MD_TPL" "$project_md"
+    printf 'created\n'
   fi
+}
+
+# Fill §E (Adapters) of a project.md THIS init run just created: tick each
+# adapter line whose adapter is actually in place. Never called on a
+# pre-existing project.md — that file is project-owned.
+tick_adapter_inventory() {
+  target_dir="$1"
+  project_md="$target_dir/.agents/project.md"
+  [ -f "$project_md" ] || return 0
+
+  agents_ok=0
+  claude_ok=0
+  link_ok=0
+  if [ -f "$target_dir/AGENTS.md" ] &&
+     grep -qF "$BLOCK_BEGIN" "$target_dir/AGENTS.md" &&
+     grep -qF "$BLOCK_END" "$target_dir/AGENTS.md"; then
+    agents_ok=1
+  fi
+  if [ -f "$target_dir/CLAUDE.md" ] &&
+     grep -qxF '@AGENTS.md' "$target_dir/CLAUDE.md"; then
+    claude_ok=1
+  fi
+  if [ -L "$target_dir/.claude/skills" ] &&
+     [ "$(readlink "$target_dir/.claude/skills")" = "../.agents/skills" ]; then
+    link_ok=1
+  fi
+
+  tmp="$(mktemp)"
+  awk -v a="$agents_ok" -v c="$claude_ok" -v l="$link_ok" '
+    /^## / { ine = ($0 ~ /^## E · /) ? 1 : 0 }
+    ine && a && /^- \[ \] `AGENTS\.md`/        { sub(/^- \[ \]/, "- [x]") }
+    ine && c && /^- \[ \] `CLAUDE\.md`/        { sub(/^- \[ \]/, "- [x]") }
+    ine && l && /^- \[ \] `\.claude\/skills`/  { sub(/^- \[ \]/, "- [x]") }
+    { print }
+  ' "$project_md" >"$tmp"
+  cat "$tmp" >"$project_md"
+  rm -f "$tmp"
 }
 
 # Project-owned: tasks/archive created if missing; CHANGELOG.md written
@@ -328,10 +367,13 @@ cmd_init() {
   project_title="$(basename "$(cd "$target_dir" && pwd -P)")"
 
   copy_managed_files "$target_dir"
-  ensure_project_md "$target_dir"
+  project_md_state="$(ensure_project_md "$target_dir")"
   render_agents_md "$target_dir/AGENTS.md" "$project_title"
   render_claude_md "$target_dir/CLAUDE.md"
   link_claude_skills "$target_dir"
+  if [ "$project_md_state" = "created" ]; then
+    tick_adapter_inventory "$target_dir"
+  fi
   ensure_project_management_skeleton "$target_dir"
   write_manifest "$target_dir"
 

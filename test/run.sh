@@ -76,7 +76,7 @@ assert_file_contains() {
   desc="$1"
   path="$2"
   needle="$3"
-  if [ -f "$path" ] && grep -qF "$needle" "$path"; then
+  if [ -f "$path" ] && grep -qF -- "$needle" "$path"; then
     pass "$desc"
   else
     fail "$desc (text not found in $path: $needle)"
@@ -87,7 +87,7 @@ assert_file_not_contains() {
   desc="$1"
   path="$2"
   needle="$3"
-  if [ -f "$path" ] && ! grep -qF "$needle" "$path"; then
+  if [ -f "$path" ] && ! grep -qF -- "$needle" "$path"; then
     pass "$desc"
   else
     fail "$desc (text unexpectedly found in $path: $needle)"
@@ -151,6 +151,12 @@ assert_full_layout() {
   assert_file_exists "[$target] .agents/workflows.md" "$target/.agents/workflows.md"
   assert_file_exists "[$target] .agents/methodology.md" "$target/.agents/methodology.md"
   assert_file_exists "[$target] .agents/project.md" "$target/.agents/project.md"
+  assert_file_contains "[$target] project.md §E: AGENTS.md adapter ticked" \
+    "$target/.agents/project.md" '- [x] `AGENTS.md`'
+  assert_file_contains "[$target] project.md §E: CLAUDE.md adapter ticked" \
+    "$target/.agents/project.md" '- [x] `CLAUDE.md`'
+  assert_file_contains "[$target] project.md §E: skills symlink ticked" \
+    "$target/.agents/project.md" '- [x] `.claude/skills`'
   assert_file_exists "[$target] .agents/.chisel.json manifest" "$target/.agents/.chisel.json"
   assert_dir_exists "[$target] project-management/tasks" "$target/project-management/tasks"
   assert_dir_exists "[$target] project-management/archive" "$target/project-management/archive"
@@ -207,6 +213,17 @@ fi
 
 assert_eq "brownfield: single managed block after two inits" "1" \
   "$(grep -c -- '<!-- chisel:begin -->' "$t1/AGENTS.md")"
+
+# A pre-existing project.md is project-owned: re-init must not re-tick a §E
+# line a human deliberately changed.
+awk 'BEGIN{done=0} !done && /^- \[x\] `\.claude\/skills`/ { sub(/^- \[x\]/, "- [ ]"); done=1 } { print }' \
+  "$t1/.agents/project.md" >"$WORK_ROOT/t1-project-md-edited"
+cat "$WORK_ROOT/t1-project-md-edited" >"$t1/.agents/project.md"
+
+run_chisel "$CHISEL" init "$t1"
+assert_eq "brownfield: third init exits 0" "0" "$rc"
+assert_file_contains "brownfield: hand-unticked §E line survives re-init" \
+  "$t1/.agents/project.md" '- [ ] `.claude/skills`'
 
 # ---------------------------------------------------------------------------
 # 3. boilerplate: init also produces the full target layout.
