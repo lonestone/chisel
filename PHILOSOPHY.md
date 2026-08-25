@@ -125,3 +125,39 @@ The full reference: [methodology.md](./socle/agents/methodology.md) (the
 concepts), [workflows.md](./socle/agents/workflows.md) (the visual guide,
 gates and model policy), and the task template in
 [socle/templates/](./socle/templates/000-task-file-template.md).
+
+## Sources
+
+**Frameworks studied (all source-level, cloned and read):**
+
+- [Fission-AI/OpenSpec](https://github.com/Fission-AI/OpenSpec) — adopted,
+  customized, used for a month in production, then rejected
+- [github/spec-kit](https://github.com/github/spec-kit) — GitHub's
+  constitution/specify/plan/tasks pipeline
+- [fabriqaai/specs.md](https://github.com/fabriqaai/specs.md) —
+  machine-checkable acceptance criteria (the `fabro` runner)
+- [obra/superpowers](https://github.com/obra/superpowers) —
+  skills-as-process-memory, taken to its maximum
+- [codervisor/leanspec](https://github.com/codervisor/leanspec) — the
+  "context economy" diagnosis of spec verbosity
+- [mattpocock/skills](https://github.com/mattpocock/skills) — **our engine**;
+  forked and vendored with per-skill upstream tracking (see
+  [upstream.lock.json](./upstream.lock.json))
+
+**References that shaped the design:**
+
+- dex (Dex Horthy, HumanLayer) — *Why Software Factories Fail*:
+  [the essay](https://x.com/dexhorthy/article/2081058573556306030) and
+  [the AI Engineer talk](https://www.youtube.com/watch?v=Ib5GBkD555M).
+  The Product → System Architecture → Program Design → Implementation phase
+  model, and why human review of the first three is incompressible.
+- Cursor — [*Agent swarm model economics*](https://cursor.com/blog/agent-swarm-model-economics).
+  Frontier-plans / cheap-executors only works with complete, self-contained
+  briefs — where our delegation boundary comes from.
+- [AGENTS.md](https://agents.md) — the cross-tool agent-instructions
+  standard (Linux Foundation) our unified `.agents/` layout builds on.
+
+**Field validation:** piloted on two production repos (music-downloader,
+evea-ai), dry-run tested on a third untouched monorepo, and dogfooded by
+this very repo — every chisel feature was built as a slice of its own
+methodology, most of them typed by a cheaper model from a persisted plan.
