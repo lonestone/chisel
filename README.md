@@ -11,6 +11,9 @@ by one command:
 npx @lonestone/chisel init
 ```
 
+**Why this exists** — the problem, the alternatives we tested, and the
+beliefs behind the design: [PHILOSOPHY.md](./PHILOSOPHY.md).
+
 > ⚠️ **Work in progress.** v1 is being built — see
 > [project-management/tasks/](./project-management/tasks/) (this repo dogfoods
 > its own methodology).

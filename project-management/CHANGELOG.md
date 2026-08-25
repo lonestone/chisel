@@ -5,6 +5,16 @@ ships.
 
 ---
 
+## 8. 2026-08-25 — PHILOSOPHY.md
+
+Added the "why" document at the repo root (task
+`20260825-1046-philosophy-doc`): the original problem (review is the
+bottleneck; our three frustrations with existing SDD frameworks), the six
+alternatives studied/tested with sources and outcomes, the outside references
+(dex's phase model, Cursor's agent-swarm economics), our conclusions as
+belief statements, and the methodology in brief. README links to it.
+Written for the team announcement and future evaluators.
+
 ## 7. 2026-08-10 — Field-test fixes (first real-world dry-run)
 
 First full install dry-run on a real untouched pnpm monorepo (gcs-monorepo):
