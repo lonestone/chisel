@@ -5,6 +5,17 @@ ships.
 
 ---
 
+## 9. 2026-08-26 — Chisel v2 task created ("un repo, des modes")
+
+Distilled the finished factory-bench design chantier (decision map `fb-3kk`,
+14 tickets closed) into task `20260826-1512-chisel-v2` + 7 slices: piloting ×
+coordination matrix, recomposition of the 3 rules + workflows.md into
+discipline.md + 2 formulas + skills, agent profiles with generated per-tool
+definitions, abstract model tiers with user.md cascade, setup §B1–B3,
+chisel-beads convention (neutralized bd init), upgrade-v2 skill +
+CHANGELOG→LOG rename, docs rewrite + one-source-per-concept dedup. Decisions
+link the factory-bench artifacts — nothing re-decided.
+
 ## 8. 2026-08-25 — PHILOSOPHY.md
 
 Added the "why" document at the repo root (task
