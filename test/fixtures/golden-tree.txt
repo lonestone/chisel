@@ -15,6 +15,8 @@
 .agents/profiles/mason.md
 .agents/project.md
 .agents/skills
+.agents/skills/chisel-beads
+.agents/skills/chisel-beads/SKILL.md
 .agents/skills/chisel-setup
 .agents/skills/chisel-setup/SKILL.md
 .agents/skills/code-review
