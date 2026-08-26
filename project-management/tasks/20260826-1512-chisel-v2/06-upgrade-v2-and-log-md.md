@@ -1,7 +1,7 @@
 # 06 — upgrade-v2 skill + LOG.md, pilot migration = parity check
 
 **Status:** 🔴 Not Started
-**Blocked by:** 04
+**Blocked by:** 04, 08
 
 **What to build:** The v1→v2 migration path — a SKILL, not machinery in
 `update` (the system is young; the agent migrates file by file, the human

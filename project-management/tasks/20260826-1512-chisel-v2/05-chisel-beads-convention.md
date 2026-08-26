@@ -1,7 +1,7 @@
 # 05 — chisel-beads: neutralized install + the convention
 
 **Status:** 🔴 Not Started
-**Blocked by:** 04
+**Blocked by:** 04, 08
 
 **What to build:** The B1 = beads branch, end to end — validated in vivo by
 `../factory-bench/prototypes/cohab-bd-init.md`. When the user picks beads, the
