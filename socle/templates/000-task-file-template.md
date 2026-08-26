@@ -29,9 +29,36 @@ Rules:
   silently — if implementation reveals a conflict, stop and surface it.
 - The 🤖 zone may be verbose. That is fine; it is not meant to be read line by line.
 
-For where each kind of content lives depending on the task shape (task alone
-vs task + slices), see the "where lives what" section and diagrams in
-[.agents/workflows.md](/.agents/workflows.md).
+## Where each kind of content lives
+
+A task is either its own single slice (one file) or a parent plus slice files.
+The content moves accordingly:
+
+| Content | One task | Parent + slices |
+|---|---|---|
+| Why / what / success criteria / seams | the task file | the **parent** file |
+| Architecture (diagrams) | the task file (if medium) | the **parent** file |
+| Implementation plan | the task file — persisted at plan approval | **each slice file** — persisted at that slice's plan approval. The parent keeps only decisions that span slices |
+| Slice list + "Blocked by" | — | the parent file |
+| Work notes, snippets | the task file (🤖 zone) | each slice file (🤖 zone) |
+| Status | the task file | per slice; the parent stays open until the last slice |
+| Archive | file → archive when done | parent + folder → archive after the last slice |
+
+On disk (paths resolve via `.agents/project.md` §A):
+
+```
+One task:                           Parent + slices:
+tasks/                              tasks/
+└── 20260810-1200-fix-thing.md      ├── 20260803-1850-admin-mvp.md   ← parent
+                                    └── 20260803-1850-admin-mvp/
+                                        ├── 01-acquisition-domain.md ← slice
+                                        ├── 02-tidal-client.md
+                                        └── …
+```
+
+Cutting a task into slices is the `slice-task` skill; a slice is ready when
+everything in its "Blocked by" list is done, and each one gets its own fresh
+session.
 
 ## Task File Template
 
@@ -188,8 +215,8 @@ Completed tasks are moved to the archive declared in `.agents/project.md`
 
 ## When Creating New Tasks
 
-1. **Interview first** — reach shared understanding before writing (see
-   `task-creation` rule)
+1. **Interview first** — reach shared understanding before writing (the
+   `interview` step of the formula in `.agents/formulas/`)
 2. **Agree the seams** with the human before writing the file
 3. **Fill the 🧑 zones carefully** — they are the review surface
 4. **Keep the top short** — detail goes down the gradient, not deleted

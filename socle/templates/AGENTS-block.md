@@ -11,12 +11,28 @@
   copied verbatim from that file.
 -->
 
-Read `.agents/project.md` §C (the minimal reading list) at the start of a
-session. Then:
+**Always** — follow `.agents/discipline.md`. It is the ambient core: it
+applies to every conversation, with or without a spec file, and its first
+rule tells you what to read before acting.
 
-- Creating a task → `.agents/rules/task-creation.md`
-- Doing the work → `.agents/rules/task-progressing.md`
-- Finishing a task → `.agents/rules/task-completion.md`
-- Workflows, models, and available skills → `.agents/workflows.md`
+**For real, scoped, multi-step work** — the pipeline is
+`.agents/formulas/chisel-controlled.formula.toml`. Execute it as an ordered
+checklist, top to bottom (it spans more than one session — the steps say
+where the breaks are):
 
-This block only routes; the socle at `.agents/` carries the content.
+- Each `[[steps]]` is one step and `needs` gives the order. Follow the step's
+  `description`: it names the role, the skills to invoke (`.agents/skills/`)
+  and the artifacts to produce.
+- Each `[steps.gate] type = "human"` means **stop and ask the human** before
+  starting that step. Never assume approval.
+- Track progress in the spec file itself (status and checkboxes from the
+  template) — it is the source of truth for content and progress.
+
+`.agents/formulas/chisel-auto.formula.toml` is the same pipeline without the
+human gates. It is used only when the human explicitly asks for it and the
+project glue allows it — never chosen by an agent on its own.
+
+Paths (task workspace, template, journal, gate commands) resolve through
+`.agents/project.md`. The reasoning behind all of it is
+`.agents/methodology.md`. This block only routes; the socle at `.agents/`
+carries the content.

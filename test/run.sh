@@ -94,6 +94,16 @@ assert_file_not_contains() {
   fi
 }
 
+assert_path_absent() {
+  desc="$1"
+  path="$2"
+  if [ ! -e "$path" ]; then
+    pass "$desc"
+  else
+    fail "$desc (path unexpectedly present: $path)"
+  fi
+}
+
 assert_eq() {
   desc="$1"
   expected="$2"
@@ -144,11 +154,15 @@ assert_full_layout() {
   assert_symlink_resolves "[$target] .claude/skills symlink" "$target/.claude/skills" "../.agents/skills"
   assert_dir_exists "[$target] .agents/skills" "$target/.agents/skills"
   assert_file_exists "[$target] .agents/skills/tdd/SKILL.md" "$target/.agents/skills/tdd/SKILL.md"
-  assert_dir_exists "[$target] .agents/rules" "$target/.agents/rules"
-  assert_file_exists "[$target] .agents/rules/task-creation.md" "$target/.agents/rules/task-creation.md"
-  assert_file_exists "[$target] .agents/rules/task-progressing.md" "$target/.agents/rules/task-progressing.md"
-  assert_file_exists "[$target] .agents/rules/task-completion.md" "$target/.agents/rules/task-completion.md"
-  assert_file_exists "[$target] .agents/workflows.md" "$target/.agents/workflows.md"
+  assert_file_exists "[$target] .agents/discipline.md" "$target/.agents/discipline.md"
+  assert_dir_exists "[$target] .agents/formulas" "$target/.agents/formulas"
+  assert_file_exists "[$target] .agents/formulas/chisel-controlled.formula.toml" \
+    "$target/.agents/formulas/chisel-controlled.formula.toml"
+  assert_file_exists "[$target] .agents/formulas/chisel-auto.formula.toml" \
+    "$target/.agents/formulas/chisel-auto.formula.toml"
+  # The v1 normative prose is retired: init must never lay it down again.
+  assert_path_absent "[$target] no .agents/rules" "$target/.agents/rules"
+  assert_path_absent "[$target] no .agents/workflows.md" "$target/.agents/workflows.md"
   assert_file_exists "[$target] .agents/methodology.md" "$target/.agents/methodology.md"
   assert_file_exists "[$target] .agents/project.md" "$target/.agents/project.md"
   assert_file_contains "[$target] project.md §E: AGENTS.md adapter ticked" \
@@ -195,6 +209,16 @@ awk '/<!-- chisel:begin -->/{f=1;next}/<!-- chisel:end -->/{f=0}f' "$t1/AGENTS.m
   >"$WORK_ROOT/t1-block.md"
 assert_files_identical "brownfield: rendered block matches AGENTS-block.md" \
   "$WORK_ROOT/t1-block.md" "$REPO_ROOT/socle/templates/AGENTS-block.md"
+
+# The v2 router: ambient core always, the formula for scoped work.
+assert_file_contains "brownfield: block routes to discipline.md" "$t1/AGENTS.md" \
+  ".agents/discipline.md"
+assert_file_contains "brownfield: block routes to the controlled formula" "$t1/AGENTS.md" \
+  ".agents/formulas/chisel-controlled.formula.toml"
+assert_file_contains "brownfield: block spells out the human gate" "$t1/AGENTS.md" \
+  'stop and ask the human'
+assert_file_not_contains "brownfield: block no longer routes to the retired rules" \
+  "$t1/AGENTS.md" ".agents/rules/"
 
 # ---------------------------------------------------------------------------
 # 2. idempotence: init twice = no diff.
@@ -254,8 +278,10 @@ printf '\n## 2099-01-01\n\n- hand-edited entry, must survive update\n' >>"$t4/pr
 cp "$t4/.agents/project.md" "$WORK_ROOT/t4-project-md-before-update"
 cp "$t4/project-management/CHANGELOG.md" "$WORK_ROOT/t4-changelog-before-update"
 
-# ...and a managed file, to prove update refreshes it.
+# ...and two managed files, to prove update refreshes them.
 printf '\n<!-- local edit that update must overwrite -->\n' >>"$t4/.agents/skills/tdd/SKILL.md"
+printf '\n# local edit that update must overwrite\n' \
+  >>"$t4/.agents/formulas/chisel-controlled.formula.toml"
 
 run_chisel "$CHISEL" update "$t4"
 assert_eq "brownfield: update exits 0" "0" "$rc"
@@ -268,6 +294,9 @@ assert_file_not_contains "update: hand-edited SKILL.md reverted" \
   "$t4/.agents/skills/tdd/SKILL.md" "local edit that update must overwrite"
 assert_files_identical "update: SKILL.md matches socle source" \
   "$t4/.agents/skills/tdd/SKILL.md" "$REPO_ROOT/socle/agents/skills/tdd/SKILL.md"
+assert_files_identical "update: controlled formula matches socle source" \
+  "$t4/.agents/formulas/chisel-controlled.formula.toml" \
+  "$REPO_ROOT/socle/agents/formulas/chisel-controlled.formula.toml"
 assert_file_contains "update: prints a summary header" "$WORK_ROOT/last.log" "chisel update:"
 if grep -qE '^  (changed: |\(no managed files changed\))' "$WORK_ROOT/last.log"; then
   pass "update: summary reports changed-or-unchanged per the manifest"
@@ -292,6 +321,16 @@ assert_eq "check: exit 1 after hand-editing a managed skill" "1" "$rc"
 assert_file_contains "check: reports the diverged skill" "$WORK_ROOT/last.log" \
   ".agents/skills/code-review/SKILL.md"
 
+# The recomposed normative layer is managed too: check must see it drift.
+t5b="$(fresh_copy brownfield)"
+run_chisel "$CHISEL" init "$t5b"
+assert_eq "check fixture (discipline): init exits 0" "0" "$rc"
+printf '\n<!-- diverged -->\n' >>"$t5b/.agents/discipline.md"
+run_chisel "$CHISEL" check "$t5b"
+assert_eq "check: exit 1 after hand-editing discipline.md" "1" "$rc"
+assert_file_contains "check: reports the diverged discipline.md" "$WORK_ROOT/last.log" \
+  ".agents/discipline.md"
+
 # ---------------------------------------------------------------------------
 # 6. package-root resolution follows a symlinked bin (npx installs a
 #    symlink) — same code path Decision 2 describes, exercised directly.
@@ -305,6 +344,115 @@ run_chisel "$link_dir/chisel" init "$t6"
 assert_eq "symlinked chisel: init exits 0" "0" "$rc"
 assert_file_exists "symlinked chisel: resolved socle content copied" \
   "$t6/.agents/skills/tdd/SKILL.md"
+
+# ---------------------------------------------------------------------------
+# 7. the recomposed normative layer: formula shape + neutral wording.
+#    Shape checks read the INSTALLED tree (what an equipped repo gets);
+#    the neutrality greps read the socle sources this slice ships.
+# ---------------------------------------------------------------------------
+printf '\n-- 7. formulas: shape, gates, neutrality --\n'
+controlled="$t1/.agents/formulas/chisel-controlled.formula.toml"
+auto="$t1/.agents/formulas/chisel-auto.formula.toml"
+
+# `version` must be an integer, not a semver string — bd refuses to parse it
+# otherwise (chantier lesson).
+assert_file_contains "formulas: controlled declares version = 1 (integer)" \
+  "$controlled" 'version = 1'
+assert_file_contains "formulas: auto declares version = 1 (integer)" \
+  "$auto" 'version = 1'
+assert_file_not_contains "formulas: controlled version is not a quoted string" \
+  "$controlled" 'version = "'
+assert_file_not_contains "formulas: auto version is not a quoted string" \
+  "$auto" 'version = "'
+
+# Controlled = exactly 3 human gates, Auto = zero. That difference IS the mode.
+# Anchored: the header comment of each file quotes the gate syntax in prose.
+# `|| true` on both counts, symmetrically: grep -c exits 1 on zero matches,
+# which would kill the suite under `set -e` without printing a FAIL line.
+assert_eq "formulas: controlled carries exactly 3 human gates" "3" \
+  "$(grep -c '^type = "human"' "$controlled" || true)"
+assert_eq "formulas: auto carries zero human gates" "0" \
+  "$(grep -c '^type = "human"' "$auto" || true)"
+
+# Same steps in the same order — the two files are one pipeline in two modes.
+grep '^id = ' "$controlled" >"$WORK_ROOT/controlled-steps.txt" || true
+grep '^id = ' "$auto" >"$WORK_ROOT/auto-steps.txt" || true
+assert_eq "formulas: controlled declares step ids at all" "7" \
+  "$(wc -l <"$WORK_ROOT/controlled-steps.txt" | tr -d ' ')"
+assert_files_identical "formulas: both declare the same ordered step ids" \
+  "$WORK_ROOT/controlled-steps.txt" "$WORK_ROOT/auto-steps.txt"
+assert_eq "formulas: seven steps in controlled" "7" \
+  "$(grep -c '^\[\[steps\]\]' "$controlled" || true)"
+
+# The mode difference is EXACTLY the gates plus escalation wording: every step
+# body of Auto must be the Controlled body with lines appended and none
+# removed. Extract the description blocks per file, then assert the diff has
+# no removed line.
+extract_descriptions() {
+  awk '
+    /^description = """$/ { inblock = 1; next }
+    inblock && /^"""$/    { inblock = 0; print "---"; next }
+    inblock               { print }
+  ' "$1"
+}
+extract_descriptions "$controlled" >"$WORK_ROOT/controlled-desc.txt"
+extract_descriptions "$auto" >"$WORK_ROOT/auto-desc.txt"
+removed_lines="$(diff "$WORK_ROOT/controlled-desc.txt" "$WORK_ROOT/auto-desc.txt" |
+  grep -c '^<' || true)"
+assert_eq "formulas: auto only ADDS to the shared step bodies (gates + escalation)" \
+  "0" "$removed_lines"
+
+# Neutrality, over the socle SOURCES this recomposition ships. Files owned by
+# later slices (methodology.md, the skills, PHILOSOPHY.md) are deliberately
+# out of this list — they lose their vendor wording in slices 03 and 07.
+# Relative paths, joined to $REPO_ROOT inside the loop: a repo path containing
+# a space must not word-split the list.
+label_hits=""
+vendor_hits=""
+ledger_hits=""
+for rel in socle/agents/discipline.md \
+  socle/agents/formulas/chisel-controlled.formula.toml \
+  socle/agents/formulas/chisel-auto.formula.toml \
+  socle/templates/AGENTS-block.md; do
+  f="$REPO_ROOT/$rel"
+  if grep -Eq 'W0|W1|W2' "$f"; then
+    label_hits="$label_hits $rel"
+  fi
+  if grep -Eiq 'cursor|grok|composer|sonnet|opus|fable|gpt|gemini|anthropic|openai' "$f"; then
+    vendor_hits="$vendor_hits $rel"
+  fi
+done
+# A step never names a ledger backend: writes go through the glue convention.
+for rel in socle/agents/formulas/chisel-controlled.formula.toml \
+  socle/agents/formulas/chisel-auto.formula.toml; do
+  if grep -Eiq '(^|[^a-z])(bd|beads|dolt|linear|jira)([^a-z]|$)' "$REPO_ROOT/$rel"; then
+    ledger_hits="$ledger_hits $rel"
+  fi
+done
+assert_eq "neutrality: no W0/W1/W2 mode label in the recomposed layer" "" "$label_hits"
+assert_eq "neutrality: no vendor or model name in the recomposed layer" "" "$vendor_hits"
+assert_eq "neutrality: no ledger backend named in a formula step" "" "$ledger_hits"
+
+# A real TOML parse when the interpreter has one; the repo's floor is a bare
+# python3, so this check says so out loud rather than silently passing.
+if python3 -c 'import tomllib' >/dev/null 2>&1; then
+  if python3 - "$controlled" "$auto" <<'PY'
+import sys, tomllib
+for path in sys.argv[1:]:
+    with open(path, "rb") as f:
+        data = tomllib.load(f)
+    assert isinstance(data["version"], int), path
+    ids = [s["id"] for s in data["steps"]]
+    assert len(ids) == len(set(ids)) == 7, path
+PY
+  then
+    pass "formulas: both parse as TOML (version integer, 7 unique step ids)"
+  else
+    fail "formulas: both parse as TOML (version integer, 7 unique step ids)"
+  fi
+else
+  printf 'SKIP: TOML parse check (this python3 has no tomllib — needs 3.11+)\n'
+fi
 
 printf '\n=== %d passed, %d failed ===\n' "$pass_count" "$fail_count"
 [ "$fail_count" -eq 0 ]

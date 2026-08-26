@@ -1,0 +1,183 @@
+# chisel — the "Auto" pipeline: the same steps as `chisel-controlled`, with
+# the human gates removed. The Brief stays human and sits UPSTREAM of this
+# formula — someone decides to instantiate it; nothing here decides that.
+#
+# Readable WITHOUT any ledger tooling: execute the steps as an ordered
+# checklist, `needs` gives the order. There is no gate to wait on: where
+# Controlled waits, Auto ESCALATES — a doubting step stops, writes what it
+# doubts into the spec file, and hands it one rung up (Mason → Architect →
+# Inspector → the Owner's digest). Auto never forces a passage.
+#
+# This file owns the ORDER, nothing else. The content and the progress belong
+# to the spec file; the know-how of each step belongs to the skill that step
+# names; the reasoning belongs to `.agents/methodology.md`. Roles are roster
+# names and tiers are abstract (frontier / mid / cheap) — a vendor or model
+# name never appears here. Every write goes through the glue
+# `.agents/project.md` (§A paths, §B tracker convention, §D living docs,
+# §F gate commands, §G glossary and decisions).
+#
+# Auto is opt-in: it runs only when the human explicitly asks for it AND the
+# project glue enables it.
+
+formula = "chisel-auto"
+description = "Chisel task pipeline, Auto mode: the same steps as chisel-controlled with no human awaits. A doubting step escalates instead of blocking. Requires the glue to enable auto."
+version = 1
+type = "workflow"
+
+[vars.task]
+description = "Short slug of the task (used in titles)"
+required = true
+
+[vars.spec]
+description = "Path to the task spec file (markdown, chisel template)"
+required = true
+
+# ── CREATE ────────────────────────────────────────────────────────────────
+
+[[steps]]
+id = "interview"
+title = "Interview: {{task}}"
+type = "task"
+description = """
+Role: Architect (frontier tier).
+Follow the `grilling` skill, with `domain-modeling` underneath: one question
+at a time, each carrying a recommended answer; facts are looked up, decisions
+belong to the Owner. Shape context, scope, acceptance criteria, and the seams
+the work will be tested through — prefer existing seams, the fewer the better.
+Domain terms land in the glossary and hard-to-reverse decisions in an ADR,
+both declared in `.agents/project.md` §G. A design question that cannot be
+settled on paper takes a detour through the `prototype` skill.
+No human in the loop: derive all of it from the Brief and the ambient layer,
+and WRITE every assumption that would have been a question into the Notes of
+{{spec}} — assumptions are reviewable artifacts, not silences.
+"""
+
+[[steps]]
+id = "spec"
+title = "Write spec: {{task}}"
+type = "task"
+needs = ["interview"]
+description = """
+Role: Architect.
+Write {{spec}} from the task file template declared in `.agents/project.md`
+§A, named with the task id script declared there. Respect the reading
+gradient: 🧑 zones short and decision-rich, detail in the 🤖 zone.
+Run the sizing check OUT LOUD, always: does this fit a single fresh context
+window AND end in one demoable, verifiable pass? Yes → the task is its own
+single slice, no breakdown artifact. No → cut it with the `slice-task` skill,
+one file per slice with its blocking edges. State the answer and the
+recommendation explicitly — never decide it silently.
+Then record the work: a dated entry in the changelog declared in
+`.agents/project.md` §A, and the coordination state per the tracker
+convention of §B.
+Then STOP: the session that creates does not implement. The build starts
+fresh from the file — `work on task <file>`, or `work on slice <file>` for a
+slice whose blockers are all done.
+No human arbitrates the cut: write the sizing answer into {{spec}} as an
+assumption, and escalate rather than guess when the work resists slicing.
+"""
+
+# ── WORK (fresh session) ──────────────────────────────────────────────────
+
+[[steps]]
+id = "plan"
+title = "Plan: {{task}}"
+type = "task"
+needs = ["spec"]
+description = """
+Role: Architect, in a FRESH session — the build works from the file, not from
+the conversation that produced it.
+Read the ambient layer declared in `.agents/project.md` §C, then {{spec}} in
+full plus what it links to (parent spec, prior art). Update its status. Plan
+against the real code.
+PERSIST the approved plan into {{spec}} BEFORE any code — the Design section
+of a slice, the Implementation Decisions / Notes zones otherwise: decisions
+locked, target file tree, seam signatures, state and migration notes, TDD
+order, and the short list of evergreen doc pages (declared in §D, never
+inside the task workspace) to write at completion. Cite the references the
+plan relies on: whoever types next follows links, not vibes. A plan that
+lives only in the conversation does not exist.
+No human approves it: self-check before proceeding — a plan that contradicts
+a 🧑 zone of {{spec}} STOPS and escalates. A 🧑 zone is never overridden
+silently, in any mode.
+"""
+
+[[steps]]
+id = "type"
+title = "Type: {{task}}"
+type = "task"
+needs = ["plan"]
+description = """
+Role: Mason (cheap or mid tier) — the Architect never types what it planned,
+and the typist never plans.
+The brief is ARTIFACTS ONLY, never the planning conversation: {{spec}} (its
+persisted Design is the core of the brief), the artifacts it explicitly
+references, and the ambient layer any session in this repo gets.
+Execute the persisted plan step by step. Work in vertical slices — something
+demoable or verifiable at each step, never layer by layer. Test-driven at the
+seams agreed in {{spec}} (`tdd` skill): red before green, one seam, one test,
+one minimal implementation per cycle; tests go through public interfaces,
+never internals. Run the typecheck and the touched tests as you go; the full
+suite is the next step's job. Tick the implementation checkboxes in {{spec}}
+as you go —
+they are the resume point if this session dies.
+Nothing left open crosses this line: if the plan left something to "figure
+out", it goes back to the Architect.
+No human chose the typist: escalation rule — blocked twice on the same step,
+or pushed outside the persisted plan → stop, write the blocker into {{spec}},
+and hand it up. Never improvise past the plan.
+"""
+
+[[steps]]
+id = "verify"
+title = "Verify: {{task}}"
+type = "task"
+needs = ["type"]
+description = """
+Mechanical verification, not a decision: run the gate commands declared in
+`.agents/project.md` §F — lint, tests, build, plus a browser check when UI
+behaviour changed. Evidence first: red output is reported as red, never
+narrated as green.
+Red twice on the same cause → stop and escalate; never loop blindly.
+"""
+
+[[steps]]
+id = "review"
+title = "Review: {{task}}"
+type = "task"
+needs = ["verify"]
+description = """
+Role: Inspector (frontier tier) — never the author of the plan nor of the
+diff under review.
+Follow the `code-review` skill: two axes in parallel from a pinned fixed
+point — Standards (the repo's documented standards plus the smell baseline)
+and Spec (the 🧑 zones of {{spec}} as requirements: anything missing? any
+scope creep?). Report the two axes side by side; never merge them and never
+re-rank findings across them.
+No human arbitrates: the Inspector applies the confirmed findings itself, but
+a finding that touches scope or a 🧑 zone escalates to the Owner's digest
+instead of being decided here.
+"""
+
+[[steps]]
+id = "close"
+title = "Close: {{task}}"
+type = "task"
+needs = ["review"]
+description = """
+Role: Architect or Mason.
+Apply the arbitrated findings. Set the status of {{spec}}, tick acceptance
+criteria and deliverables against reality, then move it to the archive
+declared in `.agents/project.md` §A. Add the dated entry to the changelog
+declared in §A and record the closing coordination state per the §B
+convention. Update the roadmap declared in §A only when it exists AND a
+roadmap-level change was made — it belongs to the Owner.
+Promote the evergreen material: as-built seams, state machines and
+integration diagrams move from the Design into the living docs declared in
+§D, never inside the task workspace — start from its architecture index
+(default `doc/architecture/ARCHITECTURE.md`); update the README when the
+change is relevant to it. Protocol and evergreen pages stay generic — a
+temporary rewrite label is never branded as part of the work system.
+No human is watching the close: the closing summary lands in the Owner's
+digest — what was assumed, what was escalated, what shipped.
+"""

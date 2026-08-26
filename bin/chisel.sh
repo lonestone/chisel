@@ -50,8 +50,8 @@ TASK_TEMPLATE_SRC="$SOCLE/templates/000-task-file-template.md"
 TASK_ID_SRC="$SOCLE/scripts/task-id.sh"
 PROJECT_MD_TPL="$SOCLE/agents/project.md.tpl"
 AGENTS_SKILLS_SRC="$SOCLE/agents/skills"
-AGENTS_RULES_SRC="$SOCLE/agents/rules"
-WORKFLOWS_SRC="$SOCLE/agents/workflows.md"
+AGENTS_FORMULAS_SRC="$SOCLE/agents/formulas"
+DISCIPLINE_SRC="$SOCLE/agents/discipline.md"
 METHODOLOGY_SRC="$SOCLE/agents/methodology.md"
 
 BLOCK_BEGIN='<!-- chisel:begin -->'
@@ -132,8 +132,8 @@ for name, sha in sorted(data.get("managed", {}).items()):
 # the AGENTS.md block, which is not a file — see agents_block_hash).
 managed_relative_files() {
   target_dir="$1"
-  ( cd "$target_dir" && find .agents/skills .agents/rules -type f | LC_ALL=C sort )
-  printf '.agents/workflows.md\n'
+  ( cd "$target_dir" && find .agents/skills .agents/formulas -type f | LC_ALL=C sort )
+  printf '.agents/discipline.md\n'
   printf '.agents/methodology.md\n'
   printf 'scripts/task-id.sh\n'
   printf 'project-management/000-task-file-template.md\n'
@@ -226,8 +226,8 @@ copy_managed_files() {
 
   mkdir -p "$target_dir/.agents"
   cp -R "$AGENTS_SKILLS_SRC" "$target_dir/.agents/"
-  cp -R "$AGENTS_RULES_SRC" "$target_dir/.agents/"
-  cp "$WORKFLOWS_SRC" "$target_dir/.agents/workflows.md"
+  cp -R "$AGENTS_FORMULAS_SRC" "$target_dir/.agents/"
+  cp "$DISCIPLINE_SRC" "$target_dir/.agents/discipline.md"
   cp "$METHODOLOGY_SRC" "$target_dir/.agents/methodology.md"
 
   mkdir -p "$target_dir/scripts"

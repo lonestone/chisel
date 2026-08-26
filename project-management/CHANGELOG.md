@@ -5,6 +5,58 @@ ships.
 
 ---
 
+## 10. 2026-08-26 — v2 slice 01: discipline core + formulas, the three rules retired
+
+Summary of the session:
+
+1. Slice 01 of task `20260826-1512-chisel-v2` completed: the normative prose
+   of the socle is recomposed into layers. `socle/agents/discipline.md` (the
+   ambient invariant core — read first, plan first, 🧑 zones are law, verify
+   before "done", the bridge rule, escalate rather than improvise, session
+   hygiene, side lanes) plus `socle/agents/formulas/chisel-controlled.formula.toml`
+   and `chisel-auto.formula.toml` (the same seven steps — interview, spec,
+   plan, type, verify, review, close — differing by exactly three human gates
+   and the escalation wording). `socle/agents/rules/` and
+   `socle/agents/workflows.md` are deleted; `socle/templates/AGENTS-block.md`
+   is now the v2 router.
+
+Project management:
+
+- Completed **Slice 01 — recomposition-discipline-formulas**. The slice's
+  Notes carry the v1 → v2 mapping table: 51 obligations of the three rules
+  and of `workflows.md`, each traced to its new home (a discipline rule, a
+  formula step, a skill, the task template, or `methodology.md`) — nothing
+  dropped silently, residuals owned by later slices listed explicitly.
+- `bin/chisel.sh` installs `discipline.md` + `formulas/` in place of
+  `rules/` + `workflows.md`; `test/run.sh` grew a group 7 for the formula
+  invariants and the neutrality greps. Suite: 103 passed, 0 failed.
+- Parity re-checked without any ledger tooling: a context-free agent session
+  on a freshly equipped fixture routed `AGENTS.md` → `discipline.md` →
+  reading list → bridge rule → the Controlled formula, walked the seven
+  steps in order and stopped at exactly the three gates — same sequence,
+  same artifacts, same verification as the v1 rules.
+
+Key architectural and technical decisions:
+
+- **Persist-the-plan know-how lives in the formula's `plan` step**, not in a
+  new file (the sub-point the parent deferred to this slice's plan gate).
+  One source per concept: the *why* is already `methodology.md`, the
+  *where-in-the-file* is already the task and slice templates, so the
+  remaining *when/what* belongs to the step that triggers it — and a stray
+  markdown file next to the TOMLs would end up inside the ledger tool's
+  formula directory in beads mode.
+- **The two formulas are one pipeline in two modes, enforced by a test**:
+  every Auto step body is the Controlled body with escalation lines appended
+  and none removed, so the diff between the files can only ever be gates plus
+  escalation wording.
+- **The step wording is ledger- and vendor-neutral**: roles are roster names
+  (Architect, Mason, Inspector, Owner), tiers are abstract (frontier / mid /
+  cheap), and every write resolves through the glue `.agents/project.md`. No
+  backend and no model name appears in a step — asserted by the suite.
+- The retired `workflows.md` §6 ("where things live") moved into
+  `socle/templates/000-task-file-template.md`, per the one-source rule that
+  gives structure to the templates.
+
 ## 9. 2026-08-26 — Chisel v2 task created ("un repo, des modes")
 
 Distilled the finished factory-bench design chantier (decision map `fb-3kk`,
