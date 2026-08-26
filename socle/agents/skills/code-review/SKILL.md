@@ -66,10 +66,13 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 
 ### 4. Spawn both sub-agents in parallel
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+Spawn both in a single turn, with whatever parallel sub-agent mechanism your tool provides — a general-purpose sub-agent is enough for each, since the briefs below carry everything they need.
 
-**Model (Cursor):** spawn both review sub-agents on **Grok**. Do not use
-Sonnet/Opus for reviews — see [workflows.md §0](../../workflows.md#0-model-policy-cursor).
+**Tier:** review is judgement work — run both sub-agents at the **frontier**
+tier. Which model that is resolves through the cascade in
+[methodology.md — Model tiers](../../methodology.md#model-tiers-and-how-they-resolve):
+`.agents/user.md` first, then `.agents/project.md`, then your tool's
+strongest model.
 
 **Standards sub-agent prompt** — include:
 

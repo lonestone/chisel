@@ -111,45 +111,90 @@ human; an optional **typist session** does only the typing from that file.
 The agent OFFERS this choice once the plan is saved (recommending it for
 large diffs); the user decides — never a silent default.
 
-In this repo's Cursor default, that is **not** "pay for Opus/Sonnet on the
-planner and burn more Sonnet on huge contexts." See
-[workflows.md §0 — Model policy](./workflows.md#0-model-policy-cursor):
-**Grok** for plan, implement, and review; **Composer 2.5** only as an
-optional typist for simple mechanical diffs. Expensive tiers (Sonnet,
-Opus/Fable-class, …) stay off the table when token volume is large.
+That gradient is a **tier** gradient, not a licence to spend: the thinking
+runs at the frontier tier, the typing from an already-persisted plan runs at
+the cheap tier, and which concrete model each tier means is resolved per dev
+and per project — see [Model tiers](#model-tiers-and-how-they-resolve) below.
 
-The swarm economics still apply at the *session* level (see
-[Cursor's write-up](https://cursor.com/blog/agent-swarm-model-economics)):
-workers consume most tokens; keeping the planner context clean for review
-matters more than upgrading the model family. *"Few moments in a large task
-genuinely require frontier intelligence: the original decomposition, the
-design decisions, and certain trade-offs"* — those moments stay with the
-planner + human; we just run them on Grok.
+The economics apply at the *session* level, not at the model-family level:
+the sessions that type consume most of the tokens, so keeping the planner's
+context clean enough to review matters more than upgrading everything. Few
+moments in a large task genuinely require frontier intelligence — the
+original decomposition, the design decisions, a handful of trade-offs. Those
+moments stay with the planner and the human, and they are exactly what the
+frontier tier is reserved for. Everything below the plan is typing, and
+typing does not need the same tier.
 
 The delegate's brief is **artifacts only, never the planning conversation**:
 the slice file + the artifacts it explicitly references (parent 🧑 zones,
 `CONTEXT.md`/ADRs, prior art) + the repo's ambient layer. Two disciplines
-follow (both from Cursor's failure modes):
+follow (both from observed swarm failure modes):
 
 - **Explicit references beat shared memory.** The Design section must link
-  what it relies on — their "compile-checked references" against split-brain;
+  what it relies on — the "compile-checked references" answer to split-brain;
   our version is: the delegate follows links, not vibes.
 - **The planner never implements** — its context stays clean for reviewing
   the delegate's diff against the plan. All completion gates still run; the
-  two-axis review is a decorrelated lens by construction (on Grok).
+  two-axis review is a decorrelated lens by construction (at the frontier
+  tier).
 
 It doubles as a quality measure (dex): if a typist cannot implement the
 slice from the persisted design and its references, the design was not
 factored well enough — fix the file, not the delegate's context.
 
+## Model tiers (and how they resolve)
+
+Nothing in this socle names a model or a vendor. It speaks in three **tiers**,
+the same three the roster uses:
+
+| Tier | What it is for | Roles |
+|---|---|---|
+| **frontier** | Thinking, grilling, reviewing — where a wrong judgement is expensive and only caught much later | Architect (interview, design, plan); Inspector (the two-axis review) |
+| **mid** | Ordinary tasks and dispatch — work that needs competence but not judgement | A Mason on a slice that is not purely mechanical |
+| **cheap** | Typing from a plan that is already persisted | A Mason as typist |
+
+(Not to be confused with **Frontier** in the glossary above — the set of
+slices whose blockers are all done. Same word, two unrelated meanings: here a
+model tier, there a position in the dependency graph.)
+
+A tier is a property of the **work**, not of the tool: it says how much
+judgement the step needs. That is why the socle can state it once and let
+every tool honour it its own way — and why a step that names a tier is still
+readable in five years, when today's model names are gone.
+
+### The cascade
+
+Which concrete model a tier means is resolved in this order, and the first
+level that answers for a tier wins that tier:
+
+1. **`.agents/user.md`** — the dev's personal file: their tool, their account,
+   their model ids. It is **never committed** — the setup poses it from the
+   socle template and adds it to the project's ignore rules, so each dev
+   writes their own at their first session and nobody inherits anyone else's.
+2. **`.agents/project.md`**, the versioned glue — the team's default mapping
+   for this repo, if the team has agreed on one and written it there. Most
+   repos have not, and skip straight to the next level.
+3. **The socle default**, which contains no model id at all: *frontier* is the
+   strongest reasoning model your tool offers you, *mid* its standard everyday
+   model, *cheap* its fastest and least expensive one.
+
+**A dev with no `user.md` is never blocked.** Resolution falls through to the
+team default, and then to the socle default — which every tool can satisfy.
+A missing `user.md` is the normal case, not an error: no rule, skill, formula
+step or command may require its presence, and none may read it as the only
+source of a fact that matters to anyone else.
+
+This is the only place the resolution rule is written. Everywhere else —
+formula steps, skills — names a tier and points here.
+
 ## Where dex's phases live (and who owns each)
 
 | dex phase | Our artifact | Produced by | Delegable? |
 |---|---|---|---|
-| **Product** (why/what/success) | Parent task 🧑 REVIEW CAREFULLY: Context, Scope, Acceptance Criteria | planner session + human (grilling); Grok in Cursor | never |
-| **System Architecture** (how the pieces talk) | Parent task **Architecture** section (🧑, medium/large; diagrams > prose) | planner session + human; Grok in Cursor | never |
-| **Program Design** (types, signatures, layout, call stacks) | Unsliced task: Implementation Decisions. Sliced task: each slice's **Design** section, persisted at plan time | planner at the plan gate, human approves; Grok in Cursor | never |
-| **Vertical Slices** (implementation) | The code, cycle by cycle | Grok default; Composer 2.5 OK for simple typist — ONLY delegable phase | ✅ opt-in |
+| **Product** (why/what/success) | Parent task 🧑 REVIEW CAREFULLY: Context, Scope, Acceptance Criteria | planner session + human (grilling); frontier tier | never |
+| **System Architecture** (how the pieces talk) | Parent task **Architecture** section (🧑, medium/large; diagrams > prose) | planner session + human; frontier tier | never |
+| **Program Design** (types, signatures, layout, call stacks) | Unsliced task: Implementation Decisions. Sliced task: each slice's **Design** section, persisted at plan time | planner at the plan gate, human approves; frontier tier | never |
+| **Vertical Slices** (implementation) | The code, cycle by cycle | typist session at the cheap tier (mid when the slice is not purely mechanical) — ONLY delegable phase | ✅ opt-in |
 
 The delegation boundary is the plan: everything above the line is thinking
 (planner + human), everything below is typing. A typist asked to "figure
@@ -198,8 +243,9 @@ crystallize what must survive it.
 
 ## Artifact ladder (plans → evergreen)
 
-Working designs and mermaid diagrams start in task/slice files (and Cursor
-plans). At completion they must be **promoted** into evergreen product docs
+Working designs and mermaid diagrams start in task/slice files (and in
+whatever scratch plan surface the tool offers). At completion they must be
+**promoted** into evergreen product docs
 under the documentation reference declared in `.agents/project.md` (default
 `doc/**`) **except** the task workspace declared there (default
 `/project-management/`: tasks, changelog, temporary baselines, archive).
