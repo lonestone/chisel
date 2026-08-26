@@ -80,11 +80,20 @@ copied from the pilot repo and have never resolved in chisel.
 
 The one decision that is not mechanical: chisel is the source of the socle
 AND its installation target. `.agents/skills/x` would point at
-`socle/agents/skills/x` in the same working tree. Whether that is a symlink
-into `socle/`, a real installed copy that `check` then compares against its
-own source, or a deliberate exception recorded in the manifest, is the
-question this task opens with. It is a 🧑 decision and must be answered
-before anything is installed.
+`socle/agents/skills/x` in the same working tree.
+
+**Decided by the Owner, 2026-08-26: a real installed copy.**
+`bin/chisel.sh init` is run on this repo exactly as on any user repo;
+`.agents/` is a committed copy of what `socle/` ships. This is the only mode
+where chisel lives what a user lives — `init`, `update` and `check` are
+exercised for real here — and a red `check` becomes a useful signal: the
+socle was edited without updating the repo's own installation. The standing
+cost (run `update` after every socle edit) is why this task stays blocked
+until v2 closes and the socle stops moving. Rejected: symlinks into `socle/`
+(check would compare a file to itself and verify nothing; a session editing
+an "installed" file would silently edit the shipped source) and a
+manifest-recorded exception (fixes the drift but never exercises the
+installer).
 
 ---
 
