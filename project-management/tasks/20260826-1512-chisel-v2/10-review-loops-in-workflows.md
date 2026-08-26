@@ -36,6 +36,19 @@ Changes:
    process audit): per-slice targets — Mason work ≥ half of the total spend,
    journal entry ≤ 8 lines, no systematic mutation testing (a mutation test
    is ordered by a reviewer for a specific doubt, not a default).
+4. **Harness memory is banned; lessons persist in the repo** (Owner ruling,
+   2026-08-26): a rule in `discipline.md` (rendered into the AGENTS block) —
+   an agent NEVER stores project knowledge in a harness memory (Claude
+   auto-memory or equivalent); the repo's files are the only memory. In its
+   place, a new socle skill **`to-lessons`** — forked/adapted from
+   `mattpocock/skills` `in-progress/retro` (vendor it with `x-upstream`
+   frontmatter + lock entry, per the D3 discipline): at the END of a
+   workflow it evaluates the session and proposes improvements to the
+   WORKING RULES (not the code) — navigation, automated checks, standards,
+   AGENTS.md hygiene, tool economy, dead instructions, missing information —
+   sorted by gravity, and persists the accepted ones into the repo's rules/
+   docs. The formulas' `close` step invokes it (propose, human or zone
+   owner accepts).
 
 ## Acceptance criteria
 
@@ -47,6 +60,9 @@ Changes:
 - [ ] No prose-pin test added (slice 09's standing rules apply)
 - [ ] A no-tooling walkthrough of `chisel-default` shows the two loops in
       the right places (trace in Notes)
+- [ ] `discipline.md` carries the harness-memory ban (repo files are the
+      only memory); `to-lessons` ships as a vendored skill (x-upstream +
+      lock entry) and the `close` step of all three formulas invokes it
 
 ---
 
