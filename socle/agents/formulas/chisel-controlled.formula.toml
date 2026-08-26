@@ -71,10 +71,24 @@ slice whose blockers are all done.
 # ── WORK (fresh session) ──────────────────────────────────────────────────
 
 [[steps]]
+id = "spec-review"
+title = "Spec review: {{task}}"
+type = "task"
+needs = ["spec"]
+description = """
+Role: Architect (frontier tier), a SECOND one, in a FRESH session — never the
+author of {{spec}}. Reads TWO things and nothing else: the Brief and {{spec}}
+— a spec needing more context than that is itself a finding. Verdict GO, or
+blocking findings written into the Notes of {{spec}}. Loop with the author,
+TWO rounds MAX; still blocked after the second round → escalate to the owner
+of the spec, never a third round.
+"""
+
+[[steps]]
 id = "plan"
 title = "Plan: {{task}}"
 type = "task"
-needs = ["spec"]
+needs = ["spec-review"]
 description = """
 Role: Architect, in a FRESH session — the build works from the file, not from
 the conversation that produced it.
@@ -92,13 +106,35 @@ lives only in the conversation does not exist.
 [steps.gate]
 type = "human"
 # Gate "spec approved": the Owner validates scope, acceptance criteria and
-# seams before anything is planned against the code.
+# seams before anything is planned against the code — after the spec-review
+# loop: the human approves a spec two Architects already agree on.
+
+[[steps]]
+id = "design-check"
+title = "Design check: {{task}}"
+type = "task"
+needs = ["plan"]
+description = """
+Role: Mason (cheap tier) posts its PROGRAM DESIGN into the Design section of
+{{spec}}: files, seam signatures, TDD order — no code typed here. Target
+~40 lines; if it cannot fit, that is a finding about the plan's size, not a
+compression exercise. The Architect who owns the plan reads the slice and
+that design only, then answers VALIDATED or corrections. TWO rounds MAX, then
+back to the owner of the plan as a finding AGAINST THE PLAN, never against the
+Mason. Typing needs VALIDATED.
+"""
+[steps.gate]
+type = "human"
+# Gate "plan approved + typist chosen": one fused human decision, moved here
+# from `type` — no Mason designs before the plan is approved. Nothing
+# half-decided crosses this line, and delegation never happens without the
+# human's yes.
 
 [[steps]]
 id = "type"
 title = "Type: {{task}}"
 type = "task"
-needs = ["plan"]
+needs = ["design-check"]
 description = """
 Role: Mason (cheap or mid tier) — the Architect never types what it planned,
 and the typist never plans.
@@ -116,11 +152,6 @@ they are the resume point if this session dies.
 Nothing left open crosses this line: if the plan left something to "figure
 out", it goes back to the Architect.
 """
-[steps.gate]
-type = "human"
-# Gate "plan approved + typist chosen": one fused human decision. Nothing
-# half-decided crosses this line, and delegation never happens without the
-# human's yes.
 
 [[steps]]
 id = "verify"

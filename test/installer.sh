@@ -220,7 +220,7 @@ group_render() {
   supervised="$t7/.agents/formulas/chisel-supervised.formula.toml"
   auto="$t7/.agents/formulas/chisel-auto.formula.toml"
 
-  # Structure by PARSING, never by grep: version integer, 7 unique step ids, gates 3/1/0.
+  # Structure by PARSING, never by grep: version integer, 9 unique step ids, gates 3/1/0.
   if python3 -c 'import tomllib' >/dev/null 2>&1; then
     if python3 - "$controlled" "$supervised" "$auto" <<'PY'
 import sys, tomllib
@@ -229,19 +229,19 @@ for path in sys.argv[1:]:
         data = tomllib.load(f)
     assert isinstance(data["version"], int), path
     ids = [s["id"] for s in data["steps"]]
-    assert len(ids) == len(set(ids)) == 7, path
+    assert len(ids) == len(set(ids)) == 9, path
     gated = [s["id"] for s in data["steps"] if s.get("gate", {}).get("type") == "human"]
     expected = {
-        "chisel-controlled": ["plan", "type", "close"],
+        "chisel-controlled": ["plan", "design-check", "close"],
         "chisel-supervised": ["plan"],
         "chisel-auto": [],
     }[data["formula"]]
     assert gated == expected, (path, gated)
 PY
     then
-      pass "formulas: all three parse as TOML (version integer, 7 unique step ids, gates 3/1/0)"
+      pass "formulas: all three parse as TOML (version integer, 9 unique step ids, gates 3/1/0)"
     else
-      fail "formulas: all three parse as TOML (version integer, 7 unique step ids, gates 3/1/0)"
+      fail "formulas: all three parse as TOML (version integer, 9 unique step ids, gates 3/1/0)"
     fi
   else
     printf 'SKIP: TOML parse check (this python3 has no tomllib — needs 3.11+)\n'
