@@ -97,10 +97,10 @@ type = "task"
 needs = ["spec"]
 description = """
 Role: Checker (frontier tier), in a FRESH session — never the author of
-{{spec}}. Reads {{spec}} and the Brief. Verdict GO, or blocking findings
-written into the Notes of {{spec}}. Loop with the author, TWO rounds MAX;
-still blocked after the second round → escalate to the owner of the spec,
-never a third round. Duties: `.agents/profiles/checker.md`.
+{{spec}}. Verdict GO, or blocking findings written into the Notes of
+{{spec}}. Loop with the author, TWO rounds MAX; still blocked after the
+second round → escalate to the owner of the spec, never a third round.
+Inputs and duties: `.agents/profiles/checker.md`.
 """
 
 [[steps]]
