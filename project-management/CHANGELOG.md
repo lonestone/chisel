@@ -5,6 +5,60 @@ ships.
 
 ---
 
+## 12. 2026-08-26 — v2 slice 03: abstract model tiers, the vendor coupling leaves the socle
+
+Summary of the session:
+
+1. Slice 03 of task `20260826-1512-chisel-v2` completed: the socle no longer
+   names a model or a vendor anywhere. It speaks in three tiers — **frontier**
+   (thinking, grilling, reviewing), **mid** (dispatch, ordinary tasks),
+   **cheap** (typing from a plan that is already persisted) — the same three
+   the formulas shipped by slice 01 already used, now defined. Which concrete
+   model a tier means resolves through a cascade: `.agents/user.md` (personal,
+   never committed) > `.agents/project.md` (the versioned team default) > the
+   socle default, which carries no model id at all.
+
+Project management:
+
+- Completed **Slice 03 — model-tiers-user-md**. `socle/agents/methodology.md`
+  gains one section, "Model tiers (and how they resolve)" — the single
+  normative home of the tier table and the cascade, inheriting the role the
+  retired `workflows.md §0 — Model policy` used to hold. Its vendor passages
+  (the cost-gradient paragraphs, the dex phase table, the artifact ladder) are
+  rewritten in tier terms; the sections themselves are untouched.
+- `socle/agents/skills/code-review/SKILL.md` stops prescribing a model and a
+  specific sub-agent mechanism: it asks for the **frontier** tier and points
+  at the methodology section.
+- New `socle/agents/user.md.tpl`: the template the setup will pose as
+  `.agents/user.md`. Entirely commented out on purpose — an untouched copy
+  overrides nothing and resolution falls through to the glue, then the socle
+  default. Its example mapping uses placeholders, never model ids: a template
+  shipped by the socle is socle text.
+- `test/run.sh` grew a group 8 (socle-wide neutrality scan, the cascade, the
+  `user.md` contract). Suite: **128 passed, 0 failed**.
+
+Key architectural and technical decisions:
+
+- **One normative place, pointers elsewhere.** The resolution rule is written
+  once, in `methodology.md`; the formulas already point there, `code-review`
+  now does, and the `user.md` template points there rather than restating the
+  rule. A test asserts that exactly one socle file carries the section, and
+  names which.
+- **The socle default names no model**: *frontier* = the strongest reasoning
+  model your tool offers, *mid* = its standard model, *cheap* = its fastest.
+  That is what makes "a dev with no `user.md` is never blocked" true on every
+  tool, and it is stated black on white: a missing `user.md` is the normal
+  case, not an error.
+- **`user.md` is posed by the setup, not by `init`.** A shared installer has
+  no business writing a personal file, and the ignore rule belongs with the
+  questionnaire that writes the glue — so slice 04 poses the file and the
+  ignore line. This slice ships the template and the rule, and tests the half
+  that exists today: `init` never lays a `user.md` down, `update` leaves a
+  hand-written one byte-intact, `check` never flags it.
+- **A tier is a property of the work, not of the tool** — which is why the
+  socle can state it once and every tool honour it its own way, and why a step
+  that names a tier still reads correctly when today's model names are gone.
+
 ## 11. 2026-08-26 — v2 slice 02: agent profiles + generated per-tool definitions
 
 Summary of the session:

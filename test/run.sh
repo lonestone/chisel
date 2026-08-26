@@ -442,9 +442,16 @@ removed_lines="$(diff "$WORK_ROOT/controlled-desc.txt" "$WORK_ROOT/auto-desc.txt
 assert_eq "formulas: auto only ADDS to the shared step bodies (gates + escalation)" \
   "0" "$removed_lines"
 
-# Neutrality, over the socle SOURCES this recomposition ships. Files owned by
-# later slices (methodology.md, the skills, PHILOSOPHY.md) are deliberately
-# out of this list — they lose their vendor wording in slices 03 and 07.
+# The model-identifier alphabet, used BOTH by the narrow scan below and by the
+# socle-wide scan in group 8 — one list, kept in one place. It deliberately
+# carries `claude-` rather than a bare vendor word: `CLAUDE.md` and
+# `.claude/skills` are adapter PATHS, which the neutrality rule excepts.
+model_name_re='cursor|grok|composer|sonnet|opus|fable|gpt|gemini|anthropic|openai|copilot|claude-|llama|mistral|deepseek|qwen'
+
+# Neutrality, over the socle SOURCES this recomposition ships. This narrow list
+# is the regression guard on the recomposed layer specifically; the socle-wide
+# scan lives in group 8. `PHILOSOPHY.md` still carries v1 wording and belongs
+# to slice 07.
 # Relative paths, joined to $REPO_ROOT inside the loop: a repo path containing
 # a space must not word-split the list.
 label_hits=""
@@ -458,7 +465,7 @@ for rel in socle/agents/discipline.md \
   if grep -Eq 'W0|W1|W2' "$f"; then
     label_hits="$label_hits $rel"
   fi
-  if grep -Eiq 'cursor|grok|composer|sonnet|opus|fable|gpt|gemini|anthropic|openai' "$f"; then
+  if grep -Eiq "$model_name_re" "$f"; then
     vendor_hits="$vendor_hits $rel"
   fi
 done
@@ -680,6 +687,123 @@ PY
 else
   printf 'SKIP: codex TOML parse check (this python3 has no tomllib — needs 3.11+)\n'
 fi
+
+# ---------------------------------------------------------------------------
+# 9. model tiers: the socle names tiers, never models — and the user.md
+#    cascade. Neutrality is scanned over EVERY socle source here (this slice's
+#    AC is socle-wide, unlike group 7's deliberately narrow list, which guards
+#    the recomposed layer against regression). Both scans share the one
+#    `model_name_re` defined in group 7.
+# ---------------------------------------------------------------------------
+printf '\n-- 9. model tiers: neutrality, cascade, user.md --\n'
+
+model_name_hits="$(grep -rliE "$model_name_re" "$REPO_ROOT/socle" || true)"
+assert_eq "tiers: no model identifier anywhere in the socle (adapter paths excepted)" \
+  "" "$model_name_hits"
+
+methodology_src="$REPO_ROOT/socle/agents/methodology.md"
+user_tpl="$REPO_ROOT/socle/agents/user.md.tpl"
+code_review_src="$REPO_ROOT/socle/agents/skills/code-review/SKILL.md"
+
+# One normative place, and the assertion names WHICH one: a second copy of the
+# resolution rule anywhere under socle/ fails here.
+tier_rule_files="$(grep -rlF '## Model tiers (and how they resolve)' "$REPO_ROOT/socle" || true)"
+assert_eq "tiers: the resolution rule is written in exactly one socle file" \
+  "$methodology_src" "$tier_rule_files"
+
+# The three tiers the delivered formulas already speak are defined there.
+assert_file_contains "tiers: frontier is defined" "$methodology_src" '**frontier**'
+assert_file_contains "tiers: mid is defined" "$methodology_src" '**mid**'
+assert_file_contains "tiers: cheap is defined" "$methodology_src" '**cheap**'
+
+# The cascade, in order, plus the fallthrough that keeps a fresh dev working.
+assert_file_contains "cascade: level 1 is the personal user.md" \
+  "$methodology_src" '1. **`.agents/user.md`**'
+assert_file_contains "cascade: level 2 is the versioned glue" \
+  "$methodology_src" '2. **`.agents/project.md`**'
+assert_file_contains "cascade: level 3 is the socle default" \
+  "$methodology_src" '3. **The socle default**'
+assert_file_contains "cascade: a dev with no user.md is not blocked" \
+  "$methodology_src" 'A dev with no `user.md` is never blocked'
+
+# Texts that need a model choice ask for a tier and point here. (That they name
+# no model is covered by the socle-wide scan above, not by this needle.)
+assert_file_contains "code-review: asks for a tier" \
+  "$code_review_src" 'frontier'
+assert_file_contains "code-review: points at the one normative place" \
+  "$code_review_src" 'methodology.md#model-tiers-and-how-they-resolve'
+assert_file_not_contains "code-review: no pointer left to the retired workflows.md" \
+  "$code_review_src" 'workflows.md'
+
+# The template ships, points at the rule, and is INERT: everything outside an
+# HTML comment must be headings only, so that an untouched copy overrides
+# nothing and resolution falls through to the glue and then the socle default.
+assert_file_exists "user.md: the socle ships a template" "$user_tpl"
+assert_file_contains "user.md: the template points at the one normative place" \
+  "$user_tpl" 'Model tiers (and how they resolve)'
+assert_file_contains "user.md: the template says the file is never committed" \
+  "$user_tpl" 'NEVER committed'
+# awk, not python3: a failed command substitution in an assignment aborts the
+# whole suite under `set -e`, with no FAIL line and no tally. awk is part of
+# the same POSIX floor bin/chisel.sh already stands on.
+strip_html_comments() {
+  awk '
+    BEGIN { inc = 0 }
+    {
+      line = $0
+      out = ""
+      while (length(line) > 0) {
+        if (inc) {
+          i = index(line, "-->")
+          if (i == 0) { line = ""; break }
+          line = substr(line, i + 3)
+          inc = 0
+        } else {
+          i = index(line, "<!--")
+          if (i == 0) { out = out line; line = ""; break }
+          out = out substr(line, 1, i - 1)
+          line = substr(line, i + 4)
+          inc = 1
+        }
+      }
+      print out
+    }
+  ' "$1"
+}
+if strip_html_comments "$user_tpl" | grep -qwiE 'frontier|mid|cheap'; then
+  fail "user.md: the example mapping is commented out (an untouched copy overrides nothing)"
+else
+  pass "user.md: the example mapping is commented out (an untouched copy overrides nothing)"
+fi
+
+# `user.md` is personal: a shared installer never writes one, and never ships
+# the template into the equipped repo either.
+assert_path_absent "init: no personal .agents/user.md posed (brownfield)" "$t1/.agents/user.md"
+assert_path_absent "init: no personal .agents/user.md posed (boilerplate)" "$t3/.agents/user.md"
+assert_path_absent "init: the user.md template stays in the socle" "$t1/.agents/user.md.tpl"
+
+# `update` does not create one either — t4 was init'ed and updated above and
+# never had a personal file: a dev who has written none still has none after
+# an upgrade, and still resolves through the glue and the socle default.
+assert_path_absent "update: no personal .agents/user.md conjured up" "$t4/.agents/user.md"
+assert_path_absent "update: the user.md template stays in the socle" "$t4/.agents/user.md.tpl"
+
+# ...and once a dev HAS written theirs, update never touches it and check
+# never flags it (it is not a managed file).
+t8="$(fresh_copy brownfield)"
+run_chisel "$CHISEL" init "$t8"
+assert_eq "user.md fixture: init exits 0" "0" "$rc"
+printf '# Personal agent settings\n\n## Model tiers\n\n- **frontier:** my-own-model-id\n' \
+  >"$t8/.agents/user.md"
+cp "$t8/.agents/user.md" "$WORK_ROOT/t8-user-md-before-update"
+
+run_chisel "$CHISEL" update "$t8"
+assert_eq "user.md: update exits 0" "0" "$rc"
+assert_files_identical "user.md: update leaves the personal file byte-intact" \
+  "$WORK_ROOT/t8-user-md-before-update" "$t8/.agents/user.md"
+
+run_chisel "$CHISEL" check "$t8"
+assert_eq "user.md: check stays clean with a personal file present" "0" "$rc"
 
 printf '\n=== %d passed, %d failed ===\n' "$pass_count" "$fail_count"
 [ "$fail_count" -eq 0 ]
