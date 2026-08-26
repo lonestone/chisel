@@ -256,7 +256,13 @@ Never commit `.agents/user.md`, and never copy one dev's file for another.
 
 ## Step 6 — When §B1 is a database
 
-Only when the user picked option 2.
+Only when the user picked option 2. This step CREATES state — it is the one
+place in this skill that does. What it runs is written out in full in
+`.agents/skills/chisel-beads/CHANGING-CASE.md` — its *entering* section (and,
+if this repo already has open task files, its *converting* section too): read
+it before running anything here, and follow it command by command, watching
+each output rather than typing the whole sequence blind. The convention those
+sections serve is `.agents/skills/chisel-beads/SKILL.md` — read that first.
 
 1. **Check the prerequisite.** The tool is `bd`, and the minimum version is
    **1.2.2** — everything this workflow relies on was validated there. Compare
@@ -272,16 +278,66 @@ Only when the user picked option 2.
 > Moving to the database later is tooled and only touches tasks that are still
 > open — choosing the files today costs you nothing tomorrow.
 
-3. **Record the choice, and stop there.** Write §B1 with the chosen case and
-   its `- [ ] initialised` line, left unticked. Creating the database and
-   setting up the working convention is a separate, named step that ships with
-   the coordination convention — this questionnaire never runs it, and never
-   runs a command that creates state. Say so on screen, so nobody believes a
-   database already exists:
+3. **Require a clean working tree, and say why before you check.** Creating the
+   database commits the whole repository — everything in flight, not just its
+   own files — and no setting turns that off. So:
 
-> **Recorded.** Nothing has been created yet: the statuses are still in the task
-> files, and the repo works exactly as it did a minute ago. The step that
-> actually sets the database up is separate, and it is the next thing to run.
+> **One condition before I create it: nothing uncommitted.** The tool commits
+> the whole repository as part of setting itself up, and there is no way to ask
+> it not to. Anything you have in progress would land in that commit. Commit or
+> stash it, and tell me when to go — this step is safe to re-run.
+
+   If `git status --porcelain` is not empty, stop here and wait. Do not stash
+   anything on the user's behalf.
+
+4. **Run the entering sequence.** Follow `CHANGING-CASE.md`'s *entering*
+   section, from the repo root, one command at a time. It creates the
+   database, re-owns the `bd init` auto-commit under a message that says what
+   happened, removes the instructions the tool installs on its own (managed
+   blocks, session hook, vendored skill), links the formulas, then commits on
+   the exact paths it touches. If any command refuses, read what it says and
+   fix that — never work around it.
+
+5. **Confirm what is now true**, out loud, by reading it back rather than
+   asserting it: `chisel check` is clean, and `bd ready` answers. Then tick §B1.
+
+6. **Write §B1.** The verdict line becomes the database case, the State line
+   becomes `- [x] initialised`, and the section names the convention — that
+   pointer is what every later session resolves through, so it is not optional:
+
+   ```
+   **Statuses: in a database committed next to the task files.** The task files
+   still hold all the content; the database holds the statuses, the blocking
+   edges and who is on what.
+
+   - **State:** - [x] initialised
+   - **Convention:** `.agents/skills/chisel-beads/SKILL.md` — how a record
+     points at its task file, how a session syncs, and the two guards
+   - **Habit:** pull at the start of a session, push at the end (the convention
+     names the three-command routine that also checks the push landed)
+   ```
+
+   Use Step 4's sub-section write span: B2 and B3 stay byte-identical.
+
+7. **If this repo already holds open task files, move them.** Only then, and
+   only once §B1 is written: follow `CHANGING-CASE.md`'s *converting* section.
+   One bead per OPEN task file, pointing back at it; the blocking edges come
+   from the files' own `**Blocked by:**` lines; the archive is never read; and
+   each open file's status line is rewritten to name its bead, so a status
+   lives in exactly one place. It commits nothing — show the diff, then commit
+   with the user.
+
+8. **Say what happened**, and hand over the one thing they now have to know:
+
+> **Done.** The statuses now live in a small database committed next to your
+> task files, and the tool's own instructions have been removed from this repo —
+> the working convention it follows here is written in
+> `.agents/skills/chisel-beads/SKILL.md`, which is the one page to read before
+> creating or claiming anything.
+>
+> The habit it costs you: pull when you start a session, push when you stop.
+> One rule to never break: never `git push --mirror` from a clone — it deletes
+> the database's history on the server.
 
 ## Step 7 — Closing summary
 

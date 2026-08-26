@@ -70,7 +70,8 @@ case — only the statuses and the blocking edges move):
 
 - **a database committed next to the files** — statuses, blocking edges and
   "what is ready to start" are answered by one command instead of a reading
-  session. Requires the `bd` tool, 1.2.2 or newer. The habit it costs: pull at
+  session. Requires the `bd` tool, 1.2.2 or newer, and follows the convention
+  at `.agents/skills/chisel-beads/SKILL.md`. The habit it costs: pull at
   the start of a session, push at the end. Never `git push --mirror` (it
   destroys the tool's own refs)
 - **the same database, served by a local background process** — for ONE
