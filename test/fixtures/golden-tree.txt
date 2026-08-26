@@ -16,6 +16,7 @@
 .agents/project.md
 .agents/skills
 .agents/skills/chisel-beads
+.agents/skills/chisel-beads/CHANGING-CASE.md
 .agents/skills/chisel-beads/SKILL.md
 .agents/skills/chisel-setup
 .agents/skills/chisel-setup/SKILL.md

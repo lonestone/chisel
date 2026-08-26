@@ -17,6 +17,11 @@ obeying the wrong one. That removal is licit by the tool's own words: its
 managed block states that explicit orchestrator instructions override it. This
 page is those instructions.
 
+Entering this case, converting existing task files, and leaving it are all
+described in
+[CHANGING-CASE.md](CHANGING-CASE.md) — read this page first, that one only when
+one of those three things is actually happening.
+
 ## 1 · What owns what
 
 **The bead owns coordination BETWEEN tasks.** Status, claim and lease, blocking
@@ -76,7 +81,8 @@ DESCRIPTION
 `(none)` under DESCRIPTION and a `Spec:` line is what a correct bead looks like.
 `bd show` may also print a `Created:`/`Updated:` line and a closing tip
 suggesting the beads Claude plugin or `bd setup claude` — ignore the tip, this
-convention deliberately runs `bd` CLI-only.
+convention deliberately runs `bd` CLI-only (see
+[CHANGING-CASE.md](CHANGING-CASE.md)).
 
 **Validation stays off, and `bd lint` is not part of this workflow.** Two
 different things, so both are said plainly:
@@ -101,9 +107,10 @@ different things, so both are said plainly:
 bd bootstrap
 ```
 
-`bd init` is only for the repo that does not have a database yet. A clone of a
-repo that already has one has nothing local to read from until `bootstrap`
-pulls it — running `bd dolt pull` straight away has no database to pull into.
+`bd init` is only for the repo that does not have a database yet (see
+[CHANGING-CASE.md](CHANGING-CASE.md)). A clone of a repo that already has one
+has nothing local to read from until `bootstrap` pulls it — running `bd dolt
+pull` straight away has no database to pull into.
 
 **Start of every other session:**
 
