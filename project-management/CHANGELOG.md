@@ -5,6 +5,83 @@ ships.
 
 ---
 
+## 14. 2026-08-26 — v2 slice 08: post-audit hardening — the installer refuses, the suite is readable
+
+Summary of the session:
+
+1. Slice 08 of task `20260826-1512-chisel-v2` completed, from the adversarial
+   audit of `b05574d` (`../factory-bench/research/audit-fable-v2.md`) and the
+   Owner's round of decisions on it. Four bundles: the two installer bugs the
+   audit proved live, the legibility of the test suite, the third workflow
+   preset, and the proposal door in the role profiles.
+2. **`chisel update` refuses a v1 layout.** A repo still holding
+   `.agents/rules/` or `.agents/workflows.md` is refused, by name, with the
+   `upgrade-v2` skill named as the way through — before anything is written, so
+   a refused update leaves the repo byte-identical. Updating it silently used to
+   leave two normative discourses side by side, with `check` reporting neither.
+3. **chisel manages what chisel copied.** The manifest's `.agents/` entries now
+   come from the socle source instead of a `find` over the target: a file
+   another tool plants in `.agents/skills/` (initialising the status database
+   does exactly that) is no longer adopted, no longer re-rendered, no longer
+   reported as `DIVERGED` the day its owner edits it — and a warning says so out
+   loud. Same discipline `.claude/agents/` already had through its marker.
+4. **The suite reads by group.** Every group prints a `PROTECTS:` line at run
+   time; the tail counts `13 scenarios, 290 assertions` (292 where python3 has
+   `tomllib`); `test/TESTS.md` is the one-page review surface — group, what it
+   protects, what a failure means.
+   ~56 tautological assertions pruned, three scattered neutrality scans merged
+   into one group with one alphabet, and the model/label scans widened to the
+   whole socle for the first time.
+5. **Referential integrity, mutation-tested.** A new group walks every internal
+   pointer of the installed socle and fails on any target that does not exist —
+   the class of bug that shipped in v2's first commits. It plants a broken
+   pointer to prove it catches one.
+6. **`chisel-supervised`** ships as the third preset: auto's step bodies byte
+   for byte, exactly one human gate — the spec approval, sitting on the `plan`
+   step — and a header stating the degraded run (stop, `awaiting approval`, a
+   fresh session resumes).
+7. **The proposal door** is written into `mason.md` and `architect.md`, and the
+   setup's B1 option 3 is shown as deferred rather than offered.
+
+What is worth remembering:
+
+- **A test that counts greps is not a safety net.** The audited suite was green,
+  dense and blind to both bugs in the commit it tested; "223 passed" largely
+  counted files that had just been copied. The number the tail prints first is
+  now SCENARIOS, and the review surface is a page of English, not 900 lines of
+  shell. What the Owner cannot read does not protect him.
+- **The guard belongs before the write.** Refusing a v1 layout after copying
+  half the socle in would produce exactly the state the guard exists to
+  prevent. The test asserts the absence of every file the refused command would
+  have written.
+- **Ownership by construction beats ownership by scan.** Deriving the manifest
+  from the source of truth (what the installer copies) rather than from the
+  target's contents removes a whole class of "chisel adopted my file" bugs, and
+  makes a retired socle file stop being tracked instead of being tracked
+  forever.
+- **The gate is asserted by PLACE, not by count.** Three gates in the wrong
+  steps would have passed the old count-based test. The suite now pairs every
+  gate with the step id it hangs under: `plan type close` / `plan` / nothing.
+  It is also the reading trap the chantier documented — the gate sits on the
+  step that WAITS.
+- **A waiver that cannot outlive its debt.** Two pointers still dangle in
+  `methodology.md`, a file this slice does not own (slice 07 does). They are
+  waived in one printed `KNOWN GAP` table, asserted in both directions: a new
+  dangling pointer fails, and a waived one that starts resolving fails too,
+  asking for its line to be deleted. Green never means "hole hidden".
+- **The door is the point, and reporting is not waiting.** Without an explicit
+  rule, an agent that finds a needed refactor either does it quietly (scope
+  nobody approved) or drops it quietly (quality decays and nobody knows why).
+  The rule, as the Owner set it during the slice: EVERY discovery goes up one
+  rung, always, carrying three evaluations — size, risk (core code? out of my
+  scope? broad impact?), and "can I deliver cleanly without it?". The reporter
+  evaluates; the receiver decides. The work does not stop unless clean delivery
+  is impossible without a decision, and "noted, later — carry on" is always an
+  available verdict. Core, out-of-scope or broad-impact work is hands up, never
+  own initiative. Answering nothing is the one forbidden answer.
+
+---
+
 ## 13. 2026-08-26 — v2 slice 04: the setup chooses the case, in the user's language
 
 Summary of the session:

@@ -65,6 +65,31 @@ plan, and a bad seam is paid for as long as the code lives.
 - A Mason that could not implement from the artifacts is a finding **against
   the plan**: take it back, do not patch it in chat.
 
+**Rule on a report.** A Mason that reports a refactor has done exactly its job:
+it evaluated — size, risk, whether the task can still be delivered cleanly —
+and it decided nothing. **The receiver decides, never the reporter**, and here
+that is you.
+
+- **Small, and inside what you signed** → rule on it now: fold it into the
+  current task's persisted plan, or create a refactoring task and put it
+  BEFORE the Mason's — sometimes the ground has to be levelled first.
+- **Too big, or risky** — core code, outside the scope you were given, broad
+  impact → **you do not do it either.** Hand it one rung up in turn, with the
+  Mason's three evaluations and your own opinion attached. Your signature is
+  the limit of your arbitration.
+- **Either way, one verdict is always available and always legitimate:**
+  "noted, later — the current task matters more, carry on." Deferring on
+  purpose is a decision; the report is recorded as candidate work and the
+  Mason keeps typing.
+
+**Answering nothing is the only forbidden answer.** An unanswered report trains
+every role that reporting is a waste of breath, and the codebase decays quietly
+after that — the failure this door exists to prevent.
+
+Reporting up does not stop the work: unless delivering cleanly is impossible
+without your decision, the Mason carries on while the report travels. Rule at
+the pace the work needs, not at the pace the report arrived.
+
 ## Inputs — what this role receives
 
 - **The Brief** — what to build and why. It comes from the Owner, always, in

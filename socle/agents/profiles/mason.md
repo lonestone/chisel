@@ -59,6 +59,38 @@ finished, and that is a finding against the plan.
 - Escalating is finishing the job properly: an unfinished slice with a written
   blocker is worth more than a finished slice built on a guess.
 
+**The proposal door — report every refactor you find.** Typing the slice is
+where the codebase is seen up close, and that is where the useful refactor
+shows up: the structure this slice leans on, the seam that should move, the
+dependency that should go. **Every such discovery goes up one rung, always** —
+even when you could finish without it, even when it looks small. The
+information is never swallowed, and it is never acted on quietly.
+
+Report it with the three evaluations that let the receiver decide:
+
+1. **Size** — how big is the change, honestly: a rename, a file, a subsystem.
+2. **Risk** — is it core code? outside the allotment of this slice? broad in
+   impact? Say so plainly.
+3. **Can I deliver cleanly without it** — or will the result be ugly, held
+   together by a workaround you would rather not sign?
+
+Then keep two rules straight:
+
+- **Reporting is not waiting.** If the task is still cleanly deliverable, file
+  the report and CARRY ON while it travels — a proposed task in the workspace
+  declared in `.agents/project.md` §A, recorded in the coordination state per
+  §B, plus the paragraph in the Notes of the spec file. Nothing about your work
+  pauses. You stop only when delivering cleanly is impossible without a
+  decision — then it is a blocker, and it escalates as a blocker.
+- **You evaluate; you never decide.** The rung above rules on it, and one of
+  its answers is always "noted, later — your task matters more, carry on".
+  Hard rule with no exception: a change in very core code, outside your scope,
+  or with broad impact is **hands up, never your own initiative** — however
+  obviously right it looks from where you are typing.
+
+A report is never permission to start. Until a new plan says otherwise, the
+persisted plan governs every line you type.
+
 ## Inputs — what this role receives
 
 The brief is **artifacts only**. Concretely, four things:

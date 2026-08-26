@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Chisel setup
 
-Turn `.agents/project.md.tpl`'s defaults into this repo's actual glue, and pose
+Turn `.agents/project.md`'s defaults into this repo's actual glue, and pose
 the current dev's personal file. One pass, sections A through H, each confirmed
 before the next. Re-running later to revisit a single section is normal — treat
 the current file as the starting recommendation, not as done-forever.
@@ -109,10 +109,10 @@ Skip §E entirely here — see Step 3.
 >    content; a tool keeps the statuses and what-blocks-what, so "what is ready
 >    to start?" is one command instead of a reading session. The cost: one tool
 >    to install, and one habit — pull when you start, push when you stop.
-> 3. **The same database, with a background service** — worth it only if you
->    run several agents at the same time on the same machine and they would
->    otherwise trip over each other. It is not what makes a team work: for
->    several people on several machines, option 2 is already the answer.
+>
+> _There is a third arrangement — the same database with a background service,
+> for several agents working at once on one machine. It is **not supported yet**;
+> ask when you need it, and it gets built then._
 >
 > You can move from 1 to 2 later: that move is tooled and only touches tasks
 > that are still open. Moving back is a `git revert` on the spot; later than
@@ -120,10 +120,16 @@ Skip §E entirely here — see Step 3.
 >
 > Recommended: **1 — in the task files**.
 
-Option 3 is never presented as the answer to "we are several developers". If
-the user says they are a team, the answer is option 2.
+The background service is shown, never offered: it is a fact about what exists,
+not a case the user can pick today. If they ask for it anyway, say it is not
+supported yet, record option 2 — which is what they would run on each machine
+regardless — and note the ask wherever this repo tracks work.
 
-If the answer is option 2 or 3, run **Step 6** before moving on to §B2.
+Nor is a database ever the answer to "we are several developers": if the user
+says they are a team, option 2 is the answer for the same reasons it is the
+answer for one person, and nothing about the choice changes.
+
+If the answer is option 2, run **Step 6** before moving on to §B2.
 
 ### §B2 — ask this, verbatim
 
@@ -250,7 +256,7 @@ Never commit `.agents/user.md`, and never copy one dev's file for another.
 
 ## Step 6 — When §B1 is a database
 
-Only when the user picked option 2 or 3.
+Only when the user picked option 2.
 
 1. **Check the prerequisite.** The tool is `bd`, and the minimum version is
    **1.2.2** — everything this workflow relies on was validated there. Compare

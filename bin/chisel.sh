@@ -139,10 +139,19 @@ for name, sha in sorted(data.get("managed", {}).items()):
 # Relative-to-target-dir paths of every file the manifest tracks (excluding
 # the AGENTS.md block, which is not a file — see agents_block_hash).
 #
+# The `.agents/` entries are derived from the SOCLE SOURCE, not from a `find`
+# over the target: chisel manages exactly the files `copy_managed_files`
+# copies, and nothing else. Scanning the target instead would adopt whatever a
+# third party dropped in `.agents/skills/` (`bd init` plants a skill directory
+# there) — silently tracked, then reported DIVERGED the day its owner edits
+# their own file. It also means a file retired upstream stops being tracked
+# instead of being tracked forever.
+#
 # The rendered agent definitions live in directories chisel shares with the
 # user (`.claude/agents/`, `.codex/agents/`), so only the files carrying the
 # generated marker are claimed as managed — a definition of the user's own is
-# neither re-rendered nor reported as drift.
+# neither re-rendered nor reported as drift. Same discipline, reached by the
+# road each directory offers: an exact source list here, a marker there.
 #
 # `|| true` on both finds: find exits nonzero when any operand is missing, and
 # under `set -euo pipefail` that would abort this function mid-body — silently
@@ -150,7 +159,8 @@ for name, sha in sorted(data.get("managed", {}).items()):
 # manifest. A missing directory here means "nothing to track", not a failure.
 managed_relative_files() {
   target_dir="$1"
-  ( cd "$target_dir" && find .agents/skills .agents/formulas .agents/profiles -type f 2>/dev/null || true ) |
+  ( cd "$SOCLE" && find agents/skills agents/formulas agents/profiles -type f 2>/dev/null || true ) |
+    sed -e 's|^agents/|.agents/|' |
     LC_ALL=C sort
   ( cd "$target_dir" && find .claude/agents .codex/agents -type f 2>/dev/null || true ) |
     LC_ALL=C sort |
@@ -273,6 +283,31 @@ copy_managed_files() {
 
   mkdir -p "$target_dir/project-management"
   cp "$TASK_TEMPLATE_SRC" "$target_dir/project-management/000-task-file-template.md"
+
+  warn_foreign_skills "$target_dir"
+}
+
+# Say out loud that a skill chisel did not install is not chisel's. It is left
+# strictly alone — not copied over, not manifest-tracked, not reported by
+# `check` — and the warning is what keeps "untouched" from looking like
+# "adopted". The case that motivates it is real: `bd init` plants its own
+# skill directory in `.agents/skills/`.
+#
+# Only `.agents/skills/`: `.agents/profiles/` is a documented extension point
+# (drop a profile in, chisel renders its definitions), and a warning there
+# would be noise about a file the project meant to add.
+warn_foreign_skills() {
+  target_dir="$1"
+  skills_dir="$target_dir/.agents/skills"
+  [ -d "$skills_dir" ] || return 0
+  for entry in "$skills_dir"/*; do
+    [ -e "$entry" ] || continue
+    entry_name="$(basename "$entry")"
+    if [ ! -e "$AGENTS_SKILLS_SRC/$entry_name" ]; then
+      printf 'chisel: warning: .agents/skills/%s was not installed by chisel — leaving it alone (never updated, never tracked)\n' \
+        "$entry_name" >&2
+    fi
+  done
 }
 
 # --- Per-tool agent definitions, rendered from the canonical profiles ------
@@ -536,6 +571,30 @@ PY
   rm -f "$hash_list"
 }
 
+# Refuse to update a repo still carrying the v1 layer. `.agents/rules/` and
+# `.agents/workflows.md` were retired: copying the current socle in beside them
+# leaves TWO normative discourses in one repo, with the old one still cited by
+# whatever pointed at it — and `check` stays silent, because chisel never
+# managed those files. Migrating has a tool; this closes the silent bypass
+# around it. Called before anything is written, so a refused update writes
+# nothing at all.
+#
+# `if` rather than `[ ... ] && v1_found=...`: a false test in that form returns
+# nonzero at statement level, which under `set -e` would kill the script
+# instead of skipping the assignment.
+refuse_v1_layout() {
+  target_dir="$1"
+  v1_found=""
+  if [ -d "$target_dir/.agents/rules" ]; then
+    v1_found="$v1_found .agents/rules/"
+  fi
+  if [ -f "$target_dir/.agents/workflows.md" ]; then
+    v1_found="$v1_found .agents/workflows.md"
+  fi
+  [ -n "$v1_found" ] || return 0
+  die "$target_dir still carries the v1 layout ($v1_found ) — updating it here would leave two normative discourses side by side, and 'chisel check' would report neither. Run the 'upgrade-v2' skill first: it retires the v1 rules and workflows.md file by file, with a human validating; 'chisel update' is safe again the moment they are gone."
+}
+
 # ---------------------------------------------------------------------------
 # Commands
 # ---------------------------------------------------------------------------
@@ -566,6 +625,7 @@ cmd_update() {
   target_dir="${1:-.}"
   [ -d "$target_dir" ] || die "target dir does not exist: $target_dir"
   [ -d "$target_dir/.agents" ] || die "$target_dir/.agents not found — run 'chisel init' first"
+  refuse_v1_layout "$target_dir"
 
   manifest_file="$target_dir/.agents/.chisel.json"
   old_tsv="$(mktemp)"
