@@ -5,6 +5,28 @@ ships.
 
 ---
 
+## 19. 2026-08-26 — v2 slice 05: the chisel-beads convention, in prose
+
+New skill `chisel-beads`: `SKILL.md` (the normative convention — what the
+bead owns versus what the task file owns, the one `bd create` shape,
+`--actor` = the roster's role, the session routine, the two guards, the
+served mode) and `CHANGING-CASE.md` (entering the database case, converting
+existing open task files, leaving). No shell shipped: the four scripts of an
+earlier draft are rejected as executable and reused as numbered, agent-run
+prose — the socle only ships shell the suite exercises, and `bd` is an
+external tool the suite has no way to require. `chisel-setup`'s Step 6 now
+actually creates the database (clean-tree precondition, the entering
+sequence, §B1 write, read-back confirmation) instead of only recording the
+choice; `project.md.tpl` §B1 names the convention page. Verified in vivo
+against real `bd 1.2.2` on a scratch fixture outside this repo: dirty-tree
+refusal, the full neutralization sequence (including the one
+`AGENTS.md` block neither `bd setup … --remove` command touches on its own),
+the formulas symlink resolving through `bd formula list`, a bead created
+under the convention, and the markdown→beads upgrade on open + archived
+tasks (edges wired, archive checksum-identical, statuses handed over).
+
+---
+
 ## 18. 2026-08-26 — v2 slice 11: Owner review fixes — Checker, no invented numbers
 
 Five corrections from the Owner's review of slice 10. `to-lessons` renamed

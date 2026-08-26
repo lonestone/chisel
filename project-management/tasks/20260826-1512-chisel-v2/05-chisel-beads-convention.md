@@ -1,6 +1,6 @@
 # 05 — chisel-beads: neutralized install + the convention
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete
 **Blocked by:** 04, 08
 
 **What to build:** The B1 = beads branch, end to end — validated in vivo by
@@ -27,17 +27,17 @@ MD files, blocking edges recreated, archive untouched.
 
 ## Acceptance criteria
 
-- [ ] Setup with B1 = beads on a dirty-tree fixture refuses and says why; on
+- [x] Setup with B1 = beads on a dirty-tree fixture refuses and says why; on
       a clean tree it completes with: no BEADS block in AGENTS.md/CLAUDE.md,
       no SessionStart `bd prime` hook, no vendored `beads` skill, bd CLI
       still functional (`bd create`/`bd ready`), `chisel check` clean
-- [ ] A task created under the convention on the fixture yields a bead with
+- [x] A task created under the convention on the fixture yields a bead with
       `--spec-id` set to the MD file, empty design/ACs fields, `--actor` per
       role — asserted via `bd show`
-- [ ] The convention text carries the sync routine and the two guards
+- [x] The convention text carries the sync routine and the two guards
       verbatim (`push --mirror`, assignee-after-claim) and states when server
       mode applies (simultaneous agents on one machine only)
-- [ ] markdown→beads upgrade on a fixture with open + archived tasks: beads
+- [x] markdown→beads upgrade on a fixture with open + archived tasks: beads
       exist for open tasks only, edges match the files' "Blocked by", archive
       byte-intact; the MD files lose coordination state (status/who) to the
       beads
@@ -257,6 +257,111 @@ budget that shipping executable enforcement requires.
 
 ## Notes
 
-_Filled during implementation. Open at plan gate (parent Notes): where the
-installed formulas live for bd (`.beads/formulas/` vs `.agents/formulas/` —
-copy/symlink?), and the bd version prerequisite / bd-not-installed behaviour._
+**Worklog.** Four commits, one per green step of the plan's execution order
+(`bash test/run.sh` green before each, 88 assertions passed throughout, no
+new assertion, no new group — the suite stayed at 588/600 lines).
+(1) `socle/agents/skills/chisel-beads/SKILL.md` written from the draft's
+§1–§5, minus every script reference (the routine's push became the
+three-command `git ls-remote` / `bd dolt push` / `git ls-remote` sequence; the
+mirror guard lost the posed-hook paragraph and kept the remote-side
+`receive.denyDeletes` recommendation); `--actor` corrected to the roster's
+actual four roles (`architect`, `checker`, `inspector`, `mason` — the draft
+still said `owner`, stale against slice 02/11's `checker.md`); the
+fresh-clone `bd bootstrap` line added ahead of `bd dolt pull`. Golden tree
+gained the file. (2) `CHANGING-CASE.md` written from the draft's §6–§7 and
+`init-neutralized.sh`'s header comments and command sequence, converted to
+numbered prose; `SKILL.md` gained its three pointers to this page (deferred
+out of commit 1 so each commit stays independently green — the page did not
+exist yet when 1 landed). (3) The wiring: `chisel-setup/SKILL.md` Step 6 now
+actually creates the database (clean-tree blockquote and closing blockquote
+from the draft, gestures replaced by "follow CHANGING-CASE.md's entering/
+converting sections") instead of only recording the choice; `project.md.tpl`
+§B1's existing comment gained one line naming the convention page. (4) In
+vivo verification below, plus this section, the ACs, and the status line.
+
+**In vivo (step 4), against real `bd 1.2.2`, on a scratch fixture built
+outside this repo** (`test/fixtures/brownfield` → `git init` → one commit →
+`bin/chisel.sh init` → `chisel-beads` skill present per the golden tree),
+**removed after**:
+
+- **AC1.** Dirty tree: `git status --porcelain` non-empty → per
+  `CHANGING-CASE.md`'s stated precondition, stopped before running `bd init`;
+  `.beads/` absent. Clean tree: ran the entering sequence by hand, command by
+  command. Confirmed live: `bd setup claude --remove` strips the
+  `SessionStart` hook and the `CLAUDE.md` section but **never** touches
+  `AGENTS.md`; `bd setup codex --remove` strips the vendored
+  `.agents/skills/beads/`, the Codex hooks/config, and its own `AGENTS.md`
+  block, but **also** leaves the Claude one behind — exactly one
+  `<!-- BEGIN BEADS INTEGRATION -->` … `<!-- END BEADS INTEGRATION -->` pair
+  survives both `--remove` commands and needs the manual strip step, matching
+  what the draft's script comments said and validating why that step exists.
+  After the full sequence: `AGENTS.md`/`CLAUDE.md` carry no BEADS block (in
+  fact `AGENTS.md` came back byte-identical to its pre-`bd-init` state — the
+  append-then-strip round-trips cleanly), `.claude/settings.json` is
+  `{"hooks": {}}` (no `SessionStart`), no `.agents/skills/beads/`, one
+  chisel-owned commit (`chore: coordination database, without its
+  discourse`), `bin/chisel.sh check` clean, `bd create`/`bd ready` both
+  answer, and `bd formula list` resolves the three chisel formulas through
+  `.beads/formulas -> ../.agents/formulas` — Open Question 1's ruling
+  confirmed live, not just read in the research note.
+- **AC2.** Created `project-management/tasks/20260826-1200-fix-payroll-
+  export.md`, then `bd create "Fix payroll export" --type task --priority 2
+  --spec-id "project-management/tasks/20260826-1200-fix-payroll-export.md"
+  --actor architect --silent`. Real `bd show <id>` output, pasted verbatim
+  (this run and a second one on the AC4 fixture agreed byte-for-byte except
+  the id/title/spec):
+
+  ```
+  ○ slice05-fixture-94o · Fix payroll export   [● P2 · OPEN]
+  Owner: architect · Type: task
+  Created: 2026-08-26 · Updated: 2026-08-26
+  Spec: project-management/tasks/20260826-1200-fix-payroll-export.md
+
+  DESCRIPTION
+    (none)
+  ```
+
+  The draft's sample was close but missing the `Created:`/`Updated:` line and
+  the closing "💡 Tip: Install the beads plugin…" that `bd show` sometimes
+  prints; `SKILL.md` §2's sample was corrected to the real block, with a
+  sentence telling the reader to ignore the tip rather than trying to keep an
+  incidental, possibly-version-dependent line byte-exact forever.
+- **AC4.** Fixture: `tasks/20260826-1500-feature-x/{01-foundation,02-ui}.md`
+  (both 🔴, `02` carrying `**Blocked by:** 01 (schema must land first)`) plus
+  `archive/20260101-0000-old-done-task.md` (🟢). Ran the three passes by
+  hand. Pass 1: two beads, one per open file, none for the archived one —
+  never opened, checksum identical before/after
+  (`5856888dc684ca6f01144fe0290a16244e0109dc095c8f13cf1d75518f7262ac`). Pass
+  2: the `01 (schema must land first)` token resolved against the sibling
+  file starting with `01-` (never against the parenthetical prose), and
+  `bd dep add <02's bead> --blocked-by <01's bead>` landed — confirmed via
+  `bd show <02's bead>`: `DEPENDS ON → ○ <01's bead>: Slice 01 — Foundation`.
+  Pass 3: both files' `**Status:**` lines now read
+  `tracked as \`<id>\` — \`bd show <id>\``. Diff read before staging; only
+  the two task files were staged (never `git add -A`) and committed.
+
+**Note without stopping — an unrelated in-flight change.** Partway through
+step 3, `git status` showed
+`project-management/tasks/20260826-2302-chisel-dogfoods-itself.md` modified
+by what is evidently a parallel session (an Owner ruling on that task's own
+question, unrelated to this slice). Left untouched and unstaged throughout,
+per the standing rule against `git add -A`/`git add .` in this repo.
+
+**Note without stopping — a simpler entering sequence exists but was not
+substituted.** `bd init` accepts `--skip-agents` and `--skip-hooks`, which
+would skip generating the managed blocks, the `SessionStart` hook and the
+vendored skill in the first place — avoiding the removal steps entirely
+rather than creating-then-neutralizing. Not adopted here: the plan's
+execution order specifies the create-then-neutralize sequence explicitly
+(reusing `init-neutralized.sh`'s validated command order), and swapping the
+mechanism would be replanning rather than executing. Left for the Owner to
+decide whether it is worth a follow-up — both variants are prose, neither is
+shell, so the "no new shell" constraint is unaffected either way.
+
+**Open questions from the plan gate, resolved during planning, executed as
+ruled:** formulas live at `.agents/formulas/`, symlinked (never copied) as
+`.beads/formulas -> ../.agents/formulas` — confirmed live via `bd formula
+list` in AC1. The bd version prerequisite (1.2.2) and the bd-absent message
+stay solely in `chisel-setup` Steps 6.1–6.2, unrepeated in
+`CHANGING-CASE.md`, which instead tells a reader who arrived another way to
+check `bd --version` themselves and go back to that question on failure.
