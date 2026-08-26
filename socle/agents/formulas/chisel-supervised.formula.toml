@@ -141,12 +141,11 @@ type = "task"
 needs = ["plan"]
 description = """
 Role: Mason (cheap tier) posts its PROGRAM DESIGN into the Design section of
-{{spec}}: files, seam signatures, TDD order — no code typed here. Target
-~40 lines; if it cannot fit, that is a finding about the plan's size, not a
-compression exercise. The Architect who owns the plan reads the slice and
-that design only, then answers VALIDATED or corrections. TWO rounds MAX, then
-back to the owner of the plan as a finding AGAINST THE PLAN, never against the
-Mason. Typing needs VALIDATED.
+{{spec}}: files, seam signatures, TDD order — no code typed here. The
+Architect who owns the plan reads the slice and that design only, then
+answers VALIDATED or corrections. TWO rounds MAX, then back to the owner of
+the plan as a finding AGAINST THE PLAN, never against the Mason. Typing
+needs VALIDATED. Duties: `.agents/profiles/architect.md`.
 """
 
 [[steps]]
