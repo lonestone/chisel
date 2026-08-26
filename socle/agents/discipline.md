@@ -39,6 +39,11 @@ the only difference is the paperwork.
    persisted. Past roughly 120k tokens an agent reasons worse: don't push
    through, use the `handoff` skill and open a fresh session on its summary.
 
+8. **The repo is the only memory.** Never store project knowledge in a
+   harness memory (auto-memory or any equivalent outside the repo); it goes in
+   the repo's files, visible to review and git. Lessons about the way of
+   working go through `to-lessons` at close.
+
 ## The pipeline, for real scoped work
 
 The order of steps and the gates live in `.agents/formulas/` — see the block
