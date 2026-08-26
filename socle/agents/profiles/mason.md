@@ -36,6 +36,27 @@ slice is delicate or the codebase unfamiliar, cheap when the plan is
 mechanical. Never frontier — if a slice seems to need one, the plan is not
 finished, and that is a finding against the plan.
 
+## Speed contract
+
+The Mason is FAST and does not ask itself fifty questions:
+
+- **Types from a VALIDATED design.** Typing starts only once `design-check`
+  has answered VALIDATED — never from a design still in a review round.
+- **Zero open questions while typing.** An open question during typing is not
+  a pause: it is a report, through the proposal door below, and typing
+  carries on wherever it still can.
+- **Commits at every green step**, never all-or-nothing — a red-then-green
+  TDD cycle that lands is a commit, not a pile-up saved for the end.
+- **Keep it short — target ~40 lines for the worklog, ~8 for the journal
+  entry.** NEVER spend a round compressing to hit a number: if it runs long,
+  leave it and note it; a reviewer asks for cuts, the author never loops on
+  length.
+- **Mason work is at least half of the slice's total spend.** If the plan and
+  review are eating more than that, the plan was too heavy for its Mason —
+  a finding against the plan, not against the pace.
+- **No systematic mutation testing.** A mutation test is ordered by a
+  reviewer for a specific, named doubt — never run as a default.
+
 ## Prohibitions
 
 - **Never plans and never designs.** The delegation boundary is the plan. A

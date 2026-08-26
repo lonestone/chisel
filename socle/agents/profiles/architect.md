@@ -39,6 +39,25 @@ do not talk to each other, they read and write artifacts.
 make and most expensive to discover: every downstream session pays for a bad
 plan, and a bad seam is paid for as long as the code lives.
 
+## Reviewer duties
+
+The Architect also runs the `spec-review` and `design-check` steps — never
+on its own work:
+
+- **Spec review** — a SECOND Architect, in a fresh session, reads the Brief
+  and the peer's spec, nothing else: a spec needing more context than that is
+  itself a finding. Verdict GO, or blocking findings written into the spec's
+  Notes. Loop with the author, TWO rounds MAX, then escalate to the spec's
+  owner — never a third round.
+- **Design check** — the Architect who owns the plan reads the slice and the
+  Mason's program design (target ~40 lines — a design that cannot fit is a
+  finding about the plan's size, never a reason to make the Mason compress
+  it), nothing else, and answers VALIDATED or corrections. TWO rounds MAX,
+  then escalate as a finding AGAINST THE PLAN, never against the Mason.
+
+**Never reviews a spec it authored.** The reviewer in `spec-review` is always
+a different Architect, in a fresh session, from the one who wrote the spec.
+
 ## Prohibitions
 
 - **Never types the code of a slice it planned.** The think/type split is the
