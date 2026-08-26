@@ -1,0 +1,96 @@
+---
+name: to-lessons
+description: At the end of a workflow, evaluate the session and propose improvements to the WORKING RULES (not the code) — navigation, automated checks, coding standards, AGENTS.md hygiene, tool economy, no-ops, information access — sorted by severity. Invoked by the `close` step of every formula. Never auto-applies anything; the human or the touched zone's owner accepts each proposal.
+x-upstream:
+  repo: mattpocock/skills
+  path: skills/in-progress/retro
+  sha: 6654f6b60cd9d5be8b54c6fafe44346dabeb3b76
+  changes: "adapted: reads repo artifacts only (spec file, worklog, diff, journal entry), never a harness session log — the repo is the only memory (discipline.md rule 8); drops the writing-for-agents call (not vendored here) for writing-great-skills; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of every formula, not only on user request."
+---
+
+You are suggesting improvements to the **working rules** — the steering
+files, standards, and docs an agent reads — never to the code itself. The
+code's findings already went through `code-review`; this is about making the
+*next* session faster or more correct.
+
+## Sources — repo artifacts only
+
+Per `.agents/discipline.md` rule 8, the repo is the only memory: never read a
+harness session log or auto-memory to build this retrospective. Read what the
+session actually left behind, all of it artifacts under version control:
+
+- The spec file's persisted Design, implementation checkboxes, and Notes.
+- The worklog and the journal entry it produced.
+- The diff and commit messages of the session (`git log`, `git diff`).
+- Any blocker or escalation written into the spec file along the way.
+
+## Steps
+
+1. Call the Skill tool with `writing-great-skills` for the writing style
+   guide (the upstream `writing-for-agents` skill is not vendored here).
+
+2. Read the primary sources above for the session just closed.
+
+3. Look for candidates for improvement in these categories, in order of
+   severity:
+
+- **Navigation**: how easy was it to find the right files? Are there hidden
+  dependencies between files? Would a navigation pointer make it easier?
+  _Use when_ the session took a long time to find a piece of information.
+- **Automated checks**: are there checks that could catch errors the agent
+  made? Linting, typing, tests, filesystem linters? _Use when_ a mistake
+  could have been caught by an automated check.
+- **Coding standards**: should the reviewer agent (Inspector) be given a new
+  rule to enforce? Should an existing rule be removed or clarified? _Use
+  when_ review failed to catch a mistake.
+- **AGENTS.md hygiene**: are there steering instructions that should move to
+  coding standards or an automated check instead? _Use when_ the rendered
+  AGENTS.md block or `.agents/discipline.md` is getting large.
+- **Tool economy**: did the session make expensive tool calls that could be
+  streamlined? Any custom tooling that is particularly token-inefficient?
+  _Use when_ an expensive tool call showed up.
+- **No-ops**: instructions in the steering files that did not change the
+  agent's behavior this session. _Use when_ the steering files are large and
+  unwieldy.
+- **Information access**: opportunities to increase access to information —
+  tee'd logs, read-only access to a third-party service. _Use when_ a
+  crucial piece of information was not available.
+
+4. For each candidate, resolve its **target file** via `.agents/project.md`
+   (the reading list of §C, the living docs of §D) rather than a hardcoded
+   path — the same rule applies to a socle skill, a project doc, or
+   `.agents/discipline.md` itself. Name the **zone owner** who accepts it:
+   the Owner for anything ambient, the touched zone's owner for anything
+   scoped to that zone.
+
+5. Present the candidates to the human or zone owner, in severity order.
+   **Nothing is auto-applied.** An accepted proposal is written in by its
+   owner (or by the agent, once the owner has said yes) as a normal edit to
+   the target file. A proposal that is deferred rather than accepted gets a
+   dated line in the target file's Notes (or, absent one, in the project's
+   changelog) instead of being silently dropped — so the next retrospective
+   does not re-discover it from scratch.
+
+## Reference
+
+### Implementation vs review
+
+All work goes through two stages: implementation and review. The
+implementation session (Architect planning, Mason typing) carries the most
+context pressure — exploration, writing code, debugging failures. The review
+session (Inspector) carries the least — it receives a diff, no exploration
+needed. This is why coding standards belong with the reviewer, not the
+implementer: enforcement is cheapest where context pressure is lowest.
+
+### Files
+
+- `AGENTS.md` / `CLAUDE.md`: pushed into every session's context. Use
+  sparingly — mostly navigation pointers to other files.
+- `.agents/discipline.md`: the ambient core, rendered into the AGENTS block.
+  Same sparing rule.
+- Coding standards: read during review, not implementation. Add navigation
+  pointers to docs folders if a standards file grows past roughly 1,000
+  lines.
+- Living docs (declared in `.agents/project.md` §D): reference material other
+  files point to. Look for an existing doc before proposing a new one.
+- Skills: for know-how and user-invoked commands, per `writing-great-skills`.

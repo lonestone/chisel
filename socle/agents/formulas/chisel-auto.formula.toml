@@ -207,6 +207,8 @@ integration diagrams move from the Design into the living docs declared in
 (default `doc/architecture/ARCHITECTURE.md`); update the README when the
 change is relevant to it. Protocol and evergreen pages stay generic — a
 temporary rewrite label is never branded as part of the work system.
+Run `to-lessons`, sort its proposals by gravity, and PROPOSE them to each
+touched zone's owner; accepted ones are written in.
 No human is watching the close: the closing summary lands in the Owner's
 digest — what was assumed, what was escalated, what shipped.
 """

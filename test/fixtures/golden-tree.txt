@@ -53,6 +53,8 @@
 .agents/skills/tdd/SKILL.md
 .agents/skills/tdd/mocking.md
 .agents/skills/tdd/tests.md
+.agents/skills/to-lessons
+.agents/skills/to-lessons/SKILL.md
 .agents/skills/triage
 .agents/skills/triage/AGENT-BRIEF.md
 .agents/skills/triage/OUT-OF-SCOPE.md

@@ -59,6 +59,11 @@
     "path": "skills/engineering/tdd",
     "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
   },
+  "to-lessons": {
+    "repo": "mattpocock/skills",
+    "path": "skills/in-progress/retro",
+    "sha": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+  },
   "triage": {
     "repo": "mattpocock/skills",
     "path": "skills/engineering/triage",
