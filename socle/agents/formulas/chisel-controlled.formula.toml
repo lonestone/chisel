@@ -76,12 +76,11 @@ title = "Spec review: {{task}}"
 type = "task"
 needs = ["spec"]
 description = """
-Role: Architect (frontier tier), a SECOND one, in a FRESH session — never the
-author of {{spec}}. Reads TWO things and nothing else: the Brief and {{spec}}
-— a spec needing more context than that is itself a finding. Verdict GO, or
-blocking findings written into the Notes of {{spec}}. Loop with the author,
-TWO rounds MAX; still blocked after the second round → escalate to the owner
-of the spec, never a third round.
+Role: Checker (frontier tier), in a FRESH session — never the author of
+{{spec}}. Reads {{spec}} and the Brief. Verdict GO, or blocking findings
+written into the Notes of {{spec}}. Loop with the author, TWO rounds MAX;
+still blocked after the second round → escalate to the owner of the spec,
+never a third round. Duties: `.agents/profiles/checker.md`.
 """
 
 [[steps]]

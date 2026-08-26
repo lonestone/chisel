@@ -10,6 +10,7 @@
 .agents/profiles
 .agents/profiles/README.md
 .agents/profiles/architect.md
+.agents/profiles/checker.md
 .agents/profiles/inspector.md
 .agents/profiles/mason.md
 .agents/project.md
@@ -70,12 +71,14 @@
 .claude
 .claude/agents
 .claude/agents/architect.md
+.claude/agents/checker.md
 .claude/agents/inspector.md
 .claude/agents/mason.md
 .claude/skills
 .codex
 .codex/agents
 .codex/agents/architect.toml
+.codex/agents/checker.toml
 .codex/agents/inspector.toml
 .codex/agents/mason.toml
 project-management
