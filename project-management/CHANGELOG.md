@@ -5,6 +5,14 @@ ships.
 
 ---
 
+## 17. 2026-08-26 — v2 slice 10: the review loops live in the workflows
+
+`spec-review` and `design-check` land in all three formulas (9 steps;
+`chisel-controlled` gates now `plan/design-check/close`). `architect.md`
+gains Reviewer duties, `mason.md` a Speed contract. `discipline.md` rule 8
+bans harness memory; `to-lessons` (forked from `mattpocock/skills` `retro`)
+runs at every `close`.
+
 ## 16. 2026-08-26 — v2 slice 09: the test suite rebuilt, behavior only
 
 Slice 09 delivered: `test/run.sh` (1580 lines, 15 groups, 352 assertions)

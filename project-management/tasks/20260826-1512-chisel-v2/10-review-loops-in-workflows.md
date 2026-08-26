@@ -1,6 +1,6 @@
 # 10 — The review loops live in the workflows, not in anyone's memory
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Done
 **Blocked by:** 09 (so formula edits are no longer pinned by prose tests)
 
 **What to build:** The Owner's ruling (audit round, 2026-08-26): the
@@ -52,15 +52,15 @@ Changes:
 
 ## Acceptance criteria
 
-- [ ] The three formulas carry `spec-review` and `design-check` with the
+- [x] The three formulas carry `spec-review` and `design-check` with the
       2-rounds-then-escalate rule; step bodies stay byte-identical across
       presets (gates aside); TOML parses, gate counts unchanged (3/1/0)
-- [ ] `architect.md` and `mason.md` carry the duties above; renders
+- [x] `architect.md` and `mason.md` carry the duties above; renders
       re-generated
-- [ ] No prose-pin test added (slice 09's standing rules apply)
-- [ ] A no-tooling walkthrough of `chisel-default` shows the two loops in
+- [x] No prose-pin test added (slice 09's standing rules apply)
+- [x] A no-tooling walkthrough of `chisel-default` shows the two loops in
       the right places (trace in Notes)
-- [ ] `discipline.md` carries the harness-memory ban (repo files are the
+- [x] `discipline.md` carries the harness-memory ban (repo files are the
       only memory); `to-lessons` ships as a vendored skill (x-upstream +
       lock entry) and the `close` step of all three formulas invokes it
 
@@ -138,3 +138,40 @@ nor a mode-specific paragraph in the two new bodies.
 ## Notes
 
 _Worklog ≤ 40 lines._
+
+**No-tooling walkthrough of `chisel-controlled` (= the Owner's
+`chisel-default`, not renamed here — slice 07).** Reading the formula file top
+to bottom as a checklist: `interview` → `spec` → **`spec-review`** (a second,
+fresh Architect; GO or loop with the author, 2 rounds max, else escalate to
+the spec's owner) → `plan` **[human gate: spec approved]** — the human signs
+off a spec two Architects already agree on → **`design-check`** **[human gate:
+plan approved + typist chosen, moved here from `type`]** — no Mason posts a
+design before the plan is approved; the plan's Architect validates the
+Mason's design, 2 rounds max, else a finding against the plan → `type` (needs
+`design-check`, so typing only ever starts from a VALIDATED design) → `verify`
+→ `review` → `close` **[human gate: review arbitration]** — invokes
+`to-lessons`. Both loops land exactly where D1/D2 put them; the second gate's
+move (`type` → `design-check`) is the one gate move D2 allows.
+
+**Worklog.** (1) rule 8 in `discipline.md`. (2) two new steps in all three
+formulas, `needs` rewired (`spec`→`spec-review`→`plan`→`design-check`→`type`),
+controlled's second gate moved to `design-check`; `test/installer.sh`'s two
+existing values updated (7→9, controlled gates). (3) `architect.md` Reviewer
+duties, `mason.md` Speed contract — renders regenerate from profiles at
+test/init time, no static render exists in this repo to touch. (4)
+`to-lessons` vendored from `mattpocock/skills` `retro` @ `6654f6b6`, lock
+entry added, one identical sentence in all 3 `close` bodies. (5) this file.
+
+**Notes without stopping.** (a) `test/fixtures/golden-tree.txt` needed the new
+skill's 2 lines or the init/boilerplate golden-tree comparison would drift —
+not named by the plan's file list but required to stay green; treated as part
+of "ship `to-lessons`", not a new file. (b) This machine's default `python3`
+is 3.9 (no `tomllib`); the formulas' TOML-parse assertion SKIPs locally.
+Verified manually with `/opt/homebrew/bin/python3.13`: 9 unique step ids in
+order, gates exactly `plan/design-check/close` for controlled — a
+pre-existing environment gap, not caused by this slice. (c) Owner correction
+received mid-slice, before step 3's commit: numeric length limits (mason.md's
+worklog/journal, the program design's line count) are written as targets with
+an explicit anti-compression rule, not hard caps — applied in `mason.md`, the
+two formulas' `design-check` body, and `architect.md`'s Reviewer duties;
+acknowledged.
