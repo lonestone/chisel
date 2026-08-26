@@ -163,6 +163,22 @@ assert_full_layout() {
   # The v1 normative prose is retired: init must never lay it down again.
   assert_path_absent "[$target] no .agents/rules" "$target/.agents/rules"
   assert_path_absent "[$target] no .agents/workflows.md" "$target/.agents/workflows.md"
+  # The role contracts, and the per-tool definitions rendered from them.
+  assert_dir_exists "[$target] .agents/profiles" "$target/.agents/profiles"
+  assert_file_exists "[$target] .agents/profiles/README.md" "$target/.agents/profiles/README.md"
+  assert_file_exists "[$target] .agents/foreman.md" "$target/.agents/foreman.md"
+  for role in architect mason inspector; do
+    assert_file_exists "[$target] .agents/profiles/$role.md" "$target/.agents/profiles/$role.md"
+    assert_file_exists "[$target] .claude/agents/$role.md" "$target/.claude/agents/$role.md"
+    assert_file_exists "[$target] .codex/agents/$role.toml" "$target/.codex/agents/$role.toml"
+  done
+  # The Foreman is a doc page, never a profile and never a generated agent.
+  assert_path_absent "[$target] no foreman profile" "$target/.agents/profiles/foreman.md"
+  assert_path_absent "[$target] no foreman agent (claude)" "$target/.claude/agents/foreman.md"
+  assert_path_absent "[$target] no foreman agent (codex)" "$target/.codex/agents/foreman.toml"
+  # A page without frontmatter is documentation: nothing is rendered from it.
+  assert_path_absent "[$target] no agent rendered from the README" \
+    "$target/.claude/agents/README.md"
   assert_file_exists "[$target] .agents/methodology.md" "$target/.agents/methodology.md"
   assert_file_exists "[$target] .agents/project.md" "$target/.agents/project.md"
   assert_file_contains "[$target] project.md §E: AGENTS.md adapter ticked" \
@@ -278,10 +294,16 @@ printf '\n## 2099-01-01\n\n- hand-edited entry, must survive update\n' >>"$t4/pr
 cp "$t4/.agents/project.md" "$WORK_ROOT/t4-project-md-before-update"
 cp "$t4/project-management/CHANGELOG.md" "$WORK_ROOT/t4-changelog-before-update"
 
-# ...and two managed files, to prove update refreshes them.
+# ...and three managed files, to prove update refreshes them. The rendered
+# agent definition is managed too: it comes back from the profile, not from a
+# copy — so keep a pristine render to compare against.
+cp "$t4/.claude/agents/mason.md" "$WORK_ROOT/t4-mason-def-before-edit"
+cp "$t4/.codex/agents/inspector.toml" "$WORK_ROOT/t4-inspector-def-before-edit"
 printf '\n<!-- local edit that update must overwrite -->\n' >>"$t4/.agents/skills/tdd/SKILL.md"
 printf '\n# local edit that update must overwrite\n' \
   >>"$t4/.agents/formulas/chisel-controlled.formula.toml"
+printf '\n<!-- local edit that update must overwrite -->\n' >>"$t4/.claude/agents/mason.md"
+printf '\n# local edit that update must overwrite\n' >>"$t4/.codex/agents/inspector.toml"
 
 run_chisel "$CHISEL" update "$t4"
 assert_eq "brownfield: update exits 0" "0" "$rc"
@@ -297,6 +319,10 @@ assert_files_identical "update: SKILL.md matches socle source" \
 assert_files_identical "update: controlled formula matches socle source" \
   "$t4/.agents/formulas/chisel-controlled.formula.toml" \
   "$REPO_ROOT/socle/agents/formulas/chisel-controlled.formula.toml"
+assert_files_identical "update: hand-edited agent definition re-rendered from the profile" \
+  "$t4/.claude/agents/mason.md" "$WORK_ROOT/t4-mason-def-before-edit"
+assert_files_identical "update: the codex render comes back too" \
+  "$t4/.codex/agents/inspector.toml" "$WORK_ROOT/t4-inspector-def-before-edit"
 assert_file_contains "update: prints a summary header" "$WORK_ROOT/last.log" "chisel update:"
 if grep -qE '^  (changed: |\(no managed files changed\))' "$WORK_ROOT/last.log"; then
   pass "update: summary reports changed-or-unchanged per the manifest"
@@ -330,6 +356,20 @@ run_chisel "$CHISEL" check "$t5b"
 assert_eq "check: exit 1 after hand-editing discipline.md" "1" "$rc"
 assert_file_contains "check: reports the diverged discipline.md" "$WORK_ROOT/last.log" \
   ".agents/discipline.md"
+
+# So are the rendered agent definitions: they are managed files, not
+# suggestions — a hand edit is drift, and check says which one.
+t5c="$(fresh_copy brownfield)"
+run_chisel "$CHISEL" init "$t5c"
+assert_eq "check fixture (agent definition): init exits 0" "0" "$rc"
+printf '\n<!-- diverged -->\n' >>"$t5c/.claude/agents/architect.md"
+printf '\n# diverged\n' >>"$t5c/.codex/agents/mason.toml"
+run_chisel "$CHISEL" check "$t5c"
+assert_eq "check: exit 1 after hand-editing a generated agent definition" "1" "$rc"
+assert_file_contains "check: reports the diverged agent definition" "$WORK_ROOT/last.log" \
+  ".claude/agents/architect.md"
+assert_file_contains "check: reports the diverged codex definition too" "$WORK_ROOT/last.log" \
+  ".codex/agents/mason.toml"
 
 # ---------------------------------------------------------------------------
 # 6. package-root resolution follows a symlinked bin (npx installs a
@@ -452,6 +492,193 @@ PY
   fi
 else
   printf 'SKIP: TOML parse check (this python3 has no tomllib — needs 3.11+)\n'
+fi
+
+# ---------------------------------------------------------------------------
+# 8. the role profiles: contract shape, neutral wording, and the per-tool
+#    definitions rendered from them (the renders are thin — the profile body
+#    is the source, byte for byte).
+# ---------------------------------------------------------------------------
+printf '\n-- 8. profiles: contract, neutrality, rendering --\n'
+
+# Each profile carries the five contract sections. Grepping the INSTALLED
+# tree: this is what an equipped repo's agents actually read.
+for role in architect mason inspector; do
+  profile="$t1/.agents/profiles/$role.md"
+  assert_file_contains "profiles: $role declares a mission" "$profile" '## Mission'
+  assert_file_contains "profiles: $role declares a tier" "$profile" '## Tier'
+  assert_file_contains "profiles: $role declares prohibitions" "$profile" '## Prohibitions'
+  assert_file_contains "profiles: $role declares escalation rules" "$profile" '## Escalation'
+  assert_file_contains "profiles: $role declares what it receives" "$profile" \
+    '## Inputs — what this role receives'
+  assert_file_contains "profiles: $role frontmatter names the role" "$profile" \
+    "name: $role"
+done
+
+# The brief is artifacts only — the one obligation this slice owes the
+# formulas' `type` and `review` steps.
+assert_file_contains "profiles: mason is never handed the planning conversation" \
+  "$t1/.agents/profiles/mason.md" 'never the planning conversation'
+assert_file_contains "profiles: inspector is handed a pinned fixed point" \
+  "$t1/.agents/profiles/inspector.md" 'The fixed point'
+
+# Tiers are abstract, and they agree with what the formulas say about each
+# role: the formula step and the profile are one contract in two places.
+assert_file_contains "profiles: architect tier is frontier" \
+  "$t1/.agents/profiles/architect.md" 'tier: frontier'
+assert_file_contains "formulas: architect step states the same tier" \
+  "$t1/.agents/formulas/chisel-controlled.formula.toml" 'Architect (frontier tier)'
+assert_file_contains "profiles: mason tier is cheap or mid" \
+  "$t1/.agents/profiles/mason.md" 'tier: cheap or mid'
+assert_file_contains "formulas: mason step states the same tier" \
+  "$t1/.agents/formulas/chisel-controlled.formula.toml" 'Mason (cheap or mid tier)'
+assert_file_contains "profiles: inspector tier is frontier" \
+  "$t1/.agents/profiles/inspector.md" 'tier: frontier'
+assert_file_contains "formulas: inspector step states the same tier" \
+  "$t1/.agents/formulas/chisel-controlled.formula.toml" 'Inspector (frontier tier)'
+
+# The universal fallback is documented where the profiles live.
+assert_file_contains "profiles: the universal fallback is documented" \
+  "$t1/.agents/profiles/README.md" 'fallback'
+assert_file_contains "foreman: documented as routing, not as an agent" \
+  "$t1/.agents/foreman.md" 'not an agent'
+
+# The renders are thin: the body of each generated definition is the profile
+# body, byte for byte. Anything else means someone paraphrased a contract.
+for role in architect mason inspector; do
+  awk 'NR == 1 && $0 == "---" { h = 1; next }
+       h && $0 == "---" { h = 0; next }
+       h { next }
+       !s && $0 == "" { next }
+       { s = 1; print }' "$t1/.agents/profiles/$role.md" >"$WORK_ROOT/profile-body-$role.txt"
+  awk 'f { print } /^<!-- chisel:generated /  { f = 1 }' \
+    "$t1/.claude/agents/$role.md" |
+    awk '!s && $0 == "" { next } { s = 1; print }' >"$WORK_ROOT/claude-body-$role.txt"
+  assert_files_identical "render: claude definition of $role carries the profile body verbatim" \
+    "$WORK_ROOT/profile-body-$role.txt" "$WORK_ROOT/claude-body-$role.txt"
+  assert_file_contains "render: claude definition of $role has a name in frontmatter" \
+    "$t1/.claude/agents/$role.md" "name: \"$role\""
+  assert_file_contains "render: codex definition of $role declares developer_instructions" \
+    "$t1/.codex/agents/$role.toml" 'developer_instructions'
+  assert_file_contains "render: codex definition of $role declares its name" \
+    "$t1/.codex/agents/$role.toml" "name = \"$role\""
+  # The provenance pointer names the file the render actually came from.
+  assert_file_contains "render: claude definition of $role points at its source" \
+    "$t1/.claude/agents/$role.md" "from .agents/profiles/$role.md"
+  assert_file_contains "render: codex definition of $role points at its source" \
+    "$t1/.codex/agents/$role.toml" "from .agents/profiles/$role.md"
+  assert_file_exists "render: the source $role points at exists" \
+    "$t1/.agents/profiles/$role.md"
+done
+
+# Every role a formula step names must have a profile: the formulas say
+# "Role: Architect", "Role: Architect or Mason", and nothing else may appear
+# there. Derived from BOTH formulas rather than from a hardcoded list, so a
+# role added to a step without a contract fails here.
+: >"$WORK_ROOT/formula-roles.txt"
+for formula in chisel-controlled chisel-auto; do
+  awk '
+    index($0, "Role: ") == 1 {
+      rest = substr($0, 7)
+      sub(/[(,.—].*/, "", rest)
+      n = split(rest, words, /[^A-Za-z]+/)
+      for (i = 1; i <= n; i++) {
+        if (words[i] ~ /^[A-Z][a-z]+$/) { print tolower(words[i]) }
+      }
+    }
+  ' "$t1/.agents/formulas/$formula.formula.toml" >>"$WORK_ROOT/formula-roles.txt"
+done
+formula_roles="$(LC_ALL=C sort -u "$WORK_ROOT/formula-roles.txt" | tr '\n' ' ')"
+assert_eq "formulas: the steps name exactly the three profiled roles" \
+  "architect inspector mason " "$formula_roles"
+missing_profiles=""
+for role in $formula_roles; do
+  [ -f "$t1/.agents/profiles/$role.md" ] || missing_profiles="$missing_profiles $role"
+done
+assert_eq "formulas: every role named in a step resolves to a profile" "" "$missing_profiles"
+
+# Neutrality, over everything this slice ships AND everything it renders. The
+# socle speaks in tiers (the tier→model mapping is slice 03's) and never names
+# a tool in prose: adapter PATHS are filesystem facts and live in code spans,
+# so the greps read each file with its code spans stripped. Relative literals
+# joined to their root inside the loop — a repo path containing a space must
+# not word-split the list.
+profile_label_hits=""
+profile_model_hits=""
+profile_tool_hits=""
+for rel in socle/agents/profiles/README.md \
+  socle/agents/profiles/architect.md \
+  socle/agents/profiles/mason.md \
+  socle/agents/profiles/inspector.md \
+  socle/agents/foreman.md; do
+  f="$REPO_ROOT/$rel"
+  if grep -Eq 'W0|W1|W2' "$f"; then
+    profile_label_hits="$profile_label_hits $rel"
+  fi
+  if sed -e 's|`[^`]*`||g' "$f" |
+    grep -Eiq 'grok|composer|sonnet|opus|fable|gpt|gemini|anthropic|openai'; then
+    profile_model_hits="$profile_model_hits $rel"
+  fi
+  if sed -e 's|`[^`]*`||g' "$f" | grep -Eiq 'cursor|codex|claude|copilot|windsurf'; then
+    profile_tool_hits="$profile_tool_hits $rel"
+  fi
+done
+# The renders inherit the sources' neutrality — assert it rather than assume
+# it, since a render is what a tool actually loads.
+for rel in .claude/agents/architect.md .claude/agents/mason.md .claude/agents/inspector.md \
+  .codex/agents/architect.toml .codex/agents/mason.toml .codex/agents/inspector.toml; do
+  f="$t1/$rel"
+  if grep -Eq 'W0|W1|W2' "$f"; then
+    profile_label_hits="$profile_label_hits $rel"
+  fi
+  if sed -e 's|`[^`]*`||g' "$f" |
+    grep -Eiq 'grok|composer|sonnet|opus|fable|gpt|gemini|anthropic|openai'; then
+    profile_model_hits="$profile_model_hits $rel"
+  fi
+done
+assert_eq "neutrality: no W0/W1/W2 mode label in the profiles or their renders" \
+  "" "$profile_label_hits"
+assert_eq "neutrality: no model name in the profiles or their renders" "" "$profile_model_hits"
+assert_eq "neutrality: no tool name in the prose of this layer (paths excepted)" \
+  "" "$profile_tool_hits"
+
+# A definition chisel did not write is never destroyed: `.claude/agents/` is
+# shared with the user's own sub-agents, and a role name can collide.
+t8="$(fresh_copy brownfield)"
+mkdir -p "$t8/.claude/agents"
+printf '# my own architect, hand written\n' >"$t8/.claude/agents/architect.md"
+run_chisel "$CHISEL" init "$t8"
+assert_eq "foreign definition: init still exits 0" "0" "$rc"
+assert_file_contains "foreign definition: left untouched by init" \
+  "$t8/.claude/agents/architect.md" "my own architect, hand written"
+assert_file_contains "foreign definition: init warns about it" "$WORK_ROOT/last.log" \
+  "was not generated by chisel"
+assert_file_exists "foreign definition: the other roles are still rendered" \
+  "$t8/.claude/agents/mason.md"
+
+# The Codex renders must be real TOML — the body travels as a multi-line
+# literal string, which is exactly why the renderer refuses a body containing
+# the delimiter. Same floor as group 7: said out loud when tomllib is absent.
+if python3 -c 'import tomllib' >/dev/null 2>&1; then
+  if python3 - "$t1" <<'PY'
+import pathlib, sys, tomllib
+
+target = pathlib.Path(sys.argv[1])
+for role in ("architect", "mason", "inspector"):
+    data = tomllib.loads((target / ".codex/agents" / (role + ".toml")).read_text(encoding="utf-8"))
+    assert data["name"] == role, data
+    assert data["description"].strip(), role
+    body = (target / ".agents/profiles" / (role + ".md")).read_text(encoding="utf-8")
+    body = body.split("---\n", 2)[2].lstrip("\n")
+    assert data["developer_instructions"] == body, role
+PY
+  then
+    pass "render: codex definitions parse as TOML and carry the profile body"
+  else
+    fail "render: codex definitions parse as TOML and carry the profile body"
+  fi
+else
+  printf 'SKIP: codex TOML parse check (this python3 has no tomllib — needs 3.11+)\n'
 fi
 
 printf '\n=== %d passed, %d failed ===\n' "$pass_count" "$fail_count"

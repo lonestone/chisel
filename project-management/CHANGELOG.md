@@ -5,6 +5,61 @@ ships.
 
 ---
 
+## 11. 2026-08-26 — v2 slice 02: agent profiles + generated per-tool definitions
+
+Summary of the session:
+
+1. Slice 02 of task `20260826-1512-chisel-v2` completed: the roster becomes
+   installable. `socle/agents/profiles/` ships the three canonical role
+   contracts — `architect.md` (frontier), `mason.md` (cheap or mid),
+   `inspector.md` (frontier) — each with the same five sections: mission,
+   tier, prohibitions, escalation, and **Inputs — what this role receives**.
+   `bin/chisel.sh` renders them into `.claude/agents/*.md` (which covers
+   Cursor ≥ 2.4 for free) and `.codex/agents/*.toml` at `init`, re-renders
+   them at `update`, hashes them in `.agents/.chisel.json`, and `check`
+   reports them when they drift.
+
+Project management:
+
+- Completed **Slice 02 — agent-profiles**. `socle/agents/foreman.md` ships as
+  a doc page, not a profile: the Foreman is the human in Controlled and a
+  scheduled job around the tracker's ready/gate queries in Auto, and it
+  becomes an agent only when routing starts needing judgement.
+  `socle/agents/profiles/README.md` carries the generation contract and the
+  universal fallback (profile inlined at spawn, or a fresh session on the
+  profile file) for tools with no definition format.
+- `test/run.sh` grew a group 8 (contract shape, tier agreement with the
+  formulas, the roles named in either formula resolving to a profile,
+  verbatim-body rendering, the foreign-file guard, the Codex TOML parse)
+  plus layout and drift assertions. Suite: 198 passed, 0 failed on a bare
+  `python3`; 200 with a 3.11+ interpreter.
+- The two-axis review (fixed point `a7ce105`) caught a real installer bug:
+  `find` over a directory that may not exist aborted the manifest builder
+  mid-body under `set -euo pipefail`, silently truncating the managed list.
+  Fixed and regression-probed, along with a provenance pointer built from
+  the wrong field and an unquoted YAML scalar.
+
+Key architectural and technical decisions:
+
+- **The profile body IS the contract; the per-tool definitions are thin
+  renders** — asserted byte-for-byte by the suite, so a render can never
+  become a paraphrase. No tool can import a shared definition, so chisel
+  generates rather than references.
+- **A definition chisel did not write is never overwritten.**
+  `.claude/agents/` is a namespace shared with the user's own sub-agents: a
+  file without the `chisel:generated` marker earns a warning and is left
+  alone, and chisel claims as managed only what it wrote.
+- **No `model:` key and no tool name in prose** — the tier travels as prose
+  (frontier / mid / cheap) and the tier → model cascade stays slice 03's;
+  the per-tool render table speaks in adapter paths, so the socle names a
+  directory, never a vendor. The suite greps both, sources and renders, with
+  code spans stripped.
+- **The delegation contract lives with the role that consumes it**: the
+  Mason's brief is the spec file, the artifacts it references and the ambient
+  layer — never the planning conversation; the Inspector's is the diff, the
+  pinned fixed point and the spec pointer. Whoever delegates reads the target
+  profile first.
+
 ## 10. 2026-08-26 — v2 slice 01: discipline core + formulas, the three rules retired
 
 Summary of the session:

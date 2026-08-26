@@ -51,11 +51,18 @@ TASK_ID_SRC="$SOCLE/scripts/task-id.sh"
 PROJECT_MD_TPL="$SOCLE/agents/project.md.tpl"
 AGENTS_SKILLS_SRC="$SOCLE/agents/skills"
 AGENTS_FORMULAS_SRC="$SOCLE/agents/formulas"
+AGENTS_PROFILES_SRC="$SOCLE/agents/profiles"
 DISCIPLINE_SRC="$SOCLE/agents/discipline.md"
+FOREMAN_SRC="$SOCLE/agents/foreman.md"
 METHODOLOGY_SRC="$SOCLE/agents/methodology.md"
 
 BLOCK_BEGIN='<!-- chisel:begin -->'
 BLOCK_END='<!-- chisel:end -->'
+
+# Stamped into every per-tool agent definition chisel renders. It is what
+# tells a render apart from a definition of the user's own that happens to
+# carry the same role name: chisel only ever overwrites its own.
+GEN_MARKER='chisel:generated'
 
 # ---------------------------------------------------------------------------
 # Small helpers
@@ -130,10 +137,30 @@ for name, sha in sorted(data.get("managed", {}).items()):
 
 # Relative-to-target-dir paths of every file the manifest tracks (excluding
 # the AGENTS.md block, which is not a file — see agents_block_hash).
+#
+# The rendered agent definitions live in directories chisel shares with the
+# user (`.claude/agents/`, `.codex/agents/`), so only the files carrying the
+# generated marker are claimed as managed — a definition of the user's own is
+# neither re-rendered nor reported as drift.
+#
+# `|| true` on both finds: find exits nonzero when any operand is missing, and
+# under `set -euo pipefail` that would abort this function mid-body — silently
+# dropping the trailing entries and leaving the caller with a truncated
+# manifest. A missing directory here means "nothing to track", not a failure.
 managed_relative_files() {
   target_dir="$1"
-  ( cd "$target_dir" && find .agents/skills .agents/formulas -type f | LC_ALL=C sort )
+  ( cd "$target_dir" && find .agents/skills .agents/formulas .agents/profiles -type f 2>/dev/null || true ) |
+    LC_ALL=C sort
+  ( cd "$target_dir" && find .claude/agents .codex/agents -type f 2>/dev/null || true ) |
+    LC_ALL=C sort |
+    while IFS= read -r rel; do
+      [ -n "$rel" ] || continue
+      if grep -qF "$GEN_MARKER" "$target_dir/$rel" 2>/dev/null; then
+        printf '%s\n' "$rel"
+      fi
+    done
   printf '.agents/discipline.md\n'
+  printf '.agents/foreman.md\n'
   printf '.agents/methodology.md\n'
   printf 'scripts/task-id.sh\n'
   printf 'project-management/000-task-file-template.md\n'
@@ -227,7 +254,9 @@ copy_managed_files() {
   mkdir -p "$target_dir/.agents"
   cp -R "$AGENTS_SKILLS_SRC" "$target_dir/.agents/"
   cp -R "$AGENTS_FORMULAS_SRC" "$target_dir/.agents/"
+  cp -R "$AGENTS_PROFILES_SRC" "$target_dir/.agents/"
   cp "$DISCIPLINE_SRC" "$target_dir/.agents/discipline.md"
+  cp "$FOREMAN_SRC" "$target_dir/.agents/foreman.md"
   cp "$METHODOLOGY_SRC" "$target_dir/.agents/methodology.md"
 
   mkdir -p "$target_dir/scripts"
@@ -236,6 +265,117 @@ copy_managed_files() {
 
   mkdir -p "$target_dir/project-management"
   cp "$TASK_TEMPLATE_SRC" "$target_dir/project-management/000-task-file-template.md"
+}
+
+# --- Per-tool agent definitions, rendered from the canonical profiles ------
+#
+# No tool can import a shared definition, so chisel generates one per tool
+# from the same source: the profile body IS the contract, the renders are
+# thin. Claude Code's format also covers Cursor >= 2.4 (it reads
+# `.claude/agents/` natively); Codex needs TOML. Tools with no definition
+# format at all use the fallback documented in `.agents/profiles/README.md`.
+
+# Value of a flat frontmatter key ("name: mason" -> "mason"). Empty when the
+# file has no frontmatter or no such key — which is how a documentation page
+# dropped in `profiles/` (its README) stays invisible to the renderer.
+profile_field() {
+  awk -v key="$2" '
+    NR == 1 && $0 != "---" { exit }
+    NR == 1 { next }
+    $0 == "---" { exit }
+    index($0, key ": ") == 1 { print substr($0, length(key) + 3); exit }
+  ' "$1"
+}
+
+# Everything after the frontmatter, leading blank lines trimmed.
+profile_body() {
+  awk '
+    NR == 1 && $0 == "---" { inhead = 1; next }
+    inhead && $0 == "---"  { inhead = 0; next }
+    inhead                 { next }
+    !started && $0 == ""   { next }
+    { started = 1; print }
+  ' "$1"
+}
+
+# Escape a one-line value for a double-quoted scalar. YAML's double-quoted
+# style and TOML's basic string agree on the two characters that can occur
+# here, so one helper serves both renders — and quoting is what keeps a
+# description containing `: `, a leading `[`, or a `#` from breaking the
+# frontmatter it lands in.
+escape_double_quoted() {
+  printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g'
+}
+
+# Write rendered content over a definition chisel owns. A file that exists
+# without the generated marker belongs to the user (their own sub-agent of
+# the same name): warn and leave it alone rather than destroy it — the same
+# stance link_claude_skills takes on a foreign `.claude/skills`.
+install_generated() {
+  dest="$1"
+  rendered="$2"
+  if [ -e "$dest" ] && ! grep -qF "$GEN_MARKER" "$dest" 2>/dev/null; then
+    printf 'chisel: warning: %s exists and was not generated by chisel — leaving it alone\n' \
+      "$dest" >&2
+    return 0
+  fi
+  cat "$rendered" >"$dest"
+}
+
+render_agent_definitions() {
+  target_dir="$1"
+  profiles_dir="$target_dir/.agents/profiles"
+  [ -d "$profiles_dir" ] || return 0
+
+  mkdir -p "$target_dir/.claude/agents" "$target_dir/.codex/agents"
+
+  for profile in "$profiles_dir"/*.md; do
+    [ -f "$profile" ] || continue
+    name="$(profile_field "$profile" name)"
+    [ -n "$name" ] || continue
+    description="$(profile_field "$profile" description)"
+    # The generated files are named after the role (`name` is the identity
+    # every tool addresses it by), but the provenance pointer names the file
+    # it actually came from — so it stays true even if the two ever differ.
+    source_rel=".agents/profiles/$(basename "$profile")"
+
+    body="$(mktemp)"
+    profile_body "$profile" >"$body"
+
+    # TOML multi-line LITERAL strings do no escape processing at all, which
+    # is what keeps a markdown body byte-identical through the render. The
+    # single sequence they cannot carry is the delimiter itself.
+    if grep -qF "'''" "$body"; then
+      rm -f "$body"
+      die "profile $profile contains ''' — it cannot be rendered as TOML; rephrase it"
+    fi
+
+    tmp="$(mktemp)"
+    {
+      printf -- '---\n'
+      printf 'name: "%s"\n' "$(escape_double_quoted "$name")"
+      printf 'description: "%s"\n' "$(escape_double_quoted "$description")"
+      printf -- '---\n\n'
+      printf '<!-- %s from %s — do not edit: `chisel update` re-renders it. -->\n\n' \
+        "$GEN_MARKER" "$source_rel"
+      cat "$body"
+    } >"$tmp"
+    install_generated "$target_dir/.claude/agents/$name.md" "$tmp"
+
+    : >"$tmp"
+    {
+      printf '# %s from %s — do not edit: `chisel update` re-renders it.\n' \
+        "$GEN_MARKER" "$source_rel"
+      printf 'name = "%s"\n' "$(escape_double_quoted "$name")"
+      printf 'description = "%s"\n' "$(escape_double_quoted "$description")"
+      printf "developer_instructions = '''\n"
+      cat "$body"
+      printf "'''\n"
+    } >"$tmp"
+    install_generated "$target_dir/.codex/agents/$name.toml" "$tmp"
+
+    rm -f "$tmp" "$body"
+  done
 }
 
 # Project-owned: written once, never again. Prints "created" when this run
@@ -367,6 +507,7 @@ cmd_init() {
   project_title="$(basename "$(cd "$target_dir" && pwd -P)")"
 
   copy_managed_files "$target_dir"
+  render_agent_definitions "$target_dir"
   project_md_state="$(ensure_project_md "$target_dir")"
   render_agents_md "$target_dir/AGENTS.md" "$project_title"
   render_claude_md "$target_dir/CLAUDE.md"
@@ -377,7 +518,7 @@ cmd_init() {
   ensure_project_management_skeleton "$target_dir"
   write_manifest "$target_dir"
 
-  printf 'chisel init: %s ready (.agents/, AGENTS.md, CLAUDE.md, .claude/skills, project-management/, scripts/task-id.sh)\n' \
+  printf 'chisel init: %s ready (.agents/, AGENTS.md, CLAUDE.md, .claude/skills, .claude/agents, .codex/agents, project-management/, scripts/task-id.sh)\n' \
     "$target_dir"
 }
 
@@ -395,6 +536,7 @@ cmd_update() {
   fi
 
   copy_managed_files "$target_dir"
+  render_agent_definitions "$target_dir"
   if [ -f "$target_dir/AGENTS.md" ]; then
     render_agents_md "$target_dir/AGENTS.md" ""
   else
