@@ -269,6 +269,16 @@ PY
       "$t7/.codex/agents/$role.toml" "from .agents/profiles/$role.md"
   done
 
+  if ! grep -rq "to-lessons" "$t7/.agents"; then
+    pass "render: installed .agents/ carries no to-lessons (renamed to retro)"
+  else
+    fail "render: installed .agents/ carries no to-lessons (renamed to retro)"
+  fi
+  if ! grep -rqE "40 lines|8 lines|half of the slice|half the spend|target ~" "$t7/.agents"; then
+    pass "render: installed .agents/ carries no invented numeric limit"
+  else
+    fail "render: installed .agents/ carries no invented numeric limit"
+  fi
 }
 
 # ---------------------------------------------------------------------------
