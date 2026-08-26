@@ -5,6 +5,20 @@ ships.
 
 ---
 
+## 18. 2026-08-26 — v2 slice 11: Owner review fixes — Checker, no invented numbers
+
+Five corrections from the Owner's review of slice 10. `to-lessons` renamed
+`retro` (the upstream name), lock entry and golden-tree following. Every
+invented numeric limit stripped from the socle — worklog/journal length,
+program-design size, the "half the slice's spend" rule — replaced by a
+pointer to the task template or deleted outright. `spec-review` and
+`design-check` bodies dedup down to sequencing plus a profile pointer, byte-
+identical across the 3 presets. New profile `socle/agents/profiles/checker.md`:
+the spec reviewer becomes a role, frontier tier, never the author of the spec
+under review, reads the codebase and the repo's rules, proposes alternative
+designs via `codebase-design`. `spec-review` now opens on the Checker instead
+of a second Architect.
+
 ## 17. 2026-08-26 — v2 slice 10: the review loops live in the workflows
 
 `spec-review` and `design-check` land in all three formulas (9 steps;

@@ -1,6 +1,6 @@
 # 11 — Owner review of slice 10: five corrections
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete
 **Blocked by:** 10 (delivered)
 
 **What to build:** The Owner reviewed slice 10's output and ruled five
@@ -40,20 +40,20 @@ artifact content and form is the ORIGINAL task template
 
 ## Acceptance criteria
 
-- [ ] `grep -r "to-lessons" socle/ upstream.lock.json` returns nothing;
+- [x] `grep -r "to-lessons" socle/ upstream.lock.json` returns nothing;
       the skill lives at `socle/agents/skills/retro/` with its x-upstream
       intact
-- [ ] `grep -rE "40 lines|8 lines|half of the slice|half the spend|target ~"
+- [x] `grep -rE "40 lines|8 lines|half of the slice|half the spend|target ~"
       socle/` returns nothing; no numeric length/spend rule anywhere in the
       socle (the task template is the only reference for artifact form)
-- [ ] The `spec-review` and `design-check` bodies contain sequencing and a
+- [x] The `spec-review` and `design-check` bodies contain sequencing and a
       profile pointer only — no duty text duplicated from the profiles;
       bodies stay byte-identical across the 3 presets; gate sets unchanged
       (3/1/0)
-- [ ] `socle/agents/profiles/checker.md` ships with the five duties above;
+- [x] `socle/agents/profiles/checker.md` ships with the five duties above;
       renders regenerate; golden-tree updated; `spec-review` names the
       Checker in all 3 formulas
-- [ ] Suite green; net new assertions ≤ 2
+- [x] Suite green; net new assertions ≤ 2
 
 ---
 
@@ -275,4 +275,38 @@ touched.
 
 ## Notes
 
-_Worklog per the task template._
+**Worklog.** Six commits, one per green step of the plan's execution order.
+(1) `git mv skills/to-lessons → retro`, `SKILL.md` frontmatter `name`, lock
+key relocated between `research`/`slice-task`, `discipline.md` rule 8, the
+shared `close` sentence in all three formulas, golden-tree's two lines moved
+next to `research`. (2) `mason.md`'s worklog/journal line pointed at the task
+template, its "half of the slice's total spend" bullet deleted outright;
+`architect.md`'s design-check bullet lost its `~40 lines` in favour of "the
+shape the task template declares". Formula occurrences left untouched here,
+per the plan's own warning against a two-step merge. (3) `design-check`'s
+body in all three formulas lost the `~40 lines` sentence (architect.md
+already covers it) and gained a closing `Duties:` pointer; `spec-review` was
+deliberately left alone in this step — repointing it to a Checker that does
+not exist yet would fail the integrity test (`dangling:
+.agents/profiles/checker.md`), which is exactly what happened on a first
+attempt and was reverted before committing. (4) `checker.md` written (Mission
+carries the five duties in the Owner's order, Prohibitions, Escalation,
+Inputs); `spec-review` repointed at the Checker in all three formulas;
+`architect.md` lost its "Spec review" bullet and the now-orphaned "Never
+reviews a spec it authored" paragraph (the same prohibition lives once, in
+`checker.md`, worded for specs the way `inspector.md` words it for diffs).
+(5) Two new `render`-group assertions in `test/installer.sh`, grepping a
+fresh install rather than the socle: no `to-lessons`, no invented numeric
+limit. Suite: 588/600 lines, comfortably under the cap — no compensating cut
+needed. (6) `chisel update` run clean on a scratch target
+(`/tmp/chisel-scratch.*`, "no managed files changed" — expected, since the
+target was freshly initted from the already-renamed socle); both acceptance
+greps re-run by hand and confirmed silent.
+
+**Note without stopping.** The plan's "Design" section 3 describes the
+*end state* of the dedup (spec-review pointing at the Checker, architect.md
+missing its Spec review bullet) but the Mason execution order in section 5
+sequences that repoint into step 4, after `checker.md` exists — the two
+sections read as simultaneous on a first pass. Followed section 5 as the
+authoritative sequencing once the integrity test caught the gap; no scope
+change, just a corrected step boundary.
