@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/in-progress/retro
   sha: 6654f6b60cd9d5be8b54c6fafe44346dabeb3b76
-  changes: "adapted: reads repo artifacts only (spec file, worklog, diff, journal entry), never a harness session log — the repo is the only memory (discipline.md rule 8); drops the writing-for-agents call (not vendored here) for writing-great-skills; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of every formula, not only on user request."
+  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (spec file, worklog, diff, journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by discipline.md rule 8; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of every formula, not only on user request."
 ---
 
 You are suggesting improvements to the **working rules** — the steering
@@ -13,23 +13,42 @@ files, standards, and docs an agent reads — never to the code itself. The
 code's findings already went through `code-review`; this is about making the
 *next* session faster or more correct.
 
-## Sources — repo artifacts only
+## Sources
 
-Per `.agents/discipline.md` rule 8, the repo is the only memory: never read a
-harness session log or auto-memory to build this retrospective. Read what the
-session actually left behind, all of it artifacts under version control:
+Rule 8 of `.agents/discipline.md` governs where conclusions are WRITTEN, not
+what may be READ: reading the session back is the point of a retrospective;
+what it produces goes in the repo, never in a harness memory.
 
-- The spec file's persisted Design, implementation checkboxes, and Notes.
+**Primary — the session itself, and its subagents.** Where the friction
+actually lives: dead ends, searches that came back empty, files that took
+three tries to find, a rule that was read and not followed, an instruction
+that changed nothing. None of it survives into the diff, which only records
+what worked. Read the transcript of the session being closed AND the
+transcripts or returned reports of every subagent it spawned. Access is
+harness-specific — in Claude Code, the session's own `.jsonl` under
+`~/.claude/projects/<project-slug>/` plus the task output files of its
+subagents; other harnesses differ, and some expose nothing. When none is
+reachable, say so in the retrospective and work from the artifacts alone: a
+retro built on the diff sees the destination, not the road.
+
+**Corroborating — what the session left in the repo.** Under version
+control, so it says what was actually decided rather than what was
+discussed:
+
+- The spec file's persisted Design, implementation checkboxes, and Notes —
+  including whatever was noted without stopping along the way.
 - The worklog and the journal entry it produced.
 - The diff and commit messages of the session (`git log`, `git diff`).
-- Any blocker or escalation written into the spec file along the way.
+- Any blocker or escalation written into the spec file.
 
 ## Steps
 
 1. Call the Skill tool with `writing-great-skills` for the writing style
-   guide (the upstream `writing-for-agents` skill is not vendored here).
+   guide — the same skill upstream now ships as `writing-for-agents`,
+   vendored here under its former name.
 
-2. Read the primary sources above for the session just closed.
+2. Read the sources above for the session just closed: the transcripts
+   first, the repo artifacts to confirm what they suggest.
 
 3. Look for candidates for improvement in these categories, in order of
    severity:
