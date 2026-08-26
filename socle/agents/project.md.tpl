@@ -15,12 +15,26 @@ a fact true of one machine or one account belongs there. -->
 
 <!-- Questionnaire asks: where do tasks, archive, changelog, roadmap, and the
 task template live? Default is root `/project-management/`; an
-Astro-embedded variant may nest it elsewhere. -->
+Astro-embedded variant may nest it elsewhere.
+
+The changelog line is the ONE place the journal's path is declared: everything
+that writes to it — the pipeline steps, the skills — resolves through this line
+and never hardcodes a name. Its default is `LOG.md` because a repo's
+`CHANGELOG.md` usually belongs to its releases, and this is a different
+document. A repo equipped before that default changed simply keeps its own name
+here; nothing else has to move.
+
+That journal is WRITTEN BY HAND — one dated entry per task, added by the agent
+at the end of the work. It is never generated: not from a coordination
+database's audit trail, not from the git history, not from anything else. It is
+narration, and narration nobody wrote is worth nothing to the next reader.
+Architecture decision records are a separate artifact and none of this touches
+them. -->
 
 - **Tasks root:** `/project-management/`
 - **Tasks:** `/project-management/tasks/`
 - **Archive:** `/project-management/archive/`
-- **Changelog:** `/project-management/CHANGELOG.md`
+- **Changelog:** `/project-management/LOG.md`
 - **Roadmap:** `/project-management/ROADMAP.md`
 - **Task file template:** `/project-management/000-task-file-template.md`
 - **Task id script:** `/scripts/task-id.sh`

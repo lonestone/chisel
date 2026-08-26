@@ -501,21 +501,72 @@ tick_adapter_inventory() {
   rm -f "$tmp"
 }
 
-# Project-owned: tasks/archive created if missing; CHANGELOG.md written
-# once, never again.
+# Project-owned: tasks/archive created if missing; the journal written once,
+# never again.
+#
+# Why the journal is called `LOG.md`, why it is handwritten, and why §A of the
+# glue — not this function — is where its path is declared: `project.md.tpl`,
+# section A. The rule is written there once and not re-argued here.
+#
+# What this function adds is a guard: a `CHANGELOG.md` already sitting in the
+# skeleton stops it. Two journals in one workspace is the incoherence the rename
+# exists to prevent, and an installer has no business renaming a project's own
+# file. It says so and names the skill that migrates properly — the same stance
+# `update` takes on a v1 layout. Note the guard is skeleton-local: it looks in
+# `project-management/`, because that is the only place this function writes.
+# A repo whose workspace lives elsewhere is the migration skill's business.
 ensure_project_management_skeleton() {
   target_dir="$1"
   pm_root="$target_dir/project-management"
   mkdir -p "$pm_root/tasks" "$pm_root/archive"
-  changelog="$pm_root/CHANGELOG.md"
-  if [ ! -f "$changelog" ]; then
-    {
-      printf '# Changelog\n\n'
-      printf 'Project history, newest first.\n\n'
-      printf '## %s\n\n' "$(date +%Y-%m-%d)"
-      printf '%s\n' "- chisel init: installed the dev-workflow socle."
-    } >"$changelog"
+  journal="$pm_root/LOG.md"
+  if [ -f "$journal" ]; then
+    return 0
   fi
+  if [ -f "$pm_root/CHANGELOG.md" ]; then
+    printf 'chisel: warning: %s/project-management/CHANGELOG.md is the journal this repo already has, and v2 names it LOG.md — leaving it alone rather than creating a second journal beside it. The upgrade-v2 skill renames it properly and updates the project glue.\n' \
+      "$target_dir" >&2
+    return 0
+  fi
+  {
+    printf '# Log\n\n'
+    printf 'Project history, newest first. Written by hand, one dated entry per\n'
+    printf 'task — never generated.\n\n'
+    printf '## %s\n\n' "$(date +%Y-%m-%d)"
+    printf '%s\n' "- chisel init: installed the dev-workflow socle."
+  } >"$journal"
+}
+
+# When the guard above declined to create `LOG.md` because the repo already has
+# a `CHANGELOG.md`, a glue THIS run created still carries the template's default
+# and points §A at a file that does not exist. Point it at the one that does.
+#
+# Only on a glue this run created, and only while that line is still the
+# template's own default: a value a human answered is never rewritten by the
+# installer — the same rule `tick_adapter_inventory` follows one section down.
+point_new_glue_at_existing_journal() {
+  target_dir="$1"
+  pm_root="$target_dir/project-management"
+  project_md="$target_dir/.agents/project.md"
+  # `||` form throughout, never `[ ... ] && return`: a false test in that form
+  # returns nonzero at statement level, which under `set -e` kills the script
+  # instead of skipping the line (same trap refuse_v1_layout documents).
+  [ -f "$project_md" ] || return 0
+  [ -f "$pm_root/CHANGELOG.md" ] || return 0
+  [ ! -f "$pm_root/LOG.md" ] || return 0
+  grep -qF '**Changelog:** `/project-management/LOG.md`' "$project_md" || return 0
+
+  tmp="$(mktemp)"
+  awk '
+    /^## / { ina = ($0 ~ /^## A · /) ? 1 : 0 }
+    ina && index($0, "- **Changelog:** `/project-management/LOG.md`") == 1 {
+      print "- **Changelog:** `/project-management/CHANGELOG.md`"
+      next
+    }
+    { print }
+  ' "$project_md" >"$tmp"
+  cat "$tmp" >"$project_md"
+  rm -f "$tmp"
 }
 
 # Rewrite .agents/.chisel.json from the current state of target_dir: chisel
@@ -615,6 +666,9 @@ cmd_init() {
     tick_adapter_inventory "$target_dir"
   fi
   ensure_project_management_skeleton "$target_dir"
+  if [ "$project_md_state" = "created" ]; then
+    point_new_glue_at_existing_journal "$target_dir"
+  fi
   write_manifest "$target_dir"
 
   printf 'chisel init: %s ready (.agents/, AGENTS.md, CLAUDE.md, .claude/skills, .claude/agents, .codex/agents, project-management/, scripts/task-id.sh)\n' \

@@ -218,7 +218,11 @@ assert_full_layout() {
   assert_dir_exists "[$target] project-management/archive" "$target/project-management/archive"
   assert_file_exists "[$target] project-management/000-task-file-template.md" \
     "$target/project-management/000-task-file-template.md"
-  assert_file_exists "[$target] project-management/CHANGELOG.md" "$target/project-management/CHANGELOG.md"
+  # The journal, under its v2 name — and NOT under the v1 one: a fresh install
+  # must never lay down a `CHANGELOG.md` again (that name belongs to releases).
+  assert_file_exists "[$target] project-management/LOG.md" "$target/project-management/LOG.md"
+  assert_path_absent "[$target] no project-management/CHANGELOG.md" \
+    "$target/project-management/CHANGELOG.md"
   assert_file_exists "[$target] scripts/task-id.sh" "$target/scripts/task-id.sh"
   assert_executable "[$target] scripts/task-id.sh is executable" "$target/scripts/task-id.sh"
 }
@@ -337,19 +341,19 @@ assert_file_exists "boilerplate: apps/documentation untouched" "$t3/apps/documen
 assert_file_contains "boilerplate: package.json untouched" "$t3/package.json" "\"lint\""
 
 # ---------------------------------------------------------------------------
-# 4. update: re-renders managed files, never touches project.md/CHANGELOG.md.
+# 4. update: re-renders managed files, never touches project.md/LOG.md.
 # ---------------------------------------------------------------------------
 group "4. update: managed refresh, glue left alone" \
-  "update brings every managed file back to the socle's version — including the rendered definitions — and never touches project.md or the changelog."
+  "update brings every managed file back to the socle's version — including the rendered definitions — and never touches project.md or the journal."
 t4="$(fresh_copy brownfield)"
 run_chisel "$CHISEL" init "$t4"
 assert_eq "update fixture: init exits 0" "0" "$rc"
 
 # Hand-edit project-owned files...
 printf '\n<!-- hand-edited by a human, must survive update -->\n' >>"$t4/.agents/project.md"
-printf '\n## 2099-01-01\n\n- hand-edited entry, must survive update\n' >>"$t4/project-management/CHANGELOG.md"
+printf '\n## 2099-01-01\n\n- hand-edited entry, must survive update\n' >>"$t4/project-management/LOG.md"
 cp "$t4/.agents/project.md" "$WORK_ROOT/t4-project-md-before-update"
-cp "$t4/project-management/CHANGELOG.md" "$WORK_ROOT/t4-changelog-before-update"
+cp "$t4/project-management/LOG.md" "$WORK_ROOT/t4-journal-before-update"
 
 # ...and three managed files, to prove update refreshes them. The rendered
 # agent definition is managed too: it comes back from the profile, not from a
@@ -367,8 +371,8 @@ assert_eq "brownfield: update exits 0" "0" "$rc"
 
 assert_files_identical "update: .agents/project.md untouched" \
   "$WORK_ROOT/t4-project-md-before-update" "$t4/.agents/project.md"
-assert_files_identical "update: CHANGELOG.md untouched" \
-  "$WORK_ROOT/t4-changelog-before-update" "$t4/project-management/CHANGELOG.md"
+assert_files_identical "update: the journal is untouched" \
+  "$WORK_ROOT/t4-journal-before-update" "$t4/project-management/LOG.md"
 assert_file_not_contains "update: hand-edited SKILL.md reverted" \
   "$t4/.agents/skills/tdd/SKILL.md" "local edit that update must overwrite"
 assert_files_identical "update: SKILL.md matches socle source" \
@@ -1187,8 +1191,8 @@ dangling_pointers() {
 # hole is the failure mode this group exists to end.
 cat >"$WORK_ROOT/pointer-waiver.txt" <<'WAIVER'
 .agents/user.md	BY DESIGN — personal file, deliberately never installed (the template is)
-.agents/rules/task-*.md	DEBT — retired v1 layer, still cited by methodology.md (slice 07)
-.agents/workflows.md	DEBT — retired v1 layer, still cited by methodology.md (slice 07)
+.agents/rules/task-*.md	BY DESIGN (upgrade-v2 must name the layer it retires) + DEBT (still cited by methodology.md — slice 07)
+.agents/workflows.md	BY DESIGN (upgrade-v2 must name the layer it retires) + DEBT (still cited by methodology.md — slice 07)
 WAIVER
 cut -f1 "$WORK_ROOT/pointer-waiver.txt" | LC_ALL=C sort >"$WORK_ROOT/waived.txt"
 
@@ -1206,6 +1210,19 @@ if [ -s "$WORK_ROOT/dangling-new.txt" ]; then
 else
   pass "integrity: every pointer of the installed socle resolves"
 fi
+
+# ...and WHO is allowed to cite the retired v1 layer. The waiver above is keyed
+# on the pointer alone, so from the day the migration skill legitimately names
+# the layer it retires, "this pointer stopped dangling" can never fire for those
+# two lines again — their DEBT half would stop expiring, which is exactly the
+# silent-known-hole failure the group exists to end. This assertion is the
+# replacement forcing function: it names the files allowed to cite the retired
+# layer TODAY. `methodology.md` is on the list because slice 07 has not
+# rewritten it yet; the day it does, this fails and asks for the line to go.
+v1_citers="$(awk -F'\t' '$1 == ".agents/rules/task-*.md" || $1 == ".agents/workflows.md" { print $2 }' \
+  "$WORK_ROOT/dangling-raw.txt" | LC_ALL=C sort -u | tr '\n' ' ')"
+assert_eq "integrity: only the files allowed to name the retired v1 layer name it" \
+  ".agents/methodology.md .agents/skills/upgrade-v2/SKILL.md " "$v1_citers"
 
 if [ -s "$WORK_ROOT/waiver-stale.txt" ]; then
   fail "integrity: the waiver has no stale line (a fixed pointer must leave it)"
@@ -1320,6 +1337,243 @@ for rel in .claude/agents/architect.md .claude/agents/mason.md .claude/agents/in
 done
 assert_eq "neutrality: no mode label and no model name in the generated definitions" \
   "" "$render_hits"
+
+# ---------------------------------------------------------------------------
+# 14. upgrade-v2: the migration a refused `update` sends people to. A test
+#     cannot run an agent, so it proves the two halves and couples them: the
+#     skill is asserted to PRESCRIBE each mechanical step, and those steps are
+#     then replayed on the v1 fixture and their result read off the tree.
+# ---------------------------------------------------------------------------
+group "14. upgrade-v2: the v1 repo that comes out the other side" \
+  "the migration retires the v1 layer, renames the journal and installs v2 — and every task file and archived file survives it byte-intact."
+
+upgrade_skill="$REPO_ROOT/socle/agents/skills/upgrade-v2/SKILL.md"
+
+assert_file_exists "upgrade-v2: the skill ships in the socle" "$upgrade_skill"
+assert_file_exists "upgrade-v2: init installs it (that is how it reaches a repo)" \
+  "$t1/.agents/skills/upgrade-v2/SKILL.md"
+assert_file_contains "upgrade-v2: it is user-invoked, never model-invoked" \
+  "$upgrade_skill" 'disable-model-invocation: true'
+
+# The prose half. Anchored on the two things a rewording cannot take away — the
+# step HEADINGS, which are the migration's shape, and the fenced COMMANDS, which
+# are what the replay below actually runs — plus the three sentences that carry
+# a rule the skill would have to delete to break. Not on subordinate clauses:
+# this is a document meant to be edited, and a test that fails on "so that"
+# teaches people to stop editing it.
+for heading in \
+  '## Step 0 — Preconditions' \
+  '## Step 1 — Inventory' \
+  '## Step 2 — Retire the v1 layer' \
+  '## Step 3 — Rename the journal' \
+  '## Step 4 — Install the v2 layer' \
+  '## Step 5 — Complete the glue' \
+  '## Step 6 — Verify' \
+  '## Step 7 — Hand over'; do
+  assert_file_contains "upgrade-v2: shape — $heading" "$upgrade_skill" "$heading"
+done
+assert_file_contains "upgrade-v2: command — the retired rules and guide are removed" \
+  "$upgrade_skill" 'git rm .agents/rules/task-*.md .agents/workflows.md'
+assert_file_contains "upgrade-v2: command — the journal is MOVED, history kept" \
+  "$upgrade_skill" 'git mv project-management/CHANGELOG.md project-management/LOG.md'
+assert_file_contains "upgrade-v2: command — the installer poses the v2 layer" \
+  "$upgrade_skill" 'npx @lonestone/chisel init .'
+assert_file_contains "upgrade-v2: command — verification is a clean check" \
+  "$upgrade_skill" 'npx @lonestone/chisel check'
+assert_file_contains "upgrade-v2: command — and an update that is finally accepted" \
+  "$upgrade_skill" 'npx @lonestone/chisel update'
+assert_file_contains "upgrade-v2: the glue questions are the setup's, not a second wording" \
+  "$upgrade_skill" '.agents/skills/chisel-setup/SKILL.md'
+assert_file_contains "upgrade-v2: rule — the retired directory may not survive either" \
+  "$upgrade_skill" '**The rules directory itself must not survive**'
+assert_file_contains "upgrade-v2: rule — the journal's content is not touched" \
+  "$upgrade_skill" "Do not touch the file's CONTENT"
+assert_file_contains "upgrade-v2: rule — the journal stays handwritten, never generated" \
+  "$upgrade_skill" 'never generated'
+assert_file_contains "upgrade-v2: rule — what is never touched is stated up front" \
+  "$upgrade_skill" '## What is never touched'
+
+# The mechanical half, replayed on a real v1 repo. `mv`/`rm` stand in for the
+# skill's `git mv`/`git rm` — the fixture copies are not git repos, and history
+# preservation is the skill's business (asserted above), file movement is this
+# test's.
+t14="$(fresh_copy brownfield-v1)"
+
+# The positive control: without it, every "is gone" assertion below would also
+# pass on a fixture that never had a v1 layer.
+assert_file_exists "migration: the fixture really carries the v1 rules first" \
+  "$t14/.agents/rules/task-creation.md"
+assert_file_exists "migration: ...and the v1 visual guide" "$t14/.agents/workflows.md"
+assert_file_exists "migration: ...and a v1-named journal" \
+  "$t14/project-management/CHANGELOG.md"
+
+cp -R "$t14/project-management/tasks" "$WORK_ROOT/t14-tasks-before"
+cp -R "$t14/project-management/archive" "$WORK_ROOT/t14-archive-before"
+cp "$t14/project-management/CHANGELOG.md" "$WORK_ROOT/t14-journal-before"
+
+# Step 2 — retire the v1 layer, directory included (the skill says the
+# directory itself must not survive: `update`'s guard looks for the directory,
+# not for its contents). `rm -rf`, not `rmdir`: a bare rmdir on a directory that
+# still holds something exits nonzero and, under `set -e`, would abort the whole
+# run mid-group — no FAIL line, no tally, just silence.
+rm -f "$t14"/.agents/rules/task-*.md "$t14/.agents/workflows.md"
+rm -rf "$t14/.agents/rules"
+# Step 3 — rename the journal, then point §A at the new name.
+mv "$t14/project-management/CHANGELOG.md" "$t14/project-management/LOG.md"
+sed -e 's|project-management/CHANGELOG.md|project-management/LOG.md|' \
+  "$t14/.agents/project.md" >"$WORK_ROOT/t14-glue.md"
+cat "$WORK_ROOT/t14-glue.md" >"$t14/.agents/project.md"
+# Step 4 — install v2.
+run_chisel "$CHISEL" init "$t14"
+assert_eq "migration: init on the half-migrated repo exits 0" "0" "$rc"
+
+assert_path_absent "migration: the v1 rules are gone" "$t14/.agents/rules"
+assert_path_absent "migration: the v1 visual guide is gone" "$t14/.agents/workflows.md"
+
+# The journal is MOVED, not regenerated: the entries a project wrote by hand are
+# its memory, and an installer that "creates" a journal has erased it.
+assert_file_exists "migration: the journal is there under its v2 name" \
+  "$t14/project-management/LOG.md"
+assert_path_absent "migration: and not under its v1 name" \
+  "$t14/project-management/CHANGELOG.md"
+assert_files_identical "migration: the journal's entries survive the rename byte for byte" \
+  "$WORK_ROOT/t14-journal-before" "$t14/project-management/LOG.md"
+
+# The whole point of the migration: the work already in the repo is not touched.
+if diff -r "$WORK_ROOT/t14-tasks-before" "$t14/project-management/tasks" \
+  >"$WORK_ROOT/t14-tasks.diff" 2>&1; then
+  pass "migration: every open task file is byte-intact"
+else
+  fail "migration: every open task file is byte-intact (see $WORK_ROOT/t14-tasks.diff)"
+fi
+if diff -r "$WORK_ROOT/t14-archive-before" "$t14/project-management/archive" \
+  >"$WORK_ROOT/t14-archive.diff" 2>&1; then
+  pass "migration: the archive is byte-intact"
+else
+  fail "migration: the archive is byte-intact (see $WORK_ROOT/t14-archive.diff)"
+fi
+
+# The v2 layer is posed — the files the retired ones were replaced by.
+assert_file_exists "migration: discipline.md posed" "$t14/.agents/discipline.md"
+assert_file_exists "migration: the default preset posed" \
+  "$t14/.agents/formulas/chisel-controlled.formula.toml"
+assert_file_exists "migration: the profiles posed" "$t14/.agents/profiles/mason.md"
+assert_file_exists "migration: the per-tool definitions rendered" \
+  "$t14/.claude/agents/mason.md"
+assert_file_exists "migration: the codex definitions rendered too" \
+  "$t14/.codex/agents/mason.toml"
+assert_file_exists "migration: the personal-file template posed" "$t14/.agents/user.md.tpl"
+assert_path_absent "migration: but never the personal file itself" "$t14/.agents/user.md"
+
+# The v1 router went with it: AGENTS.md's managed block is rewritten by `init`,
+# which is why the skill does not edit that file by hand.
+assert_file_not_contains "migration: AGENTS.md no longer routes to the retired rules" \
+  "$t14/AGENTS.md" ".agents/rules/"
+assert_file_contains "migration: AGENTS.md routes to the ambient core instead" \
+  "$t14/AGENTS.md" ".agents/discipline.md"
+assert_file_contains "migration: the repo's own words above the block survive" \
+  "$t14/AGENTS.md" "# Ledgerly — agent instructions"
+
+# The glue is the project's file: `init` finds one and leaves it entirely alone,
+# including the line the migration just rewrote.
+assert_file_contains "migration: the project's own glue is not clobbered by init" \
+  "$t14/.agents/project.md" "# Project glue (v1)"
+assert_file_contains "migration: its journal line now names LOG.md" \
+  "$t14/.agents/project.md" "project-management/LOG.md"
+# ...and no longer names the old one. Without this, a glue carrying BOTH lines
+# would pass: §A is a single declaration, and two of them is a repo where half
+# the socle writes to one journal and half to the other.
+assert_file_not_contains "migration: and the old name is gone from the glue" \
+  "$t14/.agents/project.md" "project-management/CHANGELOG.md"
+
+run_chisel "$CHISEL" check "$t14"
+assert_eq "migration: check is clean afterwards" "0" "$rc"
+
+# And the refusal that started all this is lifted — the migration is complete
+# exactly when the guard stops firing.
+run_chisel "$CHISEL" update "$t14"
+assert_eq "migration: update is accepted again on the migrated repo" "0" "$rc"
+
+# ---------------------------------------------------------------------------
+# 15. the journal: one name for new repos, one declared path, one hand.
+# ---------------------------------------------------------------------------
+group "15. the journal: LOG.md by default, written by hand" \
+  "a new repo gets project-management/LOG.md and never a second journal beside an existing one, and no socle text says the journal can be generated."
+
+# The default, in the two places that decide it: the skeleton the installer
+# writes (group 1's layout asserts the file) and the glue line every writer
+# resolves through.
+assert_file_contains "journal: the glue declares LOG.md by default" \
+  "$t1/.agents/project.md" '- **Changelog:** `/project-management/LOG.md`'
+assert_file_contains "journal: the skeleton says it is written by hand" \
+  "$t1/project-management/LOG.md" 'Written by hand'
+
+# A repo equipped before the default changed keeps ITS name: the installer must
+# not quietly add a second journal next to it. It says so, and names the skill
+# that does the rename properly.
+t15_legacy="$(fresh_copy brownfield)"
+mkdir -p "$t15_legacy/project-management"
+printf '# Changelog\n\n## 2026-01-01\n\n- the journal this repo already had.\n' \
+  >"$t15_legacy/project-management/CHANGELOG.md"
+cp "$t15_legacy/project-management/CHANGELOG.md" "$WORK_ROOT/t15-legacy-journal-before"
+
+run_chisel "$CHISEL" init "$t15_legacy"
+assert_eq "legacy journal: init exits 0" "0" "$rc"
+assert_path_absent "legacy journal: no second journal created beside it" \
+  "$t15_legacy/project-management/LOG.md"
+assert_files_identical "legacy journal: the existing one is byte-intact" \
+  "$WORK_ROOT/t15-legacy-journal-before" "$t15_legacy/project-management/CHANGELOG.md"
+assert_file_contains "legacy journal: init says so and names the migration skill" \
+  "$WORK_ROOT/last.log" "upgrade-v2"
+# ...and the glue it just wrote points at the journal that EXISTS. Without this,
+# `init` hands a fresh repo a §A naming a file it deliberately did not create —
+# a glue that is wrong the second it is written, and every text that resolves
+# the journal through §A follows it there.
+assert_file_contains "legacy journal: the new glue declares the journal that is really there" \
+  "$t15_legacy/.agents/project.md" '- **Changelog:** `/project-management/CHANGELOG.md`'
+assert_file_not_contains "legacy journal: and does not declare the one that is not" \
+  "$t15_legacy/.agents/project.md" '- **Changelog:** `/project-management/LOG.md`'
+
+# No socle text sends a NEW project to a `CHANGELOG.md`. The two files that may
+# name one are listed here by name, not excused by a regex: `sync-upstream` runs
+# in the chisel repo itself, which keeps its own journal under the old name, and
+# `upgrade-v2` has to name the file it renames. A third one appearing is the
+# default leaking back.
+changelog_citers="$( (cd "$REPO_ROOT" && grep -rlF 'project-management/CHANGELOG.md' socle || true) |
+  LC_ALL=C sort | tr '\n' ' ')"
+assert_eq "journal: only the two socle files that must name a CHANGELOG.md do" \
+  "socle/agents/skills/sync-upstream/SKILL.md socle/agents/skills/upgrade-v2/SKILL.md " \
+  "$changelog_citers"
+assert_file_contains "journal: ...and the sync skill says whose journal that is" \
+  "$REPO_ROOT/socle/agents/skills/sync-upstream/SKILL.md" "the chisel repo's own"
+assert_file_contains "journal: ...and the migration skill names it only to rename it" \
+  "$upgrade_skill" 'git mv project-management/CHANGELOG.md'
+
+# The journal is never generated from a coordination database's audit trail
+# (fb-3kk.13). Asserted as an invariant rather than as one needle in one file:
+# every socle text that raises the SUBJECT — an audit trail, or generating the
+# journal at all — must also rule the generation out. So the day someone writes
+# "we could generate the log from the trail", the suite says no. The trigger
+# list is prose-shaped and therefore not exhaustive; it catches the phrasings
+# the decision was actually argued in.
+journal_source_re='audit trail|generate the (journal|log|changelog)|generated (journal|log|changelog)'
+# The rule itself, in the one place the journal's path is declared — that is the
+# assertion that says it EXISTS.
+assert_file_contains "journal: the rule is written where the journal's path is declared" \
+  "$REPO_ROOT/socle/agents/project.md.tpl" 'never generated'
+# The sweep is the other half: it says nothing ELSE in the socle raises the
+# subject without ruling it out. `while read`, not `for` over an unquoted
+# variable — a checkout under a path with a space would otherwise split into
+# nonsense filenames and pass.
+generation_hits=""
+while IFS= read -r rel; do
+  [ -n "$rel" ] || continue
+  grep -qF 'never generated' "$rel" || generation_hits="$generation_hits $rel"
+done <<EOF
+$(grep -rliE "$journal_source_re" "$REPO_ROOT/socle" || true)
+EOF
+assert_eq "journal: no socle text raises generating the journal without ruling it out" \
+  "" "$generation_hits"
 
 printf '\n=== %d scenarios, %d assertions passed, %d failed ===\n' \
   "$scenario_count" "$pass_count" "$fail_count"

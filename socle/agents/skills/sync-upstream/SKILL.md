@@ -69,8 +69,10 @@ unplugging):
   `x-upstream: none`).
 - Update that skill's entry in `upstream.lock.json` to match (or to the
   string `"none"` if unplugged).
-- Add a dated line to `project-management/CHANGELOG.md` naming the skill and
-  summarizing what was absorbed from upstream (or why it was unplugged).
+- Add a dated line to the chisel repo's own `project-management/CHANGELOG.md`
+  (that repo keeps the name; equipped projects declare theirs in §A of their
+  glue) naming the skill and summarizing what was absorbed from upstream (or
+  why it was unplugged).
 
 Move to the next drifted skill and repeat Step 2. Do not batch these updates
 across skills — each skill's frontmatter, lock entry, and changelog line land

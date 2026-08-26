@@ -5,6 +5,78 @@ ships.
 
 ---
 
+## 15. 2026-08-26 — v2 slice 06: the way off v1, and the journal called LOG.md
+
+Summary of the session:
+
+1. Slice 06 of task `20260826-1512-chisel-v2` delivered, except its two pilot
+   criteria (below). It fills the door slice 08 opened: `chisel update` refuses
+   a v1 layout and names `upgrade-v2` — that skill now exists.
+2. **`socle/agents/skills/upgrade-v2/SKILL.md`.** The v1→v2 migration as a
+   skill, not as machinery in the installer (fb-3kk.10): preconditions (clean
+   tree, the v1 layer really present, the human present), inventory stated as
+   facts, then retire the retired layer, rename the journal with `git mv`,
+   run `init` to pose the v2 files, complete the glue's new sections with the
+   `chisel-setup` screens, verify, and hand the human one diff to validate.
+   The order is load-bearing: retire before installing (or the repo briefly
+   holds the two normative discourses the guard exists to forbid), rename
+   before installing (or the skeleton lays a second journal beside the first).
+   Task files and the archive are never touched — that is the first thing the
+   skill says and the last thing it verifies.
+3. **`LOG.md` is the journal's name for new projects.** The skeleton in
+   `bin/chisel.sh` and §A of the glue template both say `LOG.md`; a repo's
+   `CHANGELOG.md` usually belongs to its releases, and this is a different
+   document. Repos already equipped are untouched: §A is the single
+   indirection every step and skill resolves the journal through, so a repo
+   whose glue says `CHANGELOG.md` keeps writing there. And the skeleton now
+   REFUSES to create a second journal when a `CHANGELOG.md` is already sitting
+   in the workspace — it says so and names `upgrade-v2`, the same stance
+   `update` takes on a v1 layout; when that happens on a repo `init` is also
+   giving its first glue, §A is written pointing at the journal that actually
+   exists, never at the one the installer declined to create.
+4. **The journal stays handwritten.** One dated entry per task, added by the
+   agent at the end of the work — never generated from a coordination
+   database's audit trail, from the git history, or from anything else
+   (fb-3kk.13). The rule is written in §A of the glue, where the journal's path
+   is declared, and the suite holds it as an invariant: every socle text that
+   mentions an audit trail must also rule the generation out. ADR records are
+   untouched by any of this.
+5. **Two new test scenarios, 15 in all.** Group 14 replays the skill's
+   mechanical steps on the `brownfield-v1` fixture — which grew the task
+   workspace a real v1 repo has — and reads the result off the tree: the
+   retired layer gone, the journal moved with its entries byte-identical, the
+   v2 layer posed, the project's own glue not clobbered, every task file and
+   archived file byte-intact, `check` clean, and the refused `update` accepted
+   again. Group 15 holds the journal's default and the no-generation rule.
+   Each step the replay performs is also asserted to be PRESCRIBED by the
+   skill, so prose and mechanics cannot drift apart in silence. Group 12 also
+   gained a forcing function it had lost: since the migration skill must name
+   the layer it retires, the two v1 waiver lines can no longer expire, so the
+   group now asserts WHICH files may cite that layer — `methodology.md` is on
+   the list until slice 07 rewrites it, and the day it does, the suite asks for
+   the line to go.
+6. **The review round changed things.** The standards axis found that a repo
+   following the skill's own advice — keeping a locally-added rule in the
+   retired directory — would be refused by `update` forever and turned away by
+   this skill's Step 0: a closed loop. Closed on the skill's side (the directory
+   must not survive; a kept rule moves out), not by weakening slice 08's guard.
+   It also found `init` writing a §A that pointed at a journal it had just
+   declined to create, and a cleanup instruction that would have deleted a
+   managed file and made `check` fail. Both fixed, both now asserted.
+7. **Not delivered, and not claimed**: the pilot migration and the parity
+   re-verification (the slice's AC3 and AC4, and the parent's third criterion).
+   They need real repos and a human reading a real diff — evea-ai by the Owner,
+   music-downloader by its own agent. The handoff is written in the slice's
+   Notes; the two boxes stay unticked.
+
+Handed to slice 07 with it: `methodology.md` still names the retired layer and
+the old journal, the glue field is still labelled `Changelog` (its VALUE is
+`LOG.md` — renaming the field would orphan three normative files that resolve
+it by prose), and the referential-integrity waiver's two v1 lines are now
+permanent, since the migration skill has to name what it retires.
+
+---
+
 ## 14. 2026-08-26 — v2 slice 08: post-audit hardening — the installer refuses, the suite is readable
 
 Summary of the session:
