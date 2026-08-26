@@ -70,7 +70,66 @@ Changes:
 
 ## Design — persisted at plan time
 
-_To be filled at the plan gate._
+**D1 — two steps; each new body is ONE string, byte-identical in the 3 files.**
+`spec` → **`spec-review`** → `plan` → **`design-check`** → `type`; rewire
+`needs` only, ids 7 → 9. No mode-specific paragraph: escalation says "the owner
+of the spec / of the plan" — right in all 3 modes (🧑 = zone owner).
+- `spec-review` (`needs=["spec"]`; `plan` needs it) — *a SECOND Architect
+  (frontier), FRESH session, never the author of {{spec}}. Reads TWO things and
+  nothing else, the Brief and {{spec}}: a spec needing more context is itself a
+  finding. Verdict GO, or blocking findings in the Notes of {{spec}}. Loop with
+  the author, TWO rounds MAX; still blocked after the second → escalate to the
+  OWNER of the spec, never a third round.*
+- `design-check` (`needs=["plan"]`; `type` needs it) — *the Mason (cheap) posts
+  its PROGRAM DESIGN, 40 lines MAX, into the Design section of {{spec}}: files,
+  seam signatures, TDD order — no code typed here. The Architect who owns the
+  plan reads the slice and that design only, answers VALIDATED or corrections.
+  TWO rounds MAX, then back to the plan's owner as a finding AGAINST THE PLAN,
+  never against the Mason. Typing needs VALIDATED.*
+
+**D2 — gates stay 3/1/0, exactly one MOVES.** Both gated presets keep "spec
+approved" on `plan`, now after the loop — the human approves a spec two
+Architects already agree on. In `chisel-controlled` "plan approved + typist
+chosen" moves `type` → `design-check`: the gate belongs to the step that waits,
+no Mason designs before the plan is approved.
+
+**D3 — profiles.** `architect.md`, new `## Reviewer duties` after `## Tier`:
+spec-review of a PEER's spec (2 rounds → the spec's owner), design-check of a
+Mason's ≤40-line design (2 rounds → a finding against the plan), + prohibition
+"never reviews a spec it authored". `mason.md`, new `## Speed contract` before
+`## Prohibitions`: types from a VALIDATED design, ZERO open question while
+typing (an open question is a report through the proposal door), **commits at
+every green step**, worklog ≤40 / journal ≤8 lines, Mason ≥ half the slice
+spend, mutation testing only on a reviewer's named doubt.
+
+**D4 — memory ban + close.** `discipline.md` rule 8: "**The repo is the only
+memory.** Never store project knowledge in a harness memory (auto-memory or any
+equivalent outside the repo); it goes in the repo's files, visible to review and
+git. Lessons about the way of working go through `to-lessons` at close." The 3
+`close` bodies gain ONE identical sentence, same anchor (after evergreen
+promotion): run `to-lessons`, sort by gravity, PROPOSE to each touched zone's
+owner; accepted ones are written in.
+
+**D5 — `to-lessons`** (`socle/agents/skills/to-lessons/SKILL.md`). KEEP from
+upstream `retro`: the 7 categories (navigation, automated checks, coding
+standards, AGENTS.md hygiene, tool economy, no-ops, information access) and "in
+order of severity". ADAPT: drop the `writing-for-agents` call (not vendored →
+`writing-great-skills`); sources are repo artifacts, never harness session logs
+(D4); targets resolve via `.agents/project.md`. ADD: each proposal names target
+file + zone owner, **nothing is auto-applied**, deferred ones get a dated line;
+drop `disable-model-invocation`. `x-upstream` = repo
+`mattpocock/skills`, path `skills/in-progress/retro`, sha
+`6654f6b60cd9d5be8b54c6fafe44346dabeb3b76` (NOT the set's `2ab9580` — retro 404s
+there), same triple in `upstream.lock.json`.
+
+**D6 — order, one commit per green step.** (1) rule 8. (2) formulas ×3 **and**
+`test/installer.sh` in the SAME commit — two EXISTING values updated, `7`→`9`
+and `"chisel-controlled": ["plan","design-check","close"]` (else the parse test
+is red). (3) profiles + regenerate renders. (4) `to-lessons` + lock entry.
+Budget: 0 new assertions in 1–3, ≤2 in 4, no grep-on-prose. **Interdits:**
+nothing beyond that test budget, no prose-pin; do NOT rewrite `methodology.md` nor
+rename the formulas (slice 07); do NOT touch `inspector.md`; never a third round
+nor a mode-specific paragraph in the two new bodies.
 
 ---
 
