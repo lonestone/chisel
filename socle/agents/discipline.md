@@ -42,7 +42,7 @@ the only difference is the paperwork.
 8. **The repo is the only memory.** Never store project knowledge in a
    harness memory (auto-memory or any equivalent outside the repo); it goes in
    the repo's files, visible to review and git. Lessons about the way of
-   working go through `to-lessons` at close.
+   working go through `retro` at close.
 
 ## The pipeline, for real scoped work
 

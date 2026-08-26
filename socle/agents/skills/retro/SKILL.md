@@ -1,5 +1,5 @@
 ---
-name: to-lessons
+name: retro
 description: At the end of a workflow, evaluate the session and propose improvements to the WORKING RULES (not the code) — navigation, automated checks, coding standards, AGENTS.md hygiene, tool economy, no-ops, information access — sorted by severity. Invoked by the `close` step of every formula. Never auto-applies anything; the human or the touched zone's owner accepts each proposal.
 x-upstream:
   repo: mattpocock/skills
