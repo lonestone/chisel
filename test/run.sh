@@ -187,6 +187,14 @@ assert_full_layout() {
     "$target/.agents/project.md" '- [x] `CLAUDE.md`'
   assert_file_contains "[$target] project.md §E: skills symlink ticked" \
     "$target/.agents/project.md" '- [x] `.claude/skills`'
+  assert_file_contains "[$target] project.md §E: claude agent definitions ticked" \
+    "$target/.agents/project.md" '- [x] `.claude/agents`'
+  assert_file_contains "[$target] project.md §E: codex agent definitions ticked" \
+    "$target/.agents/project.md" '- [x] `.codex/agents`'
+  # The personal file's TEMPLATE is installed (any dev poses their own from
+  # it); the personal file itself never is.
+  assert_file_exists "[$target] .agents/user.md.tpl" "$target/.agents/user.md.tpl"
+  assert_path_absent "[$target] no personal .agents/user.md" "$target/.agents/user.md"
   assert_file_exists "[$target] .agents/.chisel.json manifest" "$target/.agents/.chisel.json"
   assert_dir_exists "[$target] project-management/tasks" "$target/project-management/tasks"
   assert_dir_exists "[$target] project-management/archive" "$target/project-management/archive"
@@ -776,17 +784,22 @@ else
   pass "user.md: the example mapping is commented out (an untouched copy overrides nothing)"
 fi
 
-# `user.md` is personal: a shared installer never writes one, and never ships
-# the template into the equipped repo either.
+# `user.md` is personal: a shared installer never writes one. The TEMPLATE, on
+# the other hand, is socle text and IS installed — that is what lets the setup
+# and every later dev pose their own copy with no package and no network
+# (slice 04, D0.3; slice 03 had assumed the setup could reach the socle's own
+# copy, which a repo equipped by `npx` cannot).
 assert_path_absent "init: no personal .agents/user.md posed (brownfield)" "$t1/.agents/user.md"
 assert_path_absent "init: no personal .agents/user.md posed (boilerplate)" "$t3/.agents/user.md"
-assert_path_absent "init: the user.md template stays in the socle" "$t1/.agents/user.md.tpl"
+assert_file_exists "init: the user.md template is installed to copy from" "$t1/.agents/user.md.tpl"
+assert_files_identical "init: the installed template is the socle's, byte for byte" \
+  "$t1/.agents/user.md.tpl" "$REPO_ROOT/socle/agents/user.md.tpl"
 
-# `update` does not create one either — t4 was init'ed and updated above and
-# never had a personal file: a dev who has written none still has none after
-# an upgrade, and still resolves through the glue and the socle default.
+# `update` does not create a personal file either — t4 was init'ed and updated
+# above and never had one: a dev who has written none still has none after an
+# upgrade, and still resolves through the glue and the socle default.
 assert_path_absent "update: no personal .agents/user.md conjured up" "$t4/.agents/user.md"
-assert_path_absent "update: the user.md template stays in the socle" "$t4/.agents/user.md.tpl"
+assert_file_exists "update: the user.md template is still there" "$t4/.agents/user.md.tpl"
 
 # ...and once a dev HAS written theirs, update never touches it and check
 # never flags it (it is not a managed file).
@@ -804,6 +817,230 @@ assert_files_identical "user.md: update leaves the personal file byte-intact" \
 
 run_chisel "$CHISEL" check "$t8"
 assert_eq "user.md: check stays clean with a personal file present" "0" "$rc"
+
+# ---------------------------------------------------------------------------
+# 10. setup v2: the case is chosen in the glue (§B1/B2/B3), the adapters are
+#     fully inventoried (§E), the team tier mapping exists (§H), and the
+#     questionnaire asks all of it in the user's language. The glue shape is
+#     read off the INSTALLED tree (what an equipped repo gets); the wording
+#     rule is read off the skill source, which is the same file byte for byte.
+# ---------------------------------------------------------------------------
+printf '\n-- 10. setup v2: the case, the glue, the personal file --\n'
+
+glue="$t1/.agents/project.md"
+setup_skill="$REPO_ROOT/socle/agents/skills/chisel-setup/SKILL.md"
+
+# What a reader of a DEFAULT `project.md` actually sees: the glue with its HTML
+# comments removed (strip_html_comments is group 9's). The rules that bind
+# every reader — the refusal, the open list, the mechanism — must survive this
+# stripping; the "what to write instead when you pick the other case" guidance
+# may stay in a comment.
+strip_html_comments "$glue" >"$WORK_ROOT/glue-visible.txt"
+
+# §B keeps its letter — both formulas and discipline.md point at "§B" — and
+# carries the three decisions as sub-sections.
+assert_file_contains "glue: §B is still one section, by letter" "$glue" '## B · Coordination'
+assert_file_contains "glue: B1 asks where statuses live" "$glue" '### B1 · Where task statuses live'
+assert_file_contains "glue: B2 is the external-tracker bridge" "$glue" \
+  '### B2 · Link to an external tracker'
+assert_file_contains "glue: B3 is the autonomous-run switch" "$glue" '### B3 · Autonomous runs'
+
+# The three documented defaults, on a fixture where the user accepted
+# everything (an untouched init IS that case).
+assert_file_contains "defaults: B1 = statuses in the task files" "$glue" \
+  '**Statuses: in the task files.**'
+assert_file_contains "defaults: B2 = no external tracker" "$glue" \
+  '**External tracker: none.**'
+assert_file_contains "defaults: B3 = autonomous runs disabled" "$glue" \
+  '**Autonomous runs: disabled.**'
+
+# B1 documents all three cases, and the server case is pitched for ONE machine
+# with several agents — never as the answer to "we are several people". The
+# existence of the two other cases is VISIBLE (a reader of the default file
+# knows there is a choice); their full wording is guidance, and may be a comment.
+assert_file_contains "B1: the other two cases are visible, not buried in a comment" \
+  "$WORK_ROOT/glue-visible.txt" '- **Other cases:**'
+assert_file_contains "B1: the visible line scopes the served case to one machine" \
+  "$WORK_ROOT/glue-visible.txt" 'running at once on ONE'
+assert_file_contains "B1: the committed-database case is documented" "$glue" \
+  'a database committed next to the files'
+assert_file_contains "B1: the server case is scoped to one machine" "$glue" \
+  'machine running several agents at the same time'
+assert_file_contains "B1: the server case is disclaimed for multi-dev" "$glue" \
+  'It is NOT the answer to "we are several people"'
+assert_file_contains "B1: the prerequisite version is named" "$glue" '1.2.2 or newer'
+
+# The choice and the state on disk are two facts: the default says outright
+# there is nothing to initialise, and the database cases carry a checkbox that
+# only the initialisation step ticks.
+assert_file_contains "B1: the default states there is nothing to initialise" "$glue" \
+  '- **State:** the task files ARE the state'
+assert_file_contains "B1: a database case carries an unticked initialised line" "$glue" \
+  '`- [ ] initialised`'
+assert_file_contains "B1: creating the database is a separate, named step" "$glue" \
+  'is a separate, named step of the setup'
+
+# B2 is a MECHANISM plus an open list, not a menu of three — and the open-list
+# rule is the part every reader must see, so it is asserted on the visible text.
+assert_file_contains "B2: the open list is visible, not buried in a comment" \
+  "$WORK_ROOT/glue-visible.txt" '**The list of trackers is open.**'
+assert_file_contains "B2: adding one is one adapter page, no toolkit change" \
+  "$WORK_ROOT/glue-visible.txt" 'writing one adapter page'
+assert_file_contains "B2: an adapter page has a declared home" \
+  "$WORK_ROOT/glue-visible.txt" '- **Adapter page:**'
+assert_file_contains "B2: the link travels in external_ref when there is a database" \
+  "$glue" 'external_ref'
+assert_file_contains "B2: the link travels in the task file otherwise" "$glue" \
+  '**Ticket:** <url>'
+
+# B3 is the authorization: the glue REFUSES in the imperative while it reads
+# disabled, says what enabling changes, and the two delivered texts that route
+# an autonomous run send the reader here. Both halves of the switch are visible
+# prose — this is the one line an agent must be able to read at a glance.
+assert_file_contains "B3: the glue refuses an autonomous run when disabled" \
+  "$WORK_ROOT/glue-visible.txt" 'must **refuse**'
+assert_file_contains "B3: the glue says what enabling changes" \
+  "$WORK_ROOT/glue-visible.txt" 'and such a run **proceeds**'
+assert_file_contains "B3: enabled is still never the default posture" \
+  "$WORK_ROOT/glue-visible.txt" 'it never becomes'
+assert_file_contains "B3: nobody may grant it in-session" \
+  "$WORK_ROOT/glue-visible.txt" 'Nobody may grant themselves the'
+assert_file_contains "B3: the router defers to the project glue" "$t1/AGENTS.md" \
+  'project glue allows it'
+assert_file_contains "B3: the auto pipeline defers to the project glue" \
+  "$t1/.agents/formulas/chisel-auto.formula.toml" 'project glue enables it'
+
+# --- AC 2, mechanised: the wording the USER is shown -----------------------
+# Everything the questionnaire puts on screen is a blockquote in the skill (the
+# skill says so itself). Extract exactly that, strip code spans — a command or
+# an adapter path is a fact, not jargon — and hold the rest to plain language.
+grep '^>' "$setup_skill" | sed -e 's|`[^`]*`||g' >"$WORK_ROOT/setup-shown.txt" || true
+shown_lines="$(wc -l <"$WORK_ROOT/setup-shown.txt" | tr -d ' ')"
+if [ "$shown_lines" -gt 30 ]; then
+  pass "setup: the user-facing screens are extractable (blockquote convention)"
+else
+  fail "setup: the user-facing screens are extractable (blockquote convention) (got $shown_lines lines)"
+fi
+assert_file_contains "setup: the blockquote convention is stated in the skill" \
+  "$setup_skill" 'quoted as a **blockquote**'
+# grep -c counts matching LINES, not occurrences — only the comparison to zero
+# is meaningful here, which is exactly the assertion being made.
+jargon_hits="$(grep -ciE 'ledger|formula|bead' "$WORK_ROOT/setup-shown.txt" || true)"
+assert_eq "setup: no toolkit jargon on screen (ledger / formula / bead)" "0" "$jargon_hits"
+# ...and no section letters or internal file names either: the letters are for
+# the file, not for the reader.
+letter_hits="$(grep -cE '§[A-H]|project\.md|\.agents/project' "$WORK_ROOT/setup-shown.txt" || true)"
+assert_eq "setup: no section letters or glue paths on screen" "0" "$letter_hits"
+
+# Every option the user is offered explains itself: a bolded choice, then an em
+# dash, then what it buys and what it costs — all on the option's own line. The
+# needle is `** — ` (the bold CLOSING), so a dash inside the label alone does
+# not satisfy it. The count is over the whole questionnaire; only §B offers
+# numbered options today, and that is 3 + 3 + 2.
+grep -E '^> *[0-9]+\. \*\*' "$WORK_ROOT/setup-shown.txt" >"$WORK_ROOT/setup-options.txt" || true
+option_count="$(wc -l <"$WORK_ROOT/setup-options.txt" | tr -d ' ')"
+assert_eq "setup: the questionnaire offers exactly 8 numbered options (3 + 3 + 2)" \
+  "8" "$option_count"
+unexplained=""
+while IFS= read -r opt_line; do
+  [ -n "$opt_line" ] || continue
+  case "$opt_line" in
+    *'** — '*) ;;
+    *) unexplained="$unexplained|$opt_line" ;;
+  esac
+done <"$WORK_ROOT/setup-options.txt"
+assert_eq "setup: every option carries its one-line explanation" "" "$unexplained"
+
+# --- the questionnaire's shape --------------------------------------------
+assert_file_contains "setup: walks A through H" "$setup_skill" 'sections A through H'
+assert_file_contains "setup: one section per message, still" "$setup_skill" \
+  'Never present two sections in the same message.'
+assert_file_contains "setup: §B is three messages, not one screen" "$setup_skill" \
+  'are three separate messages, not one screen'
+assert_file_contains "setup: §E stays read-back only" "$setup_skill" \
+  '§E is read-back only, never asked'
+assert_file_contains "setup: §E reads back all five adapters" "$setup_skill" \
+  'which of the five adapters are present'
+assert_file_contains "setup: a sub-section write span is bounded" "$setup_skill" \
+  'whichever comes first'
+assert_file_contains "setup: answering one sub-question leaves the others alone" \
+  "$setup_skill" 'must leave B1 and B3 byte-identical'
+assert_file_contains "setup: still never rewrites the whole file" "$setup_skill" \
+  '**Never rewrite the whole file.**'
+# The open list has no built-in exceptions: choosing a listed tracker writes an
+# adapter page exactly like choosing an unlisted one — the socle ships none.
+assert_file_contains "B2 branch: every tracker, listed or not, needs its adapter page" \
+  "$setup_skill" 'means writing the adapter page'
+assert_file_contains "B2 branch: the page is written before the next question" \
+  "$setup_skill" 'now, before moving to §B3'
+assert_file_contains "B2 branch: never a path to a page that does not exist" \
+  "$setup_skill" 'never as a path to a page that does not exist'
+
+# --- B1 = a database: check, never install, never execute ------------------
+assert_file_contains "B1 branch: a minimum version is checked" "$setup_skill" \
+  'the minimum version is'
+assert_file_contains "B1 branch: that minimum is 1.2.2" "$setup_skill" '**1.2.2**'
+assert_file_contains "B1 branch: the setup never installs the tool" "$setup_skill" \
+  'never install it yourself'
+assert_file_contains "B1 branch: it shows the install command instead" "$setup_skill" \
+  'install.sh'
+assert_file_contains "B1 branch: it offers the task files as the fallback" "$setup_skill" \
+  'keep the statuses in the task files for now'
+assert_file_contains "B1 branch: it says the upgrade is tooled" "$setup_skill" \
+  'Moving to the database later is tooled'
+assert_file_contains "B1 branch: it records the choice and stops" "$setup_skill" \
+  'Record the choice, and stop there'
+# The execution belongs to the coordination-convention slice: this
+# questionnaire must not run a command that creates state.
+assert_file_not_contains "B1 branch: the questionnaire never initialises anything" \
+  "$setup_skill" 'bd init'
+assert_file_not_contains "B1 branch: the questionnaire creates no records" \
+  "$setup_skill" 'bd create'
+
+# --- the personal file ------------------------------------------------------
+assert_file_contains "user.md: the setup poses it from the installed template" \
+  "$setup_skill" 'copy `.agents/user.md.tpl` to `.agents/user.md`'
+assert_file_contains "user.md: an existing one is never clobbered" "$setup_skill" \
+  'it is never overwritten'
+assert_file_contains "user.md: the setup adds the ignore rule" "$setup_skill" \
+  '`.gitignore`'
+assert_file_contains "user.md: the ignore line is appended once, not per run" \
+  "$setup_skill" 'never a duplicate line'
+assert_file_contains "user.md: the next dev's path is documented and light" \
+  "$setup_skill" 'This step stands alone.'
+
+# --- §H, the cascade's middle rung -----------------------------------------
+assert_file_contains "glue: §H exists" "$glue" '## H · Model tiers'
+assert_file_contains "glue: §H is unset by default" "$glue" '**Team mapping:** _(not set'
+assert_file_contains "glue: §H points at the one normative place" "$glue" \
+  'Model tiers (and how they resolve)'
+# ...and does NOT become a second normative source: the heading that carries
+# the rule stays methodology.md's alone (group 9 asserts the other direction).
+assert_file_not_contains "glue: §H does not restate the rule" "$glue" \
+  '## Model tiers (and how they resolve)'
+assert_file_contains "setup: §H is asked, with 'unset' as the recommendation" \
+  "$setup_skill" 'Recommended: **leave it unset**'
+
+# --- neutrality of the two files this slice rewrites -------------------------
+# Same two accumulators as groups 7 and 8, so a hit reads the same way
+# everywhere. Relative literals joined to their root inside the loop — a repo
+# path containing a space must not word-split the list.
+setup_label_hits=""
+setup_model_hits=""
+for rel in socle/agents/project.md.tpl \
+  socle/agents/skills/chisel-setup/SKILL.md; do
+  f="$REPO_ROOT/$rel"
+  if grep -Eq 'W0|W1|W2' "$f"; then
+    setup_label_hits="$setup_label_hits $rel"
+  fi
+  if grep -Eiq "$model_name_re" "$f"; then
+    setup_model_hits="$setup_model_hits $rel"
+  fi
+done
+assert_eq "neutrality: no W0/W1/W2 mode label in the glue or the questionnaire" \
+  "" "$setup_label_hits"
+assert_eq "neutrality: no model name in the glue or the questionnaire" \
+  "" "$setup_model_hits"
 
 printf '\n=== %d passed, %d failed ===\n' "$pass_count" "$fail_count"
 [ "$fail_count" -eq 0 ]

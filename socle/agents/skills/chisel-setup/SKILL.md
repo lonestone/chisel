@@ -1,15 +1,27 @@
 ---
 name: chisel-setup
-description: Fill in .agents/project.md — the per-repo glue — after `chisel init`. Explores the repo, prefills sections A-G, presents each one at a time for confirmation, and writes accepted sections back surgically. Re-runnable later to revisit any section.
+description: Fill in .agents/project.md — the per-repo glue — after `chisel init`. Explores the repo, prefills sections A-H, presents each one at a time for confirmation, and writes accepted sections back surgically. Also poses the current dev's personal .agents/user.md. Re-runnable later to revisit any section.
 disable-model-invocation: true
 ---
 
 # Chisel setup
 
-Turn `.agents/project.md.tpl`'s defaults into this repo's actual glue. One
-pass, sections A through G, each confirmed before the next. Re-running later
-to revisit a section is normal — treat the current file as the starting
-recommendation, not as done-forever.
+Turn `.agents/project.md.tpl`'s defaults into this repo's actual glue, and pose
+the current dev's personal file. One pass, sections A through H, each confirmed
+before the next. Re-running later to revisit a single section is normal — treat
+the current file as the starting recommendation, not as done-forever.
+
+## How to talk to the user here
+
+Everything the user is shown is quoted as a **blockquote** in this file. That
+is not decoration: it is the boundary between what the user reads and what you
+read, and it is what makes the rule below checkable.
+
+**Speak the user's language, not the toolkit's.** On screen: no "glue", no
+"socle", no "ledger", no "formula", no "bead", no section letters, no field
+names. Every option gets one line saying what it buys and what it costs, in
+words someone who has never read this repo would understand. The letters (§A,
+§B1…) are for the file and for you.
 
 ## Step 0 — Precondition
 
@@ -34,30 +46,39 @@ facts when you reach the section they affect.
 - **Existing task workspace from a previous methodology** (e.g. a
   `doc/project-management/` from an earlier convention): if one exists,
   flag it for §A instead of silently assuming the default root.
+- **`bd --version`**: run it, record what it says (or that the command does not
+  exist), and do nothing else with it. It feeds §B1's prerequisite screen only.
+  Never install anything.
+- **`.beads/`**: if the directory already exists, this repo already keeps its
+  statuses in a database — §B1's recommendation becomes "keep what you have".
+- **`.agents/user.md`**: if it already exists, Step 5 reports it and touches
+  nothing.
 
 **Fact vs decision** (same discipline as the `grilling` skill): what the scan
 established is *stated* to the user, not asked. Only genuine decisions —
 things the scan cannot determine on its own, or choices with real
 alternatives — get a question.
 
-## Step 2 — Walk sections A through G, one at a time
+## Step 2 — Walk sections A through H, one at a time
 
 For each section, in letter order:
 
 1. State any relevant facts from Step 1's scan.
-2. Give your **recommended** value — prefilled from the scan plus the D5
-   questionnaire defaults (root `/project-management/`; tracker local
-   markdown; boilerplate reading list into `apps/documentation`; living docs
-   = `apps/documentation` for boilerplate else `doc/**`; gate commands from
-   `package.json`; glossary/ADRs into `apps/documentation` for boilerplate
-   else root `CONTEXT.md` + `docs/adr/`).
+2. Give your **recommended** value — prefilled from the scan plus the
+   questionnaire defaults (root `/project-management/`; statuses in the task
+   files; no external tracker; autonomous runs disabled; boilerplate reading
+   list into `apps/documentation`; living docs = `apps/documentation` for
+   boilerplate else `doc/**`; gate commands from `package.json`; glossary/ADRs
+   into `apps/documentation` for boilerplate else root `CONTEXT.md` +
+   `docs/adr/`; model tiers unset).
 3. Wait for the user's answer before moving to the next section. Accepting a
    recommendation in one word ("yes", "ok", "sounds good") is enough to move
    on — do not demand elaboration when the user is happy with the default.
 
 **Never present two sections in the same message.** Each section gets its
 own turn, exactly like the grilling discipline this skill borrows: one
-question, wait, then the next.
+question, wait, then the next. §B is three questions — B1, B2, B3 — and they
+are three separate messages, not one screen with three headings.
 
 Per-mode prefills:
 
@@ -73,13 +94,110 @@ Per-mode prefills:
 
 Skip §E entirely here — see Step 3.
 
+### §B1 — ask this, verbatim
+
+> **Where do your tasks' statuses live?**
+>
+> Today every task is a markdown file in this repo, and its status is a line
+> inside that file. That works, and most projects should keep it.
+>
+> 1. **In the task files** — nothing to install, everything shows up in a
+>    normal diff, and two people can only collide on the same file. The cost:
+>    nothing can tell an agent "these three tasks are ready to start" without
+>    reading them all.
+> 2. **In a small database committed next to them** — the files still hold the
+>    content; a tool keeps the statuses and what-blocks-what, so "what is ready
+>    to start?" is one command instead of a reading session. The cost: one tool
+>    to install, and one habit — pull when you start, push when you stop.
+> 3. **The same database, with a background service** — worth it only if you
+>    run several agents at the same time on the same machine and they would
+>    otherwise trip over each other. It is not what makes a team work: for
+>    several people on several machines, option 2 is already the answer.
+>
+> You can move from 1 to 2 later: that move is tooled and only touches tasks
+> that are still open. Moving back is a `git revert` on the spot; later than
+> that, it is by hand.
+>
+> Recommended: **1 — in the task files**.
+
+Option 3 is never presented as the answer to "we are several developers". If
+the user says they are a team, the answer is option 2.
+
+If the answer is option 2 or 3, run **Step 6** before moving on to §B2.
+
+### §B2 — ask this, verbatim
+
+> **Should tasks here point back to tickets in another tool?**
+>
+> Some teams keep their client discussion, or their bug reports, somewhere
+> else. Each task can carry a link back to the ticket it came from, so a reader
+> can jump between the two. Nothing is copied or synchronised: the task file
+> stays the place where the work is described.
+>
+> 1. **No link** — tasks live here and nowhere else.
+> 2. **GitHub Issues** — each task records the issue it came from.
+> 3. **Plane** — the same, with a Plane work item.
+>
+> Another tool can be added later without changing anything in the toolkit: it
+> takes one page saying how to read a ticket there and where to write the link
+> back. This list is open, not a menu of three.
+>
+> Recommended: **1 — no link**.
+
+**Any answer other than "no link" means writing the adapter page** — including
+GitHub and Plane, which the socle ships no page for: the list being open means
+every tracker is wired the same way, not that two of them are built in. Write it
+with the user, now, before moving to §B3:
+
+- where it lives: with the living docs declared in §D (say the path out loud);
+- what it holds: how to find and read a ticket in that tool, what to copy into
+  the task file when a task comes from one, and what (if anything) goes back;
+- then name it on §B2's **Adapter page** line, together with the tracker and
+  where the link back is written.
+
+If the user names a tool that is not on the list, the answer is the same three
+bullets — do not improvise a wiring, and do not refuse. If they would rather not
+write the page now, record the tracker and leave the Adapter page line as
+`_(to write)_` — never as a path to a page that does not exist.
+
+### §B3 — ask this, verbatim
+
+> **May an agent run a whole task here without stopping to ask you?**
+>
+> By default an agent working on a real task stops and waits for you three
+> times: once the spec is written, once the plan is written, and once the
+> review comes back. Turning this on lets it pass those three points on its
+> own — and only when someone asks for that explicitly in the session. It never
+> becomes the normal way of working.
+>
+> 1. **No** — an agent asked to run on its own is refused, and says so.
+> 2. **Yes** — allowed. Worth it on a repo where you would rather review a
+>    finished branch than a plan.
+>
+> This is one line in the project's settings: turning it on or off later is a
+> one-word edit, nothing to migrate.
+>
+> Recommended: **1 — no**.
+
+### §H — ask this, verbatim
+
+> **Does the team want to pin which model does which kind of work?**
+>
+> The toolkit asks for a *level* rather than a name — the strongest model for
+> thinking and reviewing, the cheapest for typing out a plan that is already
+> written. Each of you answers that for your own tool, in your own file, which
+> is never committed. This section only matters if the team has agreed on one
+> answer for everybody.
+>
+> Recommended: **leave it unset**.
+
 ## Step 3 — §E is read-back only, never asked
 
 Section E (Adapters) is written by `chisel init`, not by this questionnaire.
 When you reach it in the walk, read the current checklist state back to the
-user as a fact (which adapters are present) — do not ask a question about it.
-If an adapter is missing, do not fix it here: note it as something `chisel
-check` should catch, and move on to §F.
+user as a fact (which of the five adapters are present) — do not ask a question
+about it. If an adapter is missing, do not fix it here: note it as something
+`chisel check` should catch, and move on to §F.
 
 ## Step 4 — Surgical writes to `.agents/project.md`
 
@@ -89,9 +207,12 @@ until the end of the walk. Each write is scoped to exactly one section:
 - Find that section's `## <letter> · ...` heading.
 - Replace everything from immediately after that heading line up to (but not
   including) the next `## ` heading, or end of file if there is none.
+- For a sub-section (`### B1 · ...`), the span is the same rule one level down:
+  from just after its heading to the next `### ` **or** `## ` heading,
+  whichever comes first. Answering B2 must leave B1 and B3 byte-identical.
 - Leave every byte outside that span untouched: other sections, any content
-  a human added above §A or after §G, custom sections the file doesn't
-  define (e.g. a hand-added `## H · ...`).
+  a human added above §A or after §H, custom sections the file doesn't
+  define (e.g. a hand-added `## I · ...`).
 
 **Never rewrite the whole file.** A full-file rewrite is the one mistake
 that would silently discard user edits living outside the questionnaire's
@@ -102,8 +223,64 @@ template default — is what you present as the new recommendation in Step 2.
 Accept-in-one-word keeps working on a re-run exactly as it does on a first
 run.
 
-## Step 5 — Closing summary
+## Step 5 — The personal file (also runnable on its own)
 
-After §G is written, print a one-screen summary of what got written (one
-line per section, A–G) and suggest the natural next move: create a first
-task, or run `chisel check` to confirm the adapters are all in place.
+This step stands alone. "Set up my personal file", or a second dev's first
+session on an already-configured repo, runs THIS step and nothing else — no
+questionnaire, no package, no network.
+
+1. If `.agents/user.md` already exists, say so and change nothing. It is the
+   dev's own file; it is never overwritten, never merged, never re-templated.
+2. Otherwise copy `.agents/user.md.tpl` to `.agents/user.md`. The template is
+   installed by `chisel init` and is entirely commented out, so the fresh copy
+   changes nothing until its owner edits it.
+3. Make sure `.agents/user.md` is ignored by git: if no existing rule already
+   covers it, append the line `.agents/user.md` to the repo's `.gitignore`
+   (create the file if there is none). Append once — never a duplicate line on
+   a re-run.
+4. Tell the user, in one line:
+
+> **Your own file.** I created `.agents/user.md` from the template and added it
+> to `.gitignore`, so it is never committed. It is where you say which model
+> your tool should use for each level of work; left as it comes, it changes
+> nothing. Teammates get theirs the same way — copy `.agents/user.md.tpl`, or
+> ask any session to do it.
+
+Never commit `.agents/user.md`, and never copy one dev's file for another.
+
+## Step 6 — When §B1 is a database
+
+Only when the user picked option 2 or 3.
+
+1. **Check the prerequisite.** The tool is `bd`, and the minimum version is
+   **1.2.2** — everything this workflow relies on was validated there. Compare
+   what `bd --version` printed in Step 1 against it.
+2. **If `bd` is missing or older than 1.2.2, never install it yourself.** Show
+   this, then wait:
+
+> **This one needs a tool installed: `bd`, version 1.2.2 or newer.** I will not
+> install it for you — that is your machine's business, not this repo's.
+> To install it: `curl -sSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash`, or your usual package manager.
+>
+> Say the word and I will keep the statuses in the task files for now instead.
+> Moving to the database later is tooled and only touches tasks that are still
+> open — choosing the files today costs you nothing tomorrow.
+
+3. **Record the choice, and stop there.** Write §B1 with the chosen case and
+   its `- [ ] initialised` line, left unticked. Creating the database and
+   setting up the working convention is a separate, named step that ships with
+   the coordination convention — this questionnaire never runs it, and never
+   runs a command that creates state. Say so on screen, so nobody believes a
+   database already exists:
+
+> **Recorded.** Nothing has been created yet: the statuses are still in the task
+> files, and the repo works exactly as it did a minute ago. The step that
+> actually sets the database up is separate, and it is the next thing to run.
+
+## Step 7 — Closing summary
+
+After §H is written, print a one-screen summary of what got written (one
+line per section, A–H), plus one line for the personal file, plus — when §B1
+chose a database — the one thing still to do. Then suggest the natural next
+move: create a first task, or run `chisel check` to confirm the adapters are
+all in place.

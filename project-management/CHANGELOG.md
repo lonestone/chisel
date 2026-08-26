@@ -5,6 +5,70 @@ ships.
 
 ---
 
+## 13. 2026-08-26 — v2 slice 04: the setup chooses the case, in the user's language
+
+Summary of the session:
+
+1. Slice 04 of task `20260826-1512-chisel-v2` completed: the glue now records
+   the CASE a repo works in, and the questionnaire asks for it in plain words.
+   `§B` is recut into three decisions — **B1** where task statuses live (in the
+   task files, by default; a database committed next to them; that same database
+   served locally), **B2** whether tasks point back to tickets in another tool
+   (none by default; GitHub; Plane — an OPEN list), **B3** whether an agent may
+   run a whole task without stopping (disabled by default). Defaults are
+   markdown / none / disabled, which is exactly today's behaviour.
+
+Project management:
+
+- Completed **Slice 04 — setup-b-and-glue-v2**. `socle/agents/project.md.tpl`:
+  `## B · Coordination` keeps the letter (the formulas and `discipline.md` point
+  at "§B") and carries `### B1`, `### B2`, `### B3`; `§E` finally inventories
+  the generated role definitions (`.claude/agents`, `.codex/agents`), closing a
+  residual slice 02 recorded; new `## H · Model tiers` — the cascade's middle
+  rung, the hand-off slice 03 left.
+- `socle/agents/skills/chisel-setup/SKILL.md` v2: the same pattern (silent scan,
+  facts stated not asked, one section per message, surgical writes, re-runnable)
+  now walks A→H, asks §B as three separate questions, poses the current dev's
+  `.agents/user.md` and its ignore rule as a step that **runs on its own**, and
+  branches on B1 = a database by checking `bd --version` ≥ 1.2.2 — printing the
+  install command, never installing, and recording the choice without executing
+  anything.
+- `bin/chisel.sh`: `.agents/user.md.tpl` joins the managed files, and the two new
+  §E lines are ticked only when chisel actually rendered a definition there.
+- `test/run.sh` grew a group 10 (65 assertions). Suite: **297 passed, 0 failed**
+  (299 with a 3.11+ interpreter, which runs the two optional TOML parses).
+
+Key architectural and technical decisions:
+
+- **The user's language is a testable property.** Everything the questionnaire
+  puts on screen is a blockquote in the skill; the suite extracts exactly those
+  lines, strips code spans, and fails on "ledger", "formula", "bead", a section
+  letter or a glue path — and on any of the eight options that does not explain
+  itself in one line. The rule stops being a good intention.
+- **The choice and the state on disk are two facts.** Choosing a database writes
+  the case AND an unticked `- [ ] initialised` line; the questionnaire says out
+  loud that nothing was created. Creating it is the next slice's named step, so
+  no agent can infer a database from a preference.
+- **§B2 is a mechanism, not a menu.** The link back lives in one place
+  (`external_ref` when statuses are in a database, a `**Ticket:**` line
+  otherwise) and each tracker is described by one adapter page — including the
+  two the questionnaire names, since the socle ships none. Adding GitLab later
+  costs one page and zero socle change.
+- **`init` installs `.agents/user.md.tpl`; it still never poses `.agents/user.md`.**
+  This reverses one assertion of slice 03, deliberately: a repo equipped through
+  `npx` cannot reach the socle's own template, and the second dev to clone the
+  repo needs no package and no network to write their own personal file — just
+  `cp .agents/user.md.tpl .agents/user.md`. The invariant that mattered (a shared
+  installer never writes a personal, gitignored file) is untouched and still
+  asserted on both fixtures and after `update`.
+- **What is normative is visible.** The two-axis review caught the load-bearing
+  rules of §B living inside HTML comments; they moved into visible prose, and the
+  suite now strips the comments before asserting them — a reader of a default
+  `project.md` sees the refusal, the open list and the alternatives, not three
+  one-line verdicts.
+
+---
+
 ## 12. 2026-08-26 — v2 slice 03: abstract model tiers, the vendor coupling leaves the socle
 
 Summary of the session:

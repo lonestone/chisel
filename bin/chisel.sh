@@ -49,6 +49,7 @@ AGENTS_BLOCK_SRC="$SOCLE/templates/AGENTS-block.md"
 TASK_TEMPLATE_SRC="$SOCLE/templates/000-task-file-template.md"
 TASK_ID_SRC="$SOCLE/scripts/task-id.sh"
 PROJECT_MD_TPL="$SOCLE/agents/project.md.tpl"
+USER_MD_TPL="$SOCLE/agents/user.md.tpl"
 AGENTS_SKILLS_SRC="$SOCLE/agents/skills"
 AGENTS_FORMULAS_SRC="$SOCLE/agents/formulas"
 AGENTS_PROFILES_SRC="$SOCLE/agents/profiles"
@@ -162,6 +163,7 @@ managed_relative_files() {
   printf '.agents/discipline.md\n'
   printf '.agents/foreman.md\n'
   printf '.agents/methodology.md\n'
+  printf '.agents/user.md.tpl\n'
   printf 'scripts/task-id.sh\n'
   printf 'project-management/000-task-file-template.md\n'
 }
@@ -258,6 +260,12 @@ copy_managed_files() {
   cp "$DISCIPLINE_SRC" "$target_dir/.agents/discipline.md"
   cp "$FOREMAN_SRC" "$target_dir/.agents/foreman.md"
   cp "$METHODOLOGY_SRC" "$target_dir/.agents/methodology.md"
+  # The TEMPLATE of the personal file, not the personal file itself: it is
+  # socle text, committed like the rest, and it is what lets any dev — the
+  # first one or the fifth — pose their own `.agents/user.md` with a copy, no
+  # package and no network. `init` never writes `.agents/user.md`: a shared
+  # installer has no business creating a personal, gitignored file.
+  cp "$USER_MD_TPL" "$target_dir/.agents/user.md.tpl"
 
   mkdir -p "$target_dir/scripts"
   cp "$TASK_ID_SRC" "$target_dir/scripts/task-id.sh"
@@ -378,6 +386,23 @@ render_agent_definitions() {
   done
 }
 
+# True when a directory holds at least one definition chisel rendered (a file
+# carrying the generated marker). Used by the §E inventory: the directory
+# existing proves nothing — the user may own everything in it.
+generated_definitions_present() {
+  defs_dir="$1"
+  [ -d "$defs_dir" ] || return 1
+  defs_found=1
+  for def_file in "$defs_dir"/*; do
+    [ -f "$def_file" ] || continue
+    if grep -qF "$GEN_MARKER" "$def_file" 2>/dev/null; then
+      defs_found=0
+      break
+    fi
+  done
+  return "$defs_found"
+}
+
 # Project-owned: written once, never again. Prints "created" when this run
 # wrote the file, so init knows it may fill the §E adapter inventory below.
 ensure_project_md() {
@@ -400,6 +425,8 @@ tick_adapter_inventory() {
   agents_ok=0
   claude_ok=0
   link_ok=0
+  claude_defs_ok=0
+  codex_defs_ok=0
   if [ -f "$target_dir/AGENTS.md" ] &&
      grep -qF "$BLOCK_BEGIN" "$target_dir/AGENTS.md" &&
      grep -qF "$BLOCK_END" "$target_dir/AGENTS.md"; then
@@ -413,13 +440,26 @@ tick_adapter_inventory() {
      [ "$(readlink "$target_dir/.claude/skills")" = "../.agents/skills" ]; then
     link_ok=1
   fi
+  # Ticked when chisel actually RENDERED something there, not merely when the
+  # directory exists: `.claude/agents/` is shared with the user's own
+  # sub-agents, and a directory holding only foreign files is not an adapter
+  # chisel installed.
+  if generated_definitions_present "$target_dir/.claude/agents"; then
+    claude_defs_ok=1
+  fi
+  if generated_definitions_present "$target_dir/.codex/agents"; then
+    codex_defs_ok=1
+  fi
 
   tmp="$(mktemp)"
-  awk -v a="$agents_ok" -v c="$claude_ok" -v l="$link_ok" '
+  awk -v a="$agents_ok" -v c="$claude_ok" -v l="$link_ok" \
+      -v cdefs="$claude_defs_ok" -v xdefs="$codex_defs_ok" '
     /^## / { ine = ($0 ~ /^## E · /) ? 1 : 0 }
-    ine && a && /^- \[ \] `AGENTS\.md`/        { sub(/^- \[ \]/, "- [x]") }
-    ine && c && /^- \[ \] `CLAUDE\.md`/        { sub(/^- \[ \]/, "- [x]") }
-    ine && l && /^- \[ \] `\.claude\/skills`/  { sub(/^- \[ \]/, "- [x]") }
+    ine && a && /^- \[ \] `AGENTS\.md`/           { sub(/^- \[ \]/, "- [x]") }
+    ine && c && /^- \[ \] `CLAUDE\.md`/           { sub(/^- \[ \]/, "- [x]") }
+    ine && l && /^- \[ \] `\.claude\/skills`/     { sub(/^- \[ \]/, "- [x]") }
+    ine && cdefs && /^- \[ \] `\.claude\/agents`/ { sub(/^- \[ \]/, "- [x]") }
+    ine && xdefs && /^- \[ \] `\.codex\/agents`/  { sub(/^- \[ \]/, "- [x]") }
     { print }
   ' "$project_md" >"$tmp"
   cat "$tmp" >"$project_md"
