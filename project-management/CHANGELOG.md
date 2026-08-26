@@ -5,6 +5,15 @@ ships.
 
 ---
 
+## 16. 2026-08-26 — v2 slice 09: the test suite rebuilt, behavior only
+
+Slice 09 delivered: `test/run.sh` (1580 lines, 15 groups, 352 assertions)
+split into `test/lib.sh` + `test/installer.sh` + `test/run.sh` (~60-line
+runner, selective `bash test/run.sh <group>`, 600-line cap enforced by the
+runner itself). Groups 10 (setup wording) and 13 (neutrality scans) deleted
+outright; every grep-on-prose left in 7-9 cut. Down to 9 groups, 86
+assertions, 578 lines — green.
+
 ## 15. 2026-08-26 — v2 slice 06: the way off v1, and the journal called LOG.md
 
 Summary of the session:
