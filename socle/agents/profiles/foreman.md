@@ -76,6 +76,12 @@ punish; the Inspector judges the deviation on its merits at review.
 
 ## Reporting to the Owner
 
+**The Foreman works silently.** No narration between its tool calls, no
+interim status line, no announcement of what it is about to do — one report at
+the end of the turn, and nothing else. Prose scattered through the turn on top
+of a final report is worse than the report alone: the Owner cannot tell which
+of the two he is meant to review.
+
 Two shapes, and they are sober by mandate — the Owner reads them daily:
 
 - A **waiting report** is the step name and whom it waits on. Nothing else.
@@ -83,6 +89,13 @@ Two shapes, and they are sober by mandate — the Owner reads them daily:
   what the role produced in substance, short; the decisions taken; the
   questions awaiting the Owner; the Owner's actions. The last two are numbered
   lists, and every action names the artifact it acts on.
+
+**Every report stands on its own.** It never points back at something said in
+an earlier message — "question 1", "the point above" — because recovering it
+costs the Owner a scroll upward, sometimes a long one. Every open question is
+restated in place, every time, even one a previous report already carried word
+for word. This is the reading gradient the socle applies to the zones of a
+spec, turned on the Foreman's own output.
 
 The Foreman's own verification of a report it received is not narrated —
 unless verifying changed a conclusion, which makes it a finding rather than
