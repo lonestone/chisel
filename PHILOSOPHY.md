@@ -2,9 +2,8 @@
 
 Why chisel exists, what we tried before building it, and the beliefs its
 design rests on. For *how* the methodology works day to day, read
-[socle/agents/methodology.md](./socle/agents/methodology.md) and
-[socle/agents/workflows.md](./socle/agents/workflows.md) — this document is
-the why.
+[socle/agents/methodology.md](./socle/agents/methodology.md) — this document
+is the why.
 
 ## 1. The problem
 
@@ -88,9 +87,10 @@ These are the beliefs chisel is built on:
   design are never delegated; execution can be, to a faster/cheaper model,
   with the planner reviewing the diff. (Validated in production — this
   repo's own slices were typed by a cheaper model from persisted designs.)
-- **Humans own the gates.** Seams (where we test) are agreed before code.
-  Plans are approved before typing. Slicing is validated before publication.
-  An unanswered proposal is a rejected proposal.
+- **Humans own the gates — and a 🧑 zone's owner follows who approved it, not
+  simply "the human".** Seams (where we test) are agreed before code. Plans
+  are approved before typing. Slicing is validated before publication. An
+  unanswered proposal is a rejected proposal.
 - **Own your forks.** The Pocock skills are vendored with per-skill
   upstream tracking (`x-upstream` frontmatter + lock file). Upstream
   improvements are pulled a few times a year: the agent proposes each merge
@@ -108,22 +108,42 @@ These are the beliefs chisel is built on:
 
 Three situations, one discipline:
 
-- **W0 · Ambient** — every conversation. No artifact, same behavior: read
-  the project's reading list, plan first, verify before claiming done,
-  suggest a task when the work outgrows the chat.
-- **W1 · One task** — two sessions. CREATE: an interview (grilling) shapes
-  the task file — context, scope, acceptance criteria, seams — and logs it
-  in the CHANGELOG. WORK: a fresh session reads the file, plans against the
-  real code, gets the plan approved and persisted, offers to delegate the
-  typing, then builds and closes (lint/tests/build, browser check if UI,
-  CHANGELOG, living docs).
-- **W2 · Big feature** — a parent task plus thin vertical slices with
-  dependency edges. Any slice whose blockers are done can start, each in a
-  fresh session following W1's WORK shape.
+- **The ambient discipline** — every conversation, no artifact. Read the
+  project's reading list, plan first, verify before claiming done, suggest a
+  task when the work outgrows the chat. This is not a mode: it is what the
+  default behaves like when there is nothing to file.
+- **One task** — two sessions. CREATE: an interview (grilling) shapes the
+  task file — context, scope, acceptance criteria, seams — and logs it in
+  the journal. WORK: a fresh session reads the file, plans against the real
+  code, gets the plan approved and persisted, offers to delegate the typing,
+  then builds and closes (lint/tests/build, browser check if UI, the
+  journal, living docs).
+- **A parent task with slices** — big features: a parent task plus thin
+  vertical slices with dependency edges. Any slice whose blockers are done
+  can start, each in a fresh session following the one-task WORK shape.
+
+On top of that discipline, chisel runs as **one default plus two options**.
+The default holds every gate at the human. Two options add to it, and each
+is independent of the other: **beads** (a status database, repo state,
+additive — nothing above it changes) and **auto** (permission to run
+without stopping, asked for per invocation — never the project's permanent
+setting). Three presets combine them: `chisel-default` (the discipline
+above, exactly), `chisel-supervised` (the same steps with one asynchronous
+gate — the Owner approves the spec, nothing else), `chisel-auto` (no gates;
+a doubting step escalates instead). **Factory = auto × beads** — the only
+combination that needs beads, for its queues and asynchronous gate lists;
+plain auto is one chained session and needs none.
+
+An earlier design named these situations with size-based labels instead —
+they read as **work sizes**, where the framing above reads as **piloting
+postures**. The two axes are not the same thing, and keeping the old labels
+kept conflating them, which is why they are retired rather than kept
+alongside the new vocabulary.
 
 The full reference: [methodology.md](./socle/agents/methodology.md) (the
-concepts), [workflows.md](./socle/agents/workflows.md) (the visual guide,
-gates and model policy), and the task template in
+concepts), [`.agents/discipline.md`](./socle/agents/discipline.md) (the
+ambient core), [`.agents/formulas/`](./socle/agents/formulas/) (the order
+and the gates, per preset), and the task template in
 [socle/templates/](./socle/templates/000-task-file-template.md).
 
 ## Sources
