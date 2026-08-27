@@ -1,10 +1,10 @@
-# chisel — the "Auto" pipeline: the same steps as `chisel-controlled`, with
+# chisel — the "Auto" pipeline: the same steps as `chisel-default`, with
 # the human gates removed. The Brief stays human and sits UPSTREAM of this
 # formula — someone decides to instantiate it; nothing here decides that.
 #
 # Readable WITHOUT any ledger tooling: execute the steps as an ordered
 # checklist, `needs` gives the order. There is no gate to wait on: where
-# Controlled waits, Auto ESCALATES — a doubting step stops, writes what it
+# the default waits, Auto ESCALATES — a doubting step stops, writes what it
 # doubts into the spec file, and hands it one rung up (Mason → Architect →
 # Inspector → the Owner's digest). Auto never forces a passage.
 #
@@ -20,7 +20,7 @@
 # project glue enables it.
 
 formula = "chisel-auto"
-description = "Chisel task pipeline, Auto mode: the same steps as chisel-controlled with no human awaits. A doubting step escalates instead of blocking. Requires the glue to enable auto."
+description = "Chisel task pipeline, Auto mode: the same steps as chisel-default with no human awaits. A doubting step escalates instead of blocking. Requires the glue to enable auto."
 version = 1
 type = "workflow"
 

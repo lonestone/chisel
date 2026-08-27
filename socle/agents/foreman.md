@@ -15,7 +15,7 @@ This is why there is no `foreman.md` profile in `.agents/profiles/`. A profile
 exists to be delegated to; a role with no judgement to exercise has nothing to
 delegate. Instead, the function is filled in one of two ways.
 
-## Controlled: the Foreman is you
+## Default: the Foreman is you
 
 You look at the frontier — the tasks and slices whose blockers are all done —
 pick the next one, and open a fresh session on it (`work on task <file>`, or

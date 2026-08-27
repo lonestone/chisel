@@ -44,8 +44,8 @@ group_init() {
     "$WORK_ROOT/t1-block.md" "$REPO_ROOT/socle/templates/AGENTS-block.md"
   assert_file_contains "brownfield: block routes to discipline.md" "$t1/AGENTS.md" \
     ".agents/discipline.md"
-  assert_file_contains "brownfield: block routes to the controlled formula" "$t1/AGENTS.md" \
-    ".agents/formulas/chisel-controlled.formula.toml"
+  assert_file_contains "brownfield: block routes to the default formula" "$t1/AGENTS.md" \
+    ".agents/formulas/chisel-default.formula.toml"
   assert_file_not_contains "brownfield: block no longer routes to the retired rules" \
     "$t1/AGENTS.md" ".agents/rules/"
 }
@@ -128,7 +128,7 @@ group_update() {
   cp "$t4/.codex/agents/inspector.toml" "$WORK_ROOT/t4-inspector-def-before-edit"
   printf '\n<!-- local edit that update must overwrite -->\n' >>"$t4/.agents/skills/tdd/SKILL.md"
   printf '\n# local edit that update must overwrite\n' \
-    >>"$t4/.agents/formulas/chisel-controlled.formula.toml"
+    >>"$t4/.agents/formulas/chisel-default.formula.toml"
   printf '\n<!-- local edit that update must overwrite -->\n' >>"$t4/.claude/agents/mason.md"
   printf '\n# local edit that update must overwrite\n' >>"$t4/.codex/agents/inspector.toml"
 
@@ -146,9 +146,9 @@ group_update() {
     "$t4/.agents/skills/tdd/SKILL.md" "local edit that update must overwrite"
   assert_files_identical "update: SKILL.md matches socle source" \
     "$t4/.agents/skills/tdd/SKILL.md" "$REPO_ROOT/socle/agents/skills/tdd/SKILL.md"
-  assert_files_identical "update: controlled formula matches socle source" \
-    "$t4/.agents/formulas/chisel-controlled.formula.toml" \
-    "$REPO_ROOT/socle/agents/formulas/chisel-controlled.formula.toml"
+  assert_files_identical "update: default formula matches socle source" \
+    "$t4/.agents/formulas/chisel-default.formula.toml" \
+    "$REPO_ROOT/socle/agents/formulas/chisel-default.formula.toml"
   assert_files_identical "update: hand-edited agent definition re-rendered from the profile" \
     "$t4/.claude/agents/mason.md" "$WORK_ROOT/t4-mason-def-before-edit"
   assert_files_identical "update: the codex render comes back too" \
@@ -216,13 +216,13 @@ group_render() {
     "the three formula presets parse as TOML with the right gate count per preset (3/1/0), and every generated agent definition carries its profile's body byte for byte."
 
   t7="$(fresh_install brownfield)"
-  controlled="$t7/.agents/formulas/chisel-controlled.formula.toml"
+  default_formula="$t7/.agents/formulas/chisel-default.formula.toml"
   supervised="$t7/.agents/formulas/chisel-supervised.formula.toml"
   auto="$t7/.agents/formulas/chisel-auto.formula.toml"
 
   # Structure by PARSING, never by grep: version integer, 9 unique step ids, gates 3/1/0.
   if python3 -c 'import tomllib' >/dev/null 2>&1; then
-    if python3 - "$controlled" "$supervised" "$auto" <<'PY'
+    if python3 - "$default_formula" "$supervised" "$auto" <<'PY'
 import sys, tomllib
 for path in sys.argv[1:]:
     with open(path, "rb") as f:
@@ -232,7 +232,7 @@ for path in sys.argv[1:]:
     assert len(ids) == len(set(ids)) == 9, path
     gated = [s["id"] for s in data["steps"] if s.get("gate", {}).get("type") == "human"]
     expected = {
-        "chisel-controlled": ["plan", "design-check", "close"],
+        "chisel-default": ["plan", "design-check", "close"],
         "chisel-supervised": ["plan"],
         "chisel-auto": [],
     }[data["formula"]]

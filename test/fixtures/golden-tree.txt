@@ -4,7 +4,7 @@
 .agents/foreman.md
 .agents/formulas
 .agents/formulas/chisel-auto.formula.toml
-.agents/formulas/chisel-controlled.formula.toml
+.agents/formulas/chisel-default.formula.toml
 .agents/formulas/chisel-supervised.formula.toml
 .agents/methodology.md
 .agents/profiles

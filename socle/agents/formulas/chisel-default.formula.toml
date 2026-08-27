@@ -1,4 +1,4 @@
-# chisel — the "Controlled" pipeline: the Owner holds every decision gate.
+# chisel — the "Default" pipeline: the Owner holds every decision gate.
 #
 # Readable WITHOUT any ledger tooling: execute the steps as an ordered
 # checklist, `needs` gives the order, and each `[steps.gate] type = "human"`
@@ -15,8 +15,8 @@
 # `chisel-auto.formula.toml` is this same pipeline with the human gates
 # removed and escalation in their place.
 
-formula = "chisel-controlled"
-description = "Chisel task pipeline, Controlled mode: every decision gate awaits the human (the Owner). The spec file owns the content; this formula owns the order and the gates."
+formula = "chisel-default"
+description = "Chisel task pipeline, the default: every decision gate awaits the human (the Owner). The spec file owns the content; this formula owns the order and the gates."
 version = 1
 type = "workflow"
 

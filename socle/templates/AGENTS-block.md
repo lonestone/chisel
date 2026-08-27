@@ -16,7 +16,7 @@ applies to every conversation, with or without a spec file, and its first
 rule tells you what to read before acting.
 
 **For real, scoped, multi-step work** — the pipeline is
-`.agents/formulas/chisel-controlled.formula.toml`. Execute it as an ordered
+`.agents/formulas/chisel-default.formula.toml`. Execute it as an ordered
 checklist, top to bottom (it spans more than one session — the steps say
 where the breaks are):
 
