@@ -17,72 +17,59 @@ day-to-day routine it describes.
   the version number, so as not to have two places that can go stale against
   each other.
 - **The working tree is clean** (`git status --porcelain` prints nothing).
-  `bd init` commits the WHOLE repository as part of setting itself up —
-  everything in flight, not just its own files — and no setting turns that
-  off. Commit or stash what is in progress first; this whole procedure is safe
-  to re-run once the tree is clean.
+  `bd init` makes a commit of its own as part of setting itself up, and
+  anything STAGED at that moment is swallowed into it (verified on bd 1.2.2:
+  unstaged and untracked work survives, staged work does not). A clean tree is
+  the simplest rule that covers it. Commit or stash what is in progress first;
+  this whole procedure is safe to re-run once the tree is clean.
 - **`.agents/` exists.** This is a repo chisel has already equipped; this
   procedure configures it, it does not bootstrap one from nothing.
 
 **The sequence**, run from the repo root, one command at a time — watch each
 output rather than typing the whole thing blind:
 
-1. **Create the database.**
+1. **Create the database, neutral from the start.**
 
    ```sh
-   bd init
+   bd init --prefix <short-lowercase-id> --skip-agents --skip-hooks
    ```
 
-   Pass `--prefix <short-lowercase-id>` if the default (the repo's directory
-   name) is not what you want issue IDs to carry. This creates `.beads/` and,
-   as a side effect nothing disables, commits the entire repository.
+   The prefix is what issue IDs carry; without it, bd uses the repo's
+   directory name. The two flags make bd install its database and nothing
+   else — verified on bd 1.2.2: `AGENTS.md` and `CLAUDE.md` untouched byte
+   for byte, no `SessionStart` hook, no vendored `beads` skill under
+   `.agents/skills/`, no Codex recipe, no git hooks. bd still makes one
+   commit of its own, but a minimal one — its `.beads/` files plus a
+   `.gitignore` addendum, under its own honest message. Leave that commit
+   alone.
 
-2. **Re-own that automatic commit.** Read `git log -1 --pretty=%s`:
-   - If it starts with `bd init` (the tool's own commit message) **and** the
-     repo has a commit before it (`git rev-parse --verify -q HEAD~1` succeeds),
-     undo it while keeping its changes staged:
+2. **Verify the neutrality — read it back, do not assert it.** The flags are
+   upstream behavior and a future bd may not keep their contract. Check:
+   no `BEGIN BEADS` marker in `AGENTS.md` or `CLAUDE.md`; no `SessionStart`
+   entry in `.claude/settings.json` (the file may simply not exist); no
+   vendored `beads` directory under `.agents/skills/`. If any of these IS
+   present, remove it
+   the way the fallback below describes, and report that the flags did not
+   hold — that is a finding about the bd version in use.
 
-     ```sh
-     git reset --soft HEAD~1
-     ```
+   <details>
+   <summary>Fallback — removing what the flags should have prevented</summary>
 
-     The one commit this procedure leaves at the end (step 8) will say what
-     actually happened, instead of the tool's own generic message.
-   - If it IS the repo's very first commit, leave it alone — unmaking a
-     repo's root commit is worse than a slightly generic first message.
-   - If the last commit is not the tool's own (someone committed something else
-     in between, or `bd init` skipped the auto-commit), leave history alone and
-     say so — do not guess at what to undo.
+   `bd setup claude --remove` and `bd setup codex --remove` remove, between
+   them: the `SessionStart` hook and the beads section of `CLAUDE.md`; the
+   vendored `beads` skill, the Codex native hooks and the Codex section of
+   `AGENTS.md`. Neither strips the Claude integration block from `AGENTS.md`:
+   delete every `<!-- BEGIN BEADS ... -->` … `<!-- END BEADS ... -->` pair by
+   hand, with the trailing blank lines the removed block leaves — and only
+   those. If a removal command reports a problem, read what it says and fix
+   that by hand rather than working around it. Stage what this fallback
+   touched by exact path (`git add -- AGENTS.md CLAUDE.md .claude .codex
+   .agents` — only the paths that actually changed, **never `git add -A`**)
+   and fold it into the commit of step 4.
 
-3. **Remove the tool's own instructions — first pass.**
+   </details>
 
-   ```sh
-   bd setup claude --remove
-   bd setup codex --remove
-   ```
-
-   Between them these remove: the `SessionStart` hook and the beads section of
-   `CLAUDE.md` (the `claude` recipe); and the skill the tool vendors under
-   `.agents/skills/` (named `beads`), its Codex native hooks, and the Codex
-   section of `AGENTS.md` (the `codex` recipe). If either reports a problem,
-   read what it says and fix that by hand rather than working around it.
-
-4. **Remove the tool's own instructions — the one block neither `--remove`
-   touches.** Neither command above strips the Claude integration block from
-   `AGENTS.md` — it has no removal command of its own, only the markers it was
-   written with. Open `AGENTS.md`; for every
-   `<!-- BEGIN BEADS ... -->` … `<!-- END BEADS ... -->` pair still present
-   (there is normally exactly one left at this point), delete the pair and
-   everything between them, then delete any now-dangling blank lines left at
-   the end of the file. Leave blank lines that sit BETWEEN paragraphs a human
-   wrote alone — only the trailing ones the removed block left behind are
-   yours to touch.
-
-5. **Belt and braces.** If step 3 did not already take it,
-   `.agents/skills/` may still hold the vendored `beads` directory — remove it
-   if it does.
-
-6. **Link the formulas, once.** If `.beads/formulas` does not exist yet:
+3. **Link the formulas, once.** If `.beads/formulas` does not exist yet:
 
    ```sh
    ln -s ../.agents/formulas .beads/formulas
@@ -94,26 +81,22 @@ output rather than typing the whole thing blind:
    a copy would be a second place `chisel update` cannot see and `chisel check`
    could never watch.
 
-7. **Stage exactly what this procedure touched, never the repo root.**
+4. **Stage exactly what this procedure touched, never the repo root** —
+   normally just the symlink:
 
    ```sh
-   git add -- .beads AGENTS.md CLAUDE.md .claude .codex .agents
+   git add -- .beads/formulas
    ```
 
-   Add only the paths above that actually exist or changed in this repo — a
-   path that was never touched is simply absent from the diff. **Never
-   `git add -A` here**: a session elsewhere in this repo may have unrelated
-   work in flight, and it is not this procedure's to stage.
-
-8. **One commit**, with a message that says what happened rather than
-   restating the tool's own:
+   **Never `git add -A` here**: a session elsewhere in this repo may have
+   unrelated work in flight, and it is not this procedure's to stage. One
+   commit, with a message that says what happened:
 
    ```
-   chore: coordination database, without its discourse
+   chore: coordination database under the chisel-beads convention
 
-   Created the committed status database and removed the instructions it
-   ships with (managed blocks, session hook, vendored skill): this repo's
-   one normative discourse on the subject is
+   Created the committed status database with bd's own instructions
+   skipped at init: this repo's one normative discourse on the subject is
    .agents/skills/chisel-beads/SKILL.md. Linked the formulas into the
    database directory.
    ```

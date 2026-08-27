@@ -365,3 +365,16 @@ list` in AC1. The bd version prerequisite (1.2.2) and the bd-absent message
 stay solely in `chisel-setup` Steps 6.1–6.2, unrepeated in
 `CHANGING-CASE.md`, which instead tells a reader who arrived another way to
 check `bd --version` themselves and go back to that question on failure.
+
+**Owner ruling on that question (2026-08-26, post-close): swap to the
+flags.** Tested on three scratch fixtures against bd 1.2.2 before touching
+the page: `bd init --prefix <x> --skip-agents --skip-hooks` leaves
+`AGENTS.md`/`CLAUDE.md` byte-identical, creates no `SessionStart` hook, no
+vendored skill, no Codex recipe, no git hooks; its auto-commit is minimal
+(its own `.beads/` files plus a `.gitignore` addendum) and — the nuance that
+keeps the clean-tree precondition — it swallows anything STAGED at that
+moment, while unstaged and untracked work survives. The Entering sequence
+shrank from 8 steps to 4; the manual removals survive as a collapsed
+fallback triggered by a read-back verification step, because the flags are
+upstream behavior a future bd may not honor. Verified after the rewrite:
+symlink resolves (`bd formula list`), `chisel check` clean, suite green.
