@@ -374,8 +374,8 @@ group_integrity() {
   # both ways — a new dangler not listed fails, a listed one that resolved fails too.
   cat >"$WORK_ROOT/pointer-waiver.txt" <<'WAIVER'
 .agents/user.md	BY DESIGN — personal file, deliberately never installed (the template is)
-.agents/rules/task-*.md	BY DESIGN (upgrade-v2 must name the layer it retires) + DEBT (still cited by methodology.md — slice 07)
-.agents/workflows.md	BY DESIGN (upgrade-v2 must name the layer it retires) + DEBT (still cited by methodology.md — slice 07)
+.agents/rules/task-*.md	BY DESIGN (upgrade-v2 must name the layer it retires)
+.agents/workflows.md	BY DESIGN (upgrade-v2 must name the layer it retires)
 WAIVER
   cut -f1 "$WORK_ROOT/pointer-waiver.txt" | LC_ALL=C sort >"$WORK_ROOT/waived.txt"
 
@@ -398,7 +398,7 @@ WAIVER
   v1_citers="$(awk -F'\t' '$1 == ".agents/rules/task-*.md" || $1 == ".agents/workflows.md" { print $2 }' \
     "$WORK_ROOT/dangling-raw.txt" | LC_ALL=C sort -u | tr '\n' ' ')"
   assert_eq "integrity: only the files allowed to name the retired v1 layer name it" \
-    ".agents/methodology.md .agents/skills/upgrade-v2/SKILL.md " "$v1_citers"
+    ".agents/skills/upgrade-v2/SKILL.md " "$v1_citers"
 
   if [ -s "$WORK_ROOT/waiver-stale.txt" ]; then
     fail "integrity: the waiver has no stale line (a fixed pointer must leave it)"

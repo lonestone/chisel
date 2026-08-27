@@ -1,14 +1,14 @@
 # Methodology — the why behind the workflow
 
 This document explains the reasoning behind the task workflow so that humans
-and agents apply it with judgement, not cargo-cult. The **what/where** lives in
-the rules (`.agents/rules/task-*.md`) and the task file template declared in
-`.agents/project.md` (default `/project-management/000-task-file-template.md`);
-the **when/how it chains** is the visual guide in
-[workflows.md](./workflows.md); this is the **why**.
+and agents apply it with judgement, not cargo-cult. The **what/where** is the
+task file template declared in `.agents/project.md` §A (default
+`/project-management/000-task-file-template.md`); the **order and the gates**
+are `.agents/formulas/`; the **ambient invariants** are
+`.agents/discipline.md`; this file is the **why**.
 
 Provenance: fusion of the Lonestone task lifecycle (creation → work →
-completion, dated CHANGELOG) with patterns from
+completion, a dated journal) with patterns from
 [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) and dex's
 "Why Software Factories Fail" series. Full analysis: `SDD-bench/fusion-pierrick-pocock.md`.
 
@@ -33,6 +33,96 @@ external tracker (Linear, GitHub Issues), if/when one is wired up — see
 
 ---
 
+## A default, and two options
+
+chisel has one default behaviour: the human holds every gate. Two options add
+to it, and neither changes the other — **beads** (the status database, repo
+state, additive) and **auto** (permission not to wait, an invocation
+posture, §B3).
+
+Three presets combine them:
+
+| Preset | Gates | Coordination |
+|---|---|---|
+| `chisel-default` | every gate awaits the human | markdown task files (or beads, additively) |
+| `chisel-supervised` | one asynchronous gate — the Owner approves the spec, nothing else | markdown or beads |
+| `chisel-auto` | no gates; a doubting step escalates instead | markdown or beads |
+
+**Factory = auto × beads** — the only combination that requires beads,
+because only it needs queues, lanes and asynchronous gate lists. Plain auto
+is one chained session and needs none.
+
+**The invocation-posture principle.** Piloting — which preset governs this
+run — is chosen per invocation, never baked into the project as a permanent
+setting: a non-default posture runs only when a human explicitly asks for it
+in that session AND the glue's `.agents/project.md` §B3 permits it — never
+chosen by an agent on its own. Coordination (beads) is the other axis
+entirely: repo state, additive, and orthogonal to which posture is running —
+a beads-equipped repo stays fully usable under the default.
+
+**The Brief-stays-human invariant.** Whichever preset is running, the
+decision to start the work at all — the Brief, what to build and why — is
+always the human's. No preset decides that upstream question; each only
+changes what happens once the Brief exists. See [Zone
+ownership](#zone-ownership) below for what each preset makes the human's, and
+what it makes the Architect's.
+
+The roster that fills these presets follows.
+
+## The roster
+
+| Role | Tier | Does | Contract |
+|---|---|---|---|
+| **Owner** | — | Holds the Brief, always; approves whatever a preset gates; arbitrates escalations | not an agent |
+| **Architect** | frontier | Interviews, writes the spec, plans, answers the `design-check` | `.agents/profiles/architect.md` |
+| **Checker** | frontier | Reviews the spec before it is planned — never its author | `.agents/profiles/checker.md` |
+| **Mason** | cheap or mid | Types the persisted plan — never plans | `.agents/profiles/mason.md` |
+| **Inspector** | frontier | Reviews the diff on two axes — never its author | `.agents/profiles/inspector.md` |
+| **Foreman** | — | Routes: what starts next, and who starts it. Not an agent | `.agents/foreman.md` |
+
+The table names roles and points; the contract — what a role may never do,
+when it escalates, exactly what it receives — lives in the profile.
+
+## Zone ownership
+
+🧑 marks the zone's **owner**, not simply "the human" — ownership follows
+authorship of the approval:
+
+- In the **default**, the human approved both the spec and the plan, so both
+  are his.
+- In **auto**, the Architect authored both (no human gate), so both are the
+  Architect's — a Mason's escalation on either terminates there, and the
+  human never hears of it.
+- In **supervised**, the spec is the human's (the one asynchronous gate); the
+  plan is the Architect's.
+
+**The Brief is always the human's, in every mode.** A 🧑 zone is never
+overridden silently, in any mode — a conflict with one is contested upward,
+never edited sideways.
+
+## Escalation, and the Owner's digest
+
+The chain climbs one rung at a time, to the owner of the contested zone:
+Mason → Architect → Inspector → the Owner's digest.
+
+The digest is named across the profiles and the formulas and defined here,
+once. It creates **no new artifact**: a dated ⚠️ line in the journal declared
+in §A, plus — when §B1 keeps the coordination state in beads — a blocking
+`escalation` item assigned to the Owner, per the §B convention. That is the
+whole mechanic.
+
+## The pipeline is nine steps
+
+Not seven. `spec-review` (a Checker, fresh session, never the spec's author,
+two rounds max) and `design-check` (the Mason posts its program design; the
+plan's Architect answers VALIDATED or corrections, two rounds max, then a
+finding against the plan) are part of the doctrine now, not an afterthought.
+Where the gates sit is the formulas' business, named per preset — see [A
+default, and two options](#a-default-and-two-options) above; this file does
+not restate it step by step.
+
+---
+
 ## Why a reading gradient (and not shorter files)
 
 Models cannot be trusted to maintain codebase quality over time without human
@@ -47,8 +137,9 @@ three paragraphs. Every decision NOT made explicit in a 🧑 zone is a decision
 the human would otherwise make implicitly during code review — the most
 expensive possible moment to change one's mind.
 
-The 🧑 zones are the human's property. An agent that discovers a conflict with
-them must stop and surface it, never silently override.
+The 🧑 zones are their owner's property — see [Zone
+ownership](#zone-ownership) above. An agent that discovers a conflict with one
+must stop and surface it, never silently override.
 
 ## Why seams are agreed before implementation
 
@@ -90,8 +181,8 @@ learning is ignored. Instead, the implementing session designs **just-in-time
 at its plan gate**, with the real code in view.
 
 But that plan must not die with the conversation. Once approved, the
-implementing session **persists it into the slice file's Design section**
-(rule: `task-progressing.md`). Three reasons:
+implementing session **persists it into the slice file's Design section** —
+the `plan` step of the formulas says so. Three reasons:
 
 1. **The completion review reads the file.** `code-review`'s Spec axis treats
    the task file as the requirements; a design that lives only in chat is
@@ -106,10 +197,13 @@ at plan approval → worklog during implementation → checked off at completion
 
 **Corollary — the cost gradient (opt-in delegation).** Persisting the plan
 makes the slice file a complete brief, which unlocks a division of labor: the
-**planner session** does the thinking (interview, design, plan) with the
-human; an optional **typist session** does only the typing from that file.
-The agent OFFERS this choice once the plan is saved (recommending it for
-large diffs); the user decides — never a silent default.
+**Architect** does the thinking (interview, design, plan) with the human; an
+optional **Mason** does only the typing from that file. The agent OFFERS this
+choice once the plan is saved (recommending it for large diffs); the user
+decides — never a silent default. The delegation boundary is the plan itself:
+everything above it is thinking, everything below is typing. A Mason asked to
+"figure out" something the Design left open is a planning failure, not an
+execution one — the plan goes back to the Architect.
 
 That gradient is a **tier** gradient, not a licence to spend: the thinking
 runs at the frontier tier, the typing from an already-persisted plan runs at
@@ -117,30 +211,30 @@ the cheap tier, and which concrete model each tier means is resolved per dev
 and per project — see [Model tiers](#model-tiers-and-how-they-resolve) below.
 
 The economics apply at the *session* level, not at the model-family level:
-the sessions that type consume most of the tokens, so keeping the planner's
+the sessions that type consume most of the tokens, so keeping the Architect's
 context clean enough to review matters more than upgrading everything. Few
 moments in a large task genuinely require frontier intelligence — the
 original decomposition, the design decisions, a handful of trade-offs. Those
-moments stay with the planner and the human, and they are exactly what the
+moments stay with the Architect and the human, and they are exactly what the
 frontier tier is reserved for. Everything below the plan is typing, and
 typing does not need the same tier.
 
-The delegate's brief is **artifacts only, never the planning conversation**:
-the slice file + the artifacts it explicitly references (parent 🧑 zones,
+The Mason's brief is **artifacts only, never the planning conversation**: the
+slice file + the artifacts it explicitly references (parent 🧑 zones,
 `CONTEXT.md`/ADRs, prior art) + the repo's ambient layer. Two disciplines
 follow (both from observed swarm failure modes):
 
 - **Explicit references beat shared memory.** The Design section must link
   what it relies on — the "compile-checked references" answer to split-brain;
-  our version is: the delegate follows links, not vibes.
-- **The planner never implements** — its context stays clean for reviewing
-  the delegate's diff against the plan. All completion gates still run; the
+  our version is: the Mason follows links, not vibes.
+- **The Architect never implements** — its context stays clean for reviewing
+  the Mason's diff against the plan. All completion gates still run; the
   two-axis review is a decorrelated lens by construction (at the frontier
   tier).
 
-It doubles as a quality measure (dex): if a typist cannot implement the
-slice from the persisted design and its references, the design was not
-factored well enough — fix the file, not the delegate's context.
+It doubles as a quality measure (dex): if a Mason cannot implement the slice
+from the persisted design and its references, the design was not factored
+well enough — fix the file, not the Mason's context.
 
 ## Model tiers (and how they resolve)
 
@@ -149,7 +243,7 @@ the same three the roster uses:
 
 | Tier | What it is for | Roles |
 |---|---|---|
-| **frontier** | Thinking, grilling, reviewing — where a wrong judgement is expensive and only caught much later | Architect (interview, design, plan); Inspector (the two-axis review) |
+| **frontier** | Thinking, grilling, reviewing — where a wrong judgement is expensive and only caught much later | Architect (interview, design, plan); Checker (spec review); Inspector (the two-axis review) |
 | **mid** | Ordinary tasks and dispatch — work that needs competence but not judgement | A Mason on a slice that is not purely mechanical |
 | **cheap** | Typing from a plan that is already persisted | A Mason as typist |
 
@@ -171,8 +265,8 @@ level that answers for a tier wins that tier:
    their model ids. It is **never committed** — the setup poses it from the
    socle template and adds it to the project's ignore rules, so each dev
    writes their own at their first session and nobody inherits anyone else's.
-2. **`.agents/project.md`**, the versioned glue — the team's default mapping
-   for this repo, if the team has agreed on one and written it there. Most
+2. **`.agents/project.md` §H**, the versioned glue's team default mapping for
+   this repo, if the team has agreed on one and written it there. Most
    repos have not, and skip straight to the next level.
 3. **The socle default**, which contains no model id at all: *frontier* is the
    strongest reasoning model your tool offers you, *mid* its standard everyday
@@ -191,15 +285,10 @@ formula steps, skills — names a tier and points here.
 
 | dex phase | Our artifact | Produced by | Delegable? |
 |---|---|---|---|
-| **Product** (why/what/success) | Parent task 🧑 REVIEW CAREFULLY: Context, Scope, Acceptance Criteria | planner session + human (grilling); frontier tier | never |
-| **System Architecture** (how the pieces talk) | Parent task **Architecture** section (🧑, medium/large; diagrams > prose) | planner session + human; frontier tier | never |
-| **Program Design** (types, signatures, layout, call stacks) | Unsliced task: Implementation Decisions. Sliced task: each slice's **Design** section, persisted at plan time | planner at the plan gate, human approves; frontier tier | never |
-| **Vertical Slices** (implementation) | The code, cycle by cycle | typist session at the cheap tier (mid when the slice is not purely mechanical) — ONLY delegable phase | ✅ opt-in |
-
-The delegation boundary is the plan: everything above the line is thinking
-(planner + human), everything below is typing. A typist asked to "figure
-out" something the Design left open is a planning failure, not an execution
-one — the plan goes back to the planner.
+| **Product** (why/what/success) | Parent task 🧑 REVIEW CAREFULLY: Context, Scope, Acceptance Criteria | Architect + human (grilling); frontier tier | never |
+| **System Architecture** (how the pieces talk) | Parent task **Architecture** section (🧑, medium/large; diagrams > prose) | Architect + human; frontier tier | never |
+| **Program Design** (types, signatures, layout, call stacks) | Unsliced task: Implementation Decisions. Sliced task: each slice's **Design** section, persisted at plan time | Architect at the plan gate, human approves; frontier tier | never |
+| **Vertical Slices** (implementation) | The code, cycle by cycle | Mason, cheap tier (mid when the slice is not purely mechanical) — the only delegable phase | ✅ opt-in |
 
 Upstream note: Pocock does NOT persist per-ticket program design — his
 capture points are `CONTEXT.md`/ADRs (during grilling) and the feature-level
@@ -230,16 +319,22 @@ Fowler smells, always judgement calls) and **Spec** (the task file's 🧑 zones
 as requirements: anything missing? any scope creep?) as separate axes so one
 cannot mask the other.
 
-## Why the CHANGELOG stays
+## Why the journal stays
 
-The dated CHANGELOG is the project's narrative memory: agents grep it and read
-the recent entries to load context cheaply at session start. It complements —
-never replaces — the task archive (structured detail), the living docs
-(current state), and the domain memory maintained by the `domain-modeling`
-skill: `CONTEXT.md` (the glossary, nothing else) and `docs/adr/` (decisions
-that are hard to reverse, surprising without context, AND real trade-offs —
-all three or no ADR). The CHANGELOG records the flow; CONTEXT.md and ADRs
-crystallize what must survive it.
+The journal declared in `.agents/project.md` §A is the project's narrative
+memory: agents grep it and read the recent entries to load context cheaply at
+session start. It is **written by hand** — one dated entry per task, added by
+the agent at the end of the work — and **never generated**: not from a
+coordination database's audit trail, not from the git history, not from
+anything else. Narration nobody wrote is worth nothing to the next reader.
+
+It complements — never replaces — the task archive (structured detail), the
+living docs (current state), and the domain memory maintained by the
+`domain-modeling` skill: `CONTEXT.md` (the glossary, nothing else) and
+`docs/adr/` (decisions that are hard to reverse, surprising without context,
+AND real trade-offs — all three or no ADR; a separate artifact from the
+journal). The journal records the flow; CONTEXT.md and ADRs crystallize what
+must survive it.
 
 ## Artifact ladder (plans → evergreen)
 
@@ -248,7 +343,7 @@ whatever scratch plan surface the tool offers). At completion they must be
 **promoted** into evergreen product docs
 under the documentation reference declared in `.agents/project.md` (default
 `doc/**`) **except** the task workspace declared there (default
-`/project-management/`: tasks, changelog, temporary baselines, archive).
+`/project-management/`: tasks, the journal, temporary baselines, archive).
 Prefer `doc/architecture/` for as-built seams and integration diagrams; add
 `doc/domain/` when the glossary needs a home. The task workspace is narrative
 and planning — not the living architecture. Protocol wording stays generic:
