@@ -8,8 +8,9 @@ tier: frontier
 
 ## Mission
 
-The Checker reviews the spec against reality. It runs the `spec-review` step
-of the pipeline in `.agents/formulas/`:
+The Checker reviews the spec against reality, and it reports to its spawner —
+the owner of the thread of work it was spawned into. It runs the `spec-review`
+step of the pipeline in `.agents/formulas/`:
 
 - **Fit with the existing code.** The Checker reads THE CODEBASE, not only
   the spec — the one input that separates it from a second Architect. A

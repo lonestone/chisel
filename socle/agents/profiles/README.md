@@ -17,6 +17,13 @@ profile it is about to spawn** — never from habit and never from its own
 conversation. That is the whole reason the input contract lives with the role
 that consumes it: one source, read at the moment it is used.
 
+Spawning a role is exactly two parts. The **profile body, pasted verbatim** as
+the spawned session's instructions — it carries its own framing: the mission,
+whom the role reports to, and what it never does. Then the **per-task brief**
+composed from that profile's `Inputs` section: paths, scope, artifacts. The
+delegator invents zero doctrine at spawn time; a framing written on the fly is
+unversioned and model-dependent, which is the failure this rule prevents.
+
 ## The body is the source; the per-tool definitions are renders
 
 Tools do not agree on how a sub-agent is defined, and almost none of them can
@@ -45,16 +52,18 @@ so keep it unique across profiles and equal to the file's own name. A file
 without frontmatter — this README, for instance — is documentation, and no
 definition is rendered from it.
 
-## The universal fallback
+## How a role is spawned
 
-When a tool has no definition format at all, the role still applies. Two
-equivalent ways to run it:
+**Inline at spawn** is the rule, not a fallback, and it holds whatever the
+tool: paste the profile body into the sub-agent's instructions, then the brief
+built from its `Inputs` section. A tool with a definition format renders that
+same body ahead of time; a tool with none pastes it at spawn. The contract does
+not change.
 
-- **Inline at spawn** — paste the profile body into the sub-agent's
-  instructions, then the brief built from its `Inputs` section.
-- **A fresh session** — open one, give it the profile file to read and the
-  same brief. Preferred when the role needs a full context window of its own,
-  which is the normal case for a Mason working a slice.
+**A fresh session** is the second path, and for typing it is mandatory when the
+tool cannot spawn: open one, give it the profile file to read and the same
+brief — `work on slice <file>` for a Mason working a slice, which is also the
+case where the role needs a full context window of its own.
 
 Either way the contract is the same file. Nothing about a role lives in the
 adapter: the adapter only knows how to *spawn*.
