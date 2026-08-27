@@ -5,10 +5,11 @@ template: what the role is for, at which tier it runs, what it may never do,
 when it stops and escalates, and — the part the delegating agent needs —
 exactly what it receives when it is handed work.
 
-The roles of the pipeline: `architect.md` (thinks), `checker.md` (reviews the
-spec), `mason.md` (types), `inspector.md` (reviews the diff). They are the
-roles the formula steps in `.agents/formulas/` name. The Foreman is
-deliberately **not** here: it is not an agent — see `.agents/foreman.md`.
+The roles of the pipeline: `foreman.md` (owns the thread), `architect.md`
+(thinks), `checker.md` (reviews the spec), `mason.md` (types), `inspector.md`
+(reviews the diff). They are the roles the formula steps in `.agents/formulas/`
+name. The Foreman is a role with a profile like the others — the owner of one
+thread of work, who spawns the rest; see `foreman.md` for its contract.
 
 ## Before spawning a role, read its profile
 
@@ -36,7 +37,8 @@ formats cover the field today:
 | `.codex/agents/<role>.toml` | `name`, `description`, the body as `developer_instructions` |
 
 A tool that reads another's directory natively needs nothing of its own.
-Anything with no definition format at all uses the fallback below.
+Anything with no definition format at all gets the body pasted inline at
+spawn — the rule the section "How a role is spawned" states below.
 
 Those generated files are **managed**: written by `chisel init`, re-rendered
 by `chisel update`, hashed in `.agents/.chisel.json`, and reported by

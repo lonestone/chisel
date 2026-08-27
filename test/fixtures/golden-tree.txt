@@ -1,7 +1,6 @@
 .agents
 .agents/.chisel.json
 .agents/discipline.md
-.agents/foreman.md
 .agents/formulas
 .agents/formulas/chisel-auto.formula.toml
 .agents/formulas/chisel-default.formula.toml
@@ -11,6 +10,7 @@
 .agents/profiles/README.md
 .agents/profiles/architect.md
 .agents/profiles/checker.md
+.agents/profiles/foreman.md
 .agents/profiles/inspector.md
 .agents/profiles/mason.md
 .agents/project.md
@@ -75,6 +75,7 @@
 .claude/agents
 .claude/agents/architect.md
 .claude/agents/checker.md
+.claude/agents/foreman.md
 .claude/agents/inspector.md
 .claude/agents/mason.md
 .claude/skills
@@ -82,6 +83,7 @@
 .codex/agents
 .codex/agents/architect.toml
 .codex/agents/checker.toml
+.codex/agents/foreman.toml
 .codex/agents/inspector.toml
 .codex/agents/mason.toml
 project-management

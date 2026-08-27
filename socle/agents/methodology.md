@@ -79,7 +79,7 @@ The roster that fills these presets follows.
 | **Checker** | frontier | Reviews the spec before it is planned — never its author | `.agents/profiles/checker.md` |
 | **Mason** | cheap or mid | Types the persisted plan — never plans | `.agents/profiles/mason.md` |
 | **Inspector** | frontier | Reviews the diff on two axes — never its author | `.agents/profiles/inspector.md` |
-| **Foreman** | — | Routes: what starts next, and who starts it. Not an agent | `.agents/foreman.md` |
+| **Foreman** | frontier | Owns one thread of work — carries the context, spawns the other roles, collects their reports and rules on them | `.agents/profiles/foreman.md` |
 
 The table names roles and points; the contract — what a role may never do,
 when it escalates, exactly what it receives — lives in the profile.

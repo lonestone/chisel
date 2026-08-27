@@ -248,7 +248,7 @@ PY
   fi
 
   # The renders are thin: profile body -> generated body, byte for byte.
-  for role in architect mason inspector; do
+  for role in architect foreman mason inspector; do
     awk 'NR == 1 && $0 == "---" { h = 1; next }
          h && $0 == "---" { h = 0; next }
          h { next }
