@@ -28,7 +28,7 @@
 # §F gate commands, §G glossary and decisions).
 #
 # Supervised is opt-in: it runs only when the human explicitly asks for it AND
-# the project glue enables it.
+# `.agents/project.md` §B3 permits it.
 
 formula = "chisel-supervised"
 description = "Chisel task pipeline, Supervised mode: the same steps as chisel-auto with exactly one human await — the Owner approves the spec. The plan and the review arbitration are not the Owner's here. Requires the glue to enable it."

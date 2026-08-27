@@ -133,10 +133,15 @@ While that line reads **disabled**, an agent asked to run a whole task without
 stopping at the human decision points must **refuse**, name this line as the
 reason, and continue the normal way (stopping when the pipeline says to stop).
 
-Change the line to **`Autonomous runs: enabled.`** and such a run **proceeds** —
-but only when a human explicitly asks for it in that session; it never becomes
-the default way of working. Nobody may grant themselves the permission
-in-session: it lives here, in a versioned file, either way.
+Change the line to **`Autonomous runs: enabled.`** and an agent may run
+`chisel-supervised` (one asynchronous gate — the Owner approves the spec,
+nothing else) or `chisel-auto` (no gates, escalation only) — the same
+one-word line governs both. Either still runs only when a human explicitly
+asks for it in that session; it never becomes the default way of working, and
+WHICH of the two is wanted is itself asked for in-session, never granted
+in-session — this line only lifts the refusal, it does not pick a preset.
+Nobody may grant themselves the permission in-session: it lives here, in a
+versioned file, either way.
 
 <!-- Turning it back off is the same one-word edit; there is nothing to migrate
 in either direction. -->

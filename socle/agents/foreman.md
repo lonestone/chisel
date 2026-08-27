@@ -48,5 +48,5 @@ That is a real possibility and an explicitly deferred one — the shape of that
 agent should come from watching a real queue misbehave, not from imagining
 one. Until then, a `foreman` definition is generated for no tool, on purpose.
 
-The roles that DO have profiles — Architect, Mason, Inspector — are in
-`.agents/profiles/`.
+The roles that DO have profiles — Architect, Checker, Mason, Inspector — are
+in `.agents/profiles/`.

@@ -27,10 +27,16 @@ where the breaks are):
   starting that step. Never assume approval.
 - Track progress in the spec file itself (status and checkboxes from the
   template) — it is the source of truth for content and progress.
+- Each step names a role (Architect, Checker, Mason, Inspector) — read its
+  profile in `.agents/profiles/` before spawning it; the contracts live there.
 
-`.agents/formulas/chisel-auto.formula.toml` is the same pipeline without the
-human gates. It is used only when the human explicitly asks for it and the
-project glue allows it — never chosen by an agent on its own.
+`.agents/formulas/chisel-auto.formula.toml` is the same pipeline with every
+human gate replaced by escalation — a doubting step stops and hands one rung
+up instead of waiting. `.agents/formulas/chisel-supervised.formula.toml` sits
+between the two: the same steps as auto, but with exactly one human gate — the
+Owner approves the spec, nothing else. Both are opt-in: either runs only when
+a human explicitly asks for it in that session AND `.agents/project.md` §B3
+permits it — never chosen by an agent on its own.
 
 Paths (task workspace, template, journal, gate commands) resolve through
 `.agents/project.md`. The reasoning behind all of it is

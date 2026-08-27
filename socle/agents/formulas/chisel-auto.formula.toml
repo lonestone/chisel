@@ -16,8 +16,8 @@
 # `.agents/project.md` (§A paths, §B tracker convention, §D living docs,
 # §F gate commands, §G glossary and decisions).
 #
-# Auto is opt-in: it runs only when the human explicitly asks for it AND the
-# project glue enables it.
+# Auto is opt-in: it runs only when the human explicitly asks for it AND
+# `.agents/project.md` §B3 permits it.
 
 formula = "chisel-auto"
 description = "Chisel task pipeline, Auto mode: the same steps as chisel-default with no human awaits. A doubting step escalates instead of blocking. Requires the glue to enable auto."

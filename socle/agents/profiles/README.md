@@ -5,10 +5,10 @@ template: what the role is for, at which tier it runs, what it may never do,
 when it stops and escalates, and — the part the delegating agent needs —
 exactly what it receives when it is handed work.
 
-The roles of the pipeline: `architect.md` (thinks), `mason.md` (types),
-`inspector.md` (reviews). They are the roles the formula steps in
-`.agents/formulas/` name. The Foreman is deliberately **not** here: it is not
-an agent — see `.agents/foreman.md`.
+The roles of the pipeline: `architect.md` (thinks), `checker.md` (reviews the
+spec), `mason.md` (types), `inspector.md` (reviews the diff). They are the
+roles the formula steps in `.agents/formulas/` name. The Foreman is
+deliberately **not** here: it is not an agent — see `.agents/foreman.md`.
 
 ## Before spawning a role, read its profile
 

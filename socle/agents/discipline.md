@@ -6,16 +6,17 @@ the only difference is the paperwork.
 
 1. **Read before acting.** At session start, read the reading list declared in
    `.agents/project.md` §C (by default the README and the most recent
-   changelog entries). Say which documents and rules you are working under.
+   journal entries). Say which documents and rules you are working under.
 
 2. **Plan first.** Even for a one-shot fix: say what you are about to do
    before doing it. Nothing half-decided crosses into code. When the work has
    a spec file, the approved plan is PERSISTED into that file before any code
    — how and where is the `plan` step of the formula (see below).
 
-3. **Human-owned zones are law.** Sections marked 🧑 in any spec file carry the
-   human's decisions. Never contradict one silently: if the work reveals a
-   conflict with a 🧑 zone, stop and surface it.
+3. **Zone-owner sections are law.** Sections marked 🧑 in any spec file carry
+   their owner's decisions — who that is follows the doctrine in
+   `.agents/methodology.md` ("Zone ownership"). Never contradict one silently:
+   if the work reveals a conflict with a 🧑 zone, stop and surface it.
 
 4. **Verify before "done".** Run the project's gate commands declared in
    `.agents/project.md` §F (lint, tests, build; a browser check when UI
@@ -31,8 +32,10 @@ the only difference is the paperwork.
 
 6. **Escalate, don't improvise.** Blocked twice on the same thing, or pushed
    outside the approved plan → stop and ask. Where there is no human to ask,
-   escalate one rung and write the blocker into the spec file; never force a
-   passage on your own authority.
+   escalate one rung — Mason → Architect → Inspector → the Owner's digest —
+   and write the blocker into the spec file; never force a passage on your own
+   authority. What the digest is: `.agents/methodology.md` ("Escalation, and
+   the Owner's digest").
 
 7. **Session hygiene.** Create in one sitting (interview → spec file → slicing
    feed each other); build **fresh**, from the file — that is why the plan is
@@ -43,6 +46,17 @@ the only difference is the paperwork.
    harness memory (auto-memory or any equivalent outside the repo); it goes in
    the repo's files, visible to review and git. Lessons about the way of
    working go through `retro` at close.
+
+9. **Read a role's profile before spawning it.** Compose the brief from the
+   `Inputs` section of the profile in `.agents/profiles/` you are about to
+   spawn — never from habit and never from your own conversation. The
+   contract lives with the role that consumes it.
+
+10. **A refused `update` is a redirect.** An agent whose `chisel update` is
+    refused for a v1 layout does not stop there: it chains onto the
+    `upgrade-v2` skill per the active preset — proposes it in the default,
+    runs it under `chisel-supervised` or `chisel-auto`, the new glue
+    questions following that preset's gates.
 
 ## The pipeline, for real scoped work
 
