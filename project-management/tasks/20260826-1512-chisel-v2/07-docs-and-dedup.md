@@ -1,6 +1,6 @@
 # 07 — Docs rewrite + one-source-per-concept dedup
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete
 **Blocked by:** 05, 06
 
 **What to build:** The documentation catches up with v2 and the normative
@@ -18,19 +18,19 @@ structure ×3, typist delegation ×3, model policy ×3, sizing check ×3).
 
 ## Acceptance criteria
 
-- [ ] `grep -rn "W0\|W1\|W2"` over `socle/`, `PHILOSOPHY.md`, `README.md`
+- [x] `grep -rn "W0\|W1\|W2"` over `socle/`, `PHILOSOPHY.md`, `README.md`
       returns no mode-label hit
-- [ ] PHILOSOPHY §4 and methodology.md present the piloting postures and the
+- [x] PHILOSOPHY §4 and methodology.md present the piloting postures and the
       coordination choice as one default plus options (matrix framing retired
       — Owner ruling, plan gate 2026-08-27), the invocation-posture principle,
       the Brief-stays-human invariant, and the roster — consistent with the
       shipped formulas and profiles
-- [ ] For each duplicated concept of the v1 inventory, exactly one normative
+- [x] For each duplicated concept of the v1 inventory, exactly one normative
       source remains and the other occurrences are links — mapping listed in
       this slice's Notes
-- [ ] README covers the two setup-visible choices (coordination, auto) and
+- [x] README covers the two setup-visible choices (coordination, auto) and
       the upgrade path, in plain language
-- [ ] The whole test suite stays green after the rewrite (rewritten from
+- [x] The whole test suite stays green after the rewrite (rewritten from
       "CLI test greps of slices 01/03" — those greps were deleted by slice 09;
       Owner ruling, plan gate 2026-08-27)
 
@@ -101,58 +101,58 @@ A line marked ↷ is deliberately NOT settled here and names its new owner.
 
 **Retired v1 layer still cited**
 
-- [ ] `methodology.md:5` cites `.agents/rules/task-*.md` — `01:297`, `03:276` → **S2**
-- [ ] `methodology.md:8` links `[workflows.md](./workflows.md)` — `01:297`, `03:335` → **S2**
-- [ ] `methodology.md:94` cites `task-progressing.md` — `01:297`, `03:276` → **S2**
-- [ ] `PHILOSOPHY.md:6` links `socle/agents/workflows.md` — `01:300` → **S4**
-- [ ] `PHILOSOPHY.md:125` links `workflows.md` "(the visual guide, gates and model policy)" — `01:300` → **S4**
-- [ ] `test/installer.sh:377-378` — the two waiver lines' `+ DEBT` half expires — `08:185-194`, `06:172-177` → **S2**
-- [ ] `test/installer.sh:401` — `methodology.md` leaves the v1-citers allow-list — `06:248-257`, `CHANGELOG.md:105-110` → **S2**
+- [x] `methodology.md:5` cites `.agents/rules/task-*.md` — `01:297`, `03:276` → **S2**
+- [x] `methodology.md:8` links `[workflows.md](./workflows.md)` — `01:297`, `03:335` → **S2**
+- [x] `methodology.md:94` cites `task-progressing.md` — `01:297`, `03:276` → **S2**
+- [x] `PHILOSOPHY.md:6` links `socle/agents/workflows.md` — `01:300` → **S4**
+- [x] `PHILOSOPHY.md:125` links `workflows.md` "(the visual guide, gates and model policy)" — `01:300` → **S4**
+- [x] `test/installer.sh:377-378` — the two waiver lines' `+ DEBT` half expires — `08:185-194`, `06:172-177` → **S2**
+- [x] `test/installer.sh:401` — `methodology.md` leaves the v1-citers allow-list — `06:248-257`, `CHANGELOG.md:105-110` → **S2**
 
 **Owner vocabulary: "a default + options"**
 
-- [ ] `chisel-controlled` → `chisel-default`, every occurrence — `08:221-224`, `10:143`, `11:269`, parent `:267-269` → **S1**
-- [ ] `foreman.md:18` heading "## Controlled: the Foreman is you" — same rename — **S1**
-- [ ] `chisel-supervised` is named in no routing text — `08:221-224`, parent `:267-269` → **S3**
-- [ ] PHILOSOPHY §4 W0/W1/W2 labels — AC1, `07:21-22` → **S4**
-- [ ] "Silent" as a mode name — parent `:414-417`. **Already absent from `socle/`** (verified); only §4's W0 line carries it → **S4**
-- [ ] `methodology.md` speaks "planner session / typist session", not the roster — AC2 → **S2**
+- [x] `chisel-controlled` → `chisel-default`, every occurrence — `08:221-224`, `10:143`, `11:269`, parent `:267-269` → **S1**
+- [x] `foreman.md:18` heading "## Controlled: the Foreman is you" — same rename — **S1**
+- [x] `chisel-supervised` is named in no routing text — `08:221-224`, parent `:267-269` → **S3**
+- [x] PHILOSOPHY §4 W0/W1/W2 labels — AC1, `07:21-22` → **S4**
+- [x] "Silent" as a mode name — parent `:414-417`. **Already absent from `socle/`** (verified); only §4's W0 line carries it → **S4**
+- [x] `methodology.md` speaks "planner session / typist session", not the roster — AC2 → **S2**
 
 **Naming what now resolves by search**
 
-- [ ] `AGENTS-block.md:33` "the project glue allows it" — does not name **§B3** — `04:615` → **S3**
-- [ ] `chisel-auto.formula.toml` header "the project glue enables it" — same — `04:615` → **S3**
-- [ ] `chisel-supervised.formula.toml:30-31` — same — `04:615` (by extension) → **S3**
-- [ ] `methodology.md:174-176` cascade level 2 — does not name **§H** — `04:616` → **S2**
-- [ ] Nothing routes to `.agents/profiles/` from the ambient layer — `02:463-479`, **explicitly flagged as needing an owner** → **S3**
+- [x] `AGENTS-block.md:33` "the project glue allows it" — does not name **§B3** — `04:615` → **S3**
+- [x] `chisel-auto.formula.toml` header "the project glue enables it" — same — `04:615` → **S3**
+- [x] `chisel-supervised.formula.toml:30-31` — same — `04:615` (by extension) → **S3**
+- [x] `methodology.md:174-176` cascade level 2 — does not name **§H** — `04:616` → **S2**
+- [x] Nothing routes to `.agents/profiles/` from the ambient layer — `02:463-479`, **explicitly flagged as needing an owner** → **S3**
 
 **Owner rulings awaiting their wording**
 
-- [ ] 🧑 = the zone's OWNER, not "the human" — parent `:375-383`; today `discipline.md:16` says "Human-owned zones are law" and `methodology.md:50` "the human's property" — `08:309-313` → **S2** (doctrine) + **S3** (ambient)
-- [ ] The escalation chain + **the Owner's digest**, named 9× across profiles and formulas and **defined nowhere** — parent `:375-383`, `08:309-313` → **S2** (defined once) + **S3** (named in the ambient core)
-- [ ] A refused `update` is a redirect: chain onto `upgrade-v2`, propose in default / run in supervised·auto — parent `:279-285` → **S3**
+- [x] 🧑 = the zone's OWNER, not "the human" — parent `:375-383`; today `discipline.md:16` says "Human-owned zones are law" and `methodology.md:50` "the human's property" — `08:309-313` → **S2** (doctrine) + **S3** (ambient)
+- [x] The escalation chain + **the Owner's digest**, named 9× across profiles and formulas and **defined nowhere** — parent `:375-383`, `08:309-313` → **S2** (defined once) + **S3** (named in the ambient core)
+- [x] A refused `update` is a redirect: chain onto `upgrade-v2`, propose in default / run in supervised·auto — parent `:279-285` → **S3**
 
 **The journal**
 
-- [ ] `methodology.md:11,233-242,251` still says CHANGELOG — `06:248-257` → **S2**
-- [ ] "written by hand, never generated" is missing from the doctrinal page (06 could only write it in glue §A) — `06:128-135` → **S2**
-- [ ] `discipline.md:9` "changelog entries" — `06:264-265` → **S3**
-- [ ] `PHILOSOPHY.md:116,119` CHANGELOG — → **S4**
-- [ ] Glue §A field label `Changelog:` / §C `<Changelog>` — `06:118-126`, `06:258-263` → **settled by ruling R2, kept as-is**
+- [x] `methodology.md:11,233-242,251` still says CHANGELOG — `06:248-257` → **S2**
+- [x] "written by hand, never generated" is missing from the doctrinal page (06 could only write it in glue §A) — `06:128-135` → **S2**
+- [x] `discipline.md:9` "changelog entries" — `06:264-265` → **S3**
+- [x] `PHILOSOPHY.md:116,119` CHANGELOG — → **S4**
+- [x] Glue §A field label `Changelog:` / §C `<Changelog>` — `06:118-126`, `06:258-263` → **settled by ruling R2, kept as-is**
 
 **One source per concept** (v1 inventory §4:116, re-verified against today's tree)
 
-- [ ] Model policy ×3 → **already one source**: `methodology.md` "Model tiers", which says so; §H points at it, `code-review` points at it. Verified, recorded, no edit → **S6** (mapping table only)
-- [ ] Sizing check ×3 → the three layers are legitimate (doctrine · trigger · know-how); the overlap to remove is `slice-task/SKILL.md:43-44` restating the glossary's definition → **S5**
-- [ ] Typist delegation ×3 → `methodology.md:107-143` and `:190-208` say it twice inside one file, in retired vocabulary; `mason.md` holds the role contract; the formulas hold the trigger → **S2**
-- [ ] Artifact structure ×3 → task shape = `templates/000-task-file-template.md`; slice shape = `slice-task`'s emitted template; `methodology.md` stops restating and points → **S2**
-- [ ] `improve-codebase-architecture/SKILL.md:34` — `Agent` tool / `subagent_type=Explore` hardcoded — `03:277` → **S5**
-- [ ] `codebase-design/DESIGN-IT-TWICE.md:23` — "the Agent tool" hardcoded — `03:277` → **S5**
+- [x] Model policy ×3 → **already one source**: `methodology.md` "Model tiers", which says so; §H points at it, `code-review` points at it. Verified, recorded, no edit → **S6** (mapping table only)
+- [x] Sizing check ×3 → the three layers are legitimate (doctrine · trigger · know-how); the overlap to remove is `slice-task/SKILL.md:43-44` restating the glossary's definition → **S5**
+- [x] Typist delegation ×3 → `methodology.md:107-143` and `:190-208` say it twice inside one file, in retired vocabulary; `mason.md` holds the role contract; the formulas hold the trigger → **S2**
+- [x] Artifact structure ×3 → task shape = `templates/000-task-file-template.md`; slice shape = `slice-task`'s emitted template; `methodology.md` stops restating and points → **S2**
+- [x] `improve-codebase-architecture/SKILL.md:34` — `Agent` tool / `subagent_type=Explore` hardcoded — `03:277` → **S5**
+- [x] `codebase-design/DESIGN-IT-TWICE.md:23` — "the Agent tool" hardcoded — `03:277` → **S5**
 
 **Stale after slices 10 and 11**
 
-- [ ] `foreman.md:51` and `profiles/README.md:8-9` list "Architect, Mason, Inspector" — `checker.md` shipped in slice 11 and is missing from both → **S3**
-- [ ] `methodology.md` describes a 7-step pipeline world; the formulas ship **9 steps** (`spec-review`, `design-check` added by slice 10) → **S2**
+- [x] `foreman.md:51` and `profiles/README.md:8-9` list "Architect, Mason, Inspector" — `checker.md` shipped in slice 11 and is missing from both → **S3**
+- [x] `methodology.md` describes a 7-step pipeline world; the formulas ship **9 steps** (`spec-review`, `design-check` added by slice 10) → **S2**
 
 **Not settled here** ↷
 
@@ -491,4 +491,109 @@ Both are 🧑 zone text, so neither is decided here.
 
 ## Notes
 
-_Filled during implementation._
+### Execution log
+
+Six commits, each a green suite (9 scenarios, 88 assertions, 0 failed, 588
+of the 600-line cap — unchanged start to finish, per the plan's zero-line
+budget):
+
+1. **S1** — `215dbf4` — `chisel-controlled` → `chisel-default`, atomic. The
+   file table's `grep -rni controlled` was re-run before committing and
+   caught one hit the plan's table missed: `chisel-auto.formula.toml:7`
+   ("where Controlled waits, Auto ESCALATES") — the same retired mode-name
+   vocabulary, same mechanical treatment, folded into the same commit.
+2. **S2** — `88417dd` — `methodology.md` rewritten as the sole doctrinal
+   source, plus the ruling-R1 waiver/allow-list edit in `test/installer.sh`
+   (the two cannot be split: `integrity` asserts the allow-list both ways).
+3. **S3** — `ddfc5dc` — the ambient layer and the routing texts:
+   `discipline.md`, `AGENTS-block.md`, `project.md.tpl` §B3, the two formula
+   headers (comments only — the auto/supervised byte-for-byte body invariant
+   from slice 08 was re-diffed after the edit and holds), the two stale role
+   lists.
+4. **S4** — `0ae77f2` — `PHILOSOPHY.md` §4 and `README.md`. See "AC1 vs the
+   plan's literal wording" below for one deliberate deviation.
+5. **S5** — `8f5d6da` — the three dedup residuals (two hardcoded "Agent
+   tool" mentions, one restated slice definition).
+6. **S6** — this commit — close.
+
+### AC1 — the grep, verified at review time (never committed as a test)
+
+```
+$ grep -rnE "W0|W1|W2" socle/ PHILOSOPHY.md README.md
+$ echo "exit: $?"
+exit: 1
+```
+
+Empty output, exit 1 (no match). Re-run after every step from S1 onward;
+first came back empty at S4, the step that touched the last two carriers of
+the labels (`PHILOSOPHY.md` §4 and its own earlier draft).
+
+### AC1 vs the plan's literal wording — one deliberate deviation
+
+D3/S4's design text asks for the retired labels to be mapped explicitly for
+a reader of the earlier design: *"W0 ≈ the default with no artifact, W1+W2 ≈
+the default with one, W3 ≈ auto."* Writing that sentence verbatim would have
+put the literal strings `W0`, `W1`, `W2` into `PHILOSOPHY.md` — which is
+exactly what AC1's own grep, defined two paragraphs earlier in the same
+Design (D1), forbids. The two instructions contradict each other within the
+same slice.
+
+Resolved in favor of the mechanical, gating criterion (AC1): §4 explains
+*that* an earlier design used size-based labels and *why* they were retired
+(work size vs. piloting posture — a sentence, per the plan's own summary
+goal), without spelling out the old label strings. The reader-facing
+Rosetta-stone mapping the plan asked for is not in the shipped text as a
+result — flagging this precisely so the Owner can override the call if the
+literal mapping is wanted enough to justify amending AC1 instead.
+
+### AC3 — the one-source-per-concept mapping
+
+| Duplicated concept (v1 inventory) | Normative source | Other occurrences → now pointers |
+|---|---|---|
+| Model policy ×3 | `methodology.md` — "Model tiers (and how they resolve)" | Already one source going in (verified, not edited): `project.md.tpl` §H points and says not to restate; `code-review/SKILL.md` points via anchor link; every formula step names a tier and stops there |
+| Sizing check ×3 | Doctrine — `methodology.md` "Why slicing is conditional"; trigger — the formulas' `spec` step; know-how — `slice-task/SKILL.md` | `slice-task/SKILL.md`'s two bullets restating "demoable on its own" / "sized for a single fresh context window" dropped; replaced by a pointer to the Glossary (S5) |
+| Typist delegation ×3 | `methodology.md` — the Corollary under "Why slices are born thin", now in roster vocabulary (Architect / Mason) | The second prose telling, in "Where dex's phases live", dropped; its table kept (it earns its place — maps dex phases to artifacts) (S2). `mason.md`/`architect.md` hold the role contracts, unchanged — they were never the duplicate |
+| Artifact structure ×3 | Task shape: `templates/000-task-file-template.md`; slice shape: `slice-task`'s emitted `<slice-template>` | `methodology.md`'s Glossary keeps only the one-line Task/Slice vocabulary entries — checked for a structural restatement to remove; none existed (S2) |
+| `improve-codebase-architecture/SKILL.md:34` — hardcoded "Agent tool" / `subagent_type=Explore` | `code-review/SKILL.md:69`'s tool-neutral phrasing | Now reads "whatever exploration sub-agent your tool provides, with a brief carrying what it needs" (S5) |
+| `codebase-design/DESIGN-IT-TWICE.md:23` — hardcoded "the Agent tool" | Same pattern as above | Now reads "whatever parallel sub-agent mechanism your tool provides"; sub-agent count and the "radically different interface" requirement unchanged (S5) |
+
+### D2 debt inventory
+
+Ticked in place above, item by item, each with the step that settled it —
+34 lines, all closed by S1–S5. The six ↷ lines (D2's last block) are
+untouched by design: they are reassigned to the Owner as post-v2 tasks, not
+settled by this slice.
+
+### Found, not fixed (out of scope, flagged for the Owner)
+
+- **`methodology.md`'s delegation Corollary still calls the Architect/Mason
+  split "opt-in".** Every shipped formula (`chisel-default`,
+  `chisel-supervised`, `chisel-auto`) always assigns the `type` step to a
+  Mason — there is no formula-level path where the Architect types its own
+  plan. "Opt-in" may still hold informally (nothing stops a human from doing
+  both roles themselves outside the formula's letter), but the wording
+  wasn't re-argued here: S2's brief was a vocabulary swap
+  (planner/typist session → Architect/Mason), not a re-litigation of whether
+  delegation is still optional. Not in D2's inventory; left as found.
+- No other out-of-scope issues surfaced during S1–S5.
+
+### D5 out of scope — confirmed untouched
+
+`bin/chisel.sh`, the dogfooding task, 06's pilots, every formula step body
+beyond the two headers named in S3, the four profile bodies, `chisel-setup`'s
+questionnaire, and beads vocabulary beyond the digest's §B-conditional
+mechanic — none of these were read for a change, per D5.
+
+**Two Owner corrections received after S6 was written, applied as a
+dedicated commit on top** (the executing Mason stalled mid-application; the
+orchestrator finished it): (1) a glue subsection is referenced as file +
+section title at first mention — "§B3 · Autonomous runs of
+`.agents/project.md`" — never a bare number; applied to the files this
+slice's steps already touch (README, methodology.md, AGENTS-block.md, the
+two opt-in formula headers). (2) `methodology.md`'s "Why slices are born
+thin" section rewritten as "The two designs — and why they do not happen at
+the same moment": the SYSTEM design (Architecture, 🧑) is settled at
+creation and is what makes a slice ready to produce — a slice can be big at
+birth; only the PROGRAM design (files, signatures, TDD order) waits for the
+plan step. PHILOSOPHY's "Spec once, design just-in-time" bullet aligned
+("Two designs, two moments"). Suite green after both.
