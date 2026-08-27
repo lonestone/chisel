@@ -41,12 +41,12 @@ other.
 each in `.agents/project.md`, both changeable later by re-running the
 question:
 
-- **Where task statuses live (§B1).** The default is the task files
-  themselves — nothing to install. The other answer is a committed `bd`
-  database when a repo wants queries instead of a reading session; adding it
-  later is tooled and only touches open tasks.
-- **Whether an agent may run without stopping (§B3).** Off by default. Turn
-  it on and a human can ask, in a given session, for `chisel-supervised`
+- **§B1 · Where task statuses live, of `.agents/project.md`.** The default
+  is the task files themselves — nothing to install. The other answer is a
+  committed `bd` database when a repo wants queries instead of a reading
+  session; adding it later is tooled and only touches open tasks.
+- **§B3 · Autonomous runs, of the same file.** Off by default. Turn it on
+  and a human can ask, in a given session, for `chisel-supervised`
   (one asynchronous gate — the Owner approves the spec, nothing else) or
   `chisel-auto` (no gates; a doubting step escalates instead). Nobody grants
   themselves that permission in-session — it lives in this versioned line

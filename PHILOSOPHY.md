@@ -75,12 +75,13 @@ These are the beliefs chisel is built on:
   every conversation (read the project context, plan first, verify before
   "done"). The agent detects when a chat has become real work and proposes
   a task file — it never forces one. The one-shot fix stays cheap.
-- **Spec once, design just-in-time.** Slices are born thin (intent +
-  acceptance criteria + dependency edges). Program design happens at each
-  slice's plan gate, with the real code in view — and the approved plan is
-  **persisted into the slice file before any code is typed**. A plan that
-  only lives in the conversation is invisible to the completion review, to
-  dependent slices, and to re-runs.
+- **Two designs, two moments.** The system design (how the pieces talk) is
+  settled at creation time and reviewed there — a slice is ready to produce
+  when it is settled, not before. The program design (files, signatures,
+  test order) happens at each slice's plan step, with the real code in view
+  — and once validated it is **persisted into the slice file before any
+  code is typed**. A plan that only lives in the conversation is invisible
+  to the completion review, to dependent slices, and to re-runs.
 - **Think and type are different jobs.** Planning needs a frontier model
   and a human gate; typing from a complete persisted brief doesn't. The
   **plan is the delegation boundary**: product, architecture and program

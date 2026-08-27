@@ -35,8 +35,8 @@ human gate replaced by escalation — a doubting step stops and hands one rung
 up instead of waiting. `.agents/formulas/chisel-supervised.formula.toml` sits
 between the two: the same steps as auto, but with exactly one human gate — the
 Owner approves the spec, nothing else. Both are opt-in: either runs only when
-a human explicitly asks for it in that session AND `.agents/project.md` §B3
-permits it — never chosen by an agent on its own.
+a human explicitly asks for it in that session AND `.agents/project.md`
+permits it (§B3 · Autonomous runs) — never chosen by an agent on its own.
 
 Paths (task workspace, template, journal, gate commands) resolve through
 `.agents/project.md`. The reasoning behind all of it is

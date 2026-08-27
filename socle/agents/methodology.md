@@ -2,8 +2,9 @@
 
 This document explains the reasoning behind the task workflow so that humans
 and agents apply it with judgement, not cargo-cult. The **what/where** is the
-task file template declared in `.agents/project.md` §A (default
-`/project-management/000-task-file-template.md`); the **order and the gates**
+task file template declared in §A · Task workspace of `.agents/project.md`
+(default `/project-management/000-task-file-template.md`); the **order and
+the gates**
 are `.agents/formulas/`; the **ambient invariants** are
 `.agents/discipline.md`; this file is the **why**.
 
@@ -38,7 +39,7 @@ external tracker (Linear, GitHub Issues), if/when one is wired up — see
 chisel has one default behaviour: the human holds every gate. Two options add
 to it, and neither changes the other — **beads** (the status database, repo
 state, additive) and **auto** (permission not to wait, an invocation
-posture, §B3).
+posture — §B3 · Autonomous runs of `.agents/project.md`).
 
 Three presets combine them:
 
@@ -107,9 +108,9 @@ Mason → Architect → Inspector → the Owner's digest.
 
 The digest is named across the profiles and the formulas and defined here,
 once. It creates **no new artifact**: a dated ⚠️ line in the journal declared
-in §A, plus — when §B1 keeps the coordination state in beads — a blocking
-`escalation` item assigned to the Owner, per the §B convention. That is the
-whole mechanic.
+in §A, plus — when §B1 · Where task statuses live of `.agents/project.md`
+keeps the coordination state in beads — a blocking `escalation` item
+assigned to the Owner, per the §B convention. That is the whole mechanic.
 
 ## The pipeline is nine steps
 
@@ -171,16 +172,30 @@ Note the distinction: **vertical-slice discipline during implementation**
 (never layer-by-layer, something demoable at each step) applies to ALL work,
 sliced or not. Only the decomposition artifact is conditional.
 
-## Why slices are born thin — and get their design at plan time
+## The two designs — and why they do not happen at the same moment
 
-A slice file at publishing time carries only intent: what to build, acceptance
-criteria, blocking edges. The program design (target shape, signatures, test
-order) is deliberately NOT written at slicing time: designing slice 6 before
-slices 1–3 have taught anything produces stale guesses — file paths rot,
-learning is ignored. Instead, the implementing session designs **just-in-time
-at its plan gate**, with the real code in view.
+There are two designs, and conflating them is the classic failure. The task
+file template separates them by zone, and the pipeline separates them in
+time:
 
-But that plan must not die with the conversation. Once approved, the
+**System design** — how the pieces talk: services, contracts, schemas, data
+models — is the Architecture section of the template, 🧑 REVIEW CAREFULLY.
+It is settled **at creation time**: the interview grills its owner, the
+`spec-review` loop challenges it, and the spec gate (where the mode has one)
+approves it. This is sometimes a lot of work and several rounds, synchronous
+or asynchronous — and that is the point: **a task or slice is ready to be
+produced when its system design is settled, not before.** A slice can be big
+at birth; what makes it ready is that the expensive-to-reverse decisions are
+made, not that it is small.
+
+**Program design** — the target shape inside the agreed architecture: files,
+seam signatures, test order — is deliberately NOT written at creation time.
+Designing slice 6's files before slices 1–3 have taught anything produces
+stale guesses — file paths rot, learning is ignored. The implementing
+session designs it **just-in-time at its plan step**, with the real code in
+view, and the `design-check` loop validates it before any typing.
+
+That program design must not die with the conversation. Once validated, the
 implementing session **persists it into the slice file's Design section** —
 the `plan` step of the formulas says so. Three reasons:
 
@@ -192,8 +207,9 @@ the `plan` step of the formulas says so. Three reasons:
 3. **Re-runs and crashes.** The artifact must stay self-contained (context
    hygiene) — a session must be resumable from the file alone.
 
-So the lifecycle of a slice file is: thin at birth (intent) → design persisted
-at plan approval → worklog during implementation → checked off at completion.
+So the lifecycle of a slice file is: born with intent and its system design
+settled → program design persisted at plan validation → worklog during
+implementation → checked off at completion.
 
 **Corollary — the cost gradient (opt-in delegation).** Persisting the plan
 makes the slice file a complete brief, which unlocks a division of labor: the
@@ -265,9 +281,9 @@ level that answers for a tier wins that tier:
    their model ids. It is **never committed** — the setup poses it from the
    socle template and adds it to the project's ignore rules, so each dev
    writes their own at their first session and nobody inherits anyone else's.
-2. **`.agents/project.md` §H**, the versioned glue's team default mapping for
-   this repo, if the team has agreed on one and written it there. Most
-   repos have not, and skip straight to the next level.
+2. **`.agents/project.md`, §H · Model tiers** — the versioned glue's team
+   default mapping for this repo, if the team has agreed on one and written
+   it there. Most repos have not, and skip straight to the next level.
 3. **The socle default**, which contains no model id at all: *frontier* is the
    strongest reasoning model your tool offers you, *mid* its standard everyday
    model, *cheap* its fastest and least expensive one.
