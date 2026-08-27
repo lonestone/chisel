@@ -58,6 +58,12 @@ the only difference is the paperwork.
     runs it under `chisel-supervised` or `chisel-auto`, the new glue
     questions following that preset's gates.
 
+11. **A section reference names its file and its title.** When a document you
+    write or edit cites a section of another file, the first mention carries
+    both — "§B3 · Autonomous runs of `.agents/project.md`" — never a bare
+    number; later mentions in the same document may shorten it. A reader must
+    know where to go without searching.
+
 ## The pipeline, for real scoped work
 
 The order of steps and the gates live in `.agents/formulas/` — see the block
