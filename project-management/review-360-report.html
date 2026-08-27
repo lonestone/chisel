@@ -1,0 +1,383 @@
+<title>Review 360 de chisel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #FAF9F7;
+    --surface: #FFFFFF;
+    --ink: #22262C;
+    --ink-soft: #5A616B;
+    --line: #E4E1DB;
+    --accent: #3D5A80;
+    --accent-soft: #E8EEF5;
+    --bloquant: #B3362B;
+    --bloquant-soft: #F7E9E7;
+    --majeur: #96690A;
+    --majeur-soft: #F6EEDC;
+    --mineur: #5B6570;
+    --mineur-soft: #ECEEF0;
+    --ok: #3E7A4E;
+    --ok-soft: #E7F0E9;
+    --code-bg: #F1EFEA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #16181C;
+      --surface: #1E2126;
+      --ink: #E6E8EB;
+      --ink-soft: #9BA3AD;
+      --line: #33383F;
+      --accent: #8FB3D9;
+      --accent-soft: #24303E;
+      --bloquant: #E08578;
+      --bloquant-soft: #3A2523;
+      --majeur: #D9A441;
+      --majeur-soft: #38301D;
+      --mineur: #A6ADB6;
+      --mineur-soft: #2A2E33;
+      --ok: #7FB98E;
+      --ok-soft: #223328;
+      --code-bg: #272B31;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #16181C;
+    --surface: #1E2126;
+    --ink: #E6E8EB;
+    --ink-soft: #9BA3AD;
+    --line: #33383F;
+    --accent: #8FB3D9;
+    --accent-soft: #24303E;
+    --bloquant: #E08578;
+    --bloquant-soft: #3A2523;
+    --majeur: #D9A441;
+    --majeur-soft: #38301D;
+    --mineur: #A6ADB6;
+    --mineur-soft: #2A2E33;
+    --ok: #7FB98E;
+    --ok-soft: #223328;
+    --code-bg: #272B31;
+  }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .wrap { max-width: 78ch; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  h1, h2, h3, .chip, .kicker, nav, th {
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  }
+  h1 { font-size: 2.3rem; font-weight: 800; line-height: 1.1; margin: .4rem 0 .6rem; text-wrap: balance; letter-spacing: -0.015em; }
+  h2 { font-size: 1.35rem; font-weight: 800; margin: 3rem 0 1rem; letter-spacing: -0.01em; padding-top: 1.2rem; border-top: 2px solid var(--ink); }
+  h3 { font-size: 1.02rem; font-weight: 700; margin: 0 0 .35rem; line-height: 1.35; }
+  p { margin: 0 0 1rem; }
+  .kicker { text-transform: uppercase; letter-spacing: .12em; font-size: .74rem; font-weight: 700; color: var(--accent); }
+  .lede { font-size: 1.12rem; line-height: 1.55; }
+  .meta { color: var(--ink-soft); font-size: .88rem; font-family: "Archivo", sans-serif; margin-bottom: 2.2rem; }
+  code, .path {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .82em;
+    background: var(--code-bg);
+    padding: .1em .35em;
+    border-radius: 3px;
+  }
+  .verdict {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    padding: 1.2rem 1.4rem;
+    margin: 1.5rem 0;
+  }
+  .verdict p:last-child { margin-bottom: 0; }
+  .finding {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--mineur);
+    padding: 1rem 1.2rem;
+    margin: 0 0 .9rem;
+  }
+  .finding.bloquant { border-left-color: var(--bloquant); }
+  .finding.majeur { border-left-color: var(--majeur); }
+  .finding p { margin: .5rem 0 0; font-size: .97rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .5rem; }
+  .chip {
+    font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em;
+    padding: .18em .6em; border-radius: 999px;
+  }
+  .chip.sev-bloquant { background: var(--bloquant-soft); color: var(--bloquant); }
+  .chip.sev-majeur { background: var(--majeur-soft); color: var(--majeur); }
+  .chip.sev-mineur { background: var(--mineur-soft); color: var(--mineur); }
+  .chip.cl-nouveau { background: var(--accent-soft); color: var(--accent); }
+  .chip.cl-connu { background: var(--majeur-soft); color: var(--majeur); }
+  .chip.cl-tension { background: var(--bloquant-soft); color: var(--bloquant); }
+  .chip.cl-ok { background: var(--ok-soft); color: var(--ok); }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+  .table-scroll { overflow-x: auto; margin: 1rem 0 1.5rem; }
+  th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-soft); padding: .45em .8em .45em 0; border-bottom: 2px solid var(--ink); }
+  td { padding: .5em .8em .5em 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  ul, ol { padding-left: 1.3rem; margin: 0 0 1rem; }
+  li { margin-bottom: .45rem; }
+  .good { border-left-color: var(--ok); }
+  .rules li { margin-bottom: .6rem; }
+  .rules .lint { color: var(--ink-soft); font-size: .85em; font-family: "Archivo", sans-serif; }
+  .qbox { background: var(--surface); border: 1px solid var(--line); padding: 1rem 1.2rem; margin-bottom: .8rem; }
+  .qbox h3 { color: var(--accent); }
+  .qbox p { font-size: .96rem; margin: .4rem 0 0; }
+  .sources { font-size: .85rem; color: var(--ink-soft); }
+  strong { font-weight: 600; }
+  nav.toc { font-size: .85rem; background: var(--surface); border: 1px solid var(--line); padding: .9rem 1.2rem; margin: 1.6rem 0 0; }
+  nav.toc a { color: var(--accent); text-decoration: none; margin-right: 1.1rem; white-space: nowrap; line-height: 2; }
+  nav.toc a:hover { text-decoration: underline; }
+  a { color: var(--accent); }
+</style>
+
+<div class="wrap">
+  <div class="kicker">Audit adversarial · 27 août 2026</div>
+  <h1>Review 360 de chisel</h1>
+  <div class="meta">Cinq reviewers indépendants à l'aveugle (code exécutable · prose normative · cohérence croisée · architecture vs objectifs · lisibilité des tâches), confrontés au référentiel des trois audits durs du 26/08 et aux arbitrages Owner. Claims graves re-vérifiés par grep avant publication. État audité : <span class="path">main@7e514e4</span>, v2 livrée (slices 01–11), pilote de parité non fait.</div>
+
+  <nav class="toc">
+    <a href="#verdict">Verdict</a>
+    <a href="#tri">Le tri</a>
+    <a href="#jointures">Jointures normatives</a>
+    <a href="#doctrine">Contradictions de doctrine</a>
+    <a href="#taches">Lisibilité des tâches</a>
+    <a href="#code">Code exécutable</a>
+    <a href="#dette">Dette déclarative</a>
+    <a href="#mineurs">Mineurs</a>
+    <a href="#bien">Ce qui est bien</a>
+    <a href="#regles">Règles de rédaction</a>
+    <a href="#plan">Plan d'action</a>
+    <a href="#questions">À arbitrer</a>
+  </nav>
+
+  <h2 id="verdict">Verdict</h2>
+  <div class="verdict">
+    <p class="lede"><strong>Ce n'est pas du slop.</strong> Les cinq reviewers, sans se consulter, rendent le même verdict de fond : le shell est discipliné et portable, la prose est dense et adressée à des agents (pas écrite pour impressionner), les forks Pocock sont sobres, les profils sont de vrais contrats. La suite de tests post-rebuild est au-dessus du standard habituel pour du shell.</p>
+    <p>Le vrai problème est ailleurs, et il est triple. <strong>Un : le système normatif est cohérent au centre et effiloché sur ses jointures</strong> — des pointeurs vers des sections qui n'existent plus (« Tracker section » ×5), des concepts exigés par trois fichiers et produits par aucun (l'allotment), et des contradictions frontales entre textes normatifs (le Mason à la fois optionnel et obligatoire ; le template qui dit « 🧑 = l'humain » quand la doctrine v2 dit « 🧑 = le propriétaire »). <strong>Deux : la duplication sans garde-fou</strong> — les corps d'étapes des trois formulas existent en trois exemplaires qu'aucun test ne garde alignés, et les invariants clefs sont écrits à 3–7 endroits. La dérive a déjà commencé (« The Ledger », variante orpheline dans un seul profil). <strong>Trois : tes deux griefs sur les tâches sont confirmés et mesurés</strong> — la zone « à relire attentivement » n'est pas autoportante, et la slice 07 contient ~270 références opaques dont 78 numéros de ligne pointant dans des fichiers réécrits depuis.</p>
+    <p>Les choix de fond — bash pour l'installeur, prose+TOML comme véhicule, le découpage discipline/formulas/profils/glue — sont <strong>validés</strong> par l'audit : chaque couche porte son poids. Le seul choix de langage contestable est une incohérence de dépendances : exiger <code>python3</code> dans un paquet distribué via <code>npx</code>, où Node est garanti présent.</p>
+  </div>
+
+  <h2 id="tri">Le tri — nouveau, correctif raté, déjà arbitré</h2>
+  <p>Chaque trouvaille a été confrontée aux audits du 26/08 (<span class="path">audit-tests-dur</span>, <span class="path">audit-process-dur</span>, <span class="path">audit-fable-v2</span>, <span class="path">architecture-report</span>) et à tes arbitrages consignés.</p>
+  <ul>
+    <li><strong>Nouveau (l'essentiel de ce rapport)</strong> — tout le chapitre jointures et contradictions de doctrine, les deux bugs CLI reproduits, toute la review lisibilité. Les audits précédents étaient chacun bornés à leur axe ; personne n'avait audité les jointures inter-fichiers ni les fichiers de tâche.</li>
+    <li><strong>Déjà trouvé, toujours ouvert</strong> — la cascade de tiers sans consommateur exécutable (fable-v2 A5), l'absence de <code>trap</code>/nettoyage <code>mktemp</code>, le ledger dupliqué avec <span class="path">sync-upstream.sh</span> (zéro test), l'oracle de test copié de l'implémentation (le rapport d'architecture recommandait déjà des golden files). Le trou d'orchestration d'auto est un <strong>correctif incomplet</strong> : fable-v2 A1 (« chaîne d'atterrissage fictive ») a été marqué corrigé, mais « qui relance après STOP » reste sans réponse.</li>
+    <li><strong>Déjà arbitré — non re-litigé ici</strong> — pas de tests beads, pas de shell non exercé par la suite, <code>init</code> non gardé, upgrade-v2 jetable, journal manuscrit, matrice retirée. Deux recommandations de reviewers <em>frottent</em> ces arbitrages ; elles sont signalées comme tensions, pas comme findings.</li>
+  </ul>
+
+  <h2 id="jointures">A · Les jointures normatives cassées</h2>
+  <p>La famille de findings la plus grave : le mécanisme de résolution (« tout passe par la glue ») échoue à plusieurs endroits, en violation de la règle 11 de la discipline par le socle lui-même. Trouvé indépendamment par deux reviewers, tout re-vérifié.</p>
+
+  <div class="finding bloquant">
+    <div class="chips"><span class="chip sev-bloquant">Bloquant</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Cinq fichiers pointent vers une « Tracker section » de la glue qui n'existe pas</h3>
+    <p><span class="path">methodology.md:33</span>, <span class="path">wayfinder:30</span>, <span class="path">slice-task:17</span>, <span class="path">code-review:18</span>, <span class="path">triage:48</span> résolvent vers « <code>.agents/project.md</code>, Tracker section ». Le template de glue n'a aucune section de ce nom — c'est « §B · Coordination ». <span class="path">wayfinder</span> renvoie en plus à des notes « Wayfinding operations » définies nulle part, et le step <code>close</code> des trois formulas suppose un « architecture index » que §D ne déclare pas. Résidu de la dédup de slice 07 que le test d'intégrité ne peut pas voir (il vérifie des fichiers, pas des sections). <strong>Correctif : passe de renommage + décider du sort des « Wayfinding operations » et du champ §D.</strong></p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>L'allotment est exigé du Mason, produit par personne</h3>
+    <p><span class="path">architect.md</span>, <span class="path">mason.md</span> et <span class="path">foreman.md</span> reposent sur l'allotment (les fichiers qu'une slice a le droit de toucher). Or <span class="path">slice-task</span> — le skill qui fabrique les slices — ne le mentionne jamais, son template de slice n'a pas de champ pour le porter, et aucun step <code>spec</code> ne demande de le déclarer. Le contrat central du Mason repose sur une déclaration qu'aucun artefact ne produit. <strong>Correctif : ajouter le champ au slice-template et l'étape qui le remplit.</strong></p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Trois pointeurs livrés cassés dans chaque repo équipé</h3>
+    <p>(1) <span class="path">methodology.md:14</span> renvoie à <code>SDD-bench/fusion-pierrick-pocock.md</code> — un projet frère sur ta machine, inexistant chez les équipés. (2) Le skill <span class="path">sync-upstream</span> (mainteneur-only, il le dit lui-même) est copié dans chaque repo équipé, où le script qu'il invoque n'existe pas. (3) « The Ledger », terme capitalisé unique de <span class="path">architect.md:33</span>, n'est défini nulle part — et <span class="path">chisel-setup</span> interdit de prononcer « ledger » devant l'utilisateur. C'est la preuve vivante du risque de drift multi-sources.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Le README promet un <code>init</code> interactif que le CLI n'est pas</h3>
+    <p><span class="path">README.md:40</span> : « <code>chisel init</code> asks two questions beyond your paths ». <code>cmd_init</code> ne pose aucune question — le questionnaire est le skill <span class="path">chisel-setup</span>, que le README ne mentionne jamais. Un utilisateur suivant le README obtient un init muet et une glue en défauts sans savoir qu'un setup existe.</p>
+  </div>
+
+  <h2 id="doctrine">B · Les contradictions de doctrine</h2>
+  <p>Cinq paires de textes normatifs se contredisent frontalement. Chacune demande un arbitrage (voir <a href="#questions">À arbitrer</a>), pas un simple patch.</p>
+
+  <div class="finding bloquant">
+    <div class="chips"><span class="chip sev-bloquant">Bloquant</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Le template de tâche dit « 🧑 = l'humain », la doctrine v2 dit « 🧑 = le propriétaire »</h3>
+    <p>Le template (« Human, always, before any code » ; « The 🧑 zones are the human's decisions ») contredit l'arbitrage central de la v2 (la propriété suit l'auteur de l'approbation — <span class="path">PHILOSOPHY.md:91</span>, methodology « Zone ownership »). C'est l'artefact le plus lu du système qui porte la contradiction : un agent en auto/supervised escaladera vers l'humain des zones que la doctrine attribue à l'Architect. <strong>Le template doit céder.</strong></p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Le Mason est à la fois optionnel et obligatoire — dans le mode par défaut</h3>
+    <p><span class="path">methodology.md:217</span> : le Mason est « optionnel », l'agent OFFRE la délégation, l'utilisateur décide. <span class="path">architect.md:55</span> et les trois formulas : « Never types the code of a slice it planned », sans exception. Si l'utilisateur refuse la délégation, aucun rôle n'a le droit de taper. C'est le cas le plus fréquent du système qui porte l'ambiguïté.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>La chaîne d'escalade est inversée par rapport au roster — et compromet l'Inspector</h3>
+    <p>Chisel, partout : Mason → Architect → <strong>Inspector</strong> → digest Owner. <span class="path">factory-bench/roster.md:40</span> : « Inspector → <strong>Architect</strong> → digest Owner ». Au-delà de la divergence avec la source, l'ordre chisel fait de l'Inspector l'arbitre des escalades de plan — dont il devra ensuite reviewer le diff, alors que son profil lui interdit d'être « author of the plan ». Le barreau d'escalade contamine la séparation des pouvoirs qu'il protège.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-connu">Correctif incomplet</span></div>
+    <h3>chisel-auto n'est pas exécutable : « STOP, session fraîche » sans personne pour relancer</h3>
+    <p>« Plain auto is one chained session » (methodology, PHILOSOPHY §4), mais le step <code>spec</code> de la formula auto garde le « Then STOP » du mode default, et les steps exigent « FRESH session ». En auto × markdown, ni humain ni Foreman : qui rouvre la session ? Qui commit et push au <code>close</code> ? Qui choisit la branche (l'input 4 du Mason vient « du délégant », jamais nommé en auto) ? S'y ajoutent : « the human never hears of it » (methodology) contredit par le digest qui reçoit tout (formula auto, step <code>review</code> et <code>close</code>) ; et la règle 10 de la discipline qui fait tourner <span class="path">upgrade-v2</span> sous auto alors que le skill exige un humain à chaque pas.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3><code>code-review</code> réduit la spec aux quatre sections que methodology juge insuffisantes</h3>
+    <p>Le skill énumère « Context, Scope, Acceptance Criteria, Seams » comme LA spec — exactement la revue « 4 critères au lieu du design » que la persistance du plan existe à empêcher (methodology, raison n°1). La zone Architecture et le Design persistée sont aussi des zones 🧑. <strong>Le skill doit énumérer toutes les zones 🧑.</strong></p>
+  </div>
+
+  <h2 id="taches">C · Lisibilité des tâches — tes griefs, confirmés et mesurés</h2>
+  <p>Exercice réel du lecteur fait sur 8 fichiers. Codes comptés : §X, fb-3kk*, ACn, Sn/Dn/Fn, Wn, plus les références <code>NN:ligne</code>.</p>
+
+  <div class="table-scroll"><table>
+    <tr><th>Fichier</th><th>Lignes</th><th>Codes opaques</th><th>Non expliqués</th><th>Verdict</th></tr>
+    <tr><td>Parent v2</td><td>436</td><td>~60 + 23 renvois externes</td><td>~25</td><td>Zone 🧑 non autoportante — ~10 arrêts de dé-référencement</td></tr>
+    <tr><td>Slice 07</td><td>599</td><td>~270 dont 78 <code>NN:ligne</code></td><td>~120</td><td>Illisible sans IDE ni mémoire du chantier</td></tr>
+    <tr><td>Slice 05</td><td>380</td><td>26</td><td>~8</td><td>Exigeant mais lisible (c'est un récit)</td></tr>
+    <tr><td>Slice 09</td><td>150</td><td>0</td><td>0</td><td><strong>Exemplaire</strong> — la preuve que c'est possible</td></tr>
+    <tr><td>Slice 11</td><td>312</td><td>4</td><td>2</td><td>Bon — corrections numérotées ET nommées</td></tr>
+  </table></div>
+
+  <div class="finding bloquant">
+    <div class="chips"><span class="chip sev-bloquant">Bloquant</span><span class="chip cl-nouveau">Grief 1 confirmé</span></div>
+    <h3>La zone « REVIEW CAREFULLY » n'est pas autoportante</h3>
+    <p>131 lignes dans le parent v2, truffées de codes jamais glosés : <code>fb-3kk.7</code>–<code>.13</code> nus, <code>Q16-b</code> défini nulle part dans le repo, <code>D2/D7</code> de mémoire, <code>W0/W1/W2</code> « à retirer partout » sans jamais dire ce qu'ils étaient (la glose existait — 250 lignes plus bas, dans un autre fichier). L'origine n'est pas le template (il est propre) : c'est l'habitude d'agent + les références au chantier. La zone viole sa propre règle « must fit in working memory ».</p>
+  </div>
+
+  <div class="finding bloquant">
+    <div class="chips"><span class="chip sev-bloquant">Bloquant</span><span class="chip cl-nouveau">Grief 2 confirmé</span></div>
+    <h3>Les références <code>slice:ligne</code> sont illisibles ET fausses à terme</h3>
+    <p>78 références du type <code>01:297</code> dans la seule slice 07 — trois dé-référencements par ligne d'inventaire, dont des numéros de ligne pointant dans des fichiers réécrits depuis (le parent cité par lignes a été réédité plusieurs fois). Le lecteur consciencieux vérifie et trouve autre chose à la ligne citée. C'est l'interdit du template pour le code (« file paths go stale fast ») appliqué… aux références de prose.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Des décisions Owner enterrées en zone 🤖 « humans skim or skip »</h3>
+    <p>La redéfinition de 🧑 lui-même (« ownership follows authorship ») et la règle finale de la proposal door vivent dans « Notes &amp; Snippets », la zone que le template dit de sauter. Idem slice 05 : ton revirement post-clôture (« swap to the flags ») est le dernier paragraphe de la zone 🤖. L'agent a trié par chronologie, pas par criticité de relecture — le gradient est inversé.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Les ACs numérotés sans nom cassent à la réécriture ; les Designs n'ont pas de gradient interne</h3>
+    <p>La slice 07 arbitre « AC2 » puis note que les ACs « are rewritten accordingly » : le texte que la discussion cite a disparu du fichier — le débat est orphelin. Et les zones Design (450 lignes en slice 07, ~380 en slice 04) sont d'excellents plans d'exécution et d'exécrables surfaces de relecture : labels S1/D1 utilisés avant définition, aucun chapeau. <strong>Réponse à ta question : oui, des ACs nommés</strong> (<code>- [ ] **no-w-labels** — grep …</code>), cités par slug, jamais réécrits par effacement (l'original reste barré, la version datée dessous).</p>
+  </div>
+
+  <h2 id="code">D · Code exécutable — deux bugs reproduits, trois trous de test</h2>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau · reproduit</span></div>
+    <h3><code>init</code> corrompt un <code>CLAUDE.md</code> sans newline finale — et casse sa propre idempotence</h3>
+    <p><span class="path">chisel.sh:236</span> appende <code>@AGENTS.md</code> sans garantir la newline finale du fichier existant : l'import se colle à la dernière ligne, <code>check</code> s'auto-accuse juste après un init « réussi », et le second init ré-appende (la garde <code>grep -qxF</code> ne matche plus). Le frère <code>render_agents_md</code> est protégé par accident — l'asymétrie montre que le cas n'a pas été pensé. Correctif : garde <code>tail -c 1</code> + fixture.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau · reproduit</span></div>
+    <h3><code>check</code> valide n'importe quel symlink <code>.claude/skills</code> qui résout</h3>
+    <p><span class="path">chisel.sh:775</span> teste seulement « est un lien + résout ». Un lien réécrit vers une mauvaise cible passe <code>check</code> propre alors que les skills servies ne sont plus celles du socle — et le même script sait faire la vérification correcte ailleurs (<code>readlink</code> comparé, ligne 474).</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Un fichier retiré upstream n'est jamais nettoyé — puis faussement déclaré « étranger »</h3>
+    <p><code>update</code> ne supprime ni ne signale les orphelins (la boucle de rapport n'itère que sur le nouveau manifeste) : de la prose normative périmée reste active chez les équipés, invisible pour <code>check</code>, et <code>warn_foreign_skills</code> affirme « was not installed by chisel » — factuellement faux. C'est le scénario que <code>refuse_v1_layout</code> juge assez grave pour refuser un update, laissé ouvert dans le cas général. Correctif : diff ancien/nouveau manifeste + ligne <code>removed:</code> (au minimum <code>orphaned:</code>).</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-connu">Déjà signalé (golden files), toujours ouvert</span></div>
+    <h3>Le test-clé du rendu des profils utilise l'implémentation comme oracle — et <code>checker</code> n'est jamais testé</h3>
+    <p><span class="path">installer.sh:253</span> reproduit l'awk de <code>profile_body</code> : un bug partagé passe vert des deux côtés, sur le seam central que le groupe revendique « byte for byte ». Et la boucle ne teste que 3 profils sur 4. Manquent aussi : les gardes journal (LOG/CHANGELOG, réécriture §A — quatre gardes conditionnelles sans un seul test) et la promesse « chisel only ever overwrites its own » (jamais prouvée). Correctif : fixture de profil piégeux + golden file committé, boucle sur <code>profiles/*.md</code>, groupe <code>journal</code>.</p>
+  </div>
+
+  <div class="finding mineur">
+    <div class="chips"><span class="chip sev-mineur">Mineur · lot</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Le lot CLI mineur</h3>
+    <p><code>python3</code> requis ×11 dans un paquet <code>npx</code> où Node est garanti (à remplacer par <code>node</code>, ou signal de migration du bin vers Node le jour où une commande de plus arrive) · <span class="path">package.json</span> sans <code>scripts.test</code> ni <code>os</code> · arguments excédentaires avalés (<code>chisel init --help</code> meurt sur « target dir does not exist: --help ») · aucun <code>trap</code>, ~10 mktemp fuités sur chemin d'erreur <span class="chip cl-connu" style="vertical-align:1px">déjà signalé</span> · le runner de test efface les artefacts de diagnostic que ses messages d'échec référencent · duplication <code>sha256_file/_stdin</code> · une frange de commentaires essayistes à couper.</p>
+  </div>
+
+  <h2 id="dette">E · La dette déclarative — promis, pas construit</h2>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>« Factory = auto × beads » est une équation sans machinerie</h3>
+    <p>La coordination beads est réelle et solide (routine de push vérifiée, guards, chemin de sortie complet, upgrade markdown→beads crédible). Mais les trois besoins que la doctrine attribue à la factory — queues, lanes, gates asynchrones — n'ont aucun mécanisme : zéro occurrence de « gate » dans la convention chisel-beads, et le bead <code>escalation</code> promis par methodology (« per the §B convention ») n'est défini nulle part dans ladite convention. La moitié beads du digest Owner est ininstanciable en factory — précisément le cas qui en a besoin. <strong>Choix : écrire les ~10 lignes manquantes, ou dégrader la claim en « prévu, non outillé ».</strong></p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-connu">fable-v2 A5, toujours ouvert</span></div>
+    <h3>La cascade de tiers de modèles n'a aucun consommateur exécutable</h3>
+    <p>Mécanisme complet (template, gitignore, step de setup, section methodology) mais <code>render_agent_definitions()</code> n'émet jamais de champ <code>model:</code> — que Claude Code sait pourtant lire. La résolution reste une lecture de prose au spawn. Câbler le tier dans le render, ou écrire noir sur blanc que la résolution est prose-only.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3>Trois formulas dupliquées sans garde anti-drift ; des steps qui restatent les profils</h3>
+    <p>Vérifié par diff : supervised = auto octet pour octet + une gate ; default = auto ± gates et phrases « No human ». La duplication est assumée (lisible sans tooling) mais rien — <code>chisel check</code> compris — ne vérifie que les trois restent alignées : chaque correction du step <code>plan</code> se reporte trois fois à la main. Et les corps de steps re-racontent les contrats des profils (le step <code>type</code> paraphrase mason.md), contre le contrat du header (« This file owns the ORDER and the GATES, nothing else »). Correctif compatible avec l'arbitrage « behavior only » : générer les trois TOML depuis une source au <code>update</code>, ou a minima une assertion d'identité des corps dans le groupe <code>render</code>.</p>
+  </div>
+
+  <div class="finding majeur">
+    <div class="chips"><span class="chip sev-majeur">Majeur</span><span class="chip cl-nouveau">Nouveau</span></div>
+    <h3><code>methodology.md</code> se déclare « the why » mais héberge du normatif porteur — et il n'y a pas de chemin « medium »</h3>
+    <p>Le glossaire officiel, la définition du digest, la doctrine zone-ownership et la cascade des tiers vivent dans un essai de 375 lignes qu'un agent doit charger en entier pour une définition. Extraire le normatif vers une référence courte ; couper la redite économique (§ cost-gradient, déjà couverte par PHILOSOPHY et les profils). Par ailleurs, entre le one-shot et le pipeline complet à 9 steps il n'y a rien : toute tâche avec spec paie Checker + design-check + Inspector — le système optimisé pour le débit de review ajoute de la review de process au quotidien. Un chemin allégé documenté (sizing check → « small : spec-review et design-check élidés, dit au gate ») manque.</p>
+  </div>
+
+  <h2 id="mineurs">F · Mineurs notables (liste de courses)</h2>
+  <ul>
+    <li><span class="path">wayfinder</span> sous-adapté : écrit pour un tracker externe, « local-markdown tracker » aux opérations indéfinies, et parle de « tickets » locaux — mot que le glossaire réserve aux trackers externes.</li>
+    <li><span class="path">upgrade-v2</span> : « three role profiles » — il y en a quatre.</li>
+    <li>Step <code>design-check</code> : « Mason (cheap tier) » vs « cheap or mid » partout ailleurs — un Mason mid ne peut pas, à la lettre, poster son design.</li>
+    <li>Statut « awaiting approval » (formula supervised) hors de la table des statuts du template.</li>
+    <li><span class="path">discipline.md</span> vs <span class="path">prototype</span> : « delete the code » vs « commit to a throwaway branch ».</li>
+    <li><span class="path">retro</span> : « discipline.md rendered into the AGENTS block » — faux, le bloc pointe, ne rend pas.</li>
+    <li>Surdéclaration « Nothing in this socle names a model or a vendor » (vrai pour les modèles ; des noms d'outils subsistent légitimement — restreindre la phrase).</li>
+    <li>Sédiments de rétro : Status/Version sur le template lui-même, « moved here from <code>type</code> », la règle « rewrite labels » opaque hors contexte — chaque leçon inscrite là où elle a fait mal, avec son contexte d'origine, au lieu d'être généralisée ou coupée.</li>
+    <li>Règles 10 et 11 diluent le noyau ambiant de la discipline (cycle de vie d'outillage + style documentaire dans le fichier chargé à chaque session) ; trajectoire de sédimentation à surveiller.</li>
+    <li><span class="path">grill-with-docs</span> : 12 lignes, référencé par rien, redondant avec ce que disent déjà les formulas.</li>
+    <li><span class="path">triage/AGENT-BRIEF.md</span> : 312 lignes livrées pour un skill dormant, GitHub en dur.</li>
+    <li>Glue parsée par awk sur chaînes exactes du template (<code>**Changelog:**</code> littéral) — un reword du template casse silencieusement l'installeur, couplage déclaré nulle part.</li>
+  </ul>
+
+  <h2 id="bien">Ce qui est bien — à ne pas casser en corrigeant</h2>
+  <div class="finding good">
+    <div class="chips"><span class="chip cl-ok">Unanime</span></div>
+    <p style="margin-top:0">Le modèle de propriété de l'installeur (marqueur <code>chisel:generated</code>, manifeste dérivé de la source, glue project-owned) — « de la conception, pas de la génération ». La portabilité bash 3.2/BSD réellement tenue. La suite de tests : golden tree, waiver à péremption, mutation-test de l'intégrité, cap auto-vérifié. Les sections « Inputs » des profils (le contrat vit avec le rôle qui le consomme) — « la meilleure idée structurelle du socle ». La proposal door symétrique. chisel-beads côté coordination : ingénierie honnête, choix réversible. La glue comme indirection unique : réellement respectée (zéro chemin en dur, vérifié). Les forks Pocock : denses, actionnables, zéro slop. Et la slice 09 comme preuve que les agents savent écrire lisible.</p>
+  </div>
+
+  <h2 id="regles">Les dix règles de rédaction proposées</h2>
+  <p>À répartir : la <strong>forme</strong> dans le template + le slice-template ; le <strong>comportement ambiant</strong> dans la discipline ; le <strong>contrôle</strong> dans les duties du Checker (la lisibilité de la zone 🧑 devient un motif de finding bloquant). Le lint dans <span class="path">scripts/</span>, jamais dans la suite de tests (arbitrage « behavior only » respecté).</p>
+  <ol class="rules">
+    <li>La zone 🧑 REVIEW CAREFULLY se comprend sans ouvrir aucun autre fichier. <span class="lint">⚠ la variante « ≤ 40 lignes » frotte ton arbitrage anti-limites-chiffrées — à trancher, voir Q5</span></li>
+    <li>Tout code (§X, fb-*, Wn, Q*) porte sa glose à sa première occurrence dans chaque fichier : « <code>fb-3kk.8</code> (recomposition en couches) ». <span class="lint">lint partiel</span></li>
+    <li>Règle 11 (fichier + titre de section) étendue aux fichiers de tâche et au journal. <span class="lint">lintable</span></li>
+    <li>ACs nommés : <code>- [ ] **slug-parlant** — critère</code> ; cités par slug, jamais « AC2 ». <span class="lint">lintable</span></li>
+    <li>Un AC ne se réécrit pas par effacement : original barré, version datée dessous. <span class="lint">diff</span></li>
+    <li>Aucune référence par numéro de ligne dans un fichier de tâche : titre de section + courte citation verbatim. <span class="lint">lintable</span></li>
+    <li>Une décision de l'Owner ne vit jamais en zone 🤖 : elle monte, la zone 🤖 garde le récit. <span class="lint">Checker</span></li>
+    <li>Tout renvoi externe dit en une proposition ce que le lecteur y trouverait. <span class="lint">Checker</span></li>
+    <li>Tout Design long ouvre sur un chapeau en langage humain ; étapes aux titres parlants, pas de labels S1/D1 utilisés avant définition. <span class="lint">lint partiel</span></li>
+    <li>Une langue par artefact, déclarée dans la glue ; les citations Owner restent dans leur langue. <span class="lint">décision Owner — voir Q6</span></li>
+  </ol>
+
+  <h2 id="plan">Plan d'action proposé — cinq tâches correctives</h2>
+  <div class="table-scroll"><table>
+    <tr><th>Tâche</th><th>Contenu</th><th>Nature</th></tr>
+    <tr><td><strong>T1 · Passe jointures</strong></td><td>« Tracker section » ×5 → §B ; Wayfinding operations ; architecture index §D ; Ledger ; SDD-bench ; sync-upstream sorti des équipés ; README init ; « three profiles » ; tier du design-check ; statut awaiting approval ; prototype delete-vs-branch</td><td>Mécanique — une slice, aucun arbitrage</td></tr>
+    <tr><td><strong>T2 · Arbitrages de doctrine</strong></td><td>Mason optionnel/obligatoire ; chaîne d'escalade ; 🧑 dans le template ; digest en auto ; upgrade-v2 sous auto ; allotment dans slice-task ; zones de code-review ; chemin « medium »</td><td>Grill Owner d'abord, puis une slice</td></tr>
+    <tr><td><strong>T3 · CLI &amp; tests</strong></td><td>Bug newline ; check du symlink ; orphelins d'update ; oracle golden + checker testé + groupe journal ; trap/mktemp ; args excédentaires ; python3→node ; package.json</td><td>Une slice, TDD</td></tr>
+    <tr><td><strong>T4 · Rédaction des tâches</strong></td><td>Les 10 règles arbitrées → template (ACs nommés), discipline (gloses), checker.md (duty lisibilité), script de lint</td><td>Une slice après arbitrage des règles</td></tr>
+    <tr><td><strong>T5 · Dette déclarative</strong></td><td>Factory : écrire la forme du bead escalation + gates, ou dégrader la claim ; tiers : câbler <code>model:</code> ou déclarer prose-only ; formulas : génération ou assertion d'identité ; methodology : extraire le normatif</td><td>Chaque point = un choix Owner puis du travail court</td></tr>
+  </table></div>
+
+  <h2 id="questions">Les questions qui t'appartiennent</h2>
+  <div class="qbox"><h3>Q1 — Le Mason, optionnel ou obligatoire ?</h3><p>Option A : le typing non délégué = « l'Architect endosse le contrat Mason en session fraîche » (à écrire dans le profil). Option B : la délégation n'est plus opt-in (retirer de methodology). Recommandation des reviewers : A — elle préserve le droit de l'utilisateur sans casser le think/type split.</p></div>
+  <div class="qbox"><h3>Q2 — La chaîne d'escalade : revenir à l'ordre du roster ?</h3><p>Roster : Inspector → Architect → Owner. Chisel : Architect → Inspector → Owner. Si l'inversion est voulue, il faut documenter comment un Inspector ayant arbitré un plan reste habilité à reviewer le diff qui en sort.</p></div>
+  <div class="qbox"><h3>Q3 — Factory : outiller ou dégrader la claim ?</h3><p>~10 lignes dans chisel-beads (forme du bead <code>escalation</code>, forme d'une gate en attente) suffisent à rendre la claim honnête. Sinon, écrire « prévu, non outillé » dans PHILOSOPHY/methodology.</p></div>
+  <div class="qbox"><h3>Q4 — Câbler les tiers dans le render (<code>model:</code>) ?</h3><p>Le champ existe côté Claude Code ; la résolution user.md → §H → défaut peut se faire à l'init/update. Sinon, une ligne « resolution is prose-only » clôt fable-v2 A5 proprement.</p></div>
+  <div class="qbox"><h3>Q5 — Le template de tâche peut-il porter des contraintes de forme chiffrées ?</h3><p>Tu as banni les limites chiffrées inventées du socle. Le template est « the only reference for artifact form » — une borne sur la zone 🧑 y serait-elle légitime, ou la règle reste-t-elle qualitative (« autoportante ») avec le Checker comme juge ?</p></div>
+  <div class="qbox"><h3>Q6 — La langue des artefacts</h3><p>Tout le socle et les tâches sont en anglais ; tu relis ta surface de décision en L2 sans que ce choix ait été posé. Une ligne dans la glue suffit — mais c'est ta décision, pas celle d'un agent.</p></div>
+  <div class="qbox"><h3>Q7 — Distiller un skill « codebase-audit » ?</h3><p>Le protocole de cette review (finders aveugles par lentille → vérification → tri contre les arbitrages) a bien fonctionné et est reproductible. Il peut devenir un skill du socle — à distiller depuis cette session si tu veux le garder.</p></div>
+
+  <p class="sources" style="margin-top:3rem">Méthode : 6 agents (5 finders aveugles aux audits antérieurs + 1 digest du référentiel), findings recoupés entre finders indépendants, claims graves re-vérifiés par grep sur l'arbre avant publication. Convergences notables : « Tracker section » et « The Ledger » trouvés par deux finders chacun ; la duplication des formulas par trois. Les recommandations contraires à un arbitrage Owner ont été filtrées ou marquées comme tensions.</p>
+</div>
