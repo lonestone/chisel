@@ -5,6 +5,20 @@ ships.
 
 ---
 
+## 20. 2026-08-27 — v2 slice 07: docs catch up, duplication dies
+
+The last built slice of v2. `chisel-controlled` renamed `chisel-default`
+everywhere (formulas, tests, texts — atomic). `methodology.md` rewritten as
+the single doctrinal source: roster vocabulary, "a default + options"
+framing, the Owner's digest defined once, the two designs separated (system
+design settles at creation and makes a slice ready; program design waits for
+the plan step — Owner correction, applied mid-close). PHILOSOPHY §4 and
+README rewritten in the mode vocabulary; the W-labels are gone from every
+shipped text (verified by grep, empty). `chisel-supervised` wired into the
+routing texts; glue subsections now cited as file + section title, never a
+bare number. The two v1 waiver lines lost their DEBT half. Suite untouched:
+9 scenarios, 88 assertions, 588/600 lines.
+
 ## 19. 2026-08-26 — v2 slice 05: the chisel-beads convention, in prose
 
 New skill `chisel-beads`: `SKILL.md` (the normative convention — what the
