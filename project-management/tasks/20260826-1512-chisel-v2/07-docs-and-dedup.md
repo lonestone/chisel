@@ -20,16 +20,19 @@ structure ×3, typist delegation ×3, model policy ×3, sizing check ×3).
 
 - [ ] `grep -rn "W0\|W1\|W2"` over `socle/`, `PHILOSOPHY.md`, `README.md`
       returns no mode-label hit
-- [ ] PHILOSOPHY §4 and methodology.md present the matrix (piloting ×
-      coordination), the invocation-posture principle, the Brief-stays-human
-      invariant, and the roster — consistent with the shipped formulas and
-      profiles
+- [ ] PHILOSOPHY §4 and methodology.md present the piloting postures and the
+      coordination choice as one default plus options (matrix framing retired
+      — Owner ruling, plan gate 2026-08-27), the invocation-posture principle,
+      the Brief-stays-human invariant, and the roster — consistent with the
+      shipped formulas and profiles
 - [ ] For each duplicated concept of the v1 inventory, exactly one normative
       source remains and the other occurrences are links — mapping listed in
       this slice's Notes
 - [ ] README covers the two setup-visible choices (coordination, auto) and
       the upgrade path, in plain language
-- [ ] CLI test greps (slice 01/03) still green after the rewrite
+- [ ] The whole test suite stays green after the rewrite (rewritten from
+      "CLI test greps of slices 01/03" — those greps were deleted by slice 09;
+      Owner ruling, plan gate 2026-08-27)
 
 ---
 
@@ -58,6 +61,8 @@ not a dependency.
 
 **This is the one thing the plan cannot settle alone.** Both are 🧑 zone text.
 Stated with a proposed reading; the Owner rules at the plan gate.
+**Ruled at the plan gate, 2026-08-27: the Owner accepted both proposed
+readings, and the two ACs above are rewritten accordingly.**
 
 **AC2 asks for "the matrix (piloting × coordination)".** The audit round
 retired that framing: *"Vocabulary: 'a default + options', the matrix is
