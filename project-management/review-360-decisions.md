@@ -386,6 +386,13 @@ fichier de spec) ; ce fichier est la source des intentions.
    methodology redevient le pourquoi, règle d'écriture compacte dans la
    discipline (absorbe la règle 11, la règle 10 supprimée), duty lisibilité
    du Checker. Après les chantiers 1–2 (les concepts bougent).
+   **Ajout du 2026-08-27, remonté par l'Inspector au close de la slice 01 du
+   chantier 1 :** les profils et `methodology.md` citent `.agents/project.md`
+   §A, §B, §C… sans jamais nommer le titre de la section, ce que la règle 11
+   interdit — mais la règle leur est postérieure, et corriger un seul fichier
+   rendrait le socle moins cohérent, pas plus. L'Owner a tranché : **une
+   passe de balayage en une fois, ici**, dans le chantier qui possède déjà la
+   maison de la règle 11. Rien n'est corrigé au coup par coup d'ici là.
 6. **Wayfinder local-first** (F1.1) — analyser ce que le tracker couvrait,
    écrire la déclinaison markdown locale ; brainstorm → décisions →
    epics/tâches.
@@ -395,3 +402,18 @@ fichier de spec) ; ce fichier est la source des intentions.
 
 Transverse (G3) : tout nouvel artefact en anglais ; citations Owner dans leur
 langue.
+
+## Addendum (2026-08-27, en cours d'exécution)
+
+- ✅ **G5 — Le cadrage de spawn d'un rôle n'est jamais improvisé.** Constat
+  Owner en regardant tourner la tâche 1 : les prompts « You are the
+  ARCHITECT… you report to the Foreman… you spawn no one » sont composés à
+  la volée par l'agent délégant — non versionnés, « magiques », variables
+  selon le modèle. Décision : ce cadrage VIT DANS LE PROFIL du rôle (le
+  corps du profil est le prompt, collé verbatim au spawn) ; le délégant ne
+  compose que le brief par-tâche depuis la section Inputs du profil
+  (chemins, scope, artefacts) — zéro doctrine inventée au spawn. Exigence
+  intégrée à la tâche 1 (remodel-roles-and-formulas) : les nouveaux profils
+  (Foreman compris) doivent contenir ce cadrage — mission, à qui l'on
+  rapporte, ce qu'on ne fait jamais — pour que « spawner un rôle » =
+  profil verbatim + brief, rien d'autre.

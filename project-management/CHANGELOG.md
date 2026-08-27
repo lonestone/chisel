@@ -5,6 +5,38 @@ ships.
 
 ---
 
+## 21. 2026-08-27 — Roles remodel, slice 01: the Foreman becomes a role
+
+First slice of the doctrinal chantier that applies the 360 review's rulings.
+The Foreman stops being "not an agent": `socle/agents/profiles/foreman.md` is
+written — owner of one thread of work, frontier tier, carrying the business
+context, spawning the other roles and ruling on their reports — and the doc
+page `socle/agents/foreman.md` is deleted with both of its inbound pointers
+rewired. The fixed escalation ladder and the word "digest" leave the five
+profiles: a role now reports to its spawner, and above the Foreman sits the
+human, full stop. The hard allotment boundary dies with them, replaced by the
+indicative files-to-modify / files-to-avoid map the system design declares —
+and the Inspector gains the matching duty: judge deviations a posteriori,
+never forbid them. Every profile now carries its own spawn framing, so
+spawning a role is the profile body pasted verbatim plus a brief composed
+from its `Inputs` section, and the delegator invents no doctrine; the
+profiles README states that as the rule rather than a fallback. The
+Architect is unloaded of coordination — its delegation paragraph and its
+whole "Rule on a report" passage move to the Foreman — and "The Ledger", the
+agent-invented label the Owner did not recognize, dies with the sentence
+carrying it. Two Owner rulings landed mid-flight: the CLI's three references
+to the deleted page are removed although `bin/chisel` sat on this task's
+files-to-avoid map (the first lived proof that the map is indicative, not a
+limit — escalated at design-check, ruled, then judged clean at review), and
+the Foreman's reporting shape is fixed in its own profile: it works
+silently, one report per turn, and every report stands on its own instead of
+pointing back at an earlier message. Suite: 9 scenarios, 93 assertions,
+588/600 lines — the five new assertions are the render loop covering the
+Foreman profile. Slices 02 (formulas rewritten on Foreman orchestration,
+plus `chisel-light`) and 03 (doctrine alignment) remain; `methodology.md`
+and `discipline.md` still name the dying ladder outside the roster row, an
+interim inconsistency the task's own decisions accept.
+
 ## 20. 2026-08-27 — v2 slice 07: docs catch up, duplication dies
 
 The last built slice of v2. `chisel-controlled` renamed `chisel-default`

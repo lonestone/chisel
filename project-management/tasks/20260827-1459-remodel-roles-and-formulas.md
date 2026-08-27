@@ -1,6 +1,6 @@
 # Remodel the roles and the formulas
 
-**Status:** 🔴 Not Started
+**Status:** 🟡 In Progress
 
 ---
 
@@ -405,6 +405,44 @@ words stay in French.
    removes the ladder from the profiles while `methodology.md` still names
    it until slice 3; the slices are sequential in one task and the final
    greps close the gap. No shim text is written for the interim states.
+10. **The Foreman's report to its Owner has a fixed shape, and it is sober.**
+    Ruled by the Owner on 2026-08-27, watching this very task run: the state
+    reports he was getting were too long for a flow he will use daily —
+    "L'utilisateur va utiliser ce flow régulièrement, donc quand on peut
+    faisons sobre", with the concision asked for "notamment en attente". Two
+    shapes, both carried by the Foreman profile so tomorrow's Foreman reports
+    the same way instead of improvising it: a **waiting report** is the step
+    name and whom it waits on, nothing more; a **step-delivery report** is
+    the step, what the role produced in substance, the decisions taken, the
+    questions awaiting the Owner, and the Owner's actions — the last two as
+    short numbered lists, each action carrying the link it acts on. The
+    Foreman's own verification of a report is not narrated unless it changed
+    a conclusion. Two rules were added the same day, after the first shapes
+    were still unreadable in use: the Foreman **works silently** — no
+    narration between its tool calls, no interim status line, one report at
+    the end of the turn and nothing else ("il faut que le foreman reste
+    silencieux jusqu'à sa conclusion et qu'il la présente") — and every
+    report is **self-contained**, restating each open question in place
+    rather than pointing back at an earlier message the Owner would have to
+    scroll up to find ("je dois remonter sur la question 1 qui est plus haut,
+    parfois beaucoup plus haut"). This is the reading-gradient doctrine the
+    socle already applies to spec zones, applied to the Foreman's own output.
+    This adds one section to the Foreman profile of the deliverables below;
+    nothing else in the scope moves.
+11. **The CLI's three references to the deleted doc page are removed here**,
+    although `bin/chisel` sits in this task's files-to-avoid map. Found at
+    design-check and proved in a throwaway copy: the CLI names the page in a
+    source-path constant, a line of the managed-file manifest and an install
+    copy, and under `set -euo pipefail` that copy aborts `chisel init` the
+    moment the page is gone — the whole suite turns red, and the criteria
+    named **foreman-is-a-profile** and **suite-green** cannot both hold.
+    Ruled by the Owner on 2026-08-27, at the escalation the map's own
+    doctrine predicts: "Retire oui". Removing three lines that name a deleted
+    file is the mechanical consequence of the deletion, not the CLI evolution
+    the Deno-port chantier owns; nothing else in `bin/` is touched. Recorded
+    as the first lived proof of the doctrine this task ships — the map is
+    indicative, a deviation is reported and judged, never forbidden in
+    advance.
 
 ## Testing Strategy
 
@@ -477,7 +515,9 @@ Related tasks:
   authority → task blocked + written report, the human decides; in default
   the human co-owns the thread; the two-conversation default variant named.
   Body written as the verbatim spawn prompt: it opens on the role's own
-  framing — mission, whom it reports to, what it never does.
+  framing — mission, whom it reports to, what it never does. Plus the
+  reporting shape ruled by the Owner on 2026-08-27 (Implementation Decisions,
+  point 10): the sober waiting report, and the step-delivery skeleton.
 - [ ] `socle/agents/profiles/architect.md` — coordination out (delegation
   paragraph, "Rule on a report"), allotment → files map, Escalation section
   rewritten (report to spawner; blocked + written report above authority),
