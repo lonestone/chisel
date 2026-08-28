@@ -161,9 +161,15 @@ review — carry that framing in their own body.
   2026-08-27 ("incluons-le"): its body IS reworked here as its verbatim
   spawn prompt, per the spawn-framing bullet above — that pass only,
   nothing else in it changes.
-- **`socle/agents/project.md.tpl`** — `chisel-light` keeps its human gates,
+- ~~**`socle/agents/project.md.tpl`** — `chisel-light` keeps its human gates,
   so it is not an autonomous run and needs no enabling under "§B3 ·
-  Autonomous runs" of the glue; the glue template stays untouched.
+  Autonomous runs" of the glue; the glue template stays untouched.~~
+  *Superseded 2026-08-28 by the Owner's ruling G10 of
+  `project-management/review-360-decisions.md`: the "Autonomous runs" switch is
+  deleted outright — "l'interrupteur, c'est débile quoi, je ne veux pas
+  d'interrupteur" — so the glue template IS touched, and the removal is slice 4
+  below. Every clause of the struck bullet was written before that ruling
+  existed.*
 - The factory claim, PHILOSOPHY, README — chantier 3.
 
 ## Acceptance Criteria
@@ -589,6 +595,16 @@ and test-fixture parity. Cut into three slices:
      light, dex-phases "Delegable?" cell), `AGENTS-block.md` (roster line,
      formula list gains light). Final full-socle greps pass here. (blocked
      by: 2 — it names `chisel-light`)
+  4. **switch-removal** — the "Autonomous runs" permission switch deleted from
+     the socle, nothing put in its place: the section that defines it in the
+     glue template, the header clause and the `description` field of the three
+     autonomous presets, the reverse clause in `chisel-light`, the worked
+     example of the discipline's section-reference rule, and the screens of the
+     `chisel-setup` and `upgrade-v2` skills that ask and migrate it. Opened
+     2026-08-28 on the Owner's ruling G10 and run at his order, "on fait ça de
+     suite". Slice 3 keeps the two carriers it already owned and writes them
+     switchless. (blocked by: none — it shares no file with 3, so the two land
+     in either order)
 
 Slice files are created at plan time by the implementing sessions, not now.
 

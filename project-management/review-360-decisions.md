@@ -403,6 +403,14 @@ fichier de spec) ; ce fichier est la source des intentions.
    rendrait le socle moins cohérent, pas plus. L'Owner a tranché : **une
    passe de balayage en une fois, ici**, dans le chantier qui possède déjà la
    maison de la règle 11. Rien n'est corrigé au coup par coup d'ici là.
+   **Élargissement du 2026-08-28, remonté par un Mason au plan de la slice 04
+   du chantier 1 et vérifié :** le périmètre écrit ci-dessus (« les profils et
+   `methodology.md` ») sous-compte les porteurs. `socle/agents/discipline.md`
+   lui-même cite §C dans sa règle de lecture et §F dans sa règle de
+   vérification en lettres nues — le fichier qui porte la règle l'enfreint — et
+   `socle/agents/skills/chisel-beads/`, `chisel-setup/` et `upgrade-v2/` citent
+   §B1, §B2 et §H de la même façon. Le balayage les prend tous ; rien ne change
+   au principe déjà tranché, seule la liste s'allonge.
 6. **Wayfinder local-first** (F1.1) — analyser ce que le tracker couvrait,
    écrire la déclinaison markdown locale ; brainstorm → décisions →
    epics/tâches.
@@ -551,3 +559,24 @@ sur une échelle. Nom retenu par composition des deux existants :
   d'abord, les corrections comme chantier ensuite. Un fork verbatim reste
   légitime ; ce qui ne l'est pas, c'est un fork qui affirme le contraire de ce
   que le socle enseigne à côté.
+
+- ✅ **G10 — L'interrupteur « Autonomous runs » est supprimé.** Tranché par
+  l'Owner le 2026-08-28, à la question de savoir si §B3 devait aussi nommer
+  `chisel-auto-light` : « mais l'interrupteur, c'est débile quoi, je ne veux
+  pas d'interrupteur ». Deux reproches distincts. (1) **Mauvais fichier** :
+  autoriser ou non les runs autonomes n'est pas un réglage d'équipe versionné,
+  c'est un choix de la personne qui lance — « c'est un choix de l'utilisateur
+  ça ». (2) **Mauvaise question** : un interrupteur de permission ne répond
+  pas à ce dont on a besoin ; la bonne question serait « c'est quoi ton flow
+  préféré ? », posée dans `.agents/user.md` — « moi par défaut j'aime bien
+  chisel-default », et ce preset devient celui qui est pris par défaut.
+  **Décision pour maintenant : on supprime, et on ne construit rien à la
+  place.** C'est à l'utilisateur de lancer le flow qu'il veut, à chaque
+  invocation. Le « flow préféré dans `user.md` » reste une idée consignée, pas
+  un chantier : l'Owner veut d'abord l'usage — « je ne sais même pas si ça vaut
+  le coup de se faire chier […] il faut que nous on fasse des tests, il faut
+  que je voie c'est quoi le plus pratique ». Conséquence directe : la doctrine
+  de la posture d'invocation perd sa moitié « ET la glue le permet » et garde
+  l'autre — le choix du preset est humain, à l'invocation, jamais celui d'un
+  agent. Dix fichiers du socle portent l'interrupteur ; inventaire dans le
+  fichier de la slice qui l'exécute.
