@@ -1,6 +1,7 @@
 # 03 — Doctrine alignment
 
-**Status:** 🔴 Not Started
+**Status:** 🟡 In Progress — typed 2026-08-28, four commits in; `verify`,
+`diff-review` and `close` still to run.
 **Blocked by:** 02 — formulas rewrite (closed 2026-08-27). This slice names
 `chisel-light` and `chisel-auto-light` in the doctrine tables and in the
 routing block, and it makes the two doctrine documents agree with the five
@@ -448,17 +449,22 @@ and worked example are untouched here — the example is slice 4's single edit t
 this file (`04-switch-removal.md`, its section
 "`socle/agents/discipline.md` — one edit, inside one rule").
 
-**The two slices collide inside that rule, and it is planned, not a re-scope.**
-Renumbering the rule changes its first line; slice 4 changes the worked example
-one unchanged line below it. At three lines of context the two hunks are ONE
-hunk, so whoever lands second resolves a single-hunk conflict by hand — keeping
-the other slice's number and its own example, or the reverse. The resolution is
-mechanical and the two edits are still disjoint in substance: this slice never
-touches the example, slice 4 never touches the number, and slice 4's design
-announces the same collision from its side.
-*Corrected at `plan-review` round 1, 2026-08-28: the first version of this plan
-claimed the hunks do not touch, which is true of the lines and false of the
-hunks.*
+**The two slices collide inside that rule — and the collision was moot before
+typing began.** The geometry is real: renumbering the rule changes its first
+line, slice 4 changes the worked example one unchanged line below it, and at
+three lines of context the two hunks are ONE hunk. What removes the conflict is
+not the geometry but the placement: the thread owner ran slice 4 first in this
+same working tree rather than on a parallel branch, so this slice renumbered a
+rule whose example slice 4 had already changed to "§A · Task workspace of
+`.agents/project.md`" — read before splicing, and carried through untouched.
+The two edits stay disjoint in substance: this slice never touches the example,
+slice 4 never touches the number.
+*Corrected twice, both dated 2026-08-28: at `plan-review` round 1, because the
+first version of this plan claimed the hunks do not touch — true of the lines,
+false of the hunks; then at `type`, because the slices landed sequentially in
+one tree and no conflict had to be resolved. Kept rather than deleted: the
+prediction was right about the geometry and wrong only about the branch
+topology, and a closed record of the reasoning is worth more than a tidy one.*
 
 ### `socle/agents/methodology.md` — eight edits, in file order
 
@@ -732,19 +738,22 @@ seventeen, which is not the number to trust while ticking.
 
 A fresh session picking this slice up restarts at the first unticked box.
 
-- [ ] Commit 1 — `socle/agents/profiles/inspector.md`: `review` →
-  `diff-review` in the Mission. Suite green.
-- [ ] Commit 2 — `socle/agents/methodology.md`: edits (a) through (j) above,
-  in file order. Suite green.
-- [ ] Commit 3 — `socle/agents/discipline.md`: rule 6 rewritten, rule 9's
+- [x] Commit 1 — `socle/agents/profiles/inspector.md`: `review` →
+  `diff-review` in the Mission. Suite green. (`60fd65f`)
+- [x] Commit 2 — `socle/agents/methodology.md`: edits (a) through (j) above,
+  in file order. Suite green. (`d054e57`)
+- [x] Commit 3 — `socle/agents/discipline.md`: rule 6 rewritten, rule 9's
   clause, the new rule 10, the `update`-redirect rule de-wired, rules 10 and 11
   renumbered to 11 and 12. Suite green. (After the methodology, so rule 6's
   citation of the escalation section never dangles — plan decision 10.)
-- [ ] Commit 4 — `socle/templates/AGENTS-block.md`: the role bullet, the
-  formula list, the relaunch sentence. Suite green.
-- [ ] Verification: the grep criteria, then the read-through criteria, then
-  **tests-unchanged** and **suite-green**.
-- [ ] Worklog and status written into this file, per the task template.
+  (`f6af000`)
+- [x] Commit 4 — `socle/templates/AGENTS-block.md`: the role bullet, the
+  formula list, the relaunch sentence. Suite green. (`f970418`)
+- [x] Verification: the grep criteria, then the read-through criteria, then
+  **tests-unchanged** and **suite-green**. Evidence in the worklog below.
+- [x] Worklog and status written into this file, per the task template. The
+  acceptance criteria in the 🧑 zone are deliberately NOT ticked here — see the
+  worklog's last paragraph.
 
 ---
 
@@ -1003,6 +1012,111 @@ is to prove the socle still installs and renders.
   this slice adds both presets to both places, and names its own criterion for
   the block. Slice 2 recorded three leftovers of the same kind. None is this
   slice's to edit; they are the thread owner's.
+
+### Worklog
+
+Typed 2026-08-28 from the program design persisted above, as validated at
+`plan-review` round 1. Four commits, one file each, in the order the design
+locked — the methodology before the discipline, so rule 6 never cites a section
+title that does not yet exist.
+
+**Commit 1 — the Inspector runs `diff-review`.** Commit `60fd65f`.
+
+- `socle/agents/profiles/inspector.md` — one phrase in the Mission. The last
+  stale step name in the socle; nothing else in the file moved.
+
+**Commit 2 — the why of the socle catches up with the roles.** Commit
+`d054e57`, the eight edits in file order.
+
+- Section "A default, and two options" — the opening paragraph now names the
+  two axes instead of beads × auto and drops the switch pointer; the table
+  holds five presets with their gates, their sub-agents and who relaunches, and
+  lost the Coordination column; the clause under it points at the default
+  formula's header for the full two-axis reading and denies the third axis in
+  half a sentence, per the thread owner's ruling at round 1. "Three presets
+  combine them" is gone. The invocation-posture paragraph keeps the human's
+  choice and loses the glue's permission.
+- Section "The roster" — the Foreman's "Does" cell gains the interview.
+- Section "Zone ownership" — one rule (approved, else authored), then the four
+  presets that have an owner, then `chisel-auto-light` named as the preset
+  where the zones are ignored, with the Owner's ruling quoted in French.
+- Section "Escalation, and the Owner's digest" — retitled "Escalation, and the
+  blocked-task report" and rewritten: no chain, a report to the spawner, and
+  the report's form defined there once, its two glue references carrying file
+  and title.
+- Section "The pipeline is nine steps" — "Not seven" gone; nine said to be the
+  full pipeline, the two light presets named by the steps they drop, and
+  `.agents/formulas/` named as the authority on the order.
+- Section "The two designs" — the cost-gradient corollary rewritten to the two
+  mandatory paths, with the delegation-boundary tail kept word for word inside
+  the same paragraph; the tier sentence, the Architect-never-implements bullet
+  and the closing quality measure levelled with the profiles.
+- Section "Model tiers (and how they resolve)" — the three role cells; the
+  Foreman joins the frontier row with the interview, and cheap and mid now buy
+  what `socle/agents/profiles/mason.md` says they buy. Title and anchor
+  untouched, since `socle/agents/skills/code-review/SKILL.md` links it.
+- Section "Where dex's phases live (and who owns each)" — the Program Design
+  row (produced by the implementing session at its `plan` step, at that
+  session's tier, validated by an Architect at `plan-review`) and both stale
+  cells of the Vertical Slices row.
+
+**Commit 3 — the ambient core loses the ladder, gains the arriving session.**
+Commit `f6af000`.
+
+- `socle/agents/discipline.md` — rule 6 rewritten (trigger clause kept verbatim
+  per plan decision 6, "no human at the gate" per round 1); rule 9 plus one
+  clause naming the Foreman; the new rule 10 for the session that arrives to
+  execute a step; the `update`-redirect rule de-wired and renumbered to 11; the
+  section-reference rule renumbered to 12, its text, position and worked
+  example untouched.
+
+**Commit 4 — the routing block names the Foreman and all five presets.**
+Commit `f970418`.
+
+- `socle/templates/AGENTS-block.md` — the role bullet names the Foreman with
+  what it holds itself and the four roles it spawns; the formula list is four
+  clauses (light, supervised, auto, auto-light), the default being routed in the
+  paragraph above; the opt-in sentence is replaced by who chooses and who
+  relaunches. With this commit `grep -rn "B3\|Autonomous runs" socle/` returns
+  nothing, which closes slice 04's **no-switch-left-anywhere** as well as this
+  slice's **posture-and-permission-separated**.
+
+**The suite after every commit**, run as the brief prescribes
+(`PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`): 9 scenarios, 94 assertions,
+0 failed, test files at 592 lines — identical to the baseline in all four runs.
+No gate command went red at any point, so the escalation clause never fired.
+
+**One touch beyond the eight edits, inside the same section.** The
+Brief-stays-human paragraph of "A default, and two options" ended by pointing
+at Zone ownership "for what each preset makes the human's, and what it makes
+the Architect's". Under the rewritten Zone ownership the program design is the
+Mason's in light, so the pointer named the wrong role; its tail now reads "and
+what it leaves to the roles". One clause, in a paragraph the design did not
+list, in a section the design rewrites — reported here and judged at review, per
+the files-map doctrine.
+
+**The conflict the design announced did not happen, and the decision is kept.**
+Slice 04 landed first in this same working tree, so this slice renumbered a rule
+whose worked example slice 04 had already changed. The file was read as it stood
+before splicing and the new example carried through untouched. The collision
+paragraph of the design is corrected in place rather than deleted, with both
+corrections dated.
+
+**Two records left deliberately stale**, per the thread owner's ruling recorded
+as plan decision 11: `01-roles-remodel.md` and
+`project-management/vendored-skills-audit.md` cite the section-reference rule as
+"rule 11", which the renumbering makes wrong. Neither is touched — a closed
+record states what was true when it was written.
+
+**The acceptance criteria in the 🧑 zone are not ticked by this session.** Every
+one of them is verified — the greps return what they must, and the read-through
+criteria were read against the finished files — and the evidence is in the
+report this session returned to its spawner. The ticking itself belongs to the
+`close` step, which the formulas give to the Foreman ("tick acceptance criteria
+and deliverables against reality"), and the Mason contract forbids editing a 🧑
+zone. Noted because slice 04's Mason ticked its own criteria at `type`: the two
+slices differ here, and which practice the socle wants is the thread owner's to
+settle, not a Mason's.
 
 ### Writing rules in force
 
