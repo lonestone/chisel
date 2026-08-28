@@ -2,8 +2,10 @@
 .agents/.chisel.json
 .agents/discipline.md
 .agents/formulas
+.agents/formulas/chisel-auto-light.formula.toml
 .agents/formulas/chisel-auto.formula.toml
 .agents/formulas/chisel-default.formula.toml
+.agents/formulas/chisel-light.formula.toml
 .agents/formulas/chisel-supervised.formula.toml
 .agents/methodology.md
 .agents/profiles

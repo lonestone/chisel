@@ -213,35 +213,39 @@ group_symlink() {
 # ---------------------------------------------------------------------------
 group_render() {
   group "render: formulas parse as TOML, profile renders carry the body verbatim" \
-    "the three formula presets parse as TOML with the right gate count per preset (3/1/0), and every generated agent definition carries its profile's body byte for byte."
+    "the five formula presets parse as TOML with the step count and the gates each one is supposed to have (gates 3/2/1/0/0), and every generated agent definition carries its profile's body byte for byte."
 
   t7="$(fresh_install brownfield)"
-  default_formula="$t7/.agents/formulas/chisel-default.formula.toml"
-  supervised="$t7/.agents/formulas/chisel-supervised.formula.toml"
-  auto="$t7/.agents/formulas/chisel-auto.formula.toml"
 
-  # Structure by PARSING, never by grep: version integer, 9 unique step ids, gates 3/1/0.
+  # Structure by PARSING, never by grep: version integer, unique step ids, and
+  # the step count and gate list expected of each installed preset.
   if python3 -c 'import tomllib' >/dev/null 2>&1; then
-    if python3 - "$default_formula" "$supervised" "$auto" <<'PY'
+    if python3 - "$t7"/.agents/formulas/*.formula.toml <<'PY'
 import sys, tomllib
+expected = {
+    "chisel-default": (9, ["plan", "design-check", "close"]),
+    "chisel-light": (7, ["plan", "diff-review"]),
+    "chisel-supervised": (9, ["plan"]),
+    "chisel-auto": (9, []),
+    "chisel-auto-light": (6, []),
+}
+seen = set()
 for path in sys.argv[1:]:
     with open(path, "rb") as f:
         data = tomllib.load(f)
     assert isinstance(data["version"], int), path
+    steps, gates = expected[data["formula"]]
+    seen.add(data["formula"])
     ids = [s["id"] for s in data["steps"]]
-    assert len(ids) == len(set(ids)) == 9, path
+    assert len(ids) == len(set(ids)) == steps, path
     gated = [s["id"] for s in data["steps"] if s.get("gate", {}).get("type") == "human"]
-    expected = {
-        "chisel-default": ["plan", "design-check", "close"],
-        "chisel-supervised": ["plan"],
-        "chisel-auto": [],
-    }[data["formula"]]
-    assert gated == expected, (path, gated)
+    assert gated == gates, (path, gated)
+assert seen == set(expected), sorted(seen)
 PY
     then
-      pass "formulas: all three parse as TOML (version integer, 9 unique step ids, gates 3/1/0)"
+      pass "formulas: all five presets parse as TOML (version integer, unique step ids, gates 3/2/1/0/0)"
     else
-      fail "formulas: all three parse as TOML (version integer, 9 unique step ids, gates 3/1/0)"
+      fail "formulas: all five presets parse as TOML (version integer, unique step ids, gates 3/2/1/0/0)"
     fi
   else
     printf 'SKIP: TOML parse check (this python3 has no tomllib — needs 3.11+)\n'

@@ -1,0 +1,169 @@
+# chisel — the "Auto-light" pipeline: both axes emptied. No human gate, and no
+# validation sub-agent. This is the FLOOR of the pipeline, an instrument built
+# to be measured against the other four, per the Owner's "je serais curieux de
+# l'avoir quand même pour faire du benchmark". It is not a lighter way to
+# work: it is the preset with neither net. Whoever runs it accepts that
+# nothing between the Brief and the commit is read by anyone.
+#
+# There is no `diff-review` step at all, and the absence is deliberate: a
+# self-review would put a net back, and the benchmark would stop measuring the
+# floor. The mechanical `verify` is the only signal this preset produces.
+#
+# Readable WITHOUT any ledger tooling: execute the steps as an ordered
+# checklist, and `needs` gives the order.
+#
+# Where this preset sits: neither human gates nor validation sub-agents. The
+# full reading of the axes the presets are placed on is in the header of
+# `.agents/formulas/chisel-default.formula.toml`.
+#
+# The invoking session IS the Foreman, whose contract is
+# `.agents/profiles/foreman.md`. It holds `interview`, `verify` and `close`
+# itself; every other step runs as a fresh sub-agent, spawned with the step
+# role's profile body plus a brief the Foreman composes from that profile's
+# `Inputs` section. There is nothing for a human to relaunch: the Foreman
+# spawns the next step, fresh.
+#
+# Auto-light is opt-in: it runs only when the human explicitly asks for it AND
+# `.agents/project.md` permits it (§B3 · Autonomous runs).
+#
+# This file owns the ORDER, nothing else. The content and the progress belong
+# to the spec file; the know-how of each step belongs to the skill that step
+# names; the contract of each role belongs to its profile in
+# `.agents/profiles/`; the reasoning belongs to `.agents/methodology.md`.
+# Roles are roster names — a vendor or model name never appears here. Every
+# write goes through the glue `.agents/project.md` (§A paths, §B tracker
+# convention, §D living docs, §F gate commands, §G glossary and decisions).
+
+formula = "chisel-auto-light"
+description = "Chisel task pipeline with neither human gate nor validation sub-agent: the measurable floor of the pipeline, kept to be benchmarked against the other presets. Requires the glue to enable autonomous runs."
+version = 1
+type = "workflow"
+
+[vars.task]
+description = "Short slug of the task (used in titles)"
+required = true
+
+[vars.spec]
+description = "Path to the task spec file (markdown, chisel template)"
+required = true
+
+# ── CREATE ────────────────────────────────────────────────────────────────
+
+[[steps]]
+id = "interview"
+title = "Interview: {{task}}"
+type = "task"
+description = """
+Actor: the Foreman.
+It runs the interview itself: a spawned role cannot interview the human, so
+the thread owner asks and then spawns an Architect for the spec that follows.
+Where the tool cannot spawn at all, the thread simply carries on in the
+conversation.
+Follow the `grilling` skill, with `domain-modeling` underneath. Out of it:
+context, scope, acceptance criteria, and the seams the work will be tested
+through — prefer existing seams, the fewer the better. Domain terms land in
+the glossary and hard-to-reverse decisions in an ADR, both declared in
+`.agents/project.md` §G. A design question that cannot be settled on paper
+takes a detour through the `prototype` skill.
+There is no human to interview here: derive all of it from the Brief and the
+ambient layer, and carry every assumption that would have been a question
+into the Notes of the spec the next step writes — assumptions are reviewable
+artifacts, not silences.
+"""
+
+[[steps]]
+id = "spec"
+title = "Write spec: {{task}}"
+type = "task"
+needs = ["interview"]
+description = """
+Role: Architect — contract `.agents/profiles/architect.md`.
+Write {{spec}} from the task file template declared in `.agents/project.md`
+§A, named with the task id script declared there. Respect the reading
+gradient: 🧑 zones short and decision-rich, detail in the 🤖 zone.
+Run the sizing check OUT LOUD: does this fit a single fresh context window AND
+end in one demoable, verifiable pass? Yes → the task is its own single slice,
+no breakdown artifact. No → cut it with the `slice-task` skill, one file per
+slice with its blocking edges. The check's other question — which preset the
+run uses — is already answered by being here.
+Then record the work: a dated entry in the changelog declared in
+`.agents/project.md` §A, and the coordination state per the tracker
+convention of §B.
+No human arbitrates the cut: write the sizing answer into {{spec}} as an
+assumption, and escalate rather than guess when the work resists slicing.
+The Foreman then COMMITS the spec, as it does at `close`: a task can sit at
+"spec done" for a long time, and what is not saved does not survive that wait.
+"""
+
+# ── WORK (fresh session) ──────────────────────────────────────────────────
+
+[[steps]]
+id = "plan"
+title = "Plan: {{task}}"
+type = "task"
+needs = ["spec"]
+description = """
+Role: Mason — contract `.agents/profiles/mason.md`.
+The PROGRAM DESIGN, written by the session that will implement it: the target
+file tree, the seam signatures, the state and migration notes, the TDD order,
+the decisions the spec left to the implementation, and the short list of
+evergreen doc pages (declared in `.agents/project.md` §D, never inside the
+task workspace) to write at close. PERSIST it into the Design section of
+{{spec}} BEFORE any code — a design that lives only in the conversation does
+not exist. Cite the references it relies on: whoever reads next follows links,
+not vibes.
+Read the ambient layer declared in `.agents/project.md` §C, then {{spec}} in
+full plus what it links to (parent spec, prior art), and update its status.
+"""
+
+[[steps]]
+id = "type"
+title = "Type: {{task}}"
+type = "task"
+needs = ["plan"]
+description = """
+Role: Mason — contract `.agents/profiles/mason.md`.
+Execute the program design persisted at `plan`, ticking the implementation
+checkboxes in {{spec}} as you go — they are the resume point. The full suite
+is the next step's job.
+The design typed from is the one persisted at `plan`: this preset runs no
+`plan-review`, so nothing else validated it.
+"""
+
+[[steps]]
+id = "verify"
+title = "Verify: {{task}}"
+type = "task"
+needs = ["type"]
+description = """
+Actor: the Foreman.
+Mechanical verification, not a decision: run the gate commands declared in
+`.agents/project.md` §F — lint, tests, build, plus a browser check when UI
+behaviour changed. Evidence first: red output is reported as red, never
+narrated as green. Red twice on the same cause → stop.
+"""
+
+[[steps]]
+id = "close"
+title = "Close: {{task}}"
+type = "task"
+needs = ["verify"]
+description = """
+Actor: the Foreman.
+Apply the arbitrated findings — anything that must be typed goes through the
+Mason contract. Set the status of {{spec}}, tick acceptance criteria and
+deliverables against reality, then move it to the archive declared in
+`.agents/project.md` §A. Add the dated entry to the changelog declared in §A
+and record the closing coordination state per the §B convention. Update the
+roadmap declared in §A only when it exists AND a roadmap-level change was
+made — it belongs to the Owner.
+Promote the evergreen material: as-built seams, state machines and
+integration diagrams move from the Design into the living docs declared in
+§D, never inside the task workspace — start from its architecture index
+(default `doc/architecture/ARCHITECTURE.md`); update the README when the
+change is relevant to it. Protocol and evergreen pages stay generic — a
+temporary rewrite label is never branded as part of the work system.
+Run `retro`, sort its proposals by gravity, and PROPOSE them to each touched
+zone's owner; accepted ones are written in.
+Then the Foreman COMMITS and PUSHES.
+"""
