@@ -1016,9 +1016,11 @@ is to prove the socle still installs and renders.
 ### Worklog
 
 Typed 2026-08-28 from the program design persisted above, as validated at
-`plan-review` round 1. Four commits, one file each, in the order the design
-locked — the methodology before the discipline, so rule 6 never cites a section
-title that does not yet exist.
+`plan-review` round 1. Four content commits, one file each, in the order the
+design locked — the methodology before the discipline, so rule 6 never cites a
+section title that does not yet exist — plus this worklog and one whitespace
+fix (`fcb8a48`: a stray blank line in Zone ownership, a typing slip from
+commit 2).
 
 **Commit 1 — the Inspector runs `diff-review`.** Commit `60fd65f`.
 
