@@ -971,7 +971,13 @@ closes when slice 03 lands.
 the two the spec declared up front — the glue template and the skills
 directory. Nothing under `test/` or `bin/` was touched. Diff of the three
 commits, read against `3b1c0cd` as the base: the eight carriers plus the
-decisions file, nine files, 39 insertions and 72 deletions.
+decisions file, nine files, 39 insertions and 72 deletions. Read as **this
+slice's own commits**, not as the contiguous range from that base: slice 03
+began committing into the same branch on 2026-08-28, so a plain
+`3b1c0cd..HEAD` now also contains its work — `socle/agents/profiles/inspector.md`
+in its commit `60fd65f`, and its in-flight edits to
+`socle/agents/methodology.md`. Neither is this slice's, and neither was touched
+here.
 
 **Diff review, one finding applied — Standards axis, low.** Ordered in by the
 thread owner on 2026-08-28: the note this slice added under chantier 4 of
