@@ -594,14 +594,31 @@ loses "(opt-in delegation)"; the optional Mason, the offered choice, the
 Architect's "interview, design, plan" and the "already-persisted plan" all go:
 
 > **Corollary — the cost gradient.** Persisting the program design makes the
-> slice file a complete brief, which unlocks a division of labor: the
-> **Architect** does the upstream thinking with the human — the exploration,
-> the spec and the system design — and answers the `plan-review`; the **Mason**
-> designs the how for itself at its `plan` step and types it. Typing always
-> goes through the Mason contract, by one of two mandatory paths: a Mason
-> sub-agent where the tool can spawn one, otherwise a fresh session running
-> `work on slice <file>`. It is not a choice offered to the user, and no agent
-> elides it.
+> slice file a complete brief, which unlocks a division of labor: the thread
+> owner runs the interview, the **Architect** does the upstream thinking that
+> follows it — the exploration, the spec and the system design — and answers
+> the `plan-review`; the **Mason** designs the how for itself at its `plan`
+> step and types it. Typing always goes through the Mason contract, by one of
+> two mandatory paths: a Mason sub-agent where the tool can spawn one,
+> otherwise a fresh session running `work on slice <file>`. It is not a choice
+> offered to the user, and no agent elides it.
+
+*Corrected at `diff-review`, 2026-08-28, on the thread owner's ruling.* The
+first version of this target text gave the Architect "the upstream thinking
+with the human", which puts the interview back in its hands — and the whole
+purpose of this slice is to make the doctrine agree with the profiles, which
+say the opposite in three places: `socle/agents/profiles/foreman.md` gives the
+interview to the thread owner, all five formulas state that a spawned role
+cannot interview the human, and `socle/agents/profiles/architect.md` has the
+Architect write the spec from the interview the thread owner ran. The interview
+is now named as the thread owner's and the Architect keeps the exploration, the
+spec and the system design. A design that prescribes the contradiction this
+slice exists to remove is corrected, not honoured.
+
+**And the paragraph is re-wrapped as one block at the house width, which the
+first typing pass did not do** — the splice landed and the re-wrap did not,
+leaving one long line where the new sentences met the kept tail. Corrected at
+`diff-review` in the same pass.
 
 The delegation-boundary sentences are **the tail of that same paragraph**, not
 a paragraph after it: they run from "The delegation boundary is the **system
@@ -1109,6 +1126,35 @@ as plan decision 11: `01-roles-remodel.md` and
 `project-management/vendored-skills-audit.md` cite the section-reference rule as
 "rule 11", which the renumbering makes wrong. Neither is touched — a closed
 record states what was true when it was written.
+
+**Two findings applied after `diff-review`, 2026-08-28.** Commit `0f82295`, on
+`socle/agents/methodology.md`, both inside the cost-gradient corollary.
+
+- The corollary said the Architect "does the upstream thinking with the human",
+  which hands it the interview the profiles and all five formulas give to the
+  thread owner. Now: the thread owner runs the interview, the Architect does the
+  thinking that follows it — exploration, spec, system design — and answers the
+  `plan-review`. The design's edit (h) is corrected in writing above, dated,
+  rather than the file alone: a design that prescribes the contradiction this
+  slice exists to remove is not one to honour.
+- The paragraph is re-wrapped as one block. The first typing pass spliced the
+  new sentences in and left the join long — the only overlong prose line the
+  slice introduced. Verified after the fix: no prose line this slice adds to any
+  of the four files exceeds the house width.
+
+**Two findings ruled the other way, recorded for completeness.** The locked
+phrase "preset axes" of plan decision 3 never reached the delivered text, which
+matches the design's own quoted target block word for word — the design
+contradicts itself there, not the diff, and the criterion's substance holds, so
+nothing changed. And the per-preset facts now live in three places — the five
+formula headers, the methodology's table and the block's prose — with only the
+formulas covered by the suite; all three sites are mandated by named criteria
+and by the thread owner's ruling on the relaunch column, so it is candidate work
+for later, not a fault of this slice.
+
+**One finding is at the Owner's gate and was not touched here:** the Mason
+contract forbids editing a 🧑 zone while the formulas order the Mason to write
+its program design into one. That contradiction predates this diff.
 
 **The acceptance criteria in the 🧑 zone are not ticked by this session.** Every
 one of them is verified — the greps return what they must, and the read-through
