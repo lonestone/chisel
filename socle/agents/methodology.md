@@ -75,9 +75,9 @@ The roster that fills these presets follows.
 | Role | Tier | Does | Contract |
 |---|---|---|---|
 | **Owner** | — | Holds the Brief, always; approves whatever a preset gates; arbitrates escalations | not an agent |
-| **Architect** | frontier | Interviews, writes the spec, plans, answers the `design-check` | `.agents/profiles/architect.md` |
+| **Architect** | frontier | Writes the spec, answers the `plan-review` | `.agents/profiles/architect.md` |
 | **Checker** | frontier | Reviews the spec before it is planned — never its author | `.agents/profiles/checker.md` |
-| **Mason** | cheap or mid | Types the persisted plan — never plans | `.agents/profiles/mason.md` |
+| **Mason** | cheap or mid | Authors its own program design, then types it | `.agents/profiles/mason.md` |
 | **Inspector** | frontier | Reviews the diff on two axes — never its author | `.agents/profiles/inspector.md` |
 | **Foreman** | frontier | Owns one thread of work — carries the context, spawns the other roles, collects their reports and rules on them | `.agents/profiles/foreman.md` |
 
@@ -115,9 +115,9 @@ assigned to the Owner, per the §B convention. That is the whole mechanic.
 ## The pipeline is nine steps
 
 Not seven. `spec-review` (a Checker, fresh session, never the spec's author,
-two rounds max) and `design-check` (the Mason posts its program design; the
-plan's Architect answers VALIDATED or corrections, two rounds max, then a
-finding against the plan) are part of the doctrine now, not an afterthought.
+two rounds max) and `plan-review` (the Mason posts its own program design; an
+Architect answers VALIDATED or corrections, two rounds max, then a finding
+against the spec) are part of the doctrine now, not an afterthought.
 Where the gates sit is the formulas' business, named per preset — see [A
 default, and two options](#a-default-and-two-options) above; this file does
 not restate it step by step.
@@ -164,9 +164,14 @@ the answer demands them. Rationale:
   single document, only large work gets the full breakdown. Rigor must adapt
   to the work, not the other way around.
 
-What IS unconditional: the check itself, stated out loud. The agent announces
-"this fits in one pass" or "this needs slicing, here is the breakdown", and
-the human arbitrates. A silent sizing decision is a review hole.
+What IS unconditional: the check itself, stated out loud — and it asks two
+things, not one. Does this fit in one pass? The agent announces "this fits in
+one pass" or "this needs slicing, here is the breakdown". And does this run
+**light or full**? Light drops the validation sub-agents and leaves the spec
+approval and the diff review to the human
+(`.agents/formulas/chisel-light.formula.toml`); full keeps the Checker, the
+`plan-review` and the Inspector. The human answers both, and a silent answer
+to either is a review hole.
 
 Note the distinction: **vertical-slice discipline during implementation**
 (never layer-by-layer, something demoable at each step) applies to ALL work,
@@ -193,7 +198,7 @@ seam signatures, test order — is deliberately NOT written at creation time.
 Designing slice 6's files before slices 1–3 have taught anything produces
 stale guesses — file paths rot, learning is ignored. The implementing
 session designs it **just-in-time at its plan step**, with the real code in
-view, and the `design-check` loop validates it before any typing.
+view, and the `plan-review` loop validates it before any typing.
 
 That program design must not die with the conversation. Once validated, the
 implementing session **persists it into the slice file's Design section** —
@@ -216,10 +221,13 @@ makes the slice file a complete brief, which unlocks a division of labor: the
 **Architect** does the thinking (interview, design, plan) with the human; an
 optional **Mason** does only the typing from that file. The agent OFFERS this
 choice once the plan is saved (recommending it for large diffs); the user
-decides — never a silent default. The delegation boundary is the plan itself:
-everything above it is thinking, everything below is typing. A Mason asked to
-"figure out" something the Design left open is a planning failure, not an
-execution one — the plan goes back to the Architect.
+decides — never a silent default. The delegation boundary is the **system
+design**: above it the *what* — architecture, scope, and the seams the work is
+tested through — settled at creation time and approved at the gate; below it
+the *how*, designed and typed by the session that implements. A Mason asked to
+"figure out" something the *what* left open is a specification failure, not an
+execution one — and it goes back to the spec. An open *how* is not a hole: it
+is what the `plan` step is for.
 
 That gradient is a **tier** gradient, not a licence to spend: the thinking
 runs at the frontier tier, the typing from an already-persisted plan runs at
@@ -232,8 +240,8 @@ context clean enough to review matters more than upgrading everything. Few
 moments in a large task genuinely require frontier intelligence — the
 original decomposition, the design decisions, a handful of trade-offs. Those
 moments stay with the Architect and the human, and they are exactly what the
-frontier tier is reserved for. Everything below the plan is typing, and
-typing does not need the same tier.
+frontier tier is reserved for. Everything below the system design is the how,
+and writing the how and typing it do not need the same tier.
 
 The Mason's brief is **artifacts only, never the planning conversation**: the
 slice file + the artifacts it explicitly references (parent 🧑 zones,

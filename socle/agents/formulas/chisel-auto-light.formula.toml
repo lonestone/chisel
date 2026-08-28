@@ -89,8 +89,8 @@ run uses — is already answered by being here.
 Then record the work: a dated entry in the changelog declared in
 `.agents/project.md` §A, and the coordination state per the tracker
 convention of §B.
-No human arbitrates the cut: write the sizing answer into {{spec}} as an
-assumption, and escalate rather than guess when the work resists slicing.
+Nobody arbitrates the answer here: write the sizing answer into {{spec}} as
+an assumption, and escalate rather than guess when the work resists slicing.
 The Foreman then COMMITS the spec, as it does at `close`: a task can sit at
 "spec done" for a long time, and what is not saved does not survive that wait.
 """

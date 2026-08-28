@@ -136,7 +136,7 @@ npx @lonestone/chisel init .
 purpose — it is what poses the v2 files. It:
 
 - installs `.agents/discipline.md` (the ambient core), `.agents/formulas/`
-  (the three presets), `.agents/profiles/` (the role contracts) and the
+  (the presets), `.agents/profiles/` (the role contracts) and the
   per-tool definitions rendered from them in `.claude/agents/` and
   `.codex/agents/`;
 - installs `.agents/user.md.tpl`, the template each dev copies to their own
