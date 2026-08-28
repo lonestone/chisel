@@ -645,10 +645,40 @@ sur une échelle. Nom retenu par composition des deux existants :
   `socle/agents/discipline.md` dit précisément qu'un one-shot n'a pas de fichier
   de spec. Les deux règles se croisent sans se voir : appliquées à la lettre,
   elles ordonnent de spawner un Mason pour un travail qui ne peut pas lui être
-  briefé. La règle qui manque : **le Mason obligatoire vaut pour le travail qui
-  a un fichier ; le one-shot est frappé par la session qui possède le fil.**
-  Trois porteurs à corriger : le corollaire du gradient de coût de
-  `methodology.md`, la première Prohibition de
+  briefé. Ce que la règle manquante doit dire n'est **pas** tranché ici : le
+  Foreman avait proposé « le one-shot est frappé par la session qui possède le
+  fil », et l'Owner a aussitôt refusé le cadrage — « je t'ai pas demandé de
+  one-shot this ou autre » : personne n'avait décidé que ce travail était un
+  one-shot, le Foreman l'avait classé seul. Le classement lui-même est la
+  question ouverte G13 ci-dessous.
+  Trois porteurs à corriger quand elle sera tranchée : le corollaire du
+  gradient de coût de `methodology.md`, la première Prohibition de
   `socle/agents/profiles/foreman.md` (« Never types the code itself »), et la
   règle du pont de `discipline.md`, qui gagne le pendant de sa propre phrase.
   Consigné ici, non corrigé : ouvrir la tâche est la décision de l'Owner.
+
+- ❓ **G13 — Le passage en mode « flow » n'est géré dans aucun sens.** Question
+  ouverte par l'Owner le 2026-08-28, en voyant le Foreman classer un travail
+  tout seul : « je t'ai pas demandé de one-shot this ou autre. Faudrait p-e
+  qu'on améliore / rende gated le fait de passer en mode flow ? »
+  **Le constat, dans les deux sens.** Entrer dans le flow : la règle du pont de
+  `socle/agents/discipline.md` dit de PROPOSER le pipeline quand une
+  conversation devient du travail réel — « inform, never force » — mais une
+  session qui reçoit un fichier de tâche y est déjà, sans proposition ni gate,
+  et elle spawne ensuite des rôles sans que personne ait validé qu'on y entre.
+  Sortir du flow : rien du tout. Aucune règle ne dit qui décide qu'un travail
+  est assez petit pour se passer de fichier — le Foreman l'a décidé deux fois
+  le même jour, dont une en proposant un Mason sans tâche à lui donner (G12).
+  **Recommandation du Foreman, à trancher par l'Owner.** Ne pas inventer un
+  mécanisme : le socle en a déjà un, le **sizing check**, déjà inconditionnel
+  et déjà dit à voix haute, et qui pose déjà une question au même endroit
+  (« light or full ? »). Il ne couvre aujourd'hui que le travail qui a DÉJÀ un
+  fichier. Le remonter d'un cran : la première question du sizing check devient
+  « est-ce que ça a besoin du pipeline du tout ? », posée à voix haute au moment
+  où le travail est reconnu, et sa réponse est celle de l'humain, comme l'est
+  déjà celle de « light or full ? ». Une réponse silencieuse à celle-là est un
+  trou de revue, exactement comme les deux autres.
+  Coût : le sizing check déménage de l'intérieur du pipeline vers son seuil, ce
+  qui touche `socle/agents/methodology.md` (section « Why slicing is
+  conditional »), la règle du pont de `discipline.md`, et le step `spec` des
+  cinq formulas. À articuler avec le chantier 2, qui rouvre déjà les formulas.
