@@ -27,16 +27,27 @@ where the breaks are):
   starting that step. Never assume approval.
 - Track progress in the spec file itself (status and checkboxes from the
   template) — it is the source of truth for content and progress.
-- Each step names a role (Architect, Checker, Mason, Inspector) — read its
-  profile in `.agents/profiles/` before spawning it; the contracts live there.
+- The invoking session is the **Foreman** (`.agents/profiles/foreman.md`): it
+  runs the formula, and it holds the interview, the mechanical verify and the
+  close itself. Every other step is a fresh sub-agent it spawns — Architect,
+  Checker, Mason, Inspector. Read a role's profile in `.agents/profiles/`
+  before spawning it; the contracts live there.
 
+`.agents/formulas/chisel-light.formula.toml` keeps the human gates and drops
+the validation sub-agents: no Checker on the spec, no `plan-review`, and at the
+diff review the human reads in the Inspector's place.
+`.agents/formulas/chisel-supervised.formula.toml` keeps exactly one human gate
+— the Owner approves the spec, nothing else — with every sub-agent.
 `.agents/formulas/chisel-auto.formula.toml` is the same pipeline with every
-human gate replaced by escalation — a doubting step stops and hands one rung
-up instead of waiting. `.agents/formulas/chisel-supervised.formula.toml` sits
-between the two: the same steps as auto, but with exactly one human gate — the
-Owner approves the spec, nothing else. Both are opt-in: either runs only when
-a human explicitly asks for it in that session AND `.agents/project.md`
-permits it (§B3 · Autonomous runs) — never chosen by an agent on its own.
+human gate replaced by escalation: a doubting step blocks and reports one rung
+up instead of waiting. `.agents/formulas/chisel-auto-light.formula.toml` drops
+both — no gate, no sub-agent — and exists to be measured against the others,
+not as a lighter way to work.
+
+Which preset governs a run is the human's choice, made at invocation and never
+an agent's. Under the default and light the run stops at each step and the
+human relaunches it; under supervised, auto and auto-light the Foreman spawns
+the next step itself, fresh.
 
 Paths (task workspace, template, journal, gate commands) resolve through
 `.agents/project.md`. The reasoning behind all of it is
