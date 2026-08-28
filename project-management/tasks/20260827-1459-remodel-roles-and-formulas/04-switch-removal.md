@@ -1,6 +1,7 @@
 # 04 — Switch removal
 
-**Status:** 🔴 Not Started
+**Status:** 🟡 In Progress — typed 2026-08-28, three commits in; `verify`,
+`diff-review` and `close` still to run.
 **Blocked by:** None — can start immediately. It shares exactly one file with
 slice 03 — `socle/agents/discipline.md` — and never the same passage of it; see
 "Overlap with slice 03" in the 🤖 zone for which half each slice owns, and for
@@ -48,17 +49,17 @@ Implementation Decisions, point 9, and no shim text is written for it.
 Cite these by name. An amended criterion is never erased: strike the original,
 date the new version below it.
 
-- [ ] **switch-gone-from-the-glue-template** — `grep -n "B3\|Autonomous runs"
+- [x] **switch-gone-from-the-glue-template** — `grep -n "B3\|Autonomous runs"
   socle/agents/project.md.tpl` returns nothing; and Given the section
   "B · Coordination" of that file, When read, Then it holds the two
   sub-sections "B1 · Where task statuses live" and "B2 · Link to an external
   tracker", both under their existing names and unrenumbered, and no third.
-- [ ] **b-section-announces-two-decisions** — Given the comment that introduces
+- [x] **b-section-announces-two-decisions** — Given the comment that introduces
   "B · Coordination" in `socle/agents/project.md.tpl`, When read, Then it
   announces the two decisions the section actually holds, and the clause
   describing whether an agent may run a whole task without stopping is gone
   rather than reworded.
-- [ ] **formula-headers-drop-the-permission** — `grep -rn "B3\|Autonomous
+- [x] **formula-headers-drop-the-permission** — `grep -rn "B3\|Autonomous
   runs\|Requires the glue" socle/agents/formulas/` returns nothing; and Given
   the header comments of `chisel-auto.formula.toml`,
   `chisel-supervised.formula.toml` and `chisel-auto-light.formula.toml`, When
@@ -69,34 +70,34 @@ date the new version below it.
   light is chosen by the human at the sizing check — carrying what the reader
   needs; and Given the `description` field of each of the five formulas, When
   read, Then none of them requires anything of the glue.
-- [ ] **section-reference-rule-keeps-a-worked-example** — Given the
+- [x] **section-reference-rule-keeps-a-worked-example** — Given the
   section-reference rule of `socle/agents/discipline.md` (the rule requiring a
   cited section to carry both its file and its title), When read, Then its
   worked example names a section of `.agents/project.md` that still exists,
   quoted in the exact form the rule demands, and the rule's own text is
   otherwise unchanged. The rule's position and number are slice 03's business,
   not this slice's — see "Overlap with slice 03".
-- [ ] **setup-asks-two-questions-in-b** — `grep -n "B3\|autonomous"
+- [x] **setup-asks-two-questions-in-b** — `grep -n "B3\|autonomous"
   socle/agents/skills/chisel-setup/SKILL.md` returns nothing; and Given that
   skill, When read, Then its verbatim-question screen for the switch is gone,
   the one-question-per-message rule says §B is two questions and two messages,
   the recommended-values list of the section walk no longer poses the switch,
   and the hand-off at the end of the §B2 screen names the next thing actually
   asked instead of a screen that no longer exists.
-- [ ] **setup-write-spans-still-promise-byte-identity** — Given the surgical
+- [x] **setup-write-spans-still-promise-byte-identity** — Given the surgical
   write rules of `socle/agents/skills/chisel-setup/SKILL.md` and the
   database step that cites them, When read, Then answering one sub-section of
   §B is still promised to leave the others byte-identical, stated without an
   enumeration of sub-section names that would need maintaining the next time
   §B's count changes; and Then no promise is weakened, dropped, or left naming
   a sub-section that no longer exists.
-- [ ] **migration-poses-no-switch** — `grep -n "B3\|autonomous"
+- [x] **migration-poses-no-switch** — `grep -n "B3\|autonomous"
   socle/agents/skills/upgrade-v2/SKILL.md` returns nothing; and Given that
   skill, When read, Then its inventory of what a v1 glue lacks, its list of
   screens to reuse from the setup skill, and the defaults it says a migration
   should pose all name only sections that exist, and no migration poses the
   switch in either position.
-- [ ] **nothing-replaces-it** — `grep -rin "preferred flow\|flow préféré"
+- [x] **nothing-replaces-it** — `grep -rin "preferred flow\|flow préféré"
   socle/` returns nothing, and this slice's diff touches neither
   `socle/agents/user.md.tpl` nor any file under `socle/agents/skills/` other
   than the two named above; and Given the whole diff, When read, Then no
@@ -111,17 +112,17 @@ date the new version below it.
   `socle/agents/skills/writing-great-skills/` in an unrelated sense — a
   model-invoked skill the agent can fire autonomously — and those two are
   untouched.
-- [ ] **equipped-projects-untouched** — Given this slice's diff, When read,
+- [x] **equipped-projects-untouched** — Given this slice's diff, When read,
   Then it contains no migration, no cleanup pass, and no change to
   `bin/chisel`: a project already equipped keeps whatever its own
   `.agents/project.md` says, because `chisel update` never rewrites that file
   and this slice does not start. The reasoning, and whose problem the orphan is,
   are in the 🤖 zone under "Already-equipped projects".
-- [ ] **tests-unchanged** — Given this slice's diff, When read, Then no file
+- [x] **tests-unchanged** — Given this slice's diff, When read, Then no file
   under `test/` is modified. The seam-by-seam reasoning is in the 🤖 zone under
   "The verification seam"; if implementing proves it wrong, this criterion is
   amended in place rather than quietly dropped.
-- [ ] **suite-green** — `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`
+- [x] **suite-green** — `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`
   passes: 9 scenarios, 94 assertions, 0 failed. The leading path element is not
   cosmetic — with the machine's default `python3` (a pyenv without `tomllib`)
   the formula parse check prints SKIP and proves nothing, a constat recorded
@@ -893,3 +894,86 @@ says in one clause what the reader finds there; no invented numeric limits ("on
 n'a pas de limites à mettre, c'est une fausse bonne idée"); named acceptance
 criteria, cited by name, an amended one struck and dated rather than erased; the
 reading gradient — the 🧑 zones short and decision-rich, the detail here.
+
+### Worklog
+
+**Commit 1 — the switch leaves the glue template and the pipeline.** Commit
+`dbb0f80`, typed 2026-08-28 from the persisted design as validated at round 2.
+
+- `socle/agents/project.md.tpl` — the sub-section "B3 · Autonomous runs"
+  deleted whole (heading, verdict line, the refusal paragraph, the
+  what-enabling-would-permit paragraph, the trailing comment), leaving one
+  blank line between §B2's last paragraph and §C's heading; the comment
+  introducing §B announces two decisions, the third clause deleted rather than
+  reworded. No renumbering: B1 and B2 keep their names and their order.
+- `socle/agents/formulas/chisel-auto.formula.toml`,
+  `chisel-supervised.formula.toml`, `chisel-auto-light.formula.toml` — the
+  two-line opt-in clause of each header rewritten to the one shared shape
+  (opt-in, asked by the human in that session, never chosen by an agent), with
+  no second condition; the last sentence of each `description` field struck.
+  All **three** carried it, as the design's decision 2 corrected.
+- `socle/agents/formulas/chisel-light.formula.toml` — the two-line reverse
+  clause and one of its fencing comment dividers deleted; the sentence above it
+  now sits against the paragraph on what the file owns.
+- `project-management/review-360-decisions.md` — one note under chantier 4,
+  beside the `tomllib` constat, recording the orphan sub-section surviving in
+  already-equipped projects and why nothing reads it (decision 15). Written in
+  French, like the rest of that file.
+
+**Commit 2 — the setup stops asking it, the migration stops posing it.** Commit
+`05fadf5`.
+
+- `socle/agents/skills/chisel-setup/SKILL.md` — the five edits: the verbatim
+  question screen deleted whole so §B2's screen is the last of §B and the §H
+  screen follows it directly; "autonomous runs disabled" out of the
+  recommended-values list; the arithmetic now two questions, two messages, both
+  headings; the §B2 hand-off naming §C, the reading list; and the two
+  write-span promises restated symmetrically — answering one sub-section leaves
+  the others byte-identical — so neither enumerates a name that can go stale.
+- `socle/agents/skills/upgrade-v2/SKILL.md` — the three edits: Step 1's
+  glue-sections bullet, Step 5's two lists (the prose one and the reuse-these-
+  screens one), and Step 5's defaults sentence. Verified after typing that
+  every citation of the retired v1 layer survives — Step 1's first bullet and
+  Step 2 both — and the pointer group's assertion that this is the only
+  installed file naming it stayed green.
+
+**Commit 3 — the section-reference rule keeps a worked example.** Commit
+`9a36c27`.
+
+- `socle/agents/discipline.md` — the worked example of the section-reference
+  rule becomes "§A · Task workspace of `.agents/project.md`", in the exact form
+  the rule demands. The rule's text, its position and its number are untouched.
+
+**Suite after each of the three commits**, run as the brief prescribes
+(`PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`): 9 scenarios, 94 assertions,
+0 failed, test files at 592 lines against the suite's own cap — identical to the
+baseline, in all three runs. No gate command went red at any point.
+
+**The conflict decision 14 announced did not happen, and the decision stands
+as written.** The thread owner placed slice 03 after this one in the same
+working tree rather than on a parallel branch, so the other Mason edits
+`socle/agents/discipline.md` with this slice's commit already in. The geometry
+the decision describes was right — one unchanged line between the two hunks —
+and only its resolution is moot. Kept rather than deleted, because the
+prediction is what makes the absence of a conflict readable.
+
+**The criterion no-switch-left-anywhere does not close here, by design.** This
+slice lands first, so `grep -rn "Autonomous runs" socle/` and
+`grep -rn "B3" socle/` still match slice 03's two carriers: the
+invocation-posture paragraph of `socle/agents/methodology.md` (twice — the
+parenthetical framing auto as a posture, and the paragraph's own "AND the glue
+permits it") and the opt-in sentence of `socle/templates/AGENTS-block.md`. Both
+are outside this slice's scope and specced in slice 03, whose own criterion
+greps those two files whole. Nothing else in `socle/` matches. The criterion
+closes when slice 03 lands.
+
+**No deviation from this slice's files map**, and none from the parent's beyond
+the two the spec declared up front — the glue template and the skills
+directory. Nothing under `test/` or `bin/` was touched. Diff of the three
+commits, read against `3b1c0cd` as the base: the eight carriers plus the
+decisions file, nine files, 39 insertions and 72 deletions.
+
+**Nothing for the proposal door.** The one finding this slice raised at plan
+time — the under-counted scope of the bare-section-reference sweep — was
+recorded by the thread owner under chantier 5 of
+`project-management/review-360-decisions.md` before typing began.
