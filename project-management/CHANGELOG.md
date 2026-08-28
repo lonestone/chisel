@@ -5,6 +5,62 @@ ships.
 
 ---
 
+## 23. 2026-08-28 — Roles remodel closed: the doctrine catches up, and a switch dies
+
+The two documents that still described the pre-remodel system are made to
+agree with what slices 01 and 02 shipped, and the task gains a fourth slice
+because the Owner killed something while the third was being written.
+
+`discipline.md` loses the fixed escalation ladder and the word the Owner never
+recognized: a sub-agent reports to its spawner, above the owner of the thread
+sits the human and nothing else. It gains the rule that makes the mandatory
+Mason contract reachable by a session a human opens by hand — a session opened
+to execute a step takes that step's role and reads its profile before acting —
+and its `update`-redirect rule stops naming presets. `methodology.md`, the why
+of the whole socle, stops contradicting the roles in eight places: the
+escalation section retitled and rewritten as the single definition point of
+the blocked-task report, the cost-gradient corollary with no optional Mason
+and no offered choice left in it, five presets where the table claimed three,
+zone ownership stated as one rule, the model-tiers and dex-phases tables
+following the authorship change of the program design, and the interview
+returned to the Foreman where the corollary had quietly kept giving it to the
+Architect. The AGENTS block gains the Foreman and both light presets, and says
+truthfully who relaunches. The Inspector profile stops claiming a step that
+was renamed three commits earlier — the last stale step name in the socle. The
+task's final greps close on an empty result for every word the remodel killed.
+
+**The permission switch is deleted, and nothing replaces it.** Asked whether
+§B3 · Autonomous runs should also name `chisel-auto-light`, the Owner refused
+the premise: "mais l'interrupteur, c'est débile quoi, je ne veux pas
+d'interrupteur." Two reproaches, both recorded as ruling G10 — the permission
+sat in the wrong file, since allowing an unattended run is the choice of the
+person launching it and not a versioned team setting ("c'est un choix de
+l'utilisateur ça"), and it answered the wrong question, the useful one being
+"c'est quoi ton flow préféré ?" in `.agents/user.md`. That idea is deferred
+until he has used the thing: "il faut que je voie c'est quoi le plus
+pratique." So the switch leaves the glue template, the three autonomous
+presets keep only the half of the doctrine that survives — the human chooses
+the preset at invocation, never an agent — the setup skill stops asking the
+question, the migration skill stops posing it, and the discipline's
+section-reference rule finds a worked example that still exists. The README
+stopped teaching it too, on the Owner's arbitration: an Inspector found the
+repo's front door still documenting the deleted feature while the criterion
+that was supposed to catch it grepped only `socle/`.
+
+Two things ruled along the way that outlive the task. The program design does
+not belong in the task file at all — "le program design doit être persisté
+dans ***-work, un document qui appartient au maçon ; le Mason ne doit pas
+éditer la tâche d'origine" — which dissolves rather than patches a real
+contradiction an Inspector found between the Mason's contract and what the
+formulas order it to do, and confirms two templates for the spec/work split.
+And the sweeping pass on bare section references grew: `discipline.md` itself
+cites sections by naked letter, so the file that carries the rule breaks it.
+
+Four slices, closed. Every gate held by the human; two plan reviews and two
+diff reviews run by sub-agents that had not written what they read; twelve and
+nineteen named criteria satisfied and verified independently; the installer
+suite green in every one of the fifteen runs, and never touched.
+
 ## 22. 2026-08-27 — Roles remodel, slice 02: five presets on two axes
 
 The formulas are rewritten on Foreman orchestration, and the pipeline stops

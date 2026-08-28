@@ -1,6 +1,6 @@
 # Remodel the roles and the formulas
 
-**Status:** 🟡 In Progress
+**Status:** 🟢 Complete — closed 2026-08-28, four slices.
 
 ---
 
@@ -177,14 +177,14 @@ review — carry that framing in their own body.
 Cite these by name. An amended criterion is never erased: strike the
 original, date the new version below it.
 
-- [ ] **foreman-is-a-profile** — `test -f socle/agents/profiles/foreman.md
+- [x] **foreman-is-a-profile** — `test -f socle/agents/profiles/foreman.md
   && test ! -f socle/agents/foreman.md` passes, and the new profile carries
   `name`, `description` and `tier` frontmatter like the other profiles.
-- [ ] **no-digest-left** — `grep -rin "digest" socle/` returns nothing.
-- [ ] **no-fixed-ladder** — `grep -rn "Mason → Architect" socle/` and
+- [x] **no-digest-left** — `grep -rin "digest" socle/` returns nothing.
+- [x] **no-fixed-ladder** — `grep -rn "Mason → Architect" socle/` and
   `grep -rn "Architect → Inspector" socle/` both return nothing.
-- [ ] **no-allotment-left** — `grep -rin "allotment" socle/` returns nothing.
-- [ ] **map-replaces-the-boundary** — Given `architect.md`, `mason.md`, the
+- [x] **no-allotment-left** — `grep -rin "allotment" socle/` returns nothing.
+- [x] **map-replaces-the-boundary** — Given `architect.md`, `mason.md`, the
   Foreman profile and `inspector.md`, When read, Then the system design's
   files-to-modify / files-to-avoid map is described as indicative and
   motivated, never a strict limit, and the Inspector judges deviations a
@@ -199,7 +199,7 @@ original, date the new version below it.
   `Inputs` section, nothing else.~~
   *Superseded 2026-08-27 by the Owner's ruling that the Checker joins the
   framing pass.*
-- [ ] **profiles-carry-the-framing** (amended 2026-08-27) — Given each of
+- [x] **profiles-carry-the-framing** (amended 2026-08-27) — Given each of
   the five role profiles — `foreman.md`, `architect.md`, `checker.md`,
   `mason.md`, `inspector.md` — When its body is pasted verbatim as a
   spawned session's instructions, Then the session knows its mission, whom
@@ -208,12 +208,12 @@ original, date the new version below it.
   paste-the-body-verbatim is stated as the rule of spawning (no longer a
   fallback) and the delegator's contribution is the per-task brief from the
   `Inputs` section, nothing else.
-- [ ] **mason-not-optional** — `grep -n "optional Mason" socle/agents/methodology.md`
+- [x] **mason-not-optional** — `grep -n "optional Mason" socle/agents/methodology.md`
   and `grep -n "OFFERS this choice" socle/agents/methodology.md` return
   nothing; Given the methodology's delegation passage, When read, Then it
   states the two mandatory paths (spawn a Mason sub-agent when the tool can;
   otherwise invite a fresh `work on slice <file>` session).
-- [ ] **incoming-session-rule** — Given `socle/agents/discipline.md`, When
+- [x] **incoming-session-rule** — Given `socle/agents/discipline.md`, When
   read, Then a numbered rule states that a session opened to execute a step
   takes that step's role and reads its profile before acting.
 - [ ] ~~**light-formula-exists** — `test -f
@@ -230,35 +230,35 @@ original, date the new version below it.
   Mason's plan.~~
   *Superseded 2026-08-27 by the Owner's ruling that renames the reviews after
   their object.*
-- [ ] **light-formula-exists** (amended twice, 2026-08-27) — `test -f
+- [x] **light-formula-exists** (amended twice, 2026-08-27) — `test -f
   socle/agents/formulas/chisel-light.formula.toml` passes; the file contains
   no `spec-review` and no `plan-review` step; a `diff-review` step exists and
   names the **human** as its actor (no Inspector sub-agent); and there are
   exactly two `[steps.gate] type = "human"` gates — spec approved (before
   `plan`), and the diff review itself. No human gate sits on the Mason's
   plan.
-- [ ] **reviews-named-after-their-object** — `grep -rn "design-check"
+- [x] **reviews-named-after-their-object** — `grep -rn "design-check"
   socle/` and `grep -rn 'id = "review"' socle/agents/formulas/` both return
   nothing; Given each formula, When read, Then its three review steps are
   `spec-review`, `plan-review` and `diff-review`, and the `plan` step names
   the program design as what it produces and the implementing session as its
   author.
-- [ ] **create-work-separator-sits-right** — Given each formula's section
+- [x] **create-work-separator-sits-right** — Given each formula's section
   separators, When read, Then `spec-review` sits on the CREATE side: the
   WORK separator falls after it, not before.
-- [ ] **benchmark-floor-exists** — `test -f
+- [x] **benchmark-floor-exists** — `test -f
   socle/agents/formulas/chisel-auto-light.formula.toml` passes; the file
   carries no `[steps.gate] type = "human"` and no `spec-review`, no
   `plan-review`, no Inspector at `diff-review`; and its header says plainly
   what it is — the pipeline with neither net, built to be measured against
   the others, per the Owner's "je serais curieux de l'avoir quand même pour
   faire du benchmark".
-- [ ] **stop-only-where-humans-relaunch** — `grep -l "Then STOP"
+- [x] **stop-only-where-humans-relaunch** — `grep -l "Then STOP"
   socle/agents/formulas/*.toml` lists only `chisel-default.formula.toml` and
   `chisel-light.formula.toml`; Given the auto and supervised formulas, When
   a step ends, Then the Foreman spawns the next step fresh instead of
   stopping.
-- [ ] **foreman-closes** — Given each formula's `close` step, When read,
+- [x] **foreman-closes** — Given each formula's `close` step, When read,
   Then the Foreman is named explicitly as the one who commits and pushes.
 - [ ] ~~**slim-step-bodies** — Given any step body of the four formulas, When
   read, Then it contains the role name, a pointer to that role's profile as
@@ -268,7 +268,7 @@ original, date the new version below it.
   *Superseded 2026-08-27: the original demanded a profile pointer of every
   step, but the mechanical `verify` step has no role, and the light
   formula's review step is held by the human, who has no profile.*
-- [ ] **slim-step-bodies** (amended 2026-08-27, widened to five formulas the
+- [x] **slim-step-bodies** (amended 2026-08-27, widened to five formulas the
   same day) — Given any step body of
   the five formulas that a spawned role executes, When read, Then it
   contains the role name, a pointer to that role's profile as the contract,
@@ -277,16 +277,16 @@ original, date the new version below it.
   and Given a step no spawned role executes (the mechanical `verify`, the
   light formula's human-held review), When read, Then it names its actor
   and carries only step-specific instruction.
-- [ ] **light-in-the-tables** — `grep -n "chisel-light"
+- [x] **light-in-the-tables** — `grep -n "chisel-light"
   socle/agents/methodology.md socle/templates/AGENTS-block.md` finds a match
   in both files.
-- [ ] **escalation-form-survives** — Given the rewritten escalation passage
+- [x] **escalation-form-survives** — Given the rewritten escalation passage
   of `methodology.md`, When read, Then the blocked-task report form is
   defined once: a dated ⚠️ line in the journal, plus a blocking bead when
   the coordination state is kept in beads.
-- [ ] **rule-10-unwired** — `grep -n "chisel-supervised\|chisel-auto"
+- [x] **rule-10-unwired** — `grep -n "chisel-supervised\|chisel-auto"
   socle/agents/discipline.md` returns nothing.
-- [ ] **suite-green** — `test/run.sh` passes with the updated golden tree
+- [x] **suite-green** — `test/run.sh` passes with the updated golden tree
   and render checks.
 
 ## Seams
@@ -624,7 +624,7 @@ Related tasks:
 
 ## Deliverables
 
-- [ ] `socle/agents/profiles/foreman.md` (new) — frontmatter + Mission /
+- [x] `socle/agents/profiles/foreman.md` (new) — frontmatter + Mission /
   Tier / Prohibitions / Escalation / Inputs, in the house profile shape.
   Content to carry: owns one thread; carries the business context; spawns
   roles and composes briefs from the spawned profile's `Inputs` section
@@ -637,53 +637,53 @@ Related tasks:
   framing — mission, whom it reports to, what it never does. Plus the
   reporting shape ruled by the Owner on 2026-08-27 (Implementation Decisions,
   point 10): the sober waiting report, and the step-delivery skeleton.
-- [ ] `socle/agents/profiles/architect.md` — coordination out (delegation
+- [x] `socle/agents/profiles/architect.md` — coordination out (delegation
   paragraph, "Rule on a report"), allotment → files map, Escalation section
   rewritten (report to spawner; blocked + written report above authority),
   frontmatter description updated; body reworked as the verbatim spawn
   prompt (its own framing: mission, reports to its spawner, pilots no one).
-- [ ] `socle/agents/profiles/mason.md` — mandatory-contract framing
+- [x] `socle/agents/profiles/mason.md` — mandatory-contract framing
   untouched (the profile already assumes it); "never touches files outside
   the allotment" and the claim/allotment sentence → the map, indicative;
   Escalation ladder line → report to spawner; proposal-door "rung above"
   wording → "your spawner (the thread owner)"; body reworked as the verbatim
   spawn prompt (its own framing: mission, reports to its spawner, never
   plans or reviews itself).
-- [ ] `socle/agents/profiles/inspector.md` — Escalation "Owner's digest"
+- [x] `socle/agents/profiles/inspector.md` — Escalation "Owner's digest"
   branch → blocked task + written report to the thread owner / the human;
   new duty: judge deviations from the files map a posteriori; body reworked
   as the verbatim spawn prompt (its own framing: mission, reports to its
   spawner, never the author of what it reviews).
-- [ ] `socle/agents/profiles/checker.md` — body reworked as the verbatim
+- [x] `socle/agents/profiles/checker.md` — body reworked as the verbatim
   spawn prompt (its own framing: mission, whom it reports to, what it never
   does), per the Owner's "incluons-le" of 2026-08-27; nothing else in it
   changes.
-- [ ] `socle/agents/profiles/README.md` — "The Foreman is deliberately not
+- [x] `socle/agents/profiles/README.md` — "The Foreman is deliberately not
   here" paragraph replaced; the fresh-session fallback framed as the
   mandatory second path for typing; the spawn mechanism stated once — the
   "inline at spawn" passage becomes the rule (profile body verbatim), and
   "Before spawning a role" gains the delegator side: brief from `Inputs`
   only, never doctrine.
-- [ ] `socle/agents/foreman.md` — deleted.
-- [ ] `socle/agents/formulas/chisel-default.formula.toml`,
+- [x] `socle/agents/foreman.md` — deleted.
+- [x] `socle/agents/formulas/chisel-default.formula.toml`,
   `chisel-auto.formula.toml`, `chisel-supervised.formula.toml` — rewritten
   per the Architecture table; `chisel-light.formula.toml` and
   `chisel-auto-light.formula.toml` — new.
-- [ ] `socle/agents/profiles/architect.md`, `mason.md`, `foreman.md` — the
+- [x] `socle/agents/profiles/architect.md`, `mason.md`, `foreman.md` — the
   plan's authorship moves to the implementing session, the Architect keeps
   the `plan-review` verdict, the Mason gains the go-summary for the human
   gate on its plan, and the Foreman gains the two late reporting rules.
-- [ ] `socle/agents/discipline.md` — rules 6, (new incoming-session), 9
+- [x] `socle/agents/discipline.md` — rules 6, (new incoming-session), 9
   anchored to the Foreman, 10 de-wired.
-- [ ] `socle/agents/methodology.md` — sections "The roster", "Zone
+- [x] `socle/agents/methodology.md` — sections "The roster", "Zone
   ownership", "Escalation, and the Owner's digest" (retitled), "The
   pipeline is nine steps" (light noted), "A default, and two options"
   (presets gain light; the "three presets" arithmetic corrected), "The two
   designs" corollary, the dex-phases table, "Why slicing is conditional"
   (the "light or full?" question).
-- [ ] `socle/templates/AGENTS-block.md` — role list gains Foreman, formula
+- [x] `socle/templates/AGENTS-block.md` — role list gains Foreman, formula
   list gains `chisel-light`, gate/relaunch sentence updated.
-- [ ] `test/fixtures/golden-tree.txt`, `test/installer.sh` — parity.
+- [x] `test/fixtures/golden-tree.txt`, `test/installer.sh` — parity.
 
 ## Notes & Snippets
 
@@ -711,6 +711,96 @@ Related tasks:
   references — file + section title; every pointer says in one clause what
   the reader finds there; no invented numeric limits ("on n'a pas de
   limites à mettre, c'est une fausse bonne idée").
+
+## Retrospective — proposals for the working rules
+
+Run by the Foreman at `close`, 2026-08-28, over the whole task. Sources: the
+returned reports of every sub-agent this thread spawned (two Architects at
+`spec`, two at `plan-review`, two Masons, two Inspectors), plus the repo
+artifacts that corroborate them — the four slice files, the worklog entries,
+the commit messages and the diff. **Step 1 of the `retro` skill could not be
+run:** it calls the Skill tool for `writing-great-skills`, which is vendored
+in `socle/agents/skills/` as part of the shipped product and is not an
+invocable skill in this session. The style guide was read as a file instead.
+That gap is itself proposal 6 below.
+
+Nothing here is applied. Each proposal names its target file and that zone's
+owner, and waits for the owner's decision; a deferred one gets a dated line
+rather than being dropped.
+
+1. **The Foreman's report format broke a gate, and the profile does not
+   govern form.** Severity: high. The Owner rejected a report outright — "j'ai
+   rien compris, putain tu écris tellement mal, tu formate n'importe comment,
+   c'est imbittable" — and the question inside it went unanswered for a full
+   round because he could not parse it. The section "Reporting to the Owner"
+   of `socle/agents/profiles/foreman.md` prescribes the SHAPE (which sections,
+   in which order) and the sobriety, and says nothing about FORM. What the
+   session proved works: one idea per line, short sentences, and a question
+   posed as three parts — the fact, the problem, then the options as a
+   labelled list — never as prose the reader has to disentangle. Target:
+   `socle/agents/profiles/foreman.md`, section "Reporting to the Owner".
+   Owner: the Owner.
+
+2. **The gate command is a trap, and it is documented where nobody looks.**
+   Severity: high. Every brief in this thread had to carry
+   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` verbatim, because the
+   machine's default `python3` is a pyenv without `tomllib` and the formula
+   parse check then prints SKIP and proves nothing — announcing a green suite
+   that contains no check of the gates or the step counts. That fact is
+   recorded in `project-management/review-360-decisions.md` under the
+   Deno-port chantier, which is a decision log, not a place an agent reads
+   before running a gate. It belongs in the glue's gate-commands section,
+   where every session is told to look. Target: `.agents/project.md`, §F ·
+   Gate commands (its template, `socle/agents/project.md.tpl`). Owner: the
+   Owner.
+
+3. **A grep criterion can be born vacuous, and two were.** Severity: medium.
+   The parent's **mason-not-optional** grepped `"optional Mason"` and
+   `"OFFERS this choice"`; both already returned nothing, because the file
+   wraps "OFFERS this / choice" across a line break and writes "an optional
+   **Mason**" with bold markers between the words. The prose they were written
+   to kill was untouched. Caught by an Architect at spec time, one slice
+   before it would have shipped a false green. Proposal: a criterion whose
+   test is a grep is run BEFORE the work and must MATCH — red before green,
+   the rule `tdd` already applies to tests, applied to greps. Target:
+   `socle/agents/methodology.md` (section "Why seams are agreed before
+   implementation" is the nearest home) or the task template's criteria
+   guidance. Owner: the Owner.
+
+4. **Two Masons disagreed on who ticks the acceptance criteria.** Severity:
+   medium. Slice 04's Mason ticked its own at `type`; slice 03's left them,
+   citing the 🧑-zone prohibition, and the formulas do give "tick acceptance
+   criteria and deliverables against reality" to the Foreman at `close`. Both
+   readings are defensible from the artifacts, which is the defect. Proposal:
+   one clause in the Mason contract distinguishing the implementation
+   checkboxes (the Mason's resume point, its own) from the acceptance criteria
+   (ticked against reality at `close`). Target:
+   `socle/agents/profiles/mason.md`. Owner: the Owner. Related and larger:
+   the Owner's ruling of 2026-08-28 that the program design belongs in a
+   `-work` file the Mason owns, recorded under chantier 2 of the decisions
+   file — that split may dissolve this proposal, so it is worth deciding after
+   it, not before.
+
+5. **Slice numbers implied an order the blocking edges own.** Severity: low.
+   Slice 04 was created after 03 and executed before it; every brief had to
+   say so explicitly, and both Masons had to be told which had landed. The
+   numbers are chronological by convention and the dependency lives in the
+   "Blocked by" line, but a reader takes 03-before-04 for granted. Proposal:
+   one line in the `slice-task` skill saying numbers are creation order and
+   the blocking edges are the only order. Target:
+   `socle/agents/skills/slice-task/`. Owner: the Owner.
+
+6. **The `retro` skill cannot run its own first step inside this repo.**
+   Severity: low, but it is the skill the close step of every formula
+   invokes. Its step 1 calls the Skill tool for `writing-great-skills`, which
+   exists here only as a vendored file under `socle/agents/skills/` — the
+   product, not the session's installed skills. In an equipped project the
+   call resolves; in the repo that ships the socle it never can. Proposal:
+   the step reads the guide by path when the call is unavailable, and says so
+   rather than failing silently. Target: `socle/agents/skills/retro/SKILL.md`.
+   Owner: the Owner. Already recorded from another angle in
+   `project-management/vendored-skills-audit.md`, whose findings the Owner has
+   ruled to open as its own chantier (ruling G9).
 
 ## References
 

@@ -1,7 +1,8 @@
 # 03 — Doctrine alignment
 
-**Status:** 🟡 In Progress — typed 2026-08-28, four commits in; `verify`,
-`diff-review` and `close` still to run.
+**Status:** 🟢 Complete — closed 2026-08-28. Six content commits plus two for
+the review findings; nineteen criteria satisfied and verified by the Inspector,
+the suite green in every run.
 **Blocked by:** 02 — formulas rewrite (closed 2026-08-27). This slice names
 `chisel-light` and `chisel-auto-light` in the doctrine tables and in the
 routing block, and it makes the two doctrine documents agree with the five
@@ -34,29 +35,29 @@ Cite these by name. The first eight restate the parent criteria that close in
 this slice; the rest are this slice's own. An amended criterion is never
 erased: strike the original, date the new version below it.
 
-- [ ] **no-digest-left** — `grep -rin "digest" socle/` returns nothing. Six
+- [x] **no-digest-left** — `grep -rin "digest" socle/` returns nothing. Six
   matches today, all in the two files this slice rewrites: the escalation
   section of `socle/agents/methodology.md` (its title, its ladder line, its
   definition sentence) and rule 6 of `socle/agents/discipline.md` (the rule
   itself and its pointer).
-- [ ] **no-fixed-ladder** — `grep -rn "Mason → Architect" socle/` and
+- [x] **no-fixed-ladder** — `grep -rn "Mason → Architect" socle/` and
   `grep -rn "Architect → Inspector" socle/` both return nothing. Two matches
   today, in the same two files and the same two passages.
-- [ ] **no-allotment-left** — `grep -rin "allotment" socle/` returns nothing.
+- [x] **no-allotment-left** — `grep -rin "allotment" socle/` returns nothing.
   It already does, since slice 1; this is a check, not work, and it is listed
   so the parent's grep is re-run once over the finished socle.
-- [ ] **rule-6-reports-to-the-spawner** — Given rule 6 of
+- [x] **rule-6-reports-to-the-spawner** — Given rule 6 of
   `socle/agents/discipline.md`, When read, Then a sub-agent reports to its
   spawner, above the owner of the thread sits the human and nothing else, no
   fixed chain of roles is named, and the pointer to where the blocked-task
   report form is defined carries both its file and its section title.
-- [ ] **incoming-session-rule** — Given `socle/agents/discipline.md`, When
+- [x] **incoming-session-rule** — Given `socle/agents/discipline.md`, When
   read, Then a numbered rule states that a session opened to execute a step
   takes that step's role and reads its profile before acting, and it sits
   adjacent to the rule that binds the spawner side of the same handover.
-- [ ] **rule-10-unwired** — `grep -n "chisel-supervised\|chisel-auto"
+- [x] **rule-10-unwired** — `grep -n "chisel-supervised\|chisel-auto"
   socle/agents/discipline.md` returns nothing.
-- [ ] **escalation-form-survives** — Given the rewritten escalation section of
+- [x] **escalation-form-survives** — Given the rewritten escalation section of
   `socle/agents/methodology.md`, When read, Then the blocked-task report form
   is defined there once and nowhere else — a dated ⚠️ line in the journal
   declared in §A · Task workspace of `.agents/project.md`, plus a blocking
@@ -72,7 +73,7 @@ erased: strike the original, date the new version below it.
   catch still stands. The parent criterion is satisfied vacuously; the version
   below is what bites. Reported to the thread owner as a finding against the
   parent spec's check, not against its ruling.*
-- [ ] **mason-not-optional** (amended 2026-08-28) — `grep -ni "optional"
+- [x] **mason-not-optional** (amended 2026-08-28) — `grep -ni "optional"
   socle/agents/methodology.md`, `grep -n "opt-in delegation"
   socle/agents/methodology.md`, `grep -n "✅ opt-in"
   socle/agents/methodology.md` and `grep -n "OFFERS"
@@ -86,7 +87,7 @@ erased: strike the original, date the new version below it.
   two mandatory paths — a Mason sub-agent where the tool can spawn one,
   otherwise a fresh session running `work on slice <file>` — and no cell
   presents the delegation as a choice offered to the user.
-- [ ] **tiers-follow-the-authorship** — `grep -n "interview, design, plan"
+- [x] **tiers-follow-the-authorship** — `grep -n "interview, design, plan"
   socle/agents/methodology.md` and `grep -n "already persisted\|already-persisted"
   socle/agents/methodology.md` return nothing; and Given the section "Model
   tiers (and how they resolve)" and the tier paragraph of the cost-gradient
@@ -95,12 +96,12 @@ erased: strike the original, date the new version below it.
   Mason's own, and what the cheap and mid tiers buy is stated as the Tier
   section of `socle/agents/profiles/mason.md` states it — a slice whose system
   design is settled, mid when it is delicate or the codebase unfamiliar.
-- [ ] **dex-phases-follow-the-remodel** — Given the Program Design row of the
+- [x] **dex-phases-follow-the-remodel** — Given the Program Design row of the
   section "Where dex's phases live (and who owns each)", When read, Then it is
   produced by the session that implements, at its `plan` step, and validated by
   an Architect at `plan-review`, at the tier that session runs at — not by an
   Architect at a gate, and not at the frontier tier.
-- [ ] **presets-table-holds-five** — `grep -n "Three presets"
+- [x] **presets-table-holds-five** — `grep -n "Three presets"
   socle/agents/methodology.md` returns nothing; and Given the section "A
   default, and two options", When read, Then all five presets are in its table
   with what each gates and which validation sub-agents each runs, and the full
@@ -117,7 +118,7 @@ erased: strike the original, date the new version below it.
   preset at all.~~
   *Superseded 2026-08-28 by the Owner's ruling G10: the permission switch is
   deleted, so there is no longer a permission half to scope.*
-- [ ] **posture-and-permission-separated** (amended 2026-08-28) — `grep -n
+- [x] **posture-and-permission-separated** (amended 2026-08-28) — `grep -n
   "B3\|Autonomous runs" socle/agents/methodology.md
   socle/templates/AGENTS-block.md` returns nothing; and Given the
   invocation-posture paragraph of the section "A default, and two options",
@@ -132,7 +133,7 @@ erased: strike the original, date the new version below it.
   human's, the program design the Mason's.~~
   *Superseded 2026-08-28 by the Owner's ruling that under `chisel-auto-light`
   the zones are ignored rather than owned by their author.*
-- [ ] **zones-owned-in-five-presets** (amended 2026-08-28) — Given the section
+- [x] **zones-owned-in-five-presets** (amended 2026-08-28) — Given the section
   "Zone ownership", When read, Then the owner of the spec zone and of the
   program design zone is stated for the four presets that have one, by one
   rule — a zone belongs to whoever approved it, and where nobody approved it,
@@ -140,17 +141,17 @@ erased: strike the original, date the new version below it.
   (the spec the human's, the program design the Mason's); and Then
   `chisel-auto-light` is named as the preset where the zones are IGNORED, not
   reassigned, because it designs, plans and types in one go.
-- [ ] **nine-steps-notes-the-light-presets** — Given the section "The pipeline
+- [x] **nine-steps-notes-the-light-presets** — Given the section "The pipeline
   is nine steps", When read, Then the nine are said to be the full pipeline,
   the two light presets are named with the steps they drop, and
   `.agents/formulas/` is named as the authority on the order so the count is
   not maintained in two places.
-- [ ] **light-in-the-tables** — `grep -n "chisel-light"
+- [x] **light-in-the-tables** — `grep -n "chisel-light"
   socle/agents/methodology.md socle/templates/AGENTS-block.md` finds a match in
   both files. (The methodology side already matches, from the sizing passage
   slice 2 wrote; the block is this slice's, and the preset table is the
   substance the parent criterion cannot see.)
-- [ ] **the-block-tells-the-truth** — Given `socle/templates/AGENTS-block.md`,
+- [x] **the-block-tells-the-truth** — Given `socle/templates/AGENTS-block.md`,
   When read, Then its role line names the Foreman as the session that runs the
   formula and holds the interview, the mechanical verify and the close,
   alongside the four roles it spawns (Architect, Checker, Mason, Inspector);
@@ -159,18 +160,18 @@ erased: strike the original, date the new version below it.
   who relaunches in which preset; and the opt-in sentence covers exactly the
   presets that need §B3 · Autonomous runs enabled, per the Owner's answer to
   the open question below.
-- [ ] **inspector-runs-diff-review** — ``grep -rn '`review` step' socle/`` and
+- [x] **inspector-runs-diff-review** — ``grep -rn '`review` step' socle/`` and
   `grep -rn "design-check" socle/` both return nothing, and Given the Mission
   of `socle/agents/profiles/inspector.md`, When read, Then the step it runs is
   `diff-review`. (One match today, in that Mission: the last stale step name in
   the socle. Slice 2's rename criterion grepped `design-check` over the whole
   socle and the step id over the formulas alone, so a profile naming the old
   step in prose slipped between the two.)
-- [ ] **tests-unchanged** — Given this slice's diff, When read, Then no file
+- [x] **tests-unchanged** — Given this slice's diff, When read, Then no file
   under `test/` is modified. The reasoning is in the 🤖 zone, under "The
   verification seam"; if implementing proves it wrong, this criterion is
   amended in place rather than quietly dropped.
-- [ ] **suite-green** — `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`
+- [x] **suite-green** — `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`
   passes: 9 scenarios, 94 assertions, 0 failed. The leading path element is not
   cosmetic — with the machine's default `python3` (a pyenv without `tomllib`)
   the formula parse check prints SKIP and proves nothing, a constat recorded
@@ -223,7 +224,7 @@ the 🤖 zone, under "The switch inventory".
 
 Persisted 2026-08-28 by the `plan` step of this slice, from the files as they
 stand on `review-360`. Read first the 🧑 zones of
-`project-management/tasks/20260827-1459-remodel-roles-and-formulas.md` and its
+`project-management/archive/20260827-1459-remodel-roles-and-formulas.md` and its
 thirteen Implementation Decisions (points 1, 8, 12 and 13 bind here), then the
 two addenda and the rulings G5 through G10 of
 `project-management/review-360-decisions.md`, G10 being the newest and the one
@@ -347,7 +348,7 @@ one stale step name.
 
 11. **The two records that cite the section-reference rule as "rule 11" are
     left alone.** Renumbering it to 12 makes them stale:
-    `project-management/tasks/20260827-1459-remodel-roles-and-formulas/01-roles-remodel.md`,
+    `project-management/archive/20260827-1459-remodel-roles-and-formulas/01-roles-remodel.md`,
     a closed slice, and `project-management/vendored-skills-audit.md`, an audit
     that is not a task yet. **Ruled by the thread owner at `plan-review` round
     1, 2026-08-28: touch neither.** A closed record states what was true when it

@@ -64,7 +64,7 @@ final greps.
 ## Design — persisted at plan time
 
 Persisted 2026-08-27 by the plan step of the parent task
-`project-management/tasks/20260827-1459-remodel-roles-and-formulas.md` —
+`project-management/archive/20260827-1459-remodel-roles-and-formulas.md` —
 read its 🧑 zones first: every decision below applies an Owner ruling
 recorded there or in `project-management/review-360-decisions.md`; nothing
 here is open.

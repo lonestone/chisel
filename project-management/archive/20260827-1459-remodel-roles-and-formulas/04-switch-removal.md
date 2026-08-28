@@ -1,7 +1,7 @@
 # 04 — Switch removal
 
-**Status:** 🟡 In Progress — typed 2026-08-28, three commits in; `verify`,
-`diff-review` and `close` still to run.
+**Status:** 🟢 Complete — closed 2026-08-28. Five commits; twelve criteria
+satisfied, the last one closing when slice 03 landed its two carriers.
 **Blocked by:** None — can start immediately. It shares exactly one file with
 slice 03 — `socle/agents/discipline.md` — and never the same passage of it; see
 "Overlap with slice 03" in the 🤖 zone for which half each slice owns, and for
@@ -37,7 +37,7 @@ mistake the ruling is already an example of.
 invocation-posture paragraph of `socle/agents/methodology.md` and the opt-in
 sentence of `socle/templates/AGENTS-block.md`. This slice leaves both alone.
 The inventory of all ten was first drawn in the 🤖 zone of
-`project-management/tasks/20260827-1459-remodel-roles-and-formulas/03-doctrine-alignment.md`,
+`project-management/archive/20260827-1459-remodel-roles-and-formulas/03-doctrine-alignment.md`,
 under "The switch inventory"; it is cited here, not copied — with one
 correction, recorded under "Corrections to the inventory" below. Until whichever
 of the two slices lands second, the socle names the switch in some files and not
@@ -157,13 +157,13 @@ correction at the gate.
 Persisted 2026-08-28 at the `plan` step, by the Mason implementing this slice,
 from the artifacts alone. Read to write it: the 🧑 zones and the 🤖 Notes of
 this file; the parent spec
-`project-management/tasks/20260827-1459-remodel-roles-and-formulas.md` with its
+`project-management/archive/20260827-1459-remodel-roles-and-formulas.md` with its
 thirteen Implementation Decisions, of which points 9 (interim inconsistency
 between slices is accepted) and 11 (a reported deviation from the files map is
 the doctrine) bind here; the ruling **G10** and the rulings G5 through G9 that
 close `project-management/review-360-decisions.md`; the section "The switch
 inventory" in the 🤖 zone of the sibling slice file
-`project-management/tasks/20260827-1459-remodel-roles-and-formulas/03-doctrine-alignment.md`,
+`project-management/archive/20260827-1459-remodel-roles-and-formulas/03-doctrine-alignment.md`,
 which first listed the ten carriers; and the Design sections of the two closed
 slices in this folder, for the house shape of a persisted design. The eight
 carriers were read whole before this was written — the two skills included, as

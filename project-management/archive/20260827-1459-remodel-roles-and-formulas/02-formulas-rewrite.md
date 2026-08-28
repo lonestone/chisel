@@ -163,7 +163,7 @@ erased: strike the original, date the new version below it.
 ## Design — persisted at plan time
 
 Persisted 2026-08-27 by the plan step of the parent task
-`project-management/tasks/20260827-1459-remodel-roles-and-formulas.md`, and
+`project-management/archive/20260827-1459-remodel-roles-and-formulas.md`, and
 revised twice the same day. Read the parent's 🧑 zones first and its
 Implementation Decisions in full, point 12 in particular; read too the ruling
 G6 and the reference pipeline recorded as the second addendum of

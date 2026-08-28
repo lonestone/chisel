@@ -371,6 +371,22 @@ fichier de spec) ; ce fichier est la source des intentions.
    program design = pièce à conviction, pointeur `--spec-id` inchangé.
    S'articule avec le chantier 1 (les deux réécrivent formulas et profils —
    à séquencer ensemble ou 2 avant 1).
+   **Précision de l'Owner du 2026-08-28, en réponse à un finding de l'Inspector
+   au `diff-review` de la slice 03 du chantier 1 :** le finding constatait que
+   `socle/agents/profiles/mason.md` s'interdit d'éditer une zone 🧑 alors que les
+   formulas ordonnent au Mason d'y écrire son program design, et proposait soit
+   une exception dans le contrat du Mason, soit un autre marqueur dans le
+   template. L'Owner a écarté les deux : « Le program design doit être persisté
+   dans ***-work, un document qui appartient au maçon. Le Mason ne doit pas
+   éditer la tâche d'origine. Il nous faut certainement 2 templates d'ailleurs. »
+   Donc la contradiction ne se répare pas dans le contrat du Mason : elle
+   disparaît quand le program design quitte le fichier de spec. **Deux templates
+   sont confirmés** pour ce chantier — celui de la spec, celui du document de
+   travail — et l'interdit du Mason d'éditer la tâche d'origine devient exact au
+   lieu d'être enfreint. D'ici là, l'état transitoire est celui que le chantier 1
+   avait déjà consigné (ses Implementation Decisions, point 12) : faute de
+   fichier `-work`, le program design reste là où le template le met aujourd'hui.
+   Rien n'est corrigé au coup par coup dans le contrat du Mason en attendant.
 3. **Passe jointures & mineurs** (A1, A3, A4, B1, E1, E2, F1 sauf 1/4/12) —
    mécanique, aucun arbitrage restant : pointeurs §B, champ Architecture
    index, SDD-bench supprimé, sync-upstream déménagé, Ledger remplacé,
