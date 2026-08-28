@@ -223,7 +223,7 @@ group_render() {
     if python3 - "$t7"/.agents/formulas/*.formula.toml <<'PY'
 import sys, tomllib
 expected = {
-    "chisel-default": (9, ["plan", "design-check", "close"]),
+    "chisel-default": (9, ["plan", "type", "close"]),
     "chisel-light": (7, ["plan", "diff-review"]),
     "chisel-supervised": (9, ["plan"]),
     "chisel-auto": (9, []),
