@@ -721,3 +721,74 @@ sur une échelle. Nom retenu par composition des deux existants :
   **Différé par l'Owner : « on fera ça plus tard. »** Non affecté à un chantier.
   Recoupement à surveiller : `discipline.md` et le profil Foreman sont aussi
   touchés par le chantier 2.
+
+- ✅ **G14 — Le split spec / travail, tranché en interview le 2026-08-28.**
+  Consigné ici parce que le Checker du `spec-review` a eu raison de le réclamer :
+  la spec du chantier 2 s'appuyait sur des décisions prises en conversation et
+  écrites nulle part, ce qui est exactement le défaut — une décision de l'Owner
+  qui ne vit que dans un chat — que ce chantier existe pour supprimer. Les
+  décisions ci-dessous priment sur le « suffixe pressenti `-work.md` » de la
+  décision B5 et sur le « `***-work` » de la précision du 2026-08-28 : le tiret
+  y était une hypothèse, pas un arbitrage.
+  **(1) Nommage — les DEUX documents sont suffixés, avec un segment POINTÉ.**
+  Proposition de l'Owner : « P-e qu'on peut aussi suffixer la spec ? Et utiliser
+  `.spec` et pas `-spec` — `xxxx-my-task.spec.md`, `xxxx-my-task.work.md` ».
+  Raison retenue : le point marque un genre de fichier (`.test.ts`,
+  `.config.js`), le tiret se lirait comme un mot du nom. Deux gains constatés en
+  posant la forme : la symétrie enlève la lecture « la spec, plus un
+  appendice », et `.spec.md` trie avant `.work.md`, donc la surface de
+  relecture arrive en premier dans l'arbre. Pour une slice :
+  `<NN>-<slug>.spec.md` et `<NN>-<slug>.work.md`.
+  **Formes écartées, avec leur motif** — `-work` seul : l'invocation
+  `work on slice <fichier>` attend la spec, un fichier `-work` juste à côté rend
+  la mauvaise invocation naturelle ; `-plan` : il y a une gate humaine sur le
+  plan, donc un fichier nommé ainsi se lit comme quelque chose à approuver,
+  ce qu'il n'est pas ; `-mason` : nomme un rôle renommable, et inexistant en
+  mode ambiant ; `-log`, `-build`, `-scaffold` : collision avec le vocabulaire
+  dev courant. `.task.md` a été proposé par l'Owner puis retiré par lui dans la
+  même respiration — « Bon partons sur .spec ».
+  **Idée consignée, non ouverte :** abandonner le mot « spec » du vocabulaire,
+  pas seulement du nom de fichier — « p-e qu'on devrait laisser tomber le mot
+  `spec` ». L'Owner l'a ouverte et refermée lui-même ; elle n'est pas un
+  chantier.
+  **(2) Un document de travail par fichier de spec qui est FRAPPÉ.** Une slice
+  en a un, une tâche non découpée en a un ; le parent d'une tâche découpée a un
+  `.spec.md` et jamais de `.work.md`, n'étant jamais frappé. Il est créé par le
+  Maçon au step `plan` — ni par l'installeur, ni à l'avance — et vit dans le
+  même dossier que sa spec. Conséquence utile : une spec sans document de
+  travail à côté est une spec jamais frappée, et ça se lit sans rien ouvrir.
+  **(3) La frontière des sections, arrêtée section par section.** Au
+  `.spec.md` : Context, Scope, Acceptance Criteria, Seams, Architecture /
+  system design, Implementation Decisions, Testing Strategy, Slices &
+  Dependencies, Deliverables, References, et la Retrospective écrite au
+  `close`. Au `.work.md` : le program design et le pseudo-code, le worklog, les
+  cases d'implémentation, Notes & Snippets, et les findings de review de
+  l'Inspector. Les trois lignes que le Foreman donnait pour contestables —
+  Deliverables, Testing Strategy, Retrospective — sont toutes tranchées côté
+  spec.
+  **(4) La review du `.work.md` est celle de l'INSPECTOR, pas celle de
+  l'Owner.** Correction de l'Owner, mot pour mot : « La review n'est pas un truc
+  écrit pas l'owner, c'est écrit pas l'Inspector. Ma review à moi se fait dans
+  le chat ou via un autre channel. » La sienne n'est donc une section d'aucun
+  fichier. La Retrospective est un autre artefact et reste dans la spec.
+  **(5) Cycle de vie : commité, régénérable en vol, archivé au `close`.**
+  Définition de l'Owner : « supprimable veut simplement dire qu'on peut le
+  supprimer, modifier la spec, et repartir ». La fenêtre de suppression se ferme
+  au `close`, où le document part à l'archive avec sa spec et n'est jamais
+  supprimé. Trois raisons de ne pas le jeter : le `diff-review` lit le program
+  design comme pièce à conviction, la section « Sources » du skill `retro`
+  nomme le worklog, et la règle 8 de `socle/agents/discipline.md` fait du dépôt
+  la seule mémoire.
+  **(6) Migration : « on laisse l'historique `done` tel quel, mais renomme les
+  taches à faire. »** Inventaire vérifié : six fichiers non terminés sous
+  `project-management/tasks/`, l'archive intacte, et tout le reste de `tasks/`
+  au vert garde son nom.
+  **(7) La zone 🤖 disparaît de la spec.** Le `.spec.md` ne garde que ses deux
+  zones 🧑 ; le `.work.md` ne porte aucun marqueur, appartenant au Maçon en
+  entier. Effet recherché : « le Maçon n'édite jamais une zone 🧑 » et « le
+  Maçon n'édite jamais la spec » deviennent la même phrase.
+  **(8) Deux templates**, `project-management/000-template.spec.md` et
+  `000-template.work.md`, tous deux fichiers managés du CLI. L'ancien
+  `000-task-file-template.md` restera orphelin sur un projet déjà équipé —
+  troisième orphelin de sa classe, il rejoint la liste de nettoyage du
+  chantier 4 (port Deno).
