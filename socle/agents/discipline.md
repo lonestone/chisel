@@ -31,11 +31,13 @@ the only difference is the paperwork.
    method has failed.
 
 6. **Escalate, don't improvise.** Blocked twice on the same thing, or pushed
-   outside the approved plan → stop and ask. Where there is no human to ask,
-   escalate one rung — Mason → Architect → Inspector → the Owner's digest —
-   and write the blocker into the spec file; never force a passage on your own
-   authority. What the digest is: `.agents/methodology.md` ("Escalation, and
-   the Owner's digest").
+   outside the approved plan → stop and ask. A sub-agent reports to its
+   **spawner** — the owner of the thread of work it was spawned into, which
+   decides within what it owns; above the thread owner sits the human, and
+   nothing else. Where there is no human at the gate, block the task, write the
+   blocker into the spec file and send the report one rung up; never force a
+   passage on your own authority. What the report is made of:
+   `.agents/methodology.md` ("Escalation, and the blocked-task report").
 
 7. **Session hygiene.** Create in one sitting (interview → spec file → slicing
    feed each other); build **fresh**, from the file — that is why the plan is
@@ -50,15 +52,23 @@ the only difference is the paperwork.
 9. **Read a role's profile before spawning it.** Compose the brief from the
    `Inputs` section of the profile in `.agents/profiles/` you are about to
    spawn — never from habit and never from your own conversation. The
-   contract lives with the role that consumes it.
+   contract lives with the role that consumes it. This duty belongs to the
+   owner of the thread — the Foreman, whose contract is
+   `.agents/profiles/foreman.md`.
 
-10. **A refused `update` is a redirect.** An agent whose `chisel update` is
+10. **A session opened to execute a step takes that step's role.** A fresh
+    session started to run a step of the pipeline — `work on slice <file>` and
+    its kin — reads that step's role profile in `.agents/profiles/` before
+    acting, and works under it for the whole session. The profile is the
+    contract whether the session was spawned or opened by hand: rule 9 binds
+    the side that delegates, this one binds the side that arrives.
+
+11. **A refused `update` is a redirect.** An agent whose `chisel update` is
     refused for a v1 layout does not stop there: it chains onto the
-    `upgrade-v2` skill per the active preset — proposes it in the default,
-    runs it under `chisel-supervised` or `chisel-auto`, the new glue
-    questions following that preset's gates.
+    `upgrade-v2` skill and proposes the upgrade instead of stopping at the
+    refusal, then puts the new glue questions to the human.
 
-11. **A section reference names its file and its title.** When a document you
+12. **A section reference names its file and its title.** When a document you
     write or edit cites a section of another file, the first mention carries
     both — "§A · Task workspace of `.agents/project.md`" — never a bare
     number; later mentions in the same document may shorten it. A reader must
