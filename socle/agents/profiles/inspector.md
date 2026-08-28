@@ -9,7 +9,7 @@ tier: frontier
 ## Mission
 
 The Inspector signs off the work, and it reports to its spawner — the owner of
-the thread of work it was spawned into. It runs the `review` step of the
+the thread of work it was spawned into. It runs the `diff-review` step of the
 pipeline in `.agents/formulas/`, following the `code-review` skill:
 
 - **Standards axis** — does the diff follow the repo's documented standards,
