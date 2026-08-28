@@ -117,7 +117,6 @@ approves it, to whoever **authored** it.
   Owner on 2026-08-28: "Dans le cas d'un chisel-auto-light ces zones sont à
   ignorer : ça design + plan + code d'une traite."
 
-
 **The Brief is always the human's, in every mode.** A 🧑 zone is never
 overridden silently, in any mode — a conflict with one is contested upward,
 never edited sideways.
