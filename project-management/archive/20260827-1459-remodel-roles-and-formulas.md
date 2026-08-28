@@ -807,13 +807,20 @@ rather than being dropped.
 Ruled at the `close` gate, in one pass. Nothing was applied inside this task;
 a deferred proposal keeps its dated line here rather than being dropped.
 
-- **Proposal 1 — accepted, and reshaped.** The report form does not go back
-  into the Foreman profile: it leaves it. Recorded as the ruling G11 of
-  `project-management/review-360-decisions.md` and queued as the ninth
-  chantier of that file's action plan — a `format.md` page of the socle beside
-  `discipline.md` and `methodology.md`, written in prose rather than as a
-  skeleton to fill, with the profile pointing at it. The Owner's two reasons
-  are in the ruling, in his words.
+- **Proposal 1 — accepted, and reshaped.** The report form **stays** in
+  `socle/agents/profiles/foreman.md`, section "Reporting to the Owner". What
+  the Owner refuses is not its address but its register: the section stops
+  reading as a form to fill — the enumerated sections, the imposed order, the
+  two named shapes — and says in prose what makes an output readable. "C'est
+  pas la peine de mettre un format ultra strict, je pense que de la prose
+  suffira." Recorded as the ruling G11 of
+  `project-management/review-360-decisions.md`, which carries his words and
+  the two report failures the rewrite has to answer.
+  *Corrected 2026-08-28: the first version of this disposition, and of G11,
+  said the opposite — that the doctrine left the profile for a new `format.md`
+  page, queued as a ninth chantier. The Owner struck that reading down the same
+  day — "c'est exactement l'inverse que je dis… je veux que ça reste, en prose,
+  dans `foreman.md`" — and the chantier is removed. No `format.md` is created.*
 - **Proposal 2 — deferred, and on purpose.** Documenting the gate command's
   pyenv trap in the glue's gate-commands section is not worth doing, because
   the dependency itself is leaving: "on s'en fout, on va se passer de Python."
@@ -825,8 +832,9 @@ a deferred proposal keeps its dated line here rather than being dropped.
   "le reste j'ai pas compris, donc on laisse tomber pour l'instant". That is
   the same failure proposal 1 is about, landing on the retrospective itself, so
   the four are not judged and not dropped. They stand as written above, to be
-  put again, one at a time and in a form that can be answered, once the
-  `format.md` chantier has settled what a readable proposal looks like.
+  put again, one at a time and in a form that can be answered, once the rewrite
+  of the Foreman profile's reporting section has settled what a readable
+  proposal looks like.
 
 ## References
 

@@ -442,9 +442,6 @@ fichier de spec) ; ce fichier est la source des intentions.
 7. **Modèle de statuts des tâches** (F1.4) — discussion dédiée à ouvrir
    (créée, métier OK, design OK, ready, in progress, stalled…).
 8. **Skill codebase-audit** (G4) — distiller le protocole de cette session.
-9. **Page `format.md`** (G11) — la forme des sorties d'agent sort du profil du
-   Foreman et devient une page du socle, en prose et non en gabarit ; le profil
-   pointe vers elle. Ouvert par la rétro du chantier 1, non encore interviewé.
 
 Transverse (G3) : tout nouvel artefact en anglais ; citations Owner dans leur
 langue.
@@ -609,23 +606,26 @@ sur une échelle. Nom retenu par composition des deux existants :
   agent. Dix fichiers du socle portent l'interrupteur ; inventaire dans le
   fichier de la slice qui l'exécute.
 
-- ✅ **G11 — La forme des sorties sort du profil du Foreman et devient sa propre
-  page.** Tranché par l'Owner le 2026-08-28, au `close` du chantier 1, sur la
-  première proposition de la rétro. Deux décisions distinctes.
-  **(a) Le lieu.** La forme des rapports vit aujourd'hui dans
-  `socle/agents/profiles/foreman.md`, section « Reporting to the Owner » —
-  l'Owner n'en veut pas là : « j'ai vu que tu avais foutu ça dans un fichier md,
-  le format de sortie du Foreman, moi j'aime pas ça du tout ; moi plutôt le
-  mettre dans `format.md` ». Donc une page dédiée à côté de `discipline.md` et
-  `methodology.md`, et le profil pointe vers elle au lieu de la porter. Aucun
-  fichier `format.md` n'existe aujourd'hui dans le socle.
-  **(b) Le registre.** Pas de squelette strict : « c'est pas la peine de mettre
-  un format ultra strict, je pense que de la prose suffira ». Ce qui est à
-  garder du vécu de ce chantier n'est pas la liste des sections mais ce qui l'a
-  fait échouer — un rapport correct et illisible a bloqué une gate, l'Owner ne
-  pouvant pas répondre à une question qu'il ne pouvait pas décoder : « j'ai rien
-  compris, putain tu écris tellement mal, tu formate n'importe comment, c'est
-  imbittable ». La page dit donc en prose ce qui rend une sortie lisible — une
-  idée par ligne, des phrases courtes, une question posée en trois temps (le
-  fait, le problème, les issues) — et non un gabarit à remplir.
-  Motif de fond, dans ses mots : « il va falloir qu'on travaille sur la forme ».
+- ✅ **G11 — La forme des sorties reste dans le profil du Foreman, mais en
+  prose.** Tranché par l'Owner le 2026-08-28, au `close` du chantier 1, sur la
+  première proposition de la rétro — puis **corrigé le même jour**, le Foreman
+  ayant d'abord consigné l'inverse de ce qui était dit : « c'est exactement
+  l'inverse que je dis… je veux que ça reste, en prose, dans `foreman.md` ».
+  Ce que l'Owner refuse n'est pas l'emplacement, c'est le **gabarit**. La
+  section « Reporting to the Owner » de `socle/agents/profiles/foreman.md`
+  garde donc sa maison et change de registre : « c'est pas la peine de mettre
+  un format ultra strict, je pense que de la prose suffira ». Elle cesse de se
+  lire comme un formulaire à remplir — la liste des sections, l'ordre imposé,
+  les deux « shapes » nommées — et dit en prose ce qui rend une sortie lisible.
+  Ce qu'il faut y garder du vécu de ce chantier n'est pas la liste des sections :
+  c'est ce qui l'a fait échouer. Un rapport correct et illisible a bloqué une
+  gate, l'Owner ne pouvant pas répondre à une question qu'il ne pouvait pas
+  décoder — « j'ai rien compris, putain tu écris tellement mal, tu formate
+  n'importe comment, c'est imbittable » — et quatre propositions de rétro sont
+  mortes du défaut symétrique le même jour, trop comprimées : « le reste j'ai
+  pas compris, donc on laisse tomber pour l'instant ». Une idée par ligne, des
+  phrases courtes, une question posée en trois temps — le fait, le problème,
+  les issues — et une seule question à la fois quand la réponse compte. Motif
+  de fond, dans ses mots : « il va falloir qu'on travaille sur la forme ».
+  Aucun fichier `format.md` n'est créé : la piste a existé le temps d'un
+  malentendu, elle est refermée.
