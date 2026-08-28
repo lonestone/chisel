@@ -36,18 +36,29 @@ external tracker (Linear, GitHub Issues), if/when one is wired up — see
 
 ## A default, and two options
 
-chisel has one default behaviour: the human holds every gate. Two options add
-to it, and neither changes the other — **beads** (the status database, repo
-state, additive) and **auto** (permission not to wait, an invocation
-posture — §B3 · Autonomous runs of `.agents/project.md`).
+chisel has one default behaviour: the human holds every gate. Two things vary
+from there, and they vary independently — the **human gates** (who stops the
+run and reads) and the **validation sub-agents** (which fresh reviewers run: a
+Checker on the spec, an Architect at `plan-review`, an Inspector on the diff).
+Five presets place themselves on those two axes.
 
-Three presets combine them:
+The five presets, and where each sits:
 
-| Preset | Gates | Coordination |
-|---|---|---|
-| `chisel-default` | every gate awaits the human | markdown task files (or beads, additively) |
-| `chisel-supervised` | one asynchronous gate — the Owner approves the spec, nothing else | markdown or beads |
-| `chisel-auto` | no gates; a doubting step escalates instead | markdown or beads |
+| Preset | Human gates | Validation sub-agents | Who relaunches |
+|---|---|---|---|
+| `chisel-default` | every gate awaits the human — the spec, the Mason's program design, the review arbitration | all three | the human, at every step |
+| `chisel-light` | two — the spec, and the diff review the human holds himself | none | the human, at every step |
+| `chisel-supervised` | one — the Owner approves the spec, nothing else | all three | the Foreman, spawning the next step fresh |
+| `chisel-auto` | none; a doubting step blocks and reports instead | all three | the Foreman, spawning the next step fresh |
+| `chisel-auto-light` | none | none | the Foreman, spawning the next step fresh |
+
+The full reading of the two axes — what each preset buys and gives up on each
+— is in the header of `.agents/formulas/chisel-default.formula.toml`, and it is
+written there once. The third column is not a third axis: who relaunches
+follows from whether the run is driven by the human or by the Foreman, and
+nothing places a preset on it independently. `chisel-auto-light` empties both
+axes: it is an instrument built to be measured against the others, not a notch
+on either.
 
 **Factory = auto × beads** — the only combination that requires beads,
 because only it needs queues, lanes and asynchronous gate lists. Plain auto
@@ -55,18 +66,18 @@ is one chained session and needs none.
 
 **The invocation-posture principle.** Piloting — which preset governs this
 run — is chosen per invocation, never baked into the project as a permanent
-setting: a non-default posture runs only when a human explicitly asks for it
-in that session AND the glue's `.agents/project.md` §B3 permits it — never
-chosen by an agent on its own. Coordination (beads) is the other axis
-entirely: repo state, additive, and orthogonal to which posture is running —
-a beads-equipped repo stays fully usable under the default.
+setting, and the choice is the human's: a non-default preset runs when a human
+asks for it in that session, never because an agent decided it. Nothing in the
+versioned glue grants or withholds it. Coordination (beads) is the other axis
+entirely: repo state, additive, and orthogonal to which preset is running — a
+beads-equipped repo stays fully usable under the default.
 
 **The Brief-stays-human invariant.** Whichever preset is running, the
 decision to start the work at all — the Brief, what to build and why — is
 always the human's. No preset decides that upstream question; each only
 changes what happens once the Brief exists. See [Zone
 ownership](#zone-ownership) below for what each preset makes the human's, and
-what it makes the Architect's.
+what it leaves to the roles.
 
 The roster that fills these presets follows.
 
@@ -79,47 +90,69 @@ The roster that fills these presets follows.
 | **Checker** | frontier | Reviews the spec before it is planned — never its author | `.agents/profiles/checker.md` |
 | **Mason** | cheap or mid | Authors its own program design, then types it | `.agents/profiles/mason.md` |
 | **Inspector** | frontier | Reviews the diff on two axes — never its author | `.agents/profiles/inspector.md` |
-| **Foreman** | frontier | Owns one thread of work — carries the context, spawns the other roles, collects their reports and rules on them | `.agents/profiles/foreman.md` |
+| **Foreman** | frontier | Owns one thread of work — carries the context, **leads the interview**, spawns the other roles, collects their reports and rules on them | `.agents/profiles/foreman.md` |
 
 The table names roles and points; the contract — what a role may never do,
 when it escalates, exactly what it receives — lives in the profile.
 
 ## Zone ownership
 
-🧑 marks the zone's **owner**, not simply "the human" — ownership follows
-authorship of the approval:
+The 🧑 mark names the zone's **owner**, not simply "the human" — and ownership
+follows one rule: a zone belongs to whoever **approved** it, and where nobody
+approves it, to whoever **authored** it.
 
-- In the **default**, the human approved both the spec and the plan, so both
-  are his.
-- In **auto**, the Architect authored both (no human gate), so both are the
-  Architect's — a Mason's escalation on either terminates there, and the
-  human never hears of it.
+- In the **default**, the human approved both the spec and the Mason's program
+  design, so both are his.
+- In **light**, the human approved the spec, so it is his; nobody approves the
+  program design — no `plan-review`, no gate on it — so it belongs to its
+  author, the Mason.
 - In **supervised**, the spec is the human's (the one asynchronous gate); the
-  plan is the Architect's.
+  program design is the Architect's, who approved it at `plan-review`.
+- In **auto**, no human approved anything: the spec is the Architect's, who
+  authored it (the Checker reviews it, it does not author it), and the program
+  design is the Architect's, who approved it at `plan-review` — a Mason's
+  escalation on either terminates there, and the human never hears of it.
+- Under **`chisel-auto-light`** the zones are **ignored**, not reassigned to
+  their author: the preset designs, plans and types in one go. Ruled by the
+  Owner on 2026-08-28: "Dans le cas d'un chisel-auto-light ces zones sont à
+  ignorer : ça design + plan + code d'une traite."
+
 
 **The Brief is always the human's, in every mode.** A 🧑 zone is never
 overridden silently, in any mode — a conflict with one is contested upward,
 never edited sideways.
 
-## Escalation, and the Owner's digest
+## Escalation, and the blocked-task report
 
-The chain climbs one rung at a time, to the owner of the contested zone:
-Mason → Architect → Inspector → the Owner's digest.
+There is no chain of roles. A role that cannot decide reports to its
+**spawner** — the owner of the thread it was spawned into. The thread owner
+decides within what it owns and hands anything above that one rung up; above
+the Foreman sits the human, full stop. Which rung a question goes to depends on
+who spawned whom, not on a hierarchy between roles: there is none.
 
-The digest is named across the profiles and the formulas and defined here,
-once. It creates **no new artifact**: a dated ⚠️ line in the journal declared
-in §A, plus — when §B1 · Where task statuses live of `.agents/project.md`
-keeps the coordination state in beads — a blocking `escalation` item
-assigned to the Owner, per the §B convention. That is the whole mechanic.
+Whoever cannot decide **blocks the task** and writes the report. Its form is
+named across the profiles and the formulas and defined here, once, and it
+creates **no new artifact**: a dated ⚠️ line in the journal declared in §A ·
+Task workspace of `.agents/project.md`, plus — when §B1 · Where task statuses
+live of `.agents/project.md` keeps the coordination state in beads — a blocking
+`escalation` item assigned to the Owner, per the §B convention. That is the
+whole mechanic.
 
 ## The pipeline is nine steps
 
-Not seven. `spec-review` (a Checker, fresh session, never the spec's author,
-two rounds max) and `plan-review` (the Mason posts its own program design; an
-Architect answers VALIDATED or corrections, two rounds max, then a finding
-against the spec) are part of the doctrine now, not an afterthought.
-Where the gates sit is the formulas' business, named per preset — see [A
-default, and two options](#a-default-and-two-options) above; this file does
+Nine is the FULL pipeline, and `chisel-default`, `chisel-supervised` and
+`chisel-auto` run all nine. What varies is the validation sub-agents:
+`chisel-light` drops `spec-review` and `plan-review`; `chisel-auto-light` drops
+those two and `diff-review` as well. Nothing else leaves, and the count is not
+maintained here twice — `.agents/formulas/` owns the order and the steps of
+every preset.
+
+The two reviews light drops are doctrine, not afterthought: `spec-review` is a
+Checker in a fresh session, never the spec's author, two rounds max;
+`plan-review` is an Architect answering VALIDATED or corrections on the program
+design the implementing session posted, two rounds max, then a finding against
+the spec. Where the gates sit is the formulas' business, named per preset — see
+[A default, and two options](#a-default-and-two-options) above; this file does
 not restate it step by step.
 
 ---
@@ -216,23 +249,27 @@ So the lifecycle of a slice file is: born with intent and its system design
 settled → program design persisted at plan validation → worklog during
 implementation → checked off at completion.
 
-**Corollary — the cost gradient (opt-in delegation).** Persisting the plan
-makes the slice file a complete brief, which unlocks a division of labor: the
-**Architect** does the thinking (interview, design, plan) with the human; an
-optional **Mason** does only the typing from that file. The agent OFFERS this
-choice once the plan is saved (recommending it for large diffs); the user
-decides — never a silent default. The delegation boundary is the **system
-design**: above it the *what* — architecture, scope, and the seams the work is
+**Corollary — the cost gradient.** Persisting the program design makes the
+slice file a complete brief, which unlocks a division of labor: the
+**Architect** does the upstream thinking with the human — the exploration, the
+spec and the system design — and answers the `plan-review`; the **Mason**
+designs the how for itself at its `plan` step and types it. Typing always goes
+through the Mason contract, by one of two mandatory paths: a Mason sub-agent
+where the tool can spawn one, otherwise a fresh session running
+`work on slice <file>`. It is not a choice offered to the user, and no agent
+elides it. The delegation boundary is the **system design**: above it the *what* — architecture, scope, and the seams the work is
 tested through — settled at creation time and approved at the gate; below it
 the *how*, designed and typed by the session that implements. A Mason asked to
 "figure out" something the *what* left open is a specification failure, not an
 execution one — and it goes back to the spec. An open *how* is not a hole: it
 is what the `plan` step is for.
 
-That gradient is a **tier** gradient, not a licence to spend: the thinking
-runs at the frontier tier, the typing from an already-persisted plan runs at
-the cheap tier, and which concrete model each tier means is resolved per dev
-and per project — see [Model tiers](#model-tiers-and-how-they-resolve) below.
+That gradient is a **tier** gradient, not a licence to spend: the upstream
+thinking and the reviews run at the frontier tier, and a slice whose system
+design is settled runs at the cheap tier — mid when the slice is delicate or
+the codebase unfamiliar. Which concrete model each tier means is resolved per
+dev and per project — see [Model
+tiers](#model-tiers-and-how-they-resolve) below.
 
 The economics apply at the *session* level, not at the model-family level:
 the sessions that type consume most of the tokens, so keeping the Architect's
@@ -251,14 +288,14 @@ follow (both from observed swarm failure modes):
 - **Explicit references beat shared memory.** The Design section must link
   what it relies on — the "compile-checked references" answer to split-brain;
   our version is: the Mason follows links, not vibes.
-- **The Architect never implements** — its context stays clean for reviewing
-  the Mason's diff against the plan. All completion gates still run; the
-  two-axis review is a decorrelated lens by construction (at the frontier
-  tier).
+- **The Architect never implements** — its context stays clean for the
+  `plan-review` verdict it answers on the program design; the diff is the
+  Inspector's. All completion gates still run; the two-axis review is a
+  decorrelated lens by construction (at the frontier tier).
 
-It doubles as a quality measure (dex): if a Mason cannot implement the slice
-from the persisted design and its references, the design was not factored
-well enough — fix the file, not the Mason's context.
+It doubles as a quality measure (dex): a Mason that could not implement the
+slice from the artifacts is a finding **against the spec** — the design was not
+factored well enough, so fix the file, not the Mason's context.
 
 ## Model tiers (and how they resolve)
 
@@ -267,9 +304,9 @@ the same three the roster uses:
 
 | Tier | What it is for | Roles |
 |---|---|---|
-| **frontier** | Thinking, grilling, reviewing — where a wrong judgement is expensive and only caught much later | Architect (interview, design, plan); Checker (spec review); Inspector (the two-axis review) |
-| **mid** | Ordinary tasks and dispatch — work that needs competence but not judgement | A Mason on a slice that is not purely mechanical |
-| **cheap** | Typing from a plan that is already persisted | A Mason as typist |
+| **frontier** | Thinking, grilling, reviewing — where a wrong judgement is expensive and only caught much later | Foreman (owns the thread, leads the interview, rules on reports); Architect (exploration, spec and system design, the `plan-review` verdict); Checker (spec review); Inspector (the two-axis review) |
+| **mid** | Ordinary tasks and dispatch — work that needs competence but not judgement | A Mason on a slice that is delicate, or in a codebase it does not know |
+| **cheap** | The how of a slice whose system design is settled, when that how is mechanical | A Mason on such a slice |
 
 (Not to be confused with **Frontier** in the glossary above — the set of
 slices whose blockers are all done. Same word, two unrelated meanings: here a
@@ -311,8 +348,8 @@ formula steps, skills — names a tier and points here.
 |---|---|---|---|
 | **Product** (why/what/success) | Parent task 🧑 REVIEW CAREFULLY: Context, Scope, Acceptance Criteria | Architect + human (grilling); frontier tier | never |
 | **System Architecture** (how the pieces talk) | Parent task **Architecture** section (🧑, medium/large; diagrams > prose) | Architect + human; frontier tier | never |
-| **Program Design** (types, signatures, layout, call stacks) | Unsliced task: Implementation Decisions. Sliced task: each slice's **Design** section, persisted at plan time | Architect at the plan gate, human approves; frontier tier | never |
-| **Vertical Slices** (implementation) | The code, cycle by cycle | Mason, cheap tier (mid when the slice is not purely mechanical) — the only delegable phase | ✅ opt-in |
+| **Program Design** (types, signatures, layout, call stacks) | Unsliced task: Implementation Decisions. Sliced task: each slice's **Design** section, persisted at plan time | The session that implements, at its `plan` step — at that session's tier, not the frontier; an Architect validates it at `plan-review` | ✅ always — it is the implementing session's own work |
+| **Vertical Slices** (implementation) | The code, cycle by cycle | Mason, cheap tier — mid when the slice is delicate, or in a codebase it does not know | ✅ always — through the Mason contract |
 
 Upstream note: Pocock does NOT persist per-ticket program design — his
 capture points are `CONTEXT.md`/ADRs (during grilling) and the feature-level
