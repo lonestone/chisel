@@ -629,3 +629,26 @@ sur une échelle. Nom retenu par composition des deux existants :
   de fond, dans ses mots : « il va falloir qu'on travaille sur la forme ».
   Aucun fichier `format.md` n'est créé : la piste a existé le temps d'un
   malentendu, elle est refermée.
+
+- ✅ **G12 — On ne lance pas un Mason sans fichier de tâche.** Tranché par
+  l'Owner le 2026-08-28, quand le Foreman a proposé de spawner un Mason pour
+  réécrire une seule section d'un seul fichier : « Fais les 2 tâches toi-même.
+  Pas de sous-agent à tout va, on lance pas un maçon sans une tâche (fichier). »
+  Le contrat du Mason le suppose déjà — sa section `Inputs` s'ouvre sur « le
+  fichier de spec (chemin, pas contenu collé) », ses cases d'implémentation sont
+  son point de reprise, et son brief est « artefacts seulement ». Sans fichier,
+  rien de tout cela n'existe et le spawn n'est plus qu'un coût.
+  **Le manque de doctrine que ça révèle.** Le chantier 1 a rendu la délégation
+  au Mason **obligatoire** — « la frappe passe toujours par le contrat du
+  Mason », dans `socle/agents/methodology.md` et dans les Prohibitions du profil
+  Foreman — sans exception pour le one-shot, alors que la règle du pont de
+  `socle/agents/discipline.md` dit précisément qu'un one-shot n'a pas de fichier
+  de spec. Les deux règles se croisent sans se voir : appliquées à la lettre,
+  elles ordonnent de spawner un Mason pour un travail qui ne peut pas lui être
+  briefé. La règle qui manque : **le Mason obligatoire vaut pour le travail qui
+  a un fichier ; le one-shot est frappé par la session qui possède le fil.**
+  Trois porteurs à corriger : le corollaire du gradient de coût de
+  `methodology.md`, la première Prohibition de
+  `socle/agents/profiles/foreman.md` (« Never types the code itself »), et la
+  règle du pont de `discipline.md`, qui gagne le pendant de sa propre phrase.
+  Consigné ici, non corrigé : ouvrir la tâche est la décision de l'Owner.
