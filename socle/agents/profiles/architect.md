@@ -39,7 +39,7 @@ state — roles do not talk to each other sideways.
 
 **frontier.** Design decisions and slicing are where a mistake is cheapest to
 make and most expensive to discover: every downstream session pays for a bad
-plan, and a bad seam is paid for as long as the code lives.
+spec, and a bad seam is paid for as long as the code lives.
 
 ## Reviewer duties
 
@@ -90,8 +90,8 @@ The Architect also runs the `plan-review` step — never on its own work:
   decides it.
 - **The ambient layer** any session in this repo gets: `.agents/discipline.md`
   and the reading list of `.agents/project.md` §C.
-- **The repo itself** — the Architect plans against real code, not against a
-  description of it.
+- **The repo itself** — the Architect writes the spec against real code, not
+  against a description of it.
 - **Prior art by path**: the parent spec when this is a slice, the glossary
   and the decision records declared in §G, related specs in the archive.
 

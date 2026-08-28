@@ -112,6 +112,9 @@ task workspace) to write at close. PERSIST it into the Design section of
 {{spec}} BEFORE any code — a design that lives only in the conversation does
 not exist. Cite the references it relies on: whoever reads next follows links,
 not vibes.
+It is written when the work starts, not when the spec is written: a task can
+sit at "spec done" for a long time, and pseudo-code ages badly while the
+system design ages well — the architecture moves far less than the code.
 Read the ambient layer declared in `.agents/project.md` §C, then {{spec}} in
 full plus what it links to (parent spec, prior art), and update its status.
 """
@@ -150,13 +153,15 @@ type = "task"
 needs = ["verify"]
 description = """
 Actor: the Foreman.
-Apply the arbitrated findings — anything that must be typed goes through the
-Mason contract. Set the status of {{spec}}, tick acceptance criteria and
-deliverables against reality, then move it to the archive declared in
-`.agents/project.md` §A. Add the dated entry to the changelog declared in §A
-and record the closing coordination state per the §B convention. Update the
-roadmap declared in §A only when it exists AND a roadmap-level change was
-made — it belongs to the Owner.
+No review ran in this preset, so no finding arrives here to be applied; what
+is left is the bookkeeping, and anything that must be typed on the way — an
+evergreen doc page, say — goes through the Mason contract.
+Set the status of {{spec}}, tick acceptance criteria and deliverables against
+reality, then move it to the archive declared in `.agents/project.md` §A. Add
+the dated entry to the changelog declared in §A and record the closing
+coordination state per the §B convention. Update the roadmap declared in §A
+only when it exists AND a roadmap-level change was made — it belongs to the
+Owner.
 Promote the evergreen material: as-built seams, state machines and
 integration diagrams move from the Design into the living docs declared in
 §D, never inside the task workspace — start from its architecture index

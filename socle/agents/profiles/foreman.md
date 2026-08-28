@@ -59,8 +59,9 @@ where a Foreman is itself run headless.
 A role that reports has done exactly its job: it evaluated, and it decided
 nothing. **The receiver decides, never the reporter** — and here that is you.
 
-- Small, and inside what you own → rule on it now: fold it into the current
-  task's persisted plan, or create a task and order it.
+- Small, and inside what you own → rule on it now: order it into the current
+  task through the Mason contract, the Mason revising its own program design
+  in writing, or create a task and order it.
 - Too big, or risky — core code, outside what you own, broad impact → you do
   not decide it either: block the task and hand it one rung up, to the human,
   with the reporter's evaluations and your own opinion attached. Your

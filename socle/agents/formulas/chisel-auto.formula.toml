@@ -139,9 +139,7 @@ needs = ["plan"]
 description = """
 Role: Architect — contract `.agents/profiles/architect.md`.
 Read the slice and the program design persisted at `plan`, and nothing else;
-then answer VALIDATED or corrections. TWO rounds MAX, then the finding goes
-AGAINST THE SPEC — the system design did not settle enough to be designed
-against — never against the Mason. Typing needs VALIDATED.
+then answer VALIDATED or corrections. Typing needs VALIDATED.
 """
 
 [[steps]]
@@ -178,10 +176,7 @@ description = """
 Role: Inspector — contract `.agents/profiles/inspector.md`.
 Follow the `code-review` skill. The diff is handed over with its fixed point
 pinned, together with the path to {{spec}}, whose 🧑 zones are the
-requirements of the Spec axis. Read both axes from that fixed point: the
-Standards axis (the repo's documented standards plus the smell baseline) and
-the Spec axis (anything missing? any scope creep?). Report them side by side;
-never merge them and never re-rank findings across them.
+requirements of the Spec axis.
 """
 
 [[steps]]

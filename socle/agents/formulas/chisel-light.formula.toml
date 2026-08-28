@@ -109,6 +109,9 @@ task workspace) to write at close. PERSIST it into the Design section of
 {{spec}} BEFORE any code — a design that lives only in the conversation does
 not exist. Cite the references it relies on: whoever reads next follows links,
 not vibes.
+It is written when the work starts, not when the spec is written: a task can
+sit at "spec done" for a long time, and pseudo-code ages badly while the
+system design ages well — the architecture moves far less than the code.
 Read the ambient layer declared in `.agents/project.md` §C, then {{spec}} in
 full plus what it links to (parent spec, prior art), and update its status.
 This preset runs no `plan-review`: no VALIDATED verdict is coming, and the
