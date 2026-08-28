@@ -802,6 +802,32 @@ rather than being dropped.
    `project-management/vendored-skills-audit.md`, whose findings the Owner has
    ruled to open as its own chantier (ruling G9).
 
+### The Owner's dispositions on these proposals, 2026-08-28
+
+Ruled at the `close` gate, in one pass. Nothing was applied inside this task;
+a deferred proposal keeps its dated line here rather than being dropped.
+
+- **Proposal 1 — accepted, and reshaped.** The report form does not go back
+  into the Foreman profile: it leaves it. Recorded as the ruling G11 of
+  `project-management/review-360-decisions.md` and queued as the ninth
+  chantier of that file's action plan — a `format.md` page of the socle beside
+  `discipline.md` and `methodology.md`, written in prose rather than as a
+  skeleton to fill, with the profile pointing at it. The Owner's two reasons
+  are in the ruling, in his words.
+- **Proposal 2 — deferred, and on purpose.** Documenting the gate command's
+  pyenv trap in the glue's gate-commands section is not worth doing, because
+  the dependency itself is leaving: "on s'en fout, on va se passer de Python."
+  The Deno-port chantier removes `tomllib` from the picture, and the constat is
+  already recorded under that chantier. Revisit only if that port slips far
+  enough that the trap outlives this note.
+- **Proposals 3, 4, 5 and 6 — deferred, presentation to redo.** The Owner did
+  not accept or reject them: he could not read them as they were put to him —
+  "le reste j'ai pas compris, donc on laisse tomber pour l'instant". That is
+  the same failure proposal 1 is about, landing on the retrospective itself, so
+  the four are not judged and not dropped. They stand as written above, to be
+  put again, one at a time and in a form that can be answered, once the
+  `format.md` chantier has settled what a readable proposal looks like.
+
 ## References
 
 - `project-management/review-360-decisions.md` — the Owner's rulings this

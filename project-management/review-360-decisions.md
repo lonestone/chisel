@@ -442,6 +442,9 @@ fichier de spec) ; ce fichier est la source des intentions.
 7. **Modèle de statuts des tâches** (F1.4) — discussion dédiée à ouvrir
    (créée, métier OK, design OK, ready, in progress, stalled…).
 8. **Skill codebase-audit** (G4) — distiller le protocole de cette session.
+9. **Page `format.md`** (G11) — la forme des sorties d'agent sort du profil du
+   Foreman et devient une page du socle, en prose et non en gabarit ; le profil
+   pointe vers elle. Ouvert par la rétro du chantier 1, non encore interviewé.
 
 Transverse (G3) : tout nouvel artefact en anglais ; citations Owner dans leur
 langue.
@@ -605,3 +608,24 @@ sur une échelle. Nom retenu par composition des deux existants :
   l'autre — le choix du preset est humain, à l'invocation, jamais celui d'un
   agent. Dix fichiers du socle portent l'interrupteur ; inventaire dans le
   fichier de la slice qui l'exécute.
+
+- ✅ **G11 — La forme des sorties sort du profil du Foreman et devient sa propre
+  page.** Tranché par l'Owner le 2026-08-28, au `close` du chantier 1, sur la
+  première proposition de la rétro. Deux décisions distinctes.
+  **(a) Le lieu.** La forme des rapports vit aujourd'hui dans
+  `socle/agents/profiles/foreman.md`, section « Reporting to the Owner » —
+  l'Owner n'en veut pas là : « j'ai vu que tu avais foutu ça dans un fichier md,
+  le format de sortie du Foreman, moi j'aime pas ça du tout ; moi plutôt le
+  mettre dans `format.md` ». Donc une page dédiée à côté de `discipline.md` et
+  `methodology.md`, et le profil pointe vers elle au lieu de la porter. Aucun
+  fichier `format.md` n'existe aujourd'hui dans le socle.
+  **(b) Le registre.** Pas de squelette strict : « c'est pas la peine de mettre
+  un format ultra strict, je pense que de la prose suffira ». Ce qui est à
+  garder du vécu de ce chantier n'est pas la liste des sections mais ce qui l'a
+  fait échouer — un rapport correct et illisible a bloqué une gate, l'Owner ne
+  pouvant pas répondre à une question qu'il ne pouvait pas décoder : « j'ai rien
+  compris, putain tu écris tellement mal, tu formate n'importe comment, c'est
+  imbittable ». La page dit donc en prose ce qui rend une sortie lisible — une
+  idée par ligne, des phrases courtes, une question posée en trois temps (le
+  fait, le problème, les issues) — et non un gabarit à remplir.
+  Motif de fond, dans ses mots : « il va falloir qu'on travaille sur la forme ».
