@@ -103,7 +103,7 @@ date the new version below it.
   than the two named above; and Given the whole diff, When read, Then no
   setting, question, field, or placeholder is introduced anywhere to stand in
   for the deleted switch. The Owner's decision is a deletion, not a move.
-- [ ] **no-switch-left-anywhere** — `grep -rn "Autonomous runs" socle/` and
+- [x] **no-switch-left-anywhere** — `grep -rn "Autonomous runs" socle/` and
   `grep -rn "B3" socle/` both return nothing. This one closes at whichever of
   slice 03 and this slice lands **second**, since two of the ten carriers are
   slice 03's; the slice landing first records in its worklog that the grep
@@ -447,6 +447,41 @@ group depends on — Step 2 where the migration deletes that layer, Step 1's
 first bullet where the inventory reports finding it. Only Step 1's
 glue-sections bullet moves.
 
+### `README.md` — one bullet deleted, one count corrected (added 2026-08-28)
+
+Added to this design after the diff review, on the Owner's ruling at the
+arbitration gate: the residue the Inspector found is fixed here and now rather
+than deferred to the joins-and-minors chantier. It is a deviation from the
+parent's files map, recorded below under "Deviations from the parent's files
+map".
+
+Two edits, both inside the section that tells the reader what setup asks, and
+nothing else in that file:
+
+- **The bullet documenting the switch is deleted whole** — how to turn it on,
+  the two presets it would have permitted, and the in-session-permission
+  doctrine the ruling G10 struck down. Nothing replaces it: G10 put nothing in
+  the switch's place, and the preferred-flow idea for `.agents/user.md` is
+  deferred until the Owner has used the thing, so the README must not promise
+  it.
+- **The count above it becomes one, and the heading with it** — one question
+  beyond the paths, written as one line in `.agents/project.md` and changeable
+  later by re-running the question. The surviving bullet,
+  "§B1 · Where task statuses live, of `.agents/project.md`", is verified true
+  against `socle/agents/project.md.tpl` rather than trusted: that sub-section's
+  verdict line defaults to the task files, the other case the setup offers is
+  the committed database, and the move between them is tooled and touches only
+  open tasks.
+
+**Deliberately not done, so the chantier that owns it still has its subject:**
+the clause saying `chisel init` is what asks. The ruling A4 of
+`project-management/review-360-decisions.md`, recorded there as
+"README : « init asks two questions »", hands the joins-and-minors chantier a
+truthfulness pass on exactly that point — init installs the socle silently with
+safe defaults, and the questionnaire is the `chisel-setup` skill run afterwards
+in the agent session. Correcting the count is not that pass, and this edit
+leaves its subject standing rather than half-doing it.
+
 ### Verification
 
 The gate command, in this exact form, after each commit:
@@ -784,8 +819,19 @@ discovered at review:
   It says nothing about the switch, because the switch was not yet dying when
   the map was drawn. Two skills are touched.
 
-Neither deviation is a finding against the parent's reasoning; both are the
-parent's map being older than a ruling. Recorded here so the Inspector judges
+**A third deviation, declared at the diff review rather than at spec time**,
+because that is where the Owner ruled it in. `README.md` sits in the parent's
+files-to-avoid map with the reason "the joins-and-minors chantier", and the
+Inspector found at `diff-review` that the file still teaches the deleted
+switch — a residue the routing would have left standing. Ruled by the Owner on
+2026-08-28 at the arbitration gate: fixed now. What stays with that chantier is
+the rest of the file, the truthfulness pass of the ruling A4 included, so the
+two do not collide; this slice corrects a count and deletes a bullet, and
+touches nothing else in the file.
+
+Neither of the first two deviations is a finding against the parent's
+reasoning; both are the parent's map being older than a ruling, and so is the
+third. Recorded here so the Inspector judges
 them a posteriori with the reasons in hand, which is what the map doctrine this
 task ships asks for.
 
@@ -988,9 +1034,34 @@ that rule's worked example. The reference now reads
 « §B3 · Autonomous runs » de `.agents/project.md`, the § restored with it, and
 the rest of the note stands as written; the paragraph was re-wrapped around the
 longer sentence. Suite re-run after the fix: 9 scenarios, 94 assertions, 0
-failed, 592 lines. The Inspector's second finding — `README.md` still teaching
-the deleted switch — is a residue at the Owner's gate, outside this slice's
-scope and not acted on here.
+failed, 592 lines. ~~The Inspector's second finding — `README.md` still
+teaching the deleted switch — is a residue at the Owner's gate, outside this
+slice's scope and not acted on here.~~
+*Overtaken 2026-08-28: the Owner ruled at the arbitration gate that the residue
+is fixed in this slice, not deferred. Its own worklog entry is below.*
+
+**Commit 5 — the README stops teaching the switch.** The last edit of the
+slice, ordered by the Owner at the arbitration gate on 2026-08-28 against the
+parent's own routing: `README.md` is in the files-to-avoid map, and the Owner
+overruled the map for this one residue rather than leaving a file that teaches a
+deleted setting until another chantier gets to it.
+
+- `README.md`, the section on what setup asks — the bullet documenting the
+  switch deleted whole with nothing in its place, the count and the heading
+  down to one question, and the surviving §B1 bullet left as it stands, its
+  claims first verified against `socle/agents/project.md.tpl`. The clause
+  naming `chisel init` as the asker is deliberately untouched: the ruling A4
+  gives that correction to the joins-and-minors chantier, and doing it here
+  would take its subject away.
+
+**The criterion no-switch-left-anywhere now closes, and is ticked.** Slice 03
+landed while this slice was in review, so `grep -rn "Autonomous runs" socle/`
+and `grep -rn "B3" socle/` both return nothing: the two carriers named in the
+paragraph above — the invocation-posture paragraph of
+`socle/agents/methodology.md` and the opt-in sentence of
+`socle/templates/AGENTS-block.md` — were written switchless there. This slice
+landed first and recorded the interim, as the criterion asks; the criterion
+closed at the second, which is where it always said it would.
 
 **Nothing for the proposal door.** The one finding this slice raised at plan
 time — the under-counted scope of the bare-section-reference sweep — was

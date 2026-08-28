@@ -35,22 +35,15 @@ conventions) and Spec (did the work do what the 🧑 zones asked, and nothing
 more) side by side — never merged into one list, so one axis cannot mask the
 other.
 
-## The two choices setup actually shows you
+## The one choice setup actually shows you
 
-`chisel init` asks two questions beyond your paths, both written as one line
-each in `.agents/project.md`, both changeable later by re-running the
-question:
+`chisel init` asks one question beyond your paths, written as one line in
+`.agents/project.md` and changeable later by re-running the question:
 
 - **§B1 · Where task statuses live, of `.agents/project.md`.** The default
   is the task files themselves — nothing to install. The other answer is a
   committed `bd` database when a repo wants queries instead of a reading
   session; adding it later is tooled and only touches open tasks.
-- **§B3 · Autonomous runs, of the same file.** Off by default. Turn it on
-  and a human can ask, in a given session, for `chisel-supervised`
-  (one asynchronous gate — the Owner approves the spec, nothing else) or
-  `chisel-auto` (no gates; a doubting step escalates instead). Nobody grants
-  themselves that permission in-session — it lives in this versioned line
-  either way.
 
 ## The upgrade path
 
