@@ -249,16 +249,17 @@ settled → program design persisted at plan validation → worklog during
 implementation → checked off at completion.
 
 **Corollary — the cost gradient.** Persisting the program design makes the
-slice file a complete brief, which unlocks a division of labor: the
-**Architect** does the upstream thinking with the human — the exploration, the
-spec and the system design — and answers the `plan-review`; the **Mason**
-designs the how for itself at its `plan` step and types it. Typing always goes
-through the Mason contract, by one of two mandatory paths: a Mason sub-agent
-where the tool can spawn one, otherwise a fresh session running
-`work on slice <file>`. It is not a choice offered to the user, and no agent
-elides it. The delegation boundary is the **system design**: above it the *what* — architecture, scope, and the seams the work is
-tested through — settled at creation time and approved at the gate; below it
-the *how*, designed and typed by the session that implements. A Mason asked to
+slice file a complete brief, which unlocks a division of labor: the thread
+owner runs the interview, the **Architect** does the upstream thinking that
+follows it — the exploration, the spec and the system design — and answers the
+`plan-review`; the **Mason** designs the how for itself at its `plan` step and
+types it. Typing always goes through the Mason contract, by one of two
+mandatory paths: a Mason sub-agent where the tool can spawn one, otherwise a
+fresh session running `work on slice <file>`. It is not a choice offered to the
+user, and no agent elides it. The delegation boundary is the **system design**:
+above it the *what* — architecture, scope, and the seams the work is tested
+through — settled at creation time and approved at the gate; below it the
+*how*, designed and typed by the session that implements. A Mason asked to
 "figure out" something the *what* left open is a specification failure, not an
 execution one — and it goes back to the spec. An open *how* is not a hole: it
 is what the `plan` step is for.
