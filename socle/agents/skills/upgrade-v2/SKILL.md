@@ -61,7 +61,7 @@ narrate the scan:
   the journal's current path and name;
 - how many files live in the task workspace and in the archive (the number you
   will check again at the end);
-- which sections the glue already has, and which of §B1, §B2, §B3 and §H are
+- which sections the glue already has, and which of §B1, §B2 and §H are
   missing — a v1 glue has none of them;
 - whether `.agents/user.md` exists (the personal, never-committed file).
 
@@ -163,22 +163,21 @@ Two things to check right after, before moving on:
 ## Step 5 — Complete the glue
 
 v1's glue has no equivalent of §B1 (where task statuses live), §B2 (the link to
-an external tracker), §B3 (autonomous runs) or §H (the team's model tiers). Fill
-them by asking, **one question per message**, and ask only what the existing
-glue does not already answer — this is a migration, not a fresh setup.
+an external tracker) or §H (the team's model tiers). Fill them by asking, **one
+question per message**, and ask only what the existing glue does not already
+answer — this is a migration, not a fresh setup.
 
 The wording of those questions is not this skill's to invent: it is written,
 verbatim and in plain language, in `.agents/skills/chisel-setup/SKILL.md`. Use
-its §B1, §B2, §B3 and §H screens as they stand, and its Step 4 rule for writing
+its §B1, §B2 and §H screens as they stand, and its Step 4 rule for writing
 the answers back — one section's span at a time, every byte outside it left
 untouched. If the v1 glue's shape differs enough that a section has no home yet,
 add the missing heading in letter order and nothing else.
 
 The defaults are the same as for a new repo, and for a repo being migrated they
 are almost always the right answer: statuses in the task files, no external
-tracker, autonomous runs disabled, model tiers unset. A migration that changes
-how the team works, on top of moving their files, is two changes wearing one
-diff.
+tracker, model tiers unset. A migration that changes how the team works, on top
+of moving their files, is two changes wearing one diff.
 
 Two more items from `chisel-setup` belong here, and it describes both:
 

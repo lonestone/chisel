@@ -66,8 +66,8 @@ For each section, in letter order:
 1. State any relevant facts from Step 1's scan.
 2. Give your **recommended** value — prefilled from the scan plus the
    questionnaire defaults (root `/project-management/`; statuses in the task
-   files; no external tracker; autonomous runs disabled; boilerplate reading
-   list into `apps/documentation`; living docs = `apps/documentation` for
+   files; no external tracker; boilerplate reading list into
+   `apps/documentation`; living docs = `apps/documentation` for
    boilerplate else `doc/**`; gate commands from `package.json`; glossary/ADRs
    into `apps/documentation` for boilerplate else root `CONTEXT.md` +
    `docs/adr/`; model tiers unset).
@@ -77,8 +77,8 @@ For each section, in letter order:
 
 **Never present two sections in the same message.** Each section gets its
 own turn, exactly like the grilling discipline this skill borrows: one
-question, wait, then the next. §B is three questions — B1, B2, B3 — and they
-are three separate messages, not one screen with three headings.
+question, wait, then the next. §B is two questions — B1 and B2 — and they
+are two separate messages, not one screen with both headings.
 
 Per-mode prefills:
 
@@ -153,7 +153,7 @@ If the answer is option 2, run **Step 6** before moving on to §B2.
 **Any answer other than "no link" means writing the adapter page** — including
 GitHub and Plane, which the socle ships no page for: the list being open means
 every tracker is wired the same way, not that two of them are built in. Write it
-with the user, now, before moving to §B3:
+with the user, now, before moving to §C, the reading list:
 
 - where it lives: with the living docs declared in §D (say the path out loud);
 - what it holds: how to find and read a ticket in that tool, what to copy into
@@ -165,25 +165,6 @@ If the user names a tool that is not on the list, the answer is the same three
 bullets — do not improvise a wiring, and do not refuse. If they would rather not
 write the page now, record the tracker and leave the Adapter page line as
 `_(to write)_` — never as a path to a page that does not exist.
-
-### §B3 — ask this, verbatim
-
-> **May an agent run a whole task here without stopping to ask you?**
->
-> By default an agent working on a real task stops and waits for you three
-> times: once the spec is written, once the plan is written, and once the
-> review comes back. Turning this on lets it pass those three points on its
-> own — and only when someone asks for that explicitly in the session. It never
-> becomes the normal way of working.
->
-> 1. **No** — an agent asked to run on its own is refused, and says so.
-> 2. **Yes** — allowed. Worth it on a repo where you would rather review a
->    finished branch than a plan.
->
-> This is one line in the project's settings: turning it on or off later is a
-> one-word edit, nothing to migrate.
->
-> Recommended: **1 — no**.
 
 ### §H — ask this, verbatim
 
@@ -215,7 +196,8 @@ until the end of the walk. Each write is scoped to exactly one section:
   including) the next `## ` heading, or end of file if there is none.
 - For a sub-section (`### B1 · ...`), the span is the same rule one level down:
   from just after its heading to the next `### ` **or** `## ` heading,
-  whichever comes first. Answering B2 must leave B1 and B3 byte-identical.
+  whichever comes first. Answering one sub-section leaves the others
+  byte-identical.
 - Leave every byte outside that span untouched: other sections, any content
   a human added above §A or after §H, custom sections the file doesn't
   define (e.g. a hand-added `## I · ...`).
@@ -317,7 +299,8 @@ sections serve is `.agents/skills/chisel-beads/SKILL.md` — read that first.
      names the three-command routine that also checks the push landed)
    ```
 
-   Use Step 4's sub-section write span: B2 and B3 stay byte-identical.
+   Use Step 4's sub-section write span: §B's other sub-sections stay
+   byte-identical.
 
 7. **If this repo already holds open task files, move them.** Only then, and
    only once §B1 is written: follow `CHANGING-CASE.md`'s *converting* section.
