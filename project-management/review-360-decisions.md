@@ -657,7 +657,8 @@ sur une échelle. Nom retenu par composition des deux existants :
   règle du pont de `discipline.md`, qui gagne le pendant de sa propre phrase.
   Consigné ici, non corrigé : ouvrir la tâche est la décision de l'Owner.
 
-- ❓ **G13 — Le passage en mode « flow » n'est géré dans aucun sens.** Question
+- ✅ **G13 — Le passage en mode « flow » est déclenché par l'humain, jamais
+  classé par l'agent.** Question
   ouverte par l'Owner le 2026-08-28, en voyant le Foreman classer un travail
   tout seul : « je t'ai pas demandé de one-shot this ou autre. Faudrait p-e
   qu'on améliore / rende gated le fait de passer en mode flow ? »
@@ -682,3 +683,41 @@ sur une échelle. Nom retenu par composition des deux existants :
   qui touche `socle/agents/methodology.md` (section « Why slicing is
   conditional »), la règle du pont de `discipline.md`, et le step `spec` des
   cinq formulas. À articuler avec le chantier 2, qui rouvre déjà les formulas.
+  **Tranché par l'Owner le 2026-08-28.** Le mode ne se devine pas et ne se
+  négocie pas : il se lit d'un acte explicite de l'humain, sous deux formes
+  seulement — une nouvelle session ouverte en indiquant de travailler sur une
+  tâche, ou `work on task` prononcé à un moment dans une session en cours. En
+  dehors de ces deux formes, aucun agent n'entre dans le flow.
+  **Le sens retour est réglé par la même phrase.** Une fois dans une session,
+  les petites tâches qui apparaissent en chemin **ne déclenchent pas** de flow.
+  L'exception est unique et cumulative : indication directe de l'utilisateur
+  **et** un fichier de tâche créé. Sans fichier de tâche, on reste en mode
+  **ambiant** — celui de la première version de Chisel, « plan, propose, do the
+  work » — sans les steps supplémentaires : « ça doit grosso modo revenir à
+  auto-light ».
+  **Ce que la décision écarte.** La recommandation du Foreman ci-dessus
+  (remonter le sizing check d'un cran pour que sa première question soit « est-ce
+  que ça a besoin du pipeline ? ») devient sans objet plutôt que rejetée : si le
+  déclencheur est un acte de l'humain, il n'y a plus de classement à faire
+  valider par une question au seuil. Le sizing check reste où il est et garde son
+  périmètre — le travail qui a déjà un fichier.
+  **Ce que la décision referme, lecture du Foreman à confirmer à
+  l'implémentation.** G12 laissait ouvert son propre corollaire : qui frappe un
+  travail qui n'a pas de fichier. La réponse tombe ici — la session qui possède
+  le fil, en mode ambiant, sans Maçon à spawner, puisqu'il n'y a rien à lui
+  briefer. Le cadrage que l'Owner avait refusé au moment de G12 n'était pas faux
+  sur le fond ; ce qui était fautif, c'était que le Foreman avait classé le
+  travail tout seul. Le classement appartient à l'humain ; le mode ambiant est ce
+  qui s'applique une fois qu'il a classé.
+  **Porteurs à corriger quand ce sera exécuté** — les trois que G12 nommait déjà,
+  auxquels la doctrine du déclencheur explicite s'ajoute : la règle du pont de
+  `socle/agents/discipline.md`, qui gagne le pendant de sa propre phrase (pas de
+  fichier → ambiant, et le pipeline ne s'ouvre que sur un acte de l'humain) ; le
+  corollaire du gradient de coût de `socle/agents/methodology.md` ; et la
+  première Prohibition du profil `socle/agents/profiles/foreman.md` (« Never
+  types the code itself »), qui doit cesser d'ordonner un Maçon là où aucun
+  fichier ne peut le briefer. Les cinq formulas ne bougent pas : le sizing check
+  n'en sort plus.
+  **Différé par l'Owner : « on fera ça plus tard. »** Non affecté à un chantier.
+  Recoupement à surveiller : `discipline.md` et le profil Foreman sont aussi
+  touchés par le chantier 2.
