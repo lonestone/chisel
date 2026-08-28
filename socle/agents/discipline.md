@@ -60,7 +60,7 @@ the only difference is the paperwork.
 
 11. **A section reference names its file and its title.** When a document you
     write or edit cites a section of another file, the first mention carries
-    both — "§B3 · Autonomous runs of `.agents/project.md`" — never a bare
+    both — "§A · Task workspace of `.agents/project.md`" — never a bare
     number; later mentions in the same document may shorten it. A reader must
     know where to go without searching.
 
