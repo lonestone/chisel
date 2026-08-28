@@ -5,6 +5,45 @@ ships.
 
 ---
 
+## 22. 2026-08-27 — Roles remodel, slice 02: five presets on two axes
+
+The formulas are rewritten on Foreman orchestration, and the pipeline stops
+misleading its reader. The three reviews are named after their object —
+`spec-review`, `plan-review` (was `design-check`) and `diff-review` (was a
+bare `review`) — after the Owner read the old names twice and expected the
+wrong thing both times: "Design check je m'attendais à un check du system
+design, alors qu'ici c'est un check du programming design". The rename
+uncovered a real duplication, an Architect plan at `plan` followed by a Mason
+program design at `design-check`, and it dies here: **the `plan` step belongs
+to the session that implements**, which authors its own program design. The
+Owner's reason is the durable one and travels with it — a task can sit at
+"spec done" for a long time, and pseudo-code written early ages badly once
+other tasks have changed the code, while the system design ages well because
+the architecture moves less. The delegation boundary rises with it: what the
+Mason never decides is no longer "the plan" but the **system design**, which
+took a whole-profile audit of nine carriers in `mason.md`, four more in
+`architect.md`, and three sentences of `methodology.md` to say consistently.
+The CREATE / WORK separator drops one step, since reviewing the spec is
+upstream of production. Two presets join at the ends of the range:
+`chisel-light`, which keeps the human gates and drops the validation
+sub-agents, and `chisel-auto-light`, which drops both — built against the
+Foreman's recommendation because the Owner wants the pipeline's floor
+measurable ("je serais curieux de l'avoir quand même pour faire du
+benchmark"), and its header says so instead of posing as one more notch. The
+five are read as two axes rather than one scale. The Foreman gains the
+`interview` step (a spawned role cannot interview the human), the `verify` and
+the `close`, and the reporting shape the Owner dictated after the first ones
+proved unreadable in use: it works silently, one report per turn, and every
+report stands on its own. Two proposals were closed rather than left open: the
+formulas stay in TOML (JSON has no comments, and they carry between twenty and
+forty lines of them), and the formula is not split into a spec half and a work
+half. Found while working and fixed: the suite's formula parse check depends
+on `tomllib` and silently SKIPs on a python below 3.11 — every green run this
+week had proved less than it claimed — and the check itself passed vacuously
+on an empty directory. Suite: 9 scenarios, 94 assertions, 592/600 lines, the
+parse check actually running. Slice 03 remains: `discipline.md`,
+`methodology.md`, the AGENTS block, and the task's final full-socle greps.
+
 ## 21. 2026-08-27 — Roles remodel, slice 01: the Foreman becomes a role
 
 First slice of the doctrinal chantier that applies the 360 review's rulings.

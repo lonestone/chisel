@@ -381,6 +381,16 @@ fichier de spec) ; ce fichier est la source des intentions.
    orphelins corrigés dedans, golden files pour le rendu, groupe journal,
    parser de glue structuré, plafond de lignes supprimé, distribution
    JSR + `dx`, Deno ≥ 2.6.
+   **Constat du 2026-08-27, remonté par un Mason au design-check de la slice
+   02 du chantier 1 et vérifié :** le contrôle de parsing des formulas dépend
+   de `tomllib`, donc de python ≥ 3.11, et se met silencieusement en `SKIP`
+   sinon. Sur la machine de l'Owner, `python3` est un pyenv 3.9 : la suite
+   annonce 93 assertions vertes qui ne contiennent **aucune** vérification des
+   gates ni du nombre de steps. Avec `/opt/homebrew/bin` en tête du `PATH`
+   elle en annonce 94 et le contrôle passe. Un test qui se saute en se
+   déclarant vert est exactement ce que le port doit supprimer — le runtime
+   Deno n'aura pas cette dépendance. En attendant, toute vérification de ce
+   dépôt se lance avec un python qui a `tomllib`.
 5. **Extraction du normatif & règles de rédaction** (E4.1, G1, C1, C2) —
    référence courte (glossaire dédoublonné, zone ownership, tiers),
    methodology redevient le pourquoi, règle d'écriture compacte dans la
@@ -417,3 +427,127 @@ langue.
   (Foreman compris) doivent contenir ce cadrage — mission, à qui l'on
   rapporte, ce qu'on ne fait jamais — pour que « spawner un rôle » =
   profil verbatim + brief, rien d'autre.
+
+- ✅ **G6 — Le pipeline renommé, remis dans l'ordre, et lu comme deux axes.**
+  Constat Owner en regardant tourner la tâche 1, sur le nommage d'abord :
+  « Design check je m'attendais à un check du system design, alors qu'ici
+  c'est un check du programming design et du plan du maçon. Inversement,
+  `plan` est apparemment la step de validation de la spec, alors qu'on
+  utilise souvent `plan` pour désigner le plan du maçon. » Le nommage cachait
+  une duplication réelle, vécue en session : l'Architect rédige un plan au
+  step `plan`, puis le Mason produit un program design au step `design-check`
+  — deux fois le même travail sous deux noms.
+  **(a) Le program design appartient à l'agent qui code**, qui l'écrit pour
+  lui-même au moment de coder (et, avec le split B5, dans son fichier
+  `-work`). Raison Owner, qui devient la justification durable du séquençage :
+  « un ticket peut se retrouver bloqué en statut "spec done" mais sans qu'on
+  lance son écriture. Or, écrire tout un tas de pseudo code vieillira mal si
+  entretemps des tâches ont été effectuées et ont modifié le code. Le system
+  design vieillit mieux logiquement car l'architecture du projet ne change pas
+  autant. »
+  **(b) Les trois reviews se nomment par leur objet** : `spec-review`,
+  `plan-review` (l'actuel `design-check`) et `diff-review` (l'actuel
+  `review`). Le step `plan` garde son nom et dit enfin dans son corps ce
+  qu'il produit — le program design — et qui l'écrit : la session qui
+  implémente.
+  **(c) La séparation CREATE / WORK est mal placée** : `spec-review` se
+  trouve sous le trait « WORK (fresh session) » alors que la review de la
+  spec est en amont de la production. Le trait descend d'un step.
+  **(d) Les presets sont deux axes, pas une échelle.** Axe des gates
+  humaines (relecture de la spec, validation du plan, code review) et axe des
+  sous-agents de validation (Checker sur la spec, Architect au `plan-review`,
+  Inspector au `diff-review`). `chisel-light` retire les sous-agents,
+  `chisel-auto` retire les gates, `chisel-supervised` est un point
+  intermédiaire sur l'axe des gates.
+
+## Addendum 2 (2026-08-27) — le pipeline default, dicté par l'Owner
+
+Séquence de référence du mode default, telle que l'Owner l'a posée. Elle sert
+de cible aux quatre formulas ; les numéros ne sont PAS des codes à citer,
+juste l'ordre de lecture.
+
+1. Nouvelle session : l'humain amène une problématique.
+2. Le Foreman mène l'interview.
+3. Il lance un sous-agent Architect pour écrire la spec — le sous-agent ne
+   peut pas interviewer l'humain. Sous-agent indisponible → on fait au mieux
+   dans la conversation.
+4. Review automatique par un sous-agent Checker.
+5. **Gate humaine** : relecture du fichier produit et du system design,
+   échanges possibles avec l'Architect. Jusqu'ici le système tourne
+   silencieusement.
+6. La spec est prête. Commit pour sauvegarder. **On peut rester dans cet état
+   longtemps.**
+7. Nouvelle session (ou sous-agent Mason) pour travailler. Le contexte neuf
+   est à privilégier ; le mode dégradé est un chat conservé.
+8. Le Mason fait le tour du travail et génère son fichier de travail `-work` :
+   program design, pseudo-code. Échange possible sur du tactical programming,
+   mais l'agent devrait avoir toutes les cartes pour avancer seul.
+9. Sous-agent Architect qui valide et échange avec le Mason autour du plan.
+10. **Gate humaine** : le Mason demande le feu vert. Un format de sortie est à
+    prévoir — un condensé du plan sur lequel l'humain puisse dire go.
+11. Frappe. L'agent utilise les automatisations du projet tout du long (lint,
+    build, tests). Selon le harness, des informations peuvent lui revenir
+    automatiquement.
+12. Auto-review par un sous-agent Inspector. Allers-retours possibles.
+13. **Gate humaine** : code review.
+14. Finalisation de la tâche.
+15. Commit.
+
+**Une step de validation reste utile dans la formule ; relancer toute la
+suite quand tout est déjà au vert n'est pas une fatalité** (c'est long).
+
+**Les presets sont deux axes.** `chisel-light` retire les sous-agents de
+validation (4, 9, 12). `chisel-auto` retire les gates humaines (5, 10, 13).
+`chisel-supervised` est un point intermédiaire sur l'axe des gates. La
+combinaison des deux retraits — ni gates ni sous-agents — est posée comme
+question ouverte par l'Owner, pas comme décision.
+
+**Suite de G6, tranché le 2026-08-27.** (1) Les renommages sont pris :
+`design-check` devient `plan-review`, `review` devient `diff-review`,
+`spec-review` ne bouge pas — les trois reviews se nomment par leur objet.
+(2) La combinaison « ni gates ni sous-agents » **est construite**, contre la
+recommandation du Foreman qui la jugeait sans filet. Raison de l'Owner : « je
+serais curieux de l'avoir quand même pour faire du benchmark » — c'est un
+instrument de mesure, le plancher du pipeline, et sa formula doit le dire
+franchement dans son en-tête plutôt que se présenter comme un cran de plus
+sur une échelle. Nom retenu par composition des deux existants :
+`chisel-auto-light`.
+
+- ⏭️ **G7 — Scinder la formula en deux : écriture de la spec, puis travail.**
+  Idée de l'Owner (2026-08-27), explicitement **différée** : « à terme on
+  pourrait p-e scinder la formule en 2 : écriture de la spec et work. Mais
+  pas urgent. » Elle épouse la séquence de référence, qui marque une frontière
+  nette à l'étape 6 — la spec est commitée et la tâche peut attendre là
+  longtemps. Deux inconnues à lever avant de la construire : ce que beads
+  attend d'un dossier `formulas` lié, et si deux fichiers valent mieux qu'un
+  seul avec deux moitiés. Notée, pas construite.
+  **Refermée le 2026-08-27 :** l'Owner ne la lance pas — « du coup non pas de
+  scission », dans la même respiration que le refus du JSON ci-dessous. Elle
+  reste une idée consignée, pas un chantier.
+
+- ❌ **G8 — Formulas en JSON : rejeté.** Demande de l'Owner (2026-08-27) pour
+  la lisibilité dans son éditeur : « ce qui serait bien c'est d'utiliser le
+  format json parce que c'est plus clair pour moi finalement (à moins que je
+  trouve une extension toml pour vscode) ». Constat opposé par le Foreman :
+  JSON n'a pas de commentaires, et les formulas en portent entre vingt et
+  quarante lignes chacune — la promesse « lisible sans outillage », la raison
+  de chaque gate, l'interdit des noms de modèles. La proposition de les
+  promouvoir en vrais champs a été écartée par l'Owner : « pas de json, tant
+  pis ». Le TOML reste, et le CLI n'ayant jamais codé l'extension en dur, la
+  question pourra se rouvrir sans dette. Inconnue jamais levée, à garder si
+  elle revient : ce que beads attend d'un dossier `formulas` lié.
+
+- ✅ **G9 — Les skills vendorisés doivent cesser de contredire notre doctrine.**
+  Constat de l'Owner (2026-08-27), en comparant nos formulas au jeu de skills
+  amont : « notre façon de faire n'est pas celle de Matt ». Seize skills sont
+  vendorisés depuis `mattpocock/skills`, la plupart en fork verbatim, et rien
+  ne garantit qu'ils ne portent pas des affirmations incompatibles avec ce
+  qu'on construit. Deux exemples donnés par l'Owner : son `to-spec` produit
+  des specs qui ne sont pas vraiment lisibles par un humain, alors que nous
+  avons un format très spécifique (gradient de lecture, zones 🧑/🤖) ; et il
+  n'a pas la séparation system design / program design, qui est devenue
+  centrale chez nous. Décision : **auditer les seize**, chacun contre la
+  doctrine du socle, et sortir la liste des contradictions concrètes — l'audit
+  d'abord, les corrections comme chantier ensuite. Un fork verbatim reste
+  légitime ; ce qui ne l'est pas, c'est un fork qui affirme le contraire de ce
+  que le socle enseigne à côté.

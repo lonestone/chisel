@@ -1,9 +1,6 @@
 # 02 — Formulas rewrite
 
-**Status:** 🟡 In Progress — plan persisted 2026-08-27, revised twice the same
-day: once after the Owner's ruling at the plan gate (parent Implementation
-Decisions, point 12), once after the thread owner ruled on the five items this
-plan had escalated. Nothing typed yet.
+**Status:** 🟢 Complete — closed 2026-08-27.
 **Blocked by:** 01 — roles remodel (closed 2026-08-27; the step bodies below
 point at the profile contracts that slice froze, and this slice reopens three
 of them where the rulings reach them).
@@ -1909,3 +1906,30 @@ the presets least likely to have another reader.
 
 No finding touches scope, and none of them blocks. Both deviations are ruled
 in. Everything above goes to the Owner at the arbitration gate.
+
+
+### Worklog — findings applied, and close
+
+The arbitration gate returned the Inspector's seven findings with six ruled in
+by the thread owner and one left standing: the near-verbatim shared step
+bodies across the five presets, which the Owner's ruling on formula
+duplication already accepts. A Mason applied the six as commit `d0940c0` —
+the `diff-review` and `plan-review` bodies stripped of the doctrine they were
+paraphrasing, `chisel-auto-light`'s `close` reworded for a preset that reviews
+nothing, the Architect's last two plan-authorship words, the Foreman's
+"fold it into the persisted plan" (which crossed the authorship the same
+commit created), the ageing rationale carried into the two presets that
+lacked it, and the honest note that commit `063142c` left no worklog and was
+verified at review instead. That commit is itself recorded here rather than in
+its own entry, which is the gap finding six existed to close.
+
+Ruled at close, not deferred silently: the two cells of `methodology.md` that
+still say "Architect (interview, design, plan)" and "Typing from a plan that
+is already persisted" go to slice 3. They are the same family as the roster
+cells corrected here, but slice 3 rewrites that whole section, the parent
+task's decision on intermediate inconsistency covers the interval, and the
+final greps close it.
+
+Suite at close, run with a `tomllib`-capable python so the formula parse check
+executes rather than skipping: 9 scenarios, 94 assertions, 0 failed, test
+files at 592 lines under the suite's own cap.

@@ -49,8 +49,9 @@ review — carry that framing in their own body.
   agent") — that page is **deleted** and its two pointers (the roster table
   in `socle/agents/methodology.md`, the profiles README) updated.
 - **Architect unloaded of coordination** — `socle/agents/profiles/architect.md`
-  keeps the thinking (exploration, interview, spec, plan, the design-check
-  verdict) and loses the machinery that belongs to the thread owner: the
+  keeps the thinking (exploration, spec writing, and the `plan-review`
+  verdict — the plan itself moves to the implementing session per
+  Implementation Decisions point 12) and loses the machinery that belongs to the thread owner: the
   "When it delegates…" brief-composition paragraph and the whole "Rule on a
   report" passage move to the Foreman profile. The Architect renders an
   artifact; it pilots no one.
@@ -214,13 +215,38 @@ original, date the new version below it.
   no `spec-review`, `design-check` or `review` step, and exactly two
   `[steps.gate] type = "human"` gates (spec approved, plan approved).~~
   *Superseded 2026-08-27 by the Owner's ruling on the light gates.*
-- [ ] **light-formula-exists** (amended 2026-08-27) — `test -f
+- [ ] ~~**light-formula-exists** (amended 2026-08-27) — `test -f
   socle/agents/formulas/chisel-light.formula.toml` passes; the file contains
   no `spec-review` and no `design-check` step; a `review` step exists and
   names the **human** as the reviewer of the diff (no Inspector sub-agent);
   and there are exactly two `[steps.gate] type = "human"` gates — spec
   approved (before `plan`), and the review itself. No human gate sits on the
-  Mason's plan.
+  Mason's plan.~~
+  *Superseded 2026-08-27 by the Owner's ruling that renames the reviews after
+  their object.*
+- [ ] **light-formula-exists** (amended twice, 2026-08-27) — `test -f
+  socle/agents/formulas/chisel-light.formula.toml` passes; the file contains
+  no `spec-review` and no `plan-review` step; a `diff-review` step exists and
+  names the **human** as its actor (no Inspector sub-agent); and there are
+  exactly two `[steps.gate] type = "human"` gates — spec approved (before
+  `plan`), and the diff review itself. No human gate sits on the Mason's
+  plan.
+- [ ] **reviews-named-after-their-object** — `grep -rn "design-check"
+  socle/` and `grep -rn 'id = "review"' socle/agents/formulas/` both return
+  nothing; Given each formula, When read, Then its three review steps are
+  `spec-review`, `plan-review` and `diff-review`, and the `plan` step names
+  the program design as what it produces and the implementing session as its
+  author.
+- [ ] **create-work-separator-sits-right** — Given each formula's section
+  separators, When read, Then `spec-review` sits on the CREATE side: the
+  WORK separator falls after it, not before.
+- [ ] **benchmark-floor-exists** — `test -f
+  socle/agents/formulas/chisel-auto-light.formula.toml` passes; the file
+  carries no `[steps.gate] type = "human"` and no `spec-review`, no
+  `plan-review`, no Inspector at `diff-review`; and its header says plainly
+  what it is — the pipeline with neither net, built to be measured against
+  the others, per the Owner's "je serais curieux de l'avoir quand même pour
+  faire du benchmark".
 - [ ] **stop-only-where-humans-relaunch** — `grep -l "Then STOP"
   socle/agents/formulas/*.toml` lists only `chisel-default.formula.toml` and
   `chisel-light.formula.toml`; Given the auto and supervised formulas, When
@@ -236,8 +262,9 @@ original, date the new version below it.
   *Superseded 2026-08-27: the original demanded a profile pointer of every
   step, but the mechanical `verify` step has no role, and the light
   formula's review step is held by the human, who has no profile.*
-- [ ] **slim-step-bodies** (amended 2026-08-27) — Given any step body of
-  the four formulas that a spawned role executes, When read, Then it
+- [ ] **slim-step-bodies** (amended 2026-08-27, widened to five formulas the
+  same day) — Given any step body of
+  the five formulas that a spawned role executes, When read, Then it
   contains the role name, a pointer to that role's profile as the contract,
   and only step-specific instruction (order, artifacts, gates) — no
   restatement of the profile's prohibitions, inputs or escalation rules;
@@ -297,15 +324,25 @@ cannot decide blocks the task and writes the report (dated ⚠️ journal line;
 blocking bead in beads mode); the rung above — ultimately the human —
 decides.
 
-**The four formulas.** Same nine-step pipeline; what varies is who relaunches
+**The five formulas.** One pipeline, and two axes of variation — who holds
+the gates, and which validation sub-agents run. What varies is who relaunches
 and which review sub-agents run:
 
 | Formula | Gates | Review sub-agents | Step handoff |
 |---|---|---|---|
-| `chisel-default` | every gate awaits the human | Checker, design-check, Inspector | "Then STOP", the human relaunches |
-| `chisel-light` | two human gates — spec approved, and the diff review held by the human | none — at the review step the human reviews the diff in place of the Inspector | "Then STOP", the human relaunches |
-| `chisel-supervised` | one human gate (spec) | Checker, design-check, Inspector | the Foreman spawns the next step, fresh |
-| `chisel-auto` | none | Checker, design-check, Inspector | the Foreman spawns the next step, fresh |
+| `chisel-default` | every gate awaits the human | Checker, plan-review, Inspector | "Then STOP", the human relaunches |
+| `chisel-light` | two human gates — spec approved, and the diff review held by the human | none — at `diff-review` the human judges the diff in place of the Inspector | "Then STOP", the human relaunches |
+| `chisel-supervised` | one human gate (spec) | Checker, plan-review, Inspector | the Foreman spawns the next step, fresh |
+| `chisel-auto` | none | Checker, plan-review, Inspector | the Foreman spawns the next step, fresh |
+| `chisel-auto-light` | none | none | the Foreman spawns the next step, fresh |
+
+Read as two axes rather than one scale: the human gates vary down one column,
+the validation sub-agents down the other. `chisel-light` drops the sub-agents,
+`chisel-auto` drops the gates, `chisel-supervised` sits midway on the gates
+axis, and `chisel-auto-light` drops both — the floor of the pipeline, built
+because the Owner wants it measurable ("je serais curieux de l'avoir quand
+même pour faire du benchmark"), and its header says so instead of dressing it
+up as one more notch.
 
 **Indicative files map for this task** (this task dogfoods the pattern that
 replaces the allotment — indicative, motivated, never a strict limit):
@@ -313,8 +350,9 @@ replaces the allotment — indicative, motivated, never a strict limit):
 *Files to modify:* the six files in `socle/agents/profiles/` (one created:
 `foreman.md`; `checker.md` for its spawn framing only, per the Owner's
 "incluons-le"), `socle/agents/foreman.md` (deleted), `socle/agents/discipline.md`,
-`socle/agents/methodology.md`, the four files in `socle/agents/formulas/`
-(one created: `chisel-light.formula.toml`), `socle/templates/AGENTS-block.md`,
+`socle/agents/methodology.md`, the five files in `socle/agents/formulas/`
+(two created: `chisel-light.formula.toml` and
+`chisel-auto-light.formula.toml`), `socle/templates/AGENTS-block.md`,
 `test/fixtures/golden-tree.txt`, `test/installer.sh` (render parity only).
 
 *Files to avoid, and why:* `socle/agents/project.md.tpl` (light needs no
@@ -427,8 +465,15 @@ words stay in French.
     scroll up to find ("je dois remonter sur la question 1 qui est plus haut,
     parfois beaucoup plus haut"). This is the reading-gradient doctrine the
     socle already applies to spec zones, applied to the Foreman's own output.
-    This adds one section to the Foreman profile of the deliverables below;
-    nothing else in the scope moves.
+    Two more the same day, once the first two were in use: a report **never
+    repeats what is settled** — it covers what changed since the last one,
+    and self-containment governs open items only, never licence to recap
+    ("pas la peine de te répéter non plus, je vois pas bien l'intérêt") — and
+    the Foreman **never re-asks for authorization already given**; a GO
+    stands until the Owner withdraws it. A section with nothing in it is
+    dropped, not filled. This adds one section to the Foreman profile of the
+    deliverables below; nothing else in the scope moves. The two late rules
+    land in that section during slice 2, which reopens the socle anyway.
 11. **The CLI's three references to the deleted doc page are removed here**,
     although `bin/chisel` sits in this task's files-to-avoid map. Found at
     design-check and proved in a throwaway copy: the CLI names the page in a
@@ -444,6 +489,58 @@ words stay in French.
     indicative, a deviation is reported and judged, never forbidden in
     advance.
 
+12. **The pipeline is renamed and re-ordered, and the program design moves
+    to the one who codes.** Ruled by the Owner on 2026-08-27 while slice 2 was
+    being planned, after the step names misled him twice — recorded in full in
+    `project-management/review-360-decisions.md` (ruling G6 and the reference
+    pipeline of its second addendum). Four changes bind this task: the three
+    reviews are named by their object — `spec-review`, `plan-review` (was
+    `design-check`) and `diff-review` (was `review`); the `plan` step says
+    what it produces, the **program design**, and names the implementing
+    session as its author, which ends the duplication of an Architect plan
+    followed by a Mason program design; the CREATE / WORK separator drops one
+    step, since reviewing the spec is upstream of production; and the presets
+    are read as two axes — human gates on one, validation sub-agents on the
+    other. Rationale in the Owner's words, and it is the durable reason the
+    program design waits: "un ticket peut se retrouver bloqué en statut 'spec
+    done' mais sans qu'on lance son écriture. Or, écrire tout un tas de pseudo
+    code vieillira mal si entretemps des tâches ont été effectuées et ont
+    modifié le code. Le system design vieillit mieux logiquement car
+    l'architecture du projet ne change pas autant."
+    **Allocation, decided by the Foreman as thread owner and open to
+    correction:** slice 2 absorbs the renames, the separator, the plan's
+    authorship and the two-axis framing — it rewrites all five formulas from
+    scratch, so the cost there is near zero — plus one addition to
+    `socle/agents/profiles/mason.md`: the shape of the summary the Mason
+    presents at the human gate on its plan, so the Owner can say go without
+    reading the whole file. What does **not** land here: the `-work` file that
+    will hold the program design, which is the spec/work split already ruled
+    (chantier 2) — until it exists, the program design stays where the task
+    template puts it today.
+
+13. **The delegation boundary moves up one rung: it is the system design,
+    not the plan.** Caught by the Owner on 2026-08-27, reading the Mason
+    profile against point 12: "si je dis que le maçon fait son propre
+    programming design et son plan d'implémentation… on est d'accord que ça
+    change ça ?" — pointing at the profile's prohibition "Never plans and
+    never designs. The delegation boundary is the plan." It does. Three
+    carriers state the old boundary and all three become false the moment the
+    Mason authors its program design: that prohibition, the Mason's
+    frontmatter description (which calls its work "one already-planned slice"
+    and ends on "Never plans"), and `socle/agents/methodology.md`, whose "two
+    designs" section says "The delegation boundary is the plan itself:
+    everything above it is thinking, everything below is typing."
+    The boundary does not disappear, it rises. What the Mason never decides is
+    the **system design** — architecture, scope, and the seams the work is
+    tested through — settled upstream and approved at the human gate. The
+    program design is explicitly its own: the "how" of what was already
+    decided. This is the same fault line as the ageing rationale of point 12 —
+    the "what" ages well and settles early, the "how" ages badly and is
+    written late — so the boundary belongs exactly where the two designs part.
+    Found as a gap in slice 2's persisted plan, which named none of the three
+    carriers; returned to the Architect as a finding against the plan, the
+    path the doctrine prescribes, before any typing began.
+
 ## Testing Strategy
 
 - The named criteria are the tests: greps at the socle text seam, file
@@ -453,7 +550,7 @@ words stay in French.
   set; the render loop in `test/installer.sh` extended to cover the Foreman
   profile the same way it covers architect/mason/inspector.
 - **Deliberately absent:** any identity or similarity assertion between the
-  four formulas — rejected by the Owner's ruling on formula duplication
+  five formulas — rejected by the Owner's ruling on formula duplication
   (magic-string checks); the accepted control is the slimming itself.
 - Manual check: execute each formula by eye as an ordered checklist (the
   header comments promise it is readable without tooling) — every `needs`
@@ -476,8 +573,14 @@ and test-fixture parity. Cut into three slices:
      deleted; profiles README updated; golden tree and render checks kept
      green. (blocked by: none)
   2. **formulas-rewrite** — the three formulas rewritten on Foreman
-     orchestration with slimmed step bodies; `chisel-light` written; the
-     sizing question "light or full?" added to the `spec` steps. (blocked
+     orchestration with slimmed step bodies; `chisel-light` and
+     `chisel-auto-light` written; the three reviews renamed after their
+     object and the CREATE / WORK separator moved; the `plan` step handed to
+     the implementing session as the author of the program design, with the
+     matching edits to `architect.md` and `mason.md` (which also gains the
+     go-summary it presents at the human gate) and the two reporting rules
+     added to `foreman.md`; the sizing question "light or full?" added to the
+     `spec` steps. (blocked
      by: 1 — the steps point at the new profile contracts)
   3. **doctrine-alignment** — `discipline.md` (rule 6 rewrite, the
      incoming-session rule, rule 10 de-wired), `methodology.md` (roster
@@ -548,7 +651,12 @@ Related tasks:
 - [ ] `socle/agents/foreman.md` — deleted.
 - [ ] `socle/agents/formulas/chisel-default.formula.toml`,
   `chisel-auto.formula.toml`, `chisel-supervised.formula.toml` — rewritten
-  per the Architecture table; `chisel-light.formula.toml` — new.
+  per the Architecture table; `chisel-light.formula.toml` and
+  `chisel-auto-light.formula.toml` — new.
+- [ ] `socle/agents/profiles/architect.md`, `mason.md`, `foreman.md` — the
+  plan's authorship moves to the implementing session, the Architect keeps
+  the `plan-review` verdict, the Mason gains the go-summary for the human
+  gate on its plan, and the Foreman gains the two late reporting rules.
 - [ ] `socle/agents/discipline.md` — rules 6, (new incoming-session), 9
   anchored to the Foreman, 10 de-wired.
 - [ ] `socle/agents/methodology.md` — sections "The roster", "Zone
