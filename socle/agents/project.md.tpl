@@ -41,11 +41,11 @@ them. -->
 
 ## B · Coordination
 
-<!-- Three decisions, asked separately by the questionnaire and readable
+<!-- Two decisions, asked separately by the questionnaire and readable
 separately here: B1 where task statuses live, B2 whether tasks point back to
-tickets in another tool, B3 whether an agent may run a whole task without
-stopping. Everything that needs coordination state — the pipeline steps, the
-skills — resolves through this section and never hardcodes a tool. -->
+tickets in another tool. Everything that needs coordination state — the
+pipeline steps, the skills — resolves through this section and never hardcodes
+a tool. -->
 
 ### B1 · Where task statuses live
 
@@ -124,27 +124,6 @@ skill, no new mechanism.
    copy into the task file, and what (if anything) goes back. It lives with the
    living docs declared in Section D, and its path goes on the Adapter page
    line above. -->
-
-### B3 · Autonomous runs
-
-**Autonomous runs: disabled.**
-
-While that line reads **disabled**, an agent asked to run a whole task without
-stopping at the human decision points must **refuse**, name this line as the
-reason, and continue the normal way (stopping when the pipeline says to stop).
-
-Change the line to **`Autonomous runs: enabled.`** and an agent may run
-`chisel-supervised` (one asynchronous gate — the Owner approves the spec,
-nothing else) or `chisel-auto` (no gates, escalation only) — the same
-one-word line governs both. Either still runs only when a human explicitly
-asks for it in that session; it never becomes the default way of working, and
-WHICH of the two is wanted is itself asked for in-session, never granted
-in-session — this line only lifts the refusal, it does not pick a preset.
-Nobody may grant themselves the permission in-session: it lives here, in a
-versioned file, either way.
-
-<!-- Turning it back off is the same one-word edit; there is nothing to migrate
-in either direction. -->
 
 ## C · Reading list
 

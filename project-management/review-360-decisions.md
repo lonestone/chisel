@@ -391,6 +391,15 @@ fichier de spec) ; ce fichier est la source des intentions.
    déclarant vert est exactement ce que le port doit supprimer — le runtime
    Deno n'aura pas cette dépendance. En attendant, toute vérification de ce
    dépôt se lance avec un python qui a `tomllib`.
+   **Deuxième orphelin à nettoyer ici, ajouté le 2026-08-28 par la slice 04 du
+   chantier 1 (suppression de l'interrupteur, ruling G10) :** un projet équipé
+   avant cette slice garde dans sa glue une sous-section « B3 · Autonomous
+   runs » que le socle ne nomme plus nulle part. Rien ne la lit — tous les
+   pointeurs qui y menaient sont supprimés — et `chisel check` ne la signale
+   jamais, la glue étant hors du jeu de fichiers managés. Résidu cosmétique
+   seul, de la même classe que les copies périmées de la page Foreman
+   supprimée : le nettoyage des orphelins de ce chantier les prend tous les
+   deux.
 5. **Extraction du normatif & règles de rédaction** (E4.1, G1, C1, C2) —
    référence courte (glossaire dédoublonné, zone ownership, tiers),
    methodology redevient le pourquoi, règle d'écriture compacte dans la

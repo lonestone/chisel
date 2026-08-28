@@ -23,9 +23,6 @@
 # Light is chosen by the human, at the sizing check — never a per-case elision
 # an agent decides on its own.
 #
-# Light is NOT an autonomous run: the "Autonomous runs" switch of
-# `.agents/project.md` §B3 does not govern it.
-#
 # This file owns the ORDER and the GATES, nothing else. The content and the
 # progress belong to the spec file; the know-how of each step belongs to the
 # skill that step names; the contract of each role belongs to its profile in

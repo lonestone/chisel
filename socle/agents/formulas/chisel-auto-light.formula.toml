@@ -23,8 +23,8 @@
 # `Inputs` section. There is nothing for a human to relaunch: the Foreman
 # spawns the next step, fresh.
 #
-# Auto-light is opt-in: it runs only when the human explicitly asks for it AND
-# `.agents/project.md` permits it (§B3 · Autonomous runs).
+# Auto-light is opt-in: it runs only when the human explicitly asks for it in
+# that session — never chosen by an agent on its own.
 #
 # This file owns the ORDER, nothing else. The content and the progress belong
 # to the spec file; the know-how of each step belongs to the skill that step
@@ -35,7 +35,7 @@
 # convention, §D living docs, §F gate commands, §G glossary and decisions).
 
 formula = "chisel-auto-light"
-description = "Chisel task pipeline with neither human gate nor validation sub-agent: the measurable floor of the pipeline, kept to be benchmarked against the other presets. Requires the glue to enable autonomous runs."
+description = "Chisel task pipeline with neither human gate nor validation sub-agent: the measurable floor of the pipeline, kept to be benchmarked against the other presets."
 version = 1
 type = "workflow"
 

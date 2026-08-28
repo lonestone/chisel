@@ -37,11 +37,11 @@
 # write goes through the glue `.agents/project.md` (§A paths, §B tracker
 # convention, §D living docs, §F gate commands, §G glossary and decisions).
 #
-# Supervised is opt-in: it runs only when the human explicitly asks for it AND
-# `.agents/project.md` permits it (§B3 · Autonomous runs).
+# Supervised is opt-in: it runs only when the human explicitly asks for it in
+# that session — never chosen by an agent on its own.
 
 formula = "chisel-supervised"
-description = "Chisel task pipeline, Supervised mode: the same steps as chisel-auto with exactly one human await — the Owner approves the spec. The program design and the review arbitration are not the Owner's here. Requires the glue to enable it."
+description = "Chisel task pipeline, Supervised mode: the same steps as chisel-auto with exactly one human await — the Owner approves the spec. The program design and the review arbitration are not the Owner's here."
 version = 1
 type = "workflow"
 
