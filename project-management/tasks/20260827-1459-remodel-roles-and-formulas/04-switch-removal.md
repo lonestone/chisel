@@ -973,6 +973,19 @@ directory. Nothing under `test/` or `bin/` was touched. Diff of the three
 commits, read against `3b1c0cd` as the base: the eight carriers plus the
 decisions file, nine files, 39 insertions and 72 deletions.
 
+**Diff review, one finding applied — Standards axis, low.** Ordered in by the
+thread owner on 2026-08-28: the note this slice added under chantier 4 of
+`project-management/review-360-decisions.md` wrote its section reference
+without the file, which the section-reference rule of
+`socle/agents/discipline.md` forbids — and this slice's own commit installed
+that rule's worked example. The reference now reads
+« §B3 · Autonomous runs » de `.agents/project.md`, the § restored with it, and
+the rest of the note stands as written; the paragraph was re-wrapped around the
+longer sentence. Suite re-run after the fix: 9 scenarios, 94 assertions, 0
+failed, 592 lines. The Inspector's second finding — `README.md` still teaching
+the deleted switch — is a residue at the Owner's gate, outside this slice's
+scope and not acted on here.
+
 **Nothing for the proposal door.** The one finding this slice raised at plan
 time — the under-counted scope of the bare-section-reference sweep — was
 recorded by the thread owner under chantier 5 of
