@@ -1,6 +1,6 @@
 # 01 — Templates and installer
 
-**Status:** 🟡 In Progress — implementation complete; awaiting `diff-review`.
+**Status:** 🟢 Complete — verified and cleared by `diff-review`.
 **Blocked by:** None — runs first and alone. It decides what the two
 documents look like and how they are named; slices 2–5 all read those
 decisions off this slice rather than off the parent spec's prose.
@@ -24,21 +24,21 @@ plus its share of the suite-green criterion; the rest belong to slices 2–5
 and are not restated here as if they were this slice's to close (see
 "Verification" below for which and why).
 
-- [ ] **two-templates-shipped** — `test -f socle/templates/000-template.spec.md
+- [x] **two-templates-shipped** — `test -f socle/templates/000-template.spec.md
   && test -f socle/templates/000-template.work.md && test !
   -f socle/templates/000-task-file-template.md` passes.
-- [ ] **old-template-cited-nowhere** — `grep -rn "000-task-file-template"
+- [x] **old-template-cited-nowhere** — `grep -rn "000-task-file-template"
   socle/ bin/ test/ AGENTS.md PHILOSOPHY.md` returns nothing.
-- [ ] **both-templates-installed-and-managed** — Given a fresh `chisel init`,
+- [x] **both-templates-installed-and-managed** — Given a fresh `chisel init`,
   When the tree is listed, Then both templates exist under
   `project-management/`, the old one does not, and `chisel check` reports both
   as managed. Mechanically: `grep -c "000-template"
   test/fixtures/golden-tree.txt` returns 2, and `grep -n
   "000-task-file-template" test/fixtures/golden-tree.txt` returns nothing.
-- [ ] **spec-document-is-all-review-surface** — `grep -n "AGENT ZONE"
+- [x] **spec-document-is-all-review-surface** — `grep -n "AGENT ZONE"
   socle/templates/000-template.spec.md` and `grep -n "🧑"
   socle/templates/000-template.work.md` both return nothing.
-- [ ] **the-spec-keeps-a-notes-section-for-pre-plan-writers** — Given
+- [x] **the-spec-keeps-a-notes-section-for-pre-plan-writers** — Given
   `socle/templates/000-template.spec.md`, When read, Then it carries a Notes
   section scoped to what is written before a work document exists — the
   spec review's findings, and the assumptions a gateless preset records —
@@ -49,17 +49,17 @@ and are not restated here as if they were this slice's to close (see
   half holds because it names the Notes of the spec twice — its
   `description` frontmatter and its Verdict line — and this slice's spec
   template keeps that section real).
-- [ ] **named-criteria-in-the-spec-template** — `grep -n "Criterion 1"
+- [x] **named-criteria-in-the-spec-template** — `grep -n "Criterion 1"
   socle/templates/000-template.spec.md` returns nothing; the template's
   Acceptance Criteria guidance requires a name per criterion and says an
   amended one is struck with its dated replacement below.
-- [ ] **work-document-owns-the-program-design** — Given
+- [x] **work-document-owns-the-program-design** — Given
   `socle/templates/000-template.work.md`, When read, Then it carries the
   program design and its pseudo-code, the worklog, the implementation
   checkboxes, Notes & Snippets and the diff-review findings, and says who
   creates it and when: the implementing session, at `plan`, in the spec's own
   directory, named by replacing the `.spec.md` suffix with `.work.md`.
-- [ ] **suite-green** (this slice's share) — `PATH="/opt/homebrew/bin:$PATH"
+- [x] **suite-green** (this slice's share) — `PATH="/opt/homebrew/bin:$PATH"
   bash test/run.sh` passes with zero failures after every commit of this
   slice, not just the last one.
 
@@ -588,6 +588,10 @@ unticked box.
 `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passed with 9 scenarios,
 94 assertions and 0 failures. The seven slice criteria were re-run against
 the final tree and passed. The slice now awaits the Inspector's diff review.
+
+2026-08-31 — Inspector cleared the diff-review with no findings on either
+Standards or Spec. The Foreman ticked the seven slice criteria against the
+recorded checks and closed the slice.
 
 The Mason's own working notes, code snippets, exploration findings. May be
 verbose — this is agent working space, and nobody else is required to read
