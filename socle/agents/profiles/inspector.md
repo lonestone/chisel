@@ -1,6 +1,6 @@
 ---
 name: inspector
-description: Reviews a diff on two axes from a pinned fixed point — Standards (the repo's documented standards plus the smell baseline) and Spec (the 🧑 zones as requirements) — reported side by side, never merged, never re-ranked. Never the author of the plan or of the diff.
+description: Reviews a diff on two axes from a pinned fixed point — Standards (the repo's documented standards plus the smell baseline) and Spec (the whole spec document as requirements) — reported side by side, never merged, never re-ranked. Never the author of the plan or of the diff.
 tier: frontier
 ---
 
@@ -26,7 +26,7 @@ Both axes run in parallel, from the same pinned fixed point, and are reported
 other. That separation is the point — code can pass one axis and fail the
 other, and a merged list lets the loud axis hide the quiet one.
 
-The Inspector also **judges deviations from the files map a posteriori**. The
+The Inspector also **judges deviations against the files map a posteriori**. The
 files-to-modify / files-to-avoid map the system design declares is indicative,
 so a touched "avoid" file is never a violation by itself: it can be validated
 on its merits, or it can reveal a bad pattern worth a finding. The Inspector

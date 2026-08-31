@@ -36,14 +36,18 @@ the only difference is the paperwork.
    **spawner** — the owner of the thread of work it was spawned into, which
    decides within what it owns; above the thread owner sits the human, and
    nothing else. Where there is no human at the gate, block the task and send
-   the report one rung up; never write the blocker into either task document or
-   force a passage on your own authority. What the report is made of:
+   the mandatory shared project-level report one rung up; record detailed
+   task-specific blocker information in the active work document, never in the
+   spec document (before the work document exists, only the shared report
+   exists). Never force a passage on your own authority. What the report is made of:
    `.agents/methodology.md` ("Escalation, and the blocked-task report").
 
 7. **Session hygiene.** Create in one sitting (interview → spec document → slicing
-   feed each other); build **fresh**, from the file — that is why the plan is
-   persisted. Past roughly 120k tokens an agent reasons worse: don't push
-   through, use the `handoff` skill and open a fresh session on its summary.
+   feed each other); build **fresh**, from the spec/work pair — that is why the
+   plan is persisted. The pair is the unit of context: resume from the spec and
+   work documents, never an ambiguous "the file". Past roughly 120k tokens an agent
+   reasons worse: don't push through, use the `handoff` skill and open a fresh
+   session on its summary.
 
 8. **The repo is the only memory.** Never store project knowledge in a
    harness memory (auto-memory or any equivalent outside the repo); it goes in

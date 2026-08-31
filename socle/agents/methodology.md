@@ -131,13 +131,15 @@ decides within what it owns and hands anything above that one rung up; above
 the Foreman sits the human, full stop. Which rung a question goes to depends on
 who spawned whom, not on a hierarchy between roles: there is none.
 
-Whoever cannot decide **blocks the task** and writes the report. Its form is
-named across the profiles and the formulas and defined here, once, and it
-creates **no new artifact**: a dated ⚠️ line in the journal declared in §A ·
-Task workspace of `.agents/project.md`, plus — when §B1 · Where task statuses
-live of `.agents/project.md` keeps the coordination state in beads — a blocking
-`escalation` item assigned to the Owner, per the §B convention. That is the
-whole mechanic.
+Whoever cannot decide **blocks the task** and writes two records. The shared
+project-level signal is mandatory: a dated ⚠️ line in the journal declared in
+§A · Task workspace of `.agents/project.md`, plus — when §B1 · Where task
+statuses live of `.agents/project.md` keeps the coordination state in beads — a
+blocking `escalation` item assigned to the Owner, per the §B convention. The
+active task's work document carries the detailed task-specific blocker record;
+before `plan`, while no work document exists, only the shared report exists.
+Never put implementation blocker detail into the spec document. The active
+work record creates no additional artifact beyond the task's work document.
 
 ## The pipeline is nine steps
 
@@ -163,14 +165,15 @@ not restate it step by step.
 Models cannot be trusted to maintain codebase quality over time without human
 steering, so the human must review — and review is only cheap when the human
 knows **what** to read and **how carefully**. The gradient answers that
-directly: the top of a spec document is the decision surface (read it entirely,
-before any code); the bottom is agent working space (skim or skip).
+directly: the spec document is the decision surface and is read according to
+its two 🧑 zones before any code; the separate work document is Mason-owned
+working space and is read for implementation context and review evidence.
 
-This reconciles detail vs brevity: we don't cut detail, we order it by review
-criticality. Only the top of the spec document must stay short — prefer a
-mockup or diagram over three paragraphs. Every decision NOT made explicit in
-a 🧑 zone is a decision the human would otherwise make implicitly during code
-review — the most expensive possible moment to change one's mind.
+This reconciles detail vs brevity: we don't cut detail, we order the spec
+document by review criticality. Only its top decision surface must stay short
+— prefer a mockup or diagram over three paragraphs. Every decision NOT made
+explicit in a 🧑 zone is a decision the human would otherwise make implicitly
+during code review — the most expensive possible moment to change one's mind.
 
 The spec document's 🧑 zones are their owner's property — see [Zone
 ownership](#zone-ownership) above. An agent that discovers a conflict with one
@@ -196,7 +199,7 @@ the answer demands them. Rationale:
 - What slicing adds is **decomposition**: blocking edges, the frontier, the
   order. That only has value when there are actually multiple pieces.
 - Real-world distribution (dex): ~40% of work is one-shot, medium work gets a
-  single document, only large work gets the full breakdown. Rigor must adapt
+  single spec/work pair, only large work gets the full breakdown. Rigor must adapt
   to the work, not the other way around.
 
 What IS unconditional: the check itself, stated out loud — and it asks two

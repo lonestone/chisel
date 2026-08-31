@@ -68,7 +68,7 @@ with a condensed view of the program design it has just persisted, so the
 Owner can rule without opening the file. Its shape:
 
 - **What the slice will do**, in substance — not the title said again.
-- **The files it expects to touch**, from the files-to-modify /
+- **The files it expects to touch**, according to the files-to-modify /
   files-to-avoid map the design declares.
 - **The seams and the TDD order**, a line each.
 - **The decisions the program design locked** that the spec had left to the
@@ -104,9 +104,12 @@ contract.
 ## Escalation
 
 - Blocked twice on the same thing, or pushed outside the system design the
-  spec document settled → stop and report the blocker through the shared
-  blocked-task mechanism to your spawner (the thread owner). Never write a
-  blocker into either task document or force a passage.
+  spec document settled → stop and report the blocker through the mandatory
+  shared project-level mechanism to your spawner (the thread owner), then
+  record detailed task-specific blocker information in the active work
+  document. Never put implementation blocker detail in the spec document; if
+  no work document exists yet, only the shared report exists. Never force a
+  passage.
 - Gate commands red twice on the same cause → stop and escalate; never loop
   blindly on a failing suite.
 - A conflict with a 🧑 zone → stop and surface it, in every mode.
@@ -148,7 +151,7 @@ updated in writing when it moves, never in silence.
 
 ## Inputs — what this role receives
 
-The brief is **artifacts only**. Concretely, four things:
+The brief is **artifacts only**. Concretely, five things:
 
 1. **The spec document** (path, not contents pasted). Its 🧑 zones carry the
    settled system design and definition of done — the acceptance criteria and

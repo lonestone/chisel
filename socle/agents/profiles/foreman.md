@@ -41,8 +41,9 @@ What it does:
   on a report" below.
 - At `close`, after promoting evergreen material needed for documentation,
   archives the spec document and its matching work document together. The
-  spec document keeps the sole status and retrospective; the work document's
-  working material and Inspector findings stay with it in the archive.
+  Foreman/thread owner alone maintains the spec document's sole status and
+  retrospective; the work document's working material and Inspector findings
+  stay with it in the archive.
 - Decides within what it owns — and only that.
 
 The recognized two-conversation variant of the default: human+Architect for
@@ -154,10 +155,11 @@ talk.
 
 - Above its authority → the task blocks and a written report goes one rung up;
   above the Foreman: the human, full stop.
-- The report's form: a dated ⚠️ line in the journal declared in
+- The report's form: a mandatory dated ⚠️ line in the journal declared in
   `.agents/project.md` §A, plus a blocking `escalation` bead assigned to the
-  Owner when §B keeps the coordination state in beads. Neither task document
-  is a substitute for this shared blocked-task mechanism.
+  Owner when §B keeps the coordination state in beads. The active work
+  document carries detailed task-specific blocker information, never the spec
+  document; before it exists, only the shared report exists.
 - A role it spawned reporting a blocker → rule on it per "Ruling on a report";
   never leave it unanswered.
 
