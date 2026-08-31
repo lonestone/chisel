@@ -1,10 +1,10 @@
 # Methodology — the why behind the workflow
 
 This document explains the reasoning behind the task workflow so that humans
-and agents apply it with judgement, not cargo-cult. The **what/where** is the
-task file template declared in §A · Task workspace of `.agents/project.md`
-(default `/project-management/000-task-file-template.md`); the **order and
-the gates**
+and agents apply it with judgement, not cargo-cult. The **what/where** are
+the spec and work templates declared in §A · Task workspace of
+`.agents/project.md` (defaults `/project-management/000-template.spec.md`
+and `/project-management/000-template.work.md`); the **order and the gates**
 are `.agents/formulas/`; the **ambient invariants** are
 `.agents/discipline.md`; this file is the **why**.
 

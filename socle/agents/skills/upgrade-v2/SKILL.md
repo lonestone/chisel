@@ -156,8 +156,9 @@ Two things to check right after, before moving on:
   seeded journal with a header and a dated entry, not an empty file. Leaving it
   is the two-journal outcome this migration exists to prevent. The empty
   `tasks/` and `archive/` directories are harmless (git does not track them),
-  and `project-management/000-task-file-template.md` stays where the installer
-  put it — it is a managed file and `chisel check` expects it at that path.
+  and `project-management/000-template.spec.md` and
+  `project-management/000-template.work.md` stay where the installer put
+  them — they are managed files and `chisel check` expects them at those paths.
   Say what you deleted.
 
 ## Step 5 — Complete the glue

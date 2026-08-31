@@ -144,8 +144,10 @@ alongside the new vocabulary.
 The full reference: [methodology.md](./socle/agents/methodology.md) (the
 concepts), [`.agents/discipline.md`](./socle/agents/discipline.md) (the
 ambient core), [`.agents/formulas/`](./socle/agents/formulas/) (the order
-and the gates, per preset), and the task template in
-[socle/templates/](./socle/templates/000-task-file-template.md).
+and the gates, per preset), and the two task templates in
+[socle/templates/](./socle/templates/000-template.spec.md) — the spec document
+and, for the work document,
+[000-template.work.md](./socle/templates/000-template.work.md).
 
 ## Sources
 

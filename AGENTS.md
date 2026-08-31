@@ -3,8 +3,9 @@
 This repo builds and ships the Lonestone dev-workflow socle. It dogfoods the
 methodology it ships.
 
-- Work is tracked as task files in `project-management/tasks/` (template:
-  `project-management/000-task-file-template.md`; completed →
+- Work is tracked as task files in `project-management/tasks/` (templates:
+  `project-management/000-template.spec.md` and
+  `project-management/000-template.work.md`; completed →
   `project-management/archive/`; dated `project-management/CHANGELOG.md`).
 - Task lifecycle: interview → seams agreed → task file (reading gradient) →
   sizing check out loud → work from the file in a fresh session
