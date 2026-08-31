@@ -1,7 +1,7 @@
 # Discipline — the ambient core
 
 These rules apply to **every** conversation in this repo, with or without a
-task file. A one-shot fix runs under the same discipline as a sliced feature;
+task artifact. A one-shot fix runs under the same discipline as a sliced feature;
 the only difference is the paperwork.
 
 1. **Read before acting.** At session start, read the reading list declared in
@@ -10,11 +10,12 @@ the only difference is the paperwork.
 
 2. **Plan first.** Even for a one-shot fix: say what you are about to do
    before doing it. Nothing half-decided crosses into code. When the work has
-   a spec file, the approved plan is PERSISTED into that file before any code
-   — how and where is the `plan` step of the formula (see below).
+   a spec document, the approved program design is PERSISTED into its matching
+   work document before any code — how and where is the `plan` step of the
+   formula (see below).
 
-3. **Zone-owner sections are law.** Sections marked 🧑 in any spec file carry
-   their owner's decisions — who that is follows the doctrine in
+3. **Zone-owner sections are law.** Sections marked 🧑 in any spec document
+   carry their owner's decisions — who that is follows the doctrine in
    `.agents/methodology.md` ("Zone ownership"). Never contradict one silently:
    if the work reveals a conflict with a 🧑 zone, stop and surface it.
 
@@ -23,9 +24,9 @@ the only difference is the paperwork.
    behaviour changed). Evidence first — red output is reported as red, never
    narrated as green.
 
-5. **The bridge rule.** No spec file for casual conversation or one-shot work.
+5. **The bridge rule.** No task artifact for casual conversation or one-shot work.
    But when a conversation turns into real, scoped, multi-step work, recognize
-   it and PROPOSE the pipeline (a spec file, the formula) — inform, never
+   it and PROPOSE the pipeline (a spec document and its formula) — inform, never
    force. Formality is opt-in; detection is not. Most work should stay
    small: if everything becomes a big feature, review gets diluted and the
    method has failed.
@@ -34,12 +35,12 @@ the only difference is the paperwork.
    outside the approved plan → stop and ask. A sub-agent reports to its
    **spawner** — the owner of the thread of work it was spawned into, which
    decides within what it owns; above the thread owner sits the human, and
-   nothing else. Where there is no human at the gate, block the task, write the
-   blocker into the spec file and send the report one rung up; never force a
-   passage on your own authority. What the report is made of:
+   nothing else. Where there is no human at the gate, block the task and send
+   the report one rung up; never write the blocker into either task document or
+   force a passage on your own authority. What the report is made of:
    `.agents/methodology.md` ("Escalation, and the blocked-task report").
 
-7. **Session hygiene.** Create in one sitting (interview → spec file → slicing
+7. **Session hygiene.** Create in one sitting (interview → spec document → slicing
    feed each other); build **fresh**, from the file — that is why the plan is
    persisted. Past roughly 120k tokens an agent reasons worse: don't push
    through, use the `handoff` skill and open a fresh session on its summary.
@@ -77,9 +78,10 @@ the only difference is the paperwork.
 ## The pipeline, for real scoped work
 
 The order of steps and the gates live in `.agents/formulas/` — see the block
-in `AGENTS.md`. The spec file owns the content and the progress; the formula
-owns only the order and the gates; the know-how of each step lives in the
-skill that step names.
+in `AGENTS.md`. The spec document owns requirements and sole status; the work
+document owns program design and implementation progress. The formula owns
+only the order and gates; the know-how of each step lives in the skill that
+step names.
 
 ## Side lanes
 
@@ -90,7 +92,7 @@ Not everything starts as a feature idea:
 | Something's broken (hard bug, flake, regression) | `diagnosing-bugs` — build a repeatable failing check first, THEN theorize; regression test before the fix | the fix lands as normal work |
 | A design question that talking cannot settle | `prototype` — throwaway code, one command to run; keep the answer, delete the code | back into the interview |
 | Reading legwork (docs, API facts) | `research` — background agent, cited markdown file | feeds the interview |
-| So big and foggy it cannot even be sliced | `wayfinder` — map the open DECISIONS first, resolve them one by one | then the spec file and its slices |
+| So big and foggy it cannot even be sliced | `wayfinder` — map the open DECISIONS first, resolve them one by one | then the spec document and its slices |
 | A spare moment to make the codebase nicer to work in | `improve-codebase-architecture` | produces an idea → normal flow |
 | Raw issues coming from an external tracker | `triage` — dormant until one is wired up in `.agents/project.md` §B | → normal flow |
 

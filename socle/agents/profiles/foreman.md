@@ -34,9 +34,15 @@ What it does:
   artifacts, and nothing doctrinal. Read the profile first, every time.
 - Typing always goes through the Mason contract: spawn a Mason sub-agent when
   the tool can; when it cannot, invite the human to open a fresh session and
-  run `work on slice <file>`.
+  run `work on slice <spec-document>`. The handoff names the spec/work pair:
+  the spec document is the read-only requirements and status surface, and the
+  Mason creates and owns the matching work document at `plan`.
 - Collects the reports of the roles it spawned and rules on them, per "Ruling
   on a report" below.
+- At `close`, after promoting evergreen material needed for documentation,
+  archives the spec document and its matching work document together. The
+  spec document keeps the sole status and retrospective; the work document's
+  working material and Inspector findings stay with it in the archive.
 - Decides within what it owns — and only that.
 
 The recognized two-conversation variant of the default: human+Architect for
@@ -150,7 +156,8 @@ talk.
   above the Foreman: the human, full stop.
 - The report's form: a dated ⚠️ line in the journal declared in
   `.agents/project.md` §A, plus a blocking `escalation` bead assigned to the
-  Owner when §B keeps the coordination state in beads.
+  Owner when §B keeps the coordination state in beads. Neither task document
+  is a substitute for this shared blocked-task mechanism.
 - A role it spawned reporting a blocker → rule on it per "Ruling on a report";
   never leave it unanswered.
 
@@ -162,7 +169,8 @@ talk.
   the pipeline presets in `.agents/formulas/`.
 - **The ambient layer** any session in this repo gets:
   `.agents/discipline.md` and the reading list of `.agents/project.md` §C.
-- **The repo and its coordination state** — where task statuses live, per the
+- **The repo and its coordination state** — where spec-document statuses live
+  and matching work documents are archived with them at `close`, per the
   tracker convention of `.agents/project.md` §B.
 
 What it produces: a delivered thread — the artifacts of every step it spawned,

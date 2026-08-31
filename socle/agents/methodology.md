@@ -19,14 +19,16 @@ completion, a dated journal) with patterns from
 
 | Term | Meaning |
 |---|---|
-| **Task** | The unit of work AND its artifact: one markdown file in the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`), named `<time-id>-<intention>.md`. Self-contained, review-gradient structured. |
-| **Slice** | A child task produced by decomposing a large task: a tracer-bullet vertical cut through every layer, demoable on its own, sized for a single fresh context window. Lives as `tasks/<time-id>-<feature>/<NN>-<slug>.md`. A small task IS its own single slice — no slice files are created for it. |
+| **Task** | The unit of work and its spec document in the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`), named `<time-id>-<intention>.spec.md`; a typed task also has a matching `<time-id>-<intention>.work.md` beside it. |
+| **Spec document** | The approved review surface: intent, acceptance criteria, seams, system design, decisions, testing strategy, slices, deliverables, references, pre-plan Notes and retrospective. It carries the task's sole status and has the reading gradient's two 🧑 zones; it never carries Mason working material. |
+| **Work document** | The Mason-owned companion, created at `plan` beside a spec document by replacing `.spec.md` with `.work.md`. It carries program design, pseudo-code, worklog, implementation checkboxes, Notes & Snippets and Inspector findings, and has no zone marker. |
+| **Slice** | A child task produced by decomposing a large task: a tracer-bullet vertical cut through every layer, demoable on its own, sized for a single fresh context window. Lives as `tasks/<time-id>-<feature>/<NN>-<slug>.spec.md`, with its work companion created only when typed. A small task IS its own single slice — no slice documents are created for it. |
 | **Seam** | The public boundary where a feature is tested — agreed with the human BEFORE implementation. Tests live at seams, never against internals. Fewer is better (ideal: one). |
-| **Reading gradient** | The ordering of a task file by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich) → 🧑 REVIEW IF RELEVANT (program design) → 🤖 AGENT ZONE (verbose working space). Detail is never cut, it is ordered. |
+| **Reading gradient** | The ordering of the spec document by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich) → 🧑 REVIEW IF RELEVANT (system design and remaining review surface). Detail is never cut, it is ordered. The work document has no zone and is Mason-owned working space. |
 | **Blocking edge** | A dependency between slices: "slice 3 is blocked by slice 1". A slice with no blockers can start immediately. |
 | **Frontier** | The set of slices whose blockers are all done — what can be worked on right now. |
 | **Expand–contract** | The sequencing for wide mechanical refactors (rename a column, retype a shared symbol): add the new form beside the old → migrate call sites in batches → delete the old form. The exception to vertical slicing. |
-| **One-shot** | Work done without a task file. The work rules (context preamble, plan-first, vertical discipline) still apply; only the file bookkeeping is skipped. |
+| **One-shot** | Work done without a task artifact. The work rules (context preamble, plan-first, vertical discipline) still apply; only the file bookkeeping is skipped. |
 
 We do NOT use the word "ticket" for local work. It is reserved for items in an
 external tracker (Linear, GitHub Issues), if/when one is wired up — see
@@ -97,23 +99,23 @@ when it escalates, exactly what it receives — lives in the profile.
 
 ## Zone ownership
 
-The 🧑 mark names the zone's **owner**, not simply "the human" — and ownership
-follows one rule: a zone belongs to whoever **approved** it, and where nobody
-approves it, to whoever **authored** it.
+The 🧑 mark names the owner of a review zone, not simply "the human" — and
+ownership follows one rule: a zone belongs to whoever **approved** it, and
+where nobody approves it, to whoever **authored** it. The marks occur only in
+the spec document. The work document has no zone marker: it belongs entirely
+to the Mason that creates it.
 
-- In the **default**, the human approved both the spec and the Mason's program
-  design, so both are his.
-- In **light**, the human approved the spec, so it is his; nobody approves the
-  program design — no `plan-review`, no gate on it — so it belongs to its
-  author, the Mason.
-- In **supervised**, the spec is the human's (the one asynchronous gate); the
-  program design is the Architect's, who approved it at `plan-review`.
-- In **auto**, no human approved anything: the spec is the Architect's, who
-  authored it (the Checker reviews it, it does not author it), and the program
-  design is the Architect's, who approved it at `plan-review` — a Mason's
-  escalation on either terminates there, and the human never hears of it.
-- Under **`chisel-auto-light`** the zones are **ignored**, not reassigned to
-  their author: the preset designs, plans and types in one go. Ruled by the
+- In the **default**, the human approves the spec document; the work document
+  remains Mason-owned even when the human gates its program design.
+- In **light**, the human approves the spec document; the Mason owns its work
+  document without a `plan-review` gate.
+- In **supervised**, the human approves the spec document; the Mason owns the
+  work document even though the Architect validates its program design.
+- In **auto**, no human approves the spec document: the Architect authors it,
+  while the Mason owns the work document and the Architect validates its
+  program design.
+- Under **`chisel-auto-light`** the spec zones are **ignored**, not reassigned
+  to their author: the preset designs, plans and types in one go. Ruled by the
   Owner on 2026-08-28: "Dans le cas d'un chisel-auto-light ces zones sont à
   ignorer : ça design + plan + code d'une traite."
 
@@ -161,35 +163,36 @@ not restate it step by step.
 Models cannot be trusted to maintain codebase quality over time without human
 steering, so the human must review — and review is only cheap when the human
 knows **what** to read and **how carefully**. The gradient answers that
-directly: the top of a task file is the decision surface (read it entirely,
+directly: the top of a spec document is the decision surface (read it entirely,
 before any code); the bottom is agent working space (skim or skip).
 
 This reconciles detail vs brevity: we don't cut detail, we order it by review
-criticality. Only the top must stay short — prefer a mockup or diagram over
-three paragraphs. Every decision NOT made explicit in a 🧑 zone is a decision
-the human would otherwise make implicitly during code review — the most
-expensive possible moment to change one's mind.
+criticality. Only the top of the spec document must stay short — prefer a
+mockup or diagram over three paragraphs. Every decision NOT made explicit in
+a 🧑 zone is a decision the human would otherwise make implicitly during code
+review — the most expensive possible moment to change one's mind.
 
-The 🧑 zones are their owner's property — see [Zone
+The spec document's 🧑 zones are their owner's property — see [Zone
 ownership](#zone-ownership) above. An agent that discovers a conflict with one
-must stop and surface it, never silently override.
+must stop and surface it, never silently override. The work document is wholly
+owned by its Mason and carries no zone marker.
 
 ## Why seams are agreed before implementation
 
-A seam is program design the human owns. Agreeing seams up front means testing
-effort lands on critical paths instead of every edge case, and the tests
+A seam is a human-agreed system-design boundary. Agreeing seams up front means
+testing effort lands on critical paths instead of every edge case, and the tests
 survive refactors because they observe public behavior, not internals. It is
 also the cheapest moment to catch a bad boundary — before code exists on both
 sides of it.
 
 ## Why slicing is conditional (the sizing check)
 
-The sizing check runs for EVERY task; the slice files are only created when
+The sizing check runs for EVERY task; slice documents are only created when
 the answer demands them. Rationale:
 
 - A slice is defined as "fits in a single fresh context window, demoable in
   one pass". A small task already satisfies both — slicing it would produce a
-  folder with one slice that duplicates the task file. Pure ceremony.
+  folder with one slice that duplicates the spec document. Pure ceremony.
 - What slicing adds is **decomposition**: blocking edges, the frontier, the
   order. That only has value when there are actually multiple pieces.
 - Real-world distribution (dex): ~40% of work is one-shot, medium work gets a
@@ -211,12 +214,11 @@ sliced or not. Only the decomposition artifact is conditional.
 
 ## The two designs — and why they do not happen at the same moment
 
-There are two designs, and conflating them is the classic failure. The task
-file template separates them by zone, and the pipeline separates them in
-time:
+There are two designs, and conflating them is the classic failure. The spec
+and work templates separate them, and the pipeline separates them in time:
 
 **System design** — how the pieces talk: services, contracts, schemas, data
-models — is the Architecture section of the template, 🧑 REVIEW CAREFULLY.
+models — is in the spec document's Architecture section, 🧑 REVIEW CAREFULLY.
 It is settled **at creation time**: the interview grills its owner, the
 `spec-review` loop challenges it, and the spec gate (where the mode has one)
 approves it. This is sometimes a lot of work and several rounds, synchronous
@@ -233,29 +235,31 @@ session designs it **just-in-time at its plan step**, with the real code in
 view, and the `plan-review` loop validates it before any typing.
 
 That program design must not die with the conversation. Once validated, the
-implementing session **persists it into the slice file's Design section** —
-the `plan` step of the formulas says so. Three reasons:
+implementing session **persists it into the matching work document** — the
+`plan` step of the formulas says so. Three reasons:
 
-1. **The completion review reads the file.** `code-review`'s Spec axis treats
-   the task file as the requirements; a design that lives only in chat is
-   invisible to it — the review would check 4 criteria instead of the design.
-2. **Dependent slices read the file.** Slice 04 builds on decisions made in
-   slice 01's plan; the file is the only channel between fresh contexts.
-3. **Re-runs and crashes.** The artifact must stay self-contained (context
-   hygiene) — a session must be resumable from the file alone.
+1. **The completion review reads the pair.** `code-review`'s Spec axis treats
+   the whole spec document as requirements and the work document as evidence;
+   a design that lives only in chat is invisible to it.
+2. **Dependent slices read the artifacts.** Slice 04 can build on decisions
+   made in slice 01's work document; the committed pair is the channel between
+   fresh contexts.
+3. **Re-runs and crashes.** The pair must stay self-contained (context
+   hygiene) — a session must be resumable from the spec and work documents.
 
-So the lifecycle of a slice file is: born with intent and its system design
-settled → program design persisted at plan validation → worklog during
-implementation → checked off at completion.
+So the lifecycle of a slice pair is: the spec document is born with intent and
+its system design settled → the Mason creates the work document and persists
+program design at plan validation → worklog and implementation checkboxes live
+in the work document → both are archived at completion.
 
 **Corollary — the cost gradient.** Persisting the program design makes the
-slice file a complete brief, which unlocks a division of labor: the thread
+spec/work pair a complete brief, which unlocks a division of labor: the thread
 owner runs the interview, the **Architect** does the upstream thinking that
 follows it — the exploration, the spec and the system design — and answers the
 `plan-review`; the **Mason** designs the how for itself at its `plan` step and
 types it. Typing always goes through the Mason contract, by one of two
 mandatory paths: a Mason sub-agent where the tool can spawn one, otherwise a
-fresh session running `work on slice <file>`. It is not a choice offered to the
+fresh session running `work on slice <spec-document>`. It is not a choice offered to the
 user, and no agent elides it. The delegation boundary is the **system design**:
 above it the *what* — architecture, scope, and the seams the work is tested
 through — settled at creation time and approved at the gate; below it the
@@ -281,13 +285,14 @@ frontier tier is reserved for. Everything below the system design is the how,
 and writing the how and typing it do not need the same tier.
 
 The Mason's brief is **artifacts only, never the planning conversation**: the
-slice file + the artifacts it explicitly references (parent 🧑 zones,
-`CONTEXT.md`/ADRs, prior art) + the repo's ambient layer. Two disciplines
+spec document, its matching work document when present, and the artifacts it
+explicitly references (parent 🧑 zones, `CONTEXT.md`/ADRs, prior art) + the
+repo's ambient layer. Two disciplines
 follow (both from observed swarm failure modes):
 
-- **Explicit references beat shared memory.** The Design section must link
-  what it relies on — the "compile-checked references" answer to split-brain;
-  our version is: the Mason follows links, not vibes.
+- **Explicit references beat shared memory.** The work document's program
+  design must link what it relies on — the "compile-checked references"
+  answer to split-brain; our version is: the Mason follows links, not vibes.
 - **The Architect never implements** — its context stays clean for the
   `plan-review` verdict it answers on the program design; the diff is the
   Inspector's. All completion gates still run; the two-axis review is a
@@ -346,9 +351,9 @@ formula steps, skills — names a tier and points here.
 
 | dex phase | Our artifact | Produced by | Delegable? |
 |---|---|---|---|
-| **Product** (why/what/success) | Parent task 🧑 REVIEW CAREFULLY: Context, Scope, Acceptance Criteria | Architect + human (grilling); frontier tier | never |
-| **System Architecture** (how the pieces talk) | Parent task **Architecture** section (🧑, medium/large; diagrams > prose) | Architect + human; frontier tier | never |
-| **Program Design** (types, signatures, layout, call stacks) | Unsliced task: Implementation Decisions. Sliced task: each slice's **Design** section, persisted at plan time | The session that implements, at its `plan` step — at that session's tier, not the frontier; an Architect validates it at `plan-review` | ✅ always — it is the implementing session's own work |
+| **Product** (why/what/success) | Parent task spec document 🧑 REVIEW CAREFULLY: Context, Scope, Acceptance Criteria | Architect + human (grilling); frontier tier | never |
+| **System Architecture** (how the pieces talk) | Parent task spec document **Architecture** section (🧑, medium/large; diagrams > prose) | Architect + human; frontier tier | never |
+| **Program Design** (types, signatures, layout, call stacks) | Matching work document, persisted at plan time | The session that implements, at its `plan` step — at that session's tier, not the frontier; an Architect validates it at `plan-review` | ✅ always — it is the implementing session's own work |
 | **Vertical Slices** (implementation) | The code, cycle by cycle | Mason, cheap tier — mid when the slice is delicate, or in a codebase it does not know | ✅ always — through the Mason contract |
 
 Upstream note: Pocock does NOT persist per-ticket program design — his
@@ -359,26 +364,27 @@ human-owned, reviewable artifact".
 
 ## Why the time-id prefix
 
-`scripts/task-id.sh` generates `YYYYMMDD-HHmm`. Prefixing task files and slice
+`scripts/task-id.sh` generates `YYYYMMDD-HHmm`. Prefixing spec documents and slice
 folders with it gives automatic chronological sorting in the tree while the
 rest of the name carries the intention. Incremental numbers are banned: they
 collide across branches and carry no meaning.
 
 ## Why the interview comes first (and is a separate skill)
 
-Writing a task file before shared understanding produces confident nonsense.
+Writing a spec document before shared understanding produces confident nonsense.
 The `grilling` skill interviews one question at a time with a recommended
 answer per question — facts are looked up, decisions are put to the human. The
-task file is only written once the human confirms shared understanding.
+spec document is only written once the human confirms shared understanding.
 
 ## Why a two-axis review at completion
 
 A change can follow every standard and implement the wrong thing, or do
 exactly what the task asked while breaking conventions. The `code-review`
 skill runs **Standards** (documented repo standards + a fixed baseline of
-Fowler smells, always judgement calls) and **Spec** (the task file's 🧑 zones
-as requirements: anything missing? any scope creep?) as separate axes so one
-cannot mask the other.
+Fowler smells, always judgement calls) and **Spec** (the whole spec document,
+including its system design, as requirements; the work document is evidence:
+anything missing? any scope creep?) as separate axes so one cannot mask the
+other.
 
 ## Why the journal stays
 
@@ -399,8 +405,8 @@ must survive it.
 
 ## Artifact ladder (plans → evergreen)
 
-Working designs and mermaid diagrams start in task/slice files (and in
-whatever scratch plan surface the tool offers). At completion they must be
+Working designs and mermaid diagrams start in work documents (and in whatever
+scratch plan surface the tool offers). At completion they must be
 **promoted** into evergreen product docs
 under the documentation reference declared in `.agents/project.md` (default
 `doc/**`) **except** the task workspace declared there (default
@@ -413,7 +419,7 @@ system.
 
 ## The bridge rule (default behaviour)
 
-No task file is created for casual conversations. But every conversation runs
+No task artifact is created for casual conversations. But every conversation runs
 under the work rules (context preamble, plan-first, verify-before-done), and
 when a conversation turns into real, multi-step, scoped work, the agent must
 recognize it and PROPOSE a task — inform, never force. Formality is opt-in,

@@ -15,9 +15,11 @@ pipeline in `.agents/formulas/`, following the `code-review` skill:
 - **Standards axis** — does the diff follow the repo's documented standards,
   plus the smell baseline the skill carries? A documented repo standard always
   wins over the baseline; anything tooling already enforces is skipped.
-- **Spec axis** — does the diff do what the 🧑 zones of the spec asked?
-  Missing requirements, partial ones, and behaviour nobody asked for (scope
-  creep) all count.
+- **Spec axis** — does the diff do what the whole spec document asked,
+  including its system design? Missing requirements, partial ones, and
+  behaviour nobody asked for (scope creep) all count. The matching work
+  document is evidence for the review, never a requirement to judge against;
+  divergence between the two is a finding.
 
 Both axes run in parallel, from the same pinned fixed point, and are reported
 **side by side**: never merged into one list, never re-ranked against each
@@ -77,11 +79,13 @@ Three things, and they are enough:
    as a narrative of what was built.
 2. **The fixed point**, pinned by whoever hands over the work: the review
    compares `<fixed point>...HEAD`, three-dot, against the merge base.
-3. **The spec pointer** — the path to the spec file whose 🧑 zones are the
-   requirements for the Spec axis (its 🤖 zone is context, not requirements);
-   its system design also carries the files map the deviations duty reads.
-   Plus the standards sources the repo documents; the smell baseline travels
-   with the `code-review` skill.
+3. **The spec/work pointers** — the path to the spec document, whose whole
+   contents are the requirements for the Spec axis, and the path to its
+   matching work document, which is evidence only. The spec document's system
+   design also carries the files map the deviations duty reads. Plus the
+   standards sources the repo documents; the smell baseline travels with the
+   `code-review` skill. Write findings into the work document without becoming
+   its owner.
 
 And, explicitly, **not the planning conversation and not the typing session**:
 the Inspector reviews what was produced, not the story of how. Being handed

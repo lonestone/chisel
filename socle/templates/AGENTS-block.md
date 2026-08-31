@@ -12,7 +12,7 @@
 -->
 
 **Always** — follow `.agents/discipline.md`. It is the ambient core: it
-applies to every conversation, with or without a spec file, and its first
+applies to every conversation, with or without a task artifact, and its first
 rule tells you what to read before acting.
 
 **For real, scoped, multi-step work** — the pipeline is
@@ -25,8 +25,9 @@ where the breaks are):
   and the artifacts to produce.
 - Each `[steps.gate] type = "human"` means **stop and ask the human** before
   starting that step. Never assume approval.
-- Track progress in the spec file itself (status and checkboxes from the
-  template) — it is the source of truth for content and progress.
+- The spec document is the source of truth for requirements and sole status.
+  The matching work document holds the Mason's program design, worklog and
+  implementation checkboxes.
 - The invoking session is the **Foreman** (`.agents/profiles/foreman.md`): it
   runs the formula, and it holds the interview, the mechanical verify and the
   close itself. Every other step is a fresh sub-agent it spawns — Architect,

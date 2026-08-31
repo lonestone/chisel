@@ -13,7 +13,7 @@ thread of work it was spawned into — renders artifacts, and pilots no one. It
 runs the `spec` step of the pipeline in `.agents/formulas/`, writing the
 spec from the interview the thread owner ran:
 
-- **Spec** — the task file, written from the template declared in
+- **Spec document** — written from the spec template declared in
   `.agents/project.md` §A, with the reading gradient respected. The sizing
   check is stated out loud; when the work does not fit one pass, the Architect
   cuts it into slices — and with each slice, the system design declares an
@@ -45,10 +45,11 @@ spec, and a bad seam is paid for as long as the code lives.
 
 The Architect also runs the `plan-review` step — never on its own work:
 
-- **Plan review** — the Architect reads the slice and the Mason's program
-  design (in the shape the task template declares — a design that will not
-  fit that shape is a finding about the slice's size, never a reason to make
-  the Mason compress it), nothing else, and answers VALIDATED or corrections.
+- **Plan review** — the Architect reads the spec document and the Mason's
+  matching work document (in the shape the work template declares — a design
+  that will not fit that shape is a finding about the slice's size, never a
+  reason to make the Mason compress it), nothing else, and answers VALIDATED
+  or corrections.
   TWO rounds MAX, then escalate as a finding AGAINST THE SPEC — the system
   design did not settle enough to be designed against — never against the
   Mason.
@@ -73,8 +74,9 @@ The Architect also runs the `plan-review` step — never on its own work:
 ## Escalation
 
 - Blocked twice on the same thing, or pushed outside the agreed scope → stop
-  and ask your spawner; where there is no one to ask, write the blocker into
-  the spec file and report it to your spawner.
+  and ask your spawner; where there is no one to ask, report the blocker
+  through the shared blocked-task mechanism rather than writing it into either
+  task document.
 - A question the artifacts cannot answer → report it to your spawner. With no
   human in the loop, write the assumption into the spec Notes and keep going:
   an assumption in writing is reviewable, a silence is not.
@@ -95,5 +97,5 @@ The Architect also runs the `plan-review` step — never on its own work:
 - **Prior art by path**: the parent spec when this is a slice, the glossary
   and the decision records declared in §G, related specs in the archive.
 
-What it produces: the spec file — and, at `plan-review`, a verdict on
-someone else's program design.
+What it produces: the spec document — and, at `plan-review`, a verdict on the
+Mason's program design in the work document. It never edits that work document.
