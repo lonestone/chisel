@@ -46,7 +46,8 @@ PKG_ROOT="$(cd "$BIN_DIR/.." && pwd -P)"
 
 SOCLE="$PKG_ROOT/socle"
 AGENTS_BLOCK_SRC="$SOCLE/templates/AGENTS-block.md"
-TASK_TEMPLATE_SRC="$SOCLE/templates/000-task-file-template.md"
+SPEC_TEMPLATE_SRC="$SOCLE/templates/000-template.spec.md"
+WORK_TEMPLATE_SRC="$SOCLE/templates/000-template.work.md"
 TASK_ID_SRC="$SOCLE/scripts/task-id.sh"
 PROJECT_MD_TPL="$SOCLE/agents/project.md.tpl"
 USER_MD_TPL="$SOCLE/agents/user.md.tpl"
@@ -173,7 +174,8 @@ managed_relative_files() {
   printf '.agents/methodology.md\n'
   printf '.agents/user.md.tpl\n'
   printf 'scripts/task-id.sh\n'
-  printf 'project-management/000-task-file-template.md\n'
+  printf 'project-management/000-template.spec.md\n'
+  printf 'project-management/000-template.work.md\n'
 }
 
 # ---------------------------------------------------------------------------
@@ -279,7 +281,8 @@ copy_managed_files() {
   chmod +x "$target_dir/scripts/task-id.sh"
 
   mkdir -p "$target_dir/project-management"
-  cp "$TASK_TEMPLATE_SRC" "$target_dir/project-management/000-task-file-template.md"
+  cp "$SPEC_TEMPLATE_SRC" "$target_dir/project-management/000-template.spec.md"
+  cp "$WORK_TEMPLATE_SRC" "$target_dir/project-management/000-template.work.md"
 
   warn_foreign_skills "$target_dir"
 }

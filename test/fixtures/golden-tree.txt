@@ -89,7 +89,8 @@
 .codex/agents/inspector.toml
 .codex/agents/mason.toml
 project-management
-project-management/000-task-file-template.md
+project-management/000-template.spec.md
+project-management/000-template.work.md
 project-management/LOG.md
 project-management/archive
 project-management/tasks
