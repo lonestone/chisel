@@ -24,7 +24,7 @@ completion, a dated journal) with patterns from
 | **Work document** | The Mason-owned companion, created at `plan` beside a spec document by replacing `.spec.md` with `.work.md`. It carries program design, pseudo-code, worklog, implementation checkboxes, Notes & Snippets and Inspector findings, and has no zone marker. |
 | **Slice** | A child task produced by decomposing a large task: a tracer-bullet vertical cut through every layer, demoable on its own, sized for a single fresh context window. Lives as `tasks/<time-id>-<feature>/<NN>-<slug>.spec.md`, with its work companion created only when typed. A small task IS its own single slice — no slice documents are created for it. |
 | **Seam** | The public boundary where a feature is tested — agreed with the human BEFORE implementation. Tests live at seams, never against internals. Fewer is better (ideal: one). |
-| **Reading gradient** | The ordering of the spec document by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich) → 🧑 REVIEW IF RELEVANT (system design and remaining review surface). Detail is never cut, it is ordered. The work document has no zone and is Mason-owned working space. |
+| **Reading gradient** | The ordering of the spec document by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich system design and intent) → 🧑 REVIEW IF RELEVANT (remaining review surface). Detail is never cut, it is ordered. The work document has no zone and is Mason-owned working space. |
 | **Blocking edge** | A dependency between slices: "slice 3 is blocked by slice 1". A slice with no blockers can start immediately. |
 | **Frontier** | The set of slices whose blockers are all done — what can be worked on right now. |
 | **Expand–contract** | The sequencing for wide mechanical refactors (rename a column, retype a shared symbol): add the new form beside the old → migrate call sites in batches → delete the old form. The exception to vertical slicing. |
@@ -233,13 +233,11 @@ made, not that it is small.
 **Program design** — the target shape inside the agreed architecture: files,
 seam signatures, test order — is deliberately NOT written at creation time.
 Designing slice 6's files before slices 1–3 have taught anything produces
-stale guesses — file paths rot, learning is ignored. The implementing
-session designs it **just-in-time at its plan step**, with the real code in
-view, and the `plan-review` loop validates it before any typing.
-
-That program design must not die with the conversation. Once validated, the
-implementing session **persists it into the matching work document** — the
-`plan` step of the formulas says so. Three reasons:
+stale guesses — file paths rot, learning is ignored. At `plan`, the Mason
+creates the matching work document and **persists its draft program design**
+with the real code in view; at `plan-review`, the Architect validates that
+persisted design before any typing. There is no post-validation persistence
+cycle. Three reasons to persist the draft:
 
 1. **The completion review reads the pair.** `code-review`'s Spec axis treats
    the whole spec document as requirements and the work document as evidence;
@@ -408,13 +406,17 @@ must survive it.
 
 ## Artifact ladder (plans → evergreen)
 
-Working designs and mermaid diagrams start in work documents (and in whatever
-scratch plan surface the tool offers). At completion they must be
+Only program-design Mermaid diagrams and work material start in work documents
+(and in whatever scratch plan surface the tool offers). System-design and
+architecture diagrams remain in the spec document. At completion, working
+material and program-design diagrams must be
 **promoted** into evergreen product docs
 under the documentation reference declared in `.agents/project.md` (default
 `doc/**`) **except** the task workspace declared there (default
 `/project-management/`: tasks, the journal, temporary baselines, archive).
-Prefer `doc/architecture/` for as-built seams and integration diagrams; add
+Promote system-design and architecture diagrams from the spec document's
+source, and promote program-design diagrams from the work document. Prefer
+`doc/architecture/` for as-built seams and integration diagrams; add
 `doc/domain/` when the glossary needs a home. The task workspace is narrative
 and planning — not the living architecture. Protocol wording stays generic:
 do not brand temporary rewrite labels as if they were part of the work

@@ -113,10 +113,12 @@ resumes.
 The seven owned doctrine carriers will describe one paired task artifact:
 `<name>.spec.md` is the approved review surface and source of the sole task
 status; `<name>.work.md` is the Mason-owned working material, created at
-`plan` beside the spec by replacing `.spec.md` with `.work.md`. A parent spec
-for sliced work has no work document; each typed slice does. The work document
-is committed, regenerable while work remains live, then archived alongside its
-spec at `close`.
+`plan` beside the spec by replacing `.spec.md` with `.work.md`. At that same
+`plan` step, the Mason persists a draft program design in the work document;
+the Architect validates that persisted design at `plan-review`. There is no
+"once validated, persist" cycle. A parent spec for sliced work has no work
+document; each typed slice does. The work document is committed, regenerable
+while work remains live, then archived alongside its spec at `close`.
 
 The spec document owns intent, named acceptance criteria, seams, system
 design, decisions, testing strategy, slices, deliverables, references,
@@ -152,7 +154,8 @@ untouched: before `plan`, its findings belong in the spec document's Notes.
 1. **`socle/agents/methodology.md`** — replace the single-file Glossary terms
    (Task, Slice, Reading gradient, One-shot) with the two-document names,
    `.spec.md` / `.work.md` convention, and spec-directory slice layout. Make
-   the reading gradient a property of the spec document's two 🧑 review zones;
+   the reading gradient a property of the spec document's two 🧑 review zones,
+   with system design in REVIEW CAREFULLY rather than REVIEW IF RELEVANT;
    state separately that the work document has no zone and is Mason-owned.
    Recast Zone ownership so approval governs the spec document while work
    document ownership stays with its Mason; preserve each preset's review/gate
@@ -164,6 +167,12 @@ untouched: before `plan`, its findings belong in the spec document's Notes.
    design. Remove remaining bottom-of-spec agent-space and single-document
    descriptions, and update task/slice and artifact-ladder vocabulary
    precisely; no `Design section` or `the spec file` remains. In the
+   program-design lifecycle, the Mason creates the work document and persists
+   its draft at `plan`, then the Architect validates that persisted design at
+   `plan-review`; do not describe persistence as happening after validation.
+   Only program-design Mermaid diagrams and work material start in the work
+   document; system-design/architecture diagrams remain in the spec document
+   and are promoted from that source at `close`. In the
    blocked-task-report section, define the required shared project-level
    signal and the detailed task-specific blocker record in the active work
    document; before `plan`/before a work document exists, only the shared
@@ -174,9 +183,11 @@ untouched: before `plan`, its findings belong in the spec document's Notes.
    persists an approved program design into the work document; rule 3 protects
    🧑 zones of the spec document; the pipeline assigns sole status to the spec
    document and implementation progress/checkpoints to the work document.
-   Rule 6 points to methodology's shared blocked-task report and records the
-   detailed blocker in the active work document (or, before it exists, only in
-   that shared report), regardless of interactive availability. Replace the
+   Rule 6 is unconditional for every blocker, regardless of human-gate or
+   interactive availability: it requires methodology's shared blocked-task
+   report and records detailed information in the active work document (or,
+   before it exists, only in that shared report), never the spec document.
+   Replace the
    ambiguous pipeline instruction to build "from the file" with an explicit
    spec/work pair.
 3. **`socle/templates/AGENTS-block.md`** — route real work through the two
@@ -297,6 +308,32 @@ corrections are now applied. Re-run the owned-carrier checks, cross-file
 read-through, `git diff --check`, and the exact suite, then commit the green
 correction.
 
+### Post-review correction/resume checklist — final Inspector report
+
+Fresh Architect validation is required before typing resumes. These four new
+corrections are separate from the completed historical checklists above and
+must be audited across carriers, not only as isolated line edits:
+
+- [x] Make Discipline rule 6 unconditional for every blocker, regardless of
+  human-gate availability: always emit the mandatory shared project-level
+  signal; when an active work document exists, also record detailed
+  task-specific information there; before it exists, shared report only; never
+  the spec document.
+- [x] Place system design in the methodology reading-gradient glossary's
+  REVIEW CAREFULLY zone, not REVIEW IF RELEVANT.
+- [x] Make the methodology lifecycle say the Mason creates and persists a
+  draft program design in the work document at `plan`, then the Architect
+  validates that persisted design at `plan-review`; remove any post-validation
+  persistence cycle.
+- [x] Make the methodology artifact ladder distinguish sources: only
+  program-design Mermaid diagrams/work material start in the work document;
+  system-design/architecture diagrams stay in the spec document and are
+  promoted from that source at `close`.
+
+Resume point: the Architect returned VALIDATED on this final plan; all four
+corrections are now applied. Run the focused cross-carrier audits and full
+owned verification sequence, then commit the green correction.
+
 #### Implementation worklog
 
 - 2026-08-31 — **mason** — Methodology: replaced single-file task vocabulary
@@ -360,6 +397,21 @@ correction.
   searches passed; cross-file read-through passed; `git diff --check` passed;
   exact `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passed — 9 scenarios,
   94 assertions, 0 failures.
+- 2026-09-01 — **mason** — Final Inspector report: Standards had two hard
+  violations and Spec had four findings, all ruled in scope by the Foreman.
+  Plan-only revision adds a fresh unchecked correction block for unconditional
+  blocker records, the spec reading-gradient placement, plan-time draft
+  persistence/plan-review validation ordering, and the artifact-ladder source
+  distinction. Prior evidence remains unchanged; fresh Architect validation is
+  required before typing.
+- 2026-09-01 — **mason** — Final Architect validation was VALIDATED; all four
+  final corrections are applied. Focused cross-carrier audit confirms blocker
+  signals are unconditional and records are complete; persist-before-validate
+  ordering is consistent; artifact-ladder sources are separated; owned
+  forbidden-phrase checks and cross-file read-through pass.
+- 2026-09-01 — **mason** — `git diff --check`: PASS. Exact gate
+  `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`: PASS — 9 scenarios, 94
+  assertions passed, 0 failed.
 
 The implementation worklog records each completed checkbox with the affected
 carrier(s), the precise vocabulary/ownership invariant checked, and the
@@ -386,6 +438,18 @@ gate.
    sliced parent with no own work document.
 3. Run the exact installer seam:
    `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`.
+4. Run a focused cross-carrier audit over methodology, discipline, AGENTS
+   block, Architect, Inspector, Mason and Foreman: search every occurrence of
+   human-gate/interactive-availability/"no human" blocker language and confirm
+   that the shared project-level signal is unconditional, active work records
+   hold detail, pre-work has shared-only reporting, and the spec never holds
+   implementation blocker detail.
+5. Audit the persistence/validation ordering across methodology, Mason and
+   Architect: the Mason creates and persists a draft at `plan`, the Architect
+   validates that persisted design at `plan-review`, and no text introduces a
+   post-validation persistence cycle. Read the artifact-ladder passages to
+   confirm program-design Mermaid/work material starts in work, while
+   system-design diagrams stay in the spec and promote from there.
 
 ## Notes
 

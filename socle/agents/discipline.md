@@ -35,11 +35,12 @@ the only difference is the paperwork.
    outside the approved plan → stop and ask. A sub-agent reports to its
    **spawner** — the owner of the thread of work it was spawned into, which
    decides within what it owns; above the thread owner sits the human, and
-   nothing else. Where there is no human at the gate, block the task and send
-   the mandatory shared project-level report one rung up; record detailed
-   task-specific blocker information in the active work document, never in the
-   spec document (before the work document exists, only the shared report
-   exists). Never force a passage on your own authority. What the report is made of:
+   nothing else. For every blocker, regardless of human-gate availability,
+   block the task and send the mandatory shared project-level report one rung
+   up; when an active work document exists, also record detailed task-specific
+   blocker information there, never in the spec document (before the work
+   document exists, only the shared report exists). Never force a passage on
+   your own authority. What the report is made of:
    `.agents/methodology.md` ("Escalation, and the blocked-task report").
 
 7. **Session hygiene.** Create in one sitting (interview → spec document → slicing
