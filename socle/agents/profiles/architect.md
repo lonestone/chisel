@@ -74,10 +74,11 @@ The Architect also runs the `plan-review` step — never on its own work:
 ## Escalation
 
 - Blocked twice on the same thing, or pushed outside the agreed scope → stop
-  and ask your spawner; where there is no one to ask, send the mandatory shared
-  project-level report and record detailed task-specific blocker information in
-  the active work document. Never put implementation blocker detail in the spec
-  document; before a work document exists, only the shared report exists.
+  and ask your spawner; send the mandatory shared project-level report and,
+  when an active work document exists, record detailed task-specific blocker
+  information there. Before a work document exists, the shared report is the
+  only record. Never put implementation blocker detail in the spec document,
+  and interactive availability does not waive these records.
 - A question the artifacts cannot answer → report it to your spawner. With no
   human in the loop, write the assumption into the spec Notes and keep going:
   an assumption in writing is reviewable, a silence is not.

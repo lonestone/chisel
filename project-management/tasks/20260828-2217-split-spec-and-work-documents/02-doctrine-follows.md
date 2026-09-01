@@ -127,8 +127,11 @@ spec document or a 🧑 zone; the work document has no zone marker. The Architec
 validates the work document's program design but never edits it. The Inspector
 judges the diff against the whole spec document, reads the work document only
 as evidence, and writes its findings there without becoming its owner. The
-Foreman/thread owner alone maintains status in the spec document and archives
-both documents at close.
+work-document owner/thread owner rules on those findings; any typing still goes
+through the Mason. The Foreman/thread owner alone maintains status in the spec
+document. A typed standalone task or slice archives its spec/work pair at
+close; a sliced parent has no own work document and archives its parent spec
+with the slice-folder contents.
 
 Owner ruling after diff-review (Option A): a blocker has two records. The
 shared dated journal entry and, where configured, the blocking `escalation`
@@ -137,7 +140,8 @@ active task's work document carries the detailed task-specific blocker record;
 before a work document exists, only the shared report exists. Under this
 legacy slice's parent decisions 9–10, the combined plain `.md` slice artifact
 temporarily serves as that task-specific work record. A blocker is therefore
-never silently swallowed, and neither record authorizes a scope change. A
+never silently swallowed, interactive availability never waives either record,
+and neither record authorizes a scope change. A
 non-blocking Mason refactor proposal remains proposed work in coordination
 state and is also recorded in the work document's Notes & Snippets; it never
 authorizes the change. The existing Checker wording remains deliberately
@@ -163,7 +167,8 @@ untouched: before `plan`, its findings belong in the spec document's Notes.
    blocked-task-report section, define the required shared project-level
    signal and the detailed task-specific blocker record in the active work
    document; before `plan`/before a work document exists, only the shared
-   report exists.
+   report exists; interactive availability never waives the shared signal or
+   the active-work-document detail record.
 2. **`socle/agents/discipline.md`** — distinguish spec document from work
    document in rules 2, 3, 5, 7 and the pipeline/side-lane language. Rule 2
    persists an approved program design into the work document; rule 3 protects
@@ -171,14 +176,17 @@ untouched: before `plan`, its findings belong in the spec document's Notes.
    document and implementation progress/checkpoints to the work document.
    Rule 6 points to methodology's shared blocked-task report and records the
    detailed blocker in the active work document (or, before it exists, only in
-   that shared report). Replace the ambiguous pipeline instruction to build
-   "from the file" with an explicit spec/work pair.
+   that shared report), regardless of interactive availability. Replace the
+   ambiguous pipeline instruction to build "from the file" with an explicit
+   spec/work pair.
 3. **`socle/templates/AGENTS-block.md`** — route real work through the two
    documents: the spec document is the status and requirements surface, the
    matching work document holds the Mason’s program design, worklog and
    implementation checkboxes. Keep the formula as owner of order/gates and
    the Foreman as the close owner; do not claim that a single spec file owns
-   all progress.
+   all progress. Route blocker reporting consistently: the shared project
+   signal is mandatory, active-work-document detail is required when present,
+   and implementation blocker detail never goes in the spec document.
 4. **`socle/agents/profiles/mason.md`** — at `plan`, create and own the
    matching work document, persist the program design there, and at `type`
    tick its implementation checkboxes and maintain its worklog. Replace every
@@ -190,7 +198,8 @@ untouched: before `plan`, its findings belong in the spec document's Notes.
    ambient layer, and workspace/acceptance. Preserve TDD, files-map,
    proposal-door, and stop/escalate rules, but send blockers through the shared
    report, with detailed task-specific records in the active work document (or
-   only the shared report before it exists).
+   only the shared report before it exists), regardless of interactive
+   availability.
 5. **`socle/agents/profiles/architect.md`** — author the spec document from
    the spec template; at `plan-review`, read and return a verdict on the
    Mason’s work document without editing it. Preserve the system-design/files
@@ -202,14 +211,21 @@ untouched: before `plan`, its findings belong in the spec document's Notes.
    Spec axis as the whole spec document (including its system design), name the work document
    as evidence rather than a requirement, and add the Inspector’s finding
    write to the work document. Its inputs explicitly include both document
-   pointers; remove the old 🤖-zone distinction.
+   pointers; remove the old 🤖-zone distinction. Remove language allowing the
+   Inspector to apply its own findings when no human arbitrates: it reports
+   findings into the work document, while the work-document/thread owner rules
+   and any typing goes through the Mason; preserve auto/gateless escalation
+   semantics without self-review mutation.
 7. **`socle/agents/profiles/foreman.md`** — make its Mason handoff name the
    spec/work pair, explicitly assign sole spec-document status maintenance to
    the Foreman/thread owner, and state that `close`
    archives both documents together after the work material needed for
-   evergreen documentation is promoted. Its ruling/escalation responsibilities
-   remain unchanged except that blockers use the common blocked-task report
-   plus the active work document's detailed record.
+   evergreen documentation is promoted. Distinguish a typed standalone or
+   slice spec/work pair from a sliced parent: the former archives both files;
+   the latter has no own work document and archives the parent spec plus slice
+   folder contents. Its ruling/escalation responsibilities remain unchanged
+   except that blockers use the common blocked-task report plus the active work
+   document's detailed record.
 
 `bin/chisel.sh`, both templates, formulas, skills, tests, and Checker remain
 untouched. Any needed change outside this map is logged in the worklog and
@@ -254,6 +270,32 @@ corrections, separate from the historical implementation checklist above:
 Resume point: the Architect returned VALIDATED on this revised plan; the six
 corrections are now applied. Re-run the text criteria, cross-file read-through,
 and exact suite, then continue the existing implementation workflow.
+
+### Post-review correction/resume checklist — round 3
+
+Fresh Architect validation is required before typing resumes. These are new
+corrections from the post-correction Inspector report; the completed
+checklists above remain historical and are not reused:
+
+- [x] Make `discipline.md`, `architect.md`, `inspector.md`, and
+  `AGENTS-block.md` consistently require the mandatory shared project-level
+  blocker signal and, when an active work document exists, detailed
+  task-specific blocker detail there; before it exists, shared report only;
+  never the spec document. Interactive availability does not waive either
+  record.
+- [x] Remove `inspector.md` language allowing the Inspector to apply its own
+  findings when no human arbitrates. The Inspector reports findings into the
+  work document; the work-document owner/thread owner rules, and any typing,
+  goes through the Mason. Preserve auto/gateless escalation semantics without
+  self-review mutation.
+- [x] Update `foreman.md` close topology: a typed standalone task or slice
+  archives its spec/work pair; a sliced parent has no own work document and
+  archives its parent spec plus slice-folder contents.
+
+Resume point: the Architect returned VALIDATED on this round-3 plan; all three
+corrections are now applied. Re-run the owned-carrier checks, cross-file
+read-through, `git diff --check`, and the exact suite, then commit the green
+correction.
 
 #### Implementation worklog
 
@@ -302,6 +344,22 @@ and exact suite, then continue the existing implementation workflow.
 - 2026-08-31 — **mason** — `git diff --check`: PASS. Exact gate
   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`: PASS — 9 scenarios, 94
   assertions passed, 0 failed.
+- 2026-09-01 — **mason** — Post-correction Inspector report: Standards PASS;
+  three Spec findings were ruled in scope by the Foreman under approved Owner
+  decisions. Plan-only revision records the required cross-carrier blocker
+  completeness, Inspector separation, and standalone/slice-versus-parent close
+  topology. No source was edited and no commit was created; fresh Architect
+  validation is required before resuming type.
+- 2026-09-01 — **mason** — Architect round-3 VALIDATED: applied all three new
+  corrections. The four blocker-contract carriers now require the mandatory
+  shared signal plus active-work-document detail, with interactive availability
+  unable to waive either record; Inspector reports without self-applying, and
+  Foreman close distinguishes typed pairs from sliced parents.
+- 2026-09-01 — **mason** — Round-3 evidence: targeted blocker-contract,
+  Inspector-separation, parent/slice-topology, and owned forbidden-phrase
+  searches passed; cross-file read-through passed; `git diff --check` passed;
+  exact `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passed — 9 scenarios,
+  94 assertions, 0 failures.
 
 The implementation worklog records each completed checkbox with the affected
 carrier(s), the precise vocabulary/ownership invariant checked, and the
@@ -323,7 +381,9 @@ gate.
    above: no Mason spec write, Inspector findings in work, Checker’s pre-plan
    Notes exception intact, sole spec status, archive-both at close, mandatory
    shared blocker signal, and detailed blocker record in the active work
-   document (never the spec document).
+   document (never the spec document), Inspector reports without applying its
+   own findings, Mason owns typing, and close distinguishes typed pairs from a
+   sliced parent with no own work document.
 3. Run the exact installer seam:
    `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`.
 

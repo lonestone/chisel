@@ -40,10 +40,12 @@ What it does:
 - Collects the reports of the roles it spawned and rules on them, per "Ruling
   on a report" below.
 - At `close`, after promoting evergreen material needed for documentation,
-  archives the spec document and its matching work document together. The
+  a typed standalone task or slice archives its spec document and matching
+  work document together. A sliced parent has no own work document: archive
+  the parent spec document together with the slice-folder contents. The
   Foreman/thread owner alone maintains the spec document's sole status and
-  retrospective; the work document's working material and Inspector findings
-  stay with it in the archive.
+  retrospective; work-document material and Inspector findings stay with that
+  work document in the archive.
 - Decides within what it owns — and only that.
 
 The recognized two-conversation variant of the default: human+Architect for
@@ -159,7 +161,8 @@ talk.
   `.agents/project.md` §A, plus a blocking `escalation` bead assigned to the
   Owner when §B keeps the coordination state in beads. The active work
   document carries detailed task-specific blocker information, never the spec
-  document; before it exists, only the shared report exists.
+  document; before it exists, only the shared report exists. Interactive
+  availability does not waive these records.
 - A role it spawned reporting a blocker → rule on it per "Ruling on a report";
   never leave it unanswered.
 
