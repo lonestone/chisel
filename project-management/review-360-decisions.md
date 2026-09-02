@@ -792,3 +792,48 @@ sur une échelle. Nom retenu par composition des deux existants :
   `000-task-file-template.md` restera orphelin sur un projet déjà équipé —
   troisième orphelin de sa classe, il rejoint la liste de nettoyage du
   chantier 4 (port Deno).
+
+## Addendum 3 (2026-09-02) — arbitrage S1 : la trace des blocages
+
+- ✅ **G15 — Tout blocage laisse une trace écrite ; elle vit dans les documents
+  de la tâche, pas dans le journal du projet.** Tranché à l'oral (2026-09-02),
+  en arbitrage du finding S1 de l'Inspector sur les quatre commits de la
+  slice 02 (le doctrine livré exigeait un « signal projet partagé » — ligne ⚠️
+  datée au journal — que ni la spec parente ni ce fichier n'autorisaient).
+  **(1) La traçabilité est ratifiée, la destination est amendée.** Tout
+  blocage, dans tous les modes, même quand l'Owner est disponible à l'oral,
+  laisse une trace écrite. Mais « c'est pas dans le journal du projet, c'est
+  dans les documents de travail » : chaque rôle écrit ses notes dans le
+  document qu'il travaille — le Maçon dans le `.work.md`, l'Architecte dans le
+  `.spec.md` (ses notes pré-`plan`). La ligne ⚠️ obligatoire au journal
+  disparaît de la règle.
+  **(2) La forme de la trace : qui, quand.** Chaque note de blocage porte le
+  rôle de son auteur et la date **et l'heure** — « qu'on sache, qu'on a un peu
+  de traçabilité ». Et si l'Owner répond (à l'oral ou autrement), **sa réponse
+  est notée aussi**, au même endroit.
+  **(3) L'escalade est ratifiée telle que livrée** : ça remonte toujours d'un
+  cran ; au-dessus du Foreman, l'humain, point. La clause supprimée
+  (« l'humain n'en entend jamais parler ») reste supprimée.
+  **(4) Clarification du Foreman par mode**, dans la ligne de B3(c) : en mode
+  default, **l'humain est le Foreman** — la session principale, pas de
+  sous-agent Foreman intermédiaire (« un sous-agent de trop et ça consomme
+  beaucoup ») ; l'humain parle directement à l'Architecte. En mode auto, un
+  Foreman agent existe et orchestre ; il tranche rarement — « il a assez peu
+  de connaissances du projet, c'est plus un orchestrateur qu'autre chose » —
+  et ce qu'il ne possède pas remonte à l'humain.
+  **(5) Le canal de découverte d'une tâche bloquée, tranché le même jour.**
+  Pas de signal partagé dédié : en auto sans beads, « je suis dans mon IDE ou
+  terminal, l'agent me dit que c'est bloqué » — la session rapporte le blocage
+  directement à l'humain quand le run s'arrête. Avec beads, « on utilise la
+  feature native de status dans beads » — le bead de la tâche passe au statut
+  bloqué ; le bead `escalation` séparé assigné à l'Owner disparaît avec la
+  ligne ⚠️ au journal.
+  **(6) « L'architecte démarre un maçon » était une façon de parler.**
+  Confirmé le même jour : B3(c) tient — l'Architecte rend un artefact et ne
+  pilote personne ; c'est le propriétaire du fil qui ouvre la session Mason.
+  **(7) Toute décision sur un blocage est tracée, pas seulement celles de
+  l'Owner.** Tranché (2026-09-02), sur question remontée par l'Architecte au
+  plan-review du round 5 : quiconque tranche un blocage — l'Owner ou le
+  Foreman en auto — sa décision est notée au même endroit que la trace du
+  blocage, signée rôle + date et heure. Le point (2) se lit donc « quiconque
+  répond », l'Owner en étant le cas nommé.

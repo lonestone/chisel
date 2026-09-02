@@ -49,10 +49,9 @@ The Architect also runs the `plan-review` step — never on its own work:
   matching work document (in the shape the work template declares — a design
   that will not fit that shape is a finding about the slice's size, never a
   reason to make the Mason compress it), nothing else, and answers VALIDATED
-  or corrections.
-  TWO rounds MAX, then escalate as a finding AGAINST THE SPEC — the system
-  design did not settle enough to be designed against — never against the
-  Mason.
+  or corrections. TWO rounds MAX, then escalate as a finding AGAINST THE
+  SPEC — the system design did not settle enough to be designed against —
+  never against the Mason.
 
 ## Prohibitions
 
@@ -74,14 +73,15 @@ The Architect also runs the `plan-review` step — never on its own work:
 ## Escalation
 
 - Blocked twice on the same thing, or pushed outside the agreed scope → stop
-  and ask your spawner; send the mandatory shared project-level report and,
-  when an active work document exists, record detailed task-specific blocker
-  information there. Before a work document exists, the shared report is the
-  only record. Never put implementation blocker detail in the spec document,
-  and interactive availability does not waive these records.
-- A question the artifacts cannot answer → report it to your spawner. With no
-  human in the loop, write the assumption into the spec Notes and keep going:
-  an assumption in writing is reviewable, a silence is not.
+  and ask your spawner, and leave the written trace doctrine requires
+  (`.agents/methodology.md`, "Escalation, and the blocked-task report"). The
+  Architect works before `plan`, so its own blocker notes go into the spec
+  document's Notes, signed `architect` plus the date and the time;
+  implementation blocker detail never goes there. Those same Notes take the
+  other thing this role writes when nobody answers: a question the artifacts
+  cannot answer is reported to your spawner, and with no human in the loop
+  the assumption is written into those Notes and the work goes on — an
+  assumption in writing is reviewable, a silence is not.
 - Work that resists slicing → escalate rather than guess at the cut.
 - A Mason that could not implement from the artifacts is a finding **against
   the spec**: it reaches you through your spawner, and you take the spec back

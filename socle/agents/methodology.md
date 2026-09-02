@@ -111,7 +111,8 @@ to the Mason that creates it.
   document without a `plan-review` gate.
 - In **supervised**, the human approves the spec document; the Mason owns the
   work document even though the Architect validates its program design.
-- In **auto**, no human approves the spec document: the Architect authors it,
+- In **auto**, no human approves the spec document: it belongs to the
+  Architect that authored it (the Checker reviews it, it does not author it),
   while the Mason owns the work document and the Architect validates its
   program design.
 - Under **`chisel-auto-light`** the spec zones are **ignored**, not reassigned
@@ -131,15 +132,29 @@ decides within what it owns and hands anything above that one rung up; above
 the Foreman sits the human, full stop. Which rung a question goes to depends on
 who spawned whom, not on a hierarchy between roles: there is none.
 
-Whoever cannot decide **blocks the task** and writes two records. The shared
-project-level signal is mandatory: a dated ⚠️ line in the journal declared in
-§A · Task workspace of `.agents/project.md`, plus — when §B1 · Where task
-statuses live of `.agents/project.md` keeps the coordination state in beads — a
-blocking `escalation` item assigned to the Owner, per the §B convention. The
-active task's work document carries the detailed task-specific blocker record;
-before `plan`, while no work document exists, only the shared report exists.
-Never put implementation blocker detail into the spec document. The active
-work record creates no additional artifact beyond the task's work document.
+Whoever cannot decide **blocks the task** and leaves a written trace of the
+block **in the task's own documents** — never in an artifact of its own, and
+never only in the conversation. Each role writes in the document it works:
+an implementation blocker goes into the active work document; a blocker met
+before `plan`, while no work document exists yet, goes into the spec
+document's Notes. Implementation blocker detail never lands in the spec
+document.
+
+Every such entry is **signed with its author's role plus the date and the
+time** — that signature is what makes the trace traceable months later. And
+whoever rules on the block — the Owner, or the Foreman in auto within what it
+owns — records the ruling **in the same place, signed the same way**. A
+ruling given out loud is written down like any other: oral availability
+waives no record, in any mode.
+
+How a blocked task is then discovered follows the coordination state declared
+in §B1 · Where task statuses live of `.agents/project.md`. Where it is kept
+in beads, the task's own bead takes beads' native blocked status; in auto
+without beads, the session reports the block directly to the human when the
+run stops. There is no mandatory dated ⚠️ journal line and no separate
+blocking `escalation` item. Ruled by the Owner on 2026-09-02: "c'est pas dans
+le journal du projet, c'est dans les documents de travail" — which retires
+the report form an earlier ruling had let survive.
 
 ## The pipeline is nine steps
 
@@ -248,10 +263,11 @@ cycle. Three reasons to persist the draft:
 3. **Re-runs and crashes.** The pair must stay self-contained (context
    hygiene) — a session must be resumable from the spec and work documents.
 
-So the lifecycle of a slice pair is: the spec document is born with intent and
-its system design settled → the Mason creates the work document and persists
-program design at plan validation → worklog and implementation checkboxes live
-in the work document → both are archived at completion.
+So the lifecycle of a slice pair is: the spec document is born with intent
+and its system design settled → the Mason creates the work document and
+persists its draft program design at `plan`, which the Architect validates at
+`plan-review` → worklog and implementation checkboxes live in the work
+document → both are archived at completion.
 
 **Corollary — the cost gradient.** Persisting the program design makes the
 spec/work pair a complete brief, which unlocks a division of labor: the thread
@@ -260,14 +276,14 @@ follows it — the exploration, the spec and the system design — and answers t
 `plan-review`; the **Mason** designs the how for itself at its `plan` step and
 types it. Typing always goes through the Mason contract, by one of two
 mandatory paths: a Mason sub-agent where the tool can spawn one, otherwise a
-fresh session running `work on slice <spec-document>`. It is not a choice offered to the
-user, and no agent elides it. The delegation boundary is the **system design**:
-above it the *what* — architecture, scope, and the seams the work is tested
-through — settled at creation time and approved at the gate; below it the
-*how*, designed and typed by the session that implements. A Mason asked to
-"figure out" something the *what* left open is a specification failure, not an
-execution one — and it goes back to the spec. An open *how* is not a hole: it
-is what the `plan` step is for.
+fresh session running `work on slice <spec-document>`. It is not a choice
+offered to the user, and no agent elides it. The delegation boundary is the
+**system design**: above it the *what* — architecture, scope, and the seams
+the work is tested through — settled at creation time and approved at the
+gate; below it the *how*, designed and typed by the session that implements.
+A Mason asked to "figure out" something the *what* left open is a
+specification failure, not an execution one — and it goes back to the spec.
+An open *how* is not a hole: it is what the `plan` step is for.
 
 That gradient is a **tier** gradient, not a licence to spend: the upstream
 thinking and the reviews run at the frontier tier, and a slice whose system
@@ -288,8 +304,8 @@ and writing the how and typing it do not need the same tier.
 The Mason's brief is **artifacts only, never the planning conversation**: the
 spec document, its matching work document when present, and the artifacts it
 explicitly references (parent 🧑 zones, `CONTEXT.md`/ADRs, prior art) + the
-repo's ambient layer. Two disciplines
-follow (both from observed swarm failure modes):
+repo's ambient layer. Two disciplines follow (both from observed swarm
+failure modes):
 
 - **Explicit references beat shared memory.** The work document's program
   design must link what it relies on — the "compile-checked references"
@@ -409,18 +425,17 @@ must survive it.
 Only program-design Mermaid diagrams and work material start in work documents
 (and in whatever scratch plan surface the tool offers). System-design and
 architecture diagrams remain in the spec document. At completion, working
-material and program-design diagrams must be
-**promoted** into evergreen product docs
-under the documentation reference declared in `.agents/project.md` (default
-`doc/**`) **except** the task workspace declared there (default
-`/project-management/`: tasks, the journal, temporary baselines, archive).
-Promote system-design and architecture diagrams from the spec document's
-source, and promote program-design diagrams from the work document. Prefer
-`doc/architecture/` for as-built seams and integration diagrams; add
-`doc/domain/` when the glossary needs a home. The task workspace is narrative
-and planning — not the living architecture. Protocol wording stays generic:
-do not brand temporary rewrite labels as if they were part of the work
-system.
+material and program-design diagrams must be **promoted** into evergreen
+product docs under the documentation reference declared in
+`.agents/project.md` (default `doc/**`) **except** the task workspace declared
+there (default `/project-management/`: tasks, the journal, temporary
+baselines, archive). Promote system-design and architecture diagrams from the
+spec document's source, and promote program-design diagrams from the work
+document. Prefer `doc/architecture/` for as-built seams and integration
+diagrams; add `doc/domain/` when the glossary needs a home. The task workspace
+is narrative and planning — not the living architecture. Protocol wording
+stays generic: do not brand temporary rewrite labels as if they were part of
+the work system.
 
 ## The bridge rule (default behaviour)
 

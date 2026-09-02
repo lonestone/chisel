@@ -36,7 +36,7 @@ Where there is no human to arbitrate, the Inspector still reports its findings
 into the work document and does not apply them itself. The work-document or
 thread owner rules on findings, and any typing goes through the Mason. A
 finding that touches scope or a 🧑 zone escalates instead of being decided;
-auto/gateless runs retain that blocking escalation semantics without allowing
+auto/gateless runs retain that blocking-report semantics without allowing
 self-review mutation. Every act recorded in the project's coordination state
 is signed with the role name — `inspector` — as its actor, per the tracker
 convention of `.agents/project.md` §B.
@@ -65,12 +65,9 @@ ships.
 
 ## Escalation
 
-- A blocker always requires the mandatory shared project-level signal: a dated
-  journal report and, when configured, its blocking coordination item. When an
-  active work document exists, record detailed task-specific blocker
-  information there; before it exists, the shared report is the only record.
-  Never put implementation blocker detail in the spec document, and
-  interactive availability does not waive these records.
+- A blocker leaves its written trace in the active work document, signed
+  `inspector` plus the date and the time, per `.agents/methodology.md`
+  ("Escalation, and the blocked-task report").
 - A finding that touches scope or a 🧑 zone → to the Owner: the arbitration
   gate when there is a human at it; where there is no human at the gate, the
   task blocks and a written report goes to the thread owner — ultimately the

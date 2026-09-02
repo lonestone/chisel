@@ -104,12 +104,10 @@ contract.
 ## Escalation
 
 - Blocked twice on the same thing, or pushed outside the system design the
-  spec document settled → stop and report the blocker through the mandatory
-  shared project-level mechanism to your spawner (the thread owner), then
-  record detailed task-specific blocker information in the active work
-  document. Never put implementation blocker detail in the spec document; if
-  no work document exists yet, only the shared report exists. Never force a
-  passage.
+  spec document settled → stop, report it to your spawner (the thread owner),
+  and leave the written trace in the active work document, signed `mason`
+  plus the date and the time, per `.agents/methodology.md` ("Escalation, and
+  the blocked-task report"). Never force a passage.
 - Gate commands red twice on the same cause → stop and escalate; never loop
   blindly on a failing suite.
 - A conflict with a 🧑 zone → stop and surface it, in every mode.
@@ -160,10 +158,10 @@ The brief is **artifacts only**. Concretely, five things:
    or its existing path when resuming). It owns the program design,
    implementation checkboxes, worklog and Notes & Snippets; those checkboxes
    are the resume point.
-3. **The artifacts that the spec document explicitly references** — the parent spec, the
-   decision records and glossary of `.agents/project.md` §G, prior art, the
-   source files it names. They are given as paths and followed as links: the
-   Mason reads them, it is not handed a summary of them.
+3. **The artifacts that the spec document explicitly references** — the
+   parent spec, the decision records and glossary of `.agents/project.md` §G,
+   prior art, the source files it names. They are given as paths and followed
+   as links: the Mason reads them, it is not handed a summary of them.
 4. **The ambient layer** any session in this repo gets:
    `.agents/discipline.md`, the reading list of §C, the skills the spec names.
 5. **The workspace and the acceptance** — which branch or worktree to work in,

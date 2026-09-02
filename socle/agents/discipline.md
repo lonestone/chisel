@@ -10,8 +10,9 @@ the only difference is the paperwork.
 
 2. **Plan first.** Even for a one-shot fix: say what you are about to do
    before doing it. Nothing half-decided crosses into code. When the work has
-   a spec document, the approved program design is PERSISTED into its matching
-   work document before any code — how and where is the `plan` step of the
+   a spec document, the program design is PERSISTED into its matching work
+   document before any code — a draft at `plan`, validated at `plan-review`
+   where the formula runs one; how and where is the `plan` step of the
    formula (see below).
 
 3. **Zone-owner sections are law.** Sections marked 🧑 in any spec document
@@ -35,13 +36,11 @@ the only difference is the paperwork.
    outside the approved plan → stop and ask. A sub-agent reports to its
    **spawner** — the owner of the thread of work it was spawned into, which
    decides within what it owns; above the thread owner sits the human, and
-   nothing else. For every blocker, regardless of human-gate availability,
-   block the task and send the mandatory shared project-level report one rung
-   up; when an active work document exists, also record detailed task-specific
-   blocker information there, never in the spec document (before the work
-   document exists, only the shared report exists). Never force a passage on
-   your own authority. What the report is made of:
-   `.agents/methodology.md` ("Escalation, and the blocked-task report").
+   nothing else. Every blocker, in every mode, leaves a written trace in the
+   task's own documents, signed with its author's role plus the date and the
+   time, and the ruling on it is recorded in the same place — the form and
+   the destinations are `.agents/methodology.md` ("Escalation, and the
+   blocked-task report"). Never force a passage on your own authority.
 
 7. **Session hygiene.** Create in one sitting (interview → spec document → slicing
    feed each other); build **fresh**, from the spec/work pair — that is why the
@@ -63,11 +62,12 @@ the only difference is the paperwork.
    `.agents/profiles/foreman.md`.
 
 10. **A session opened to execute a step takes that step's role.** A fresh
-    session started to run a step of the pipeline — `work on slice <file>` and
-    its kin — reads that step's role profile in `.agents/profiles/` before
-    acting, and works under it for the whole session. The profile is the
-    contract whether the session was spawned or opened by hand: rule 9 binds
-    the side that delegates, this one binds the side that arrives.
+    session started to run a step of the pipeline — `work on slice
+    <spec-document>` and its kin — reads that step's role profile in
+    `.agents/profiles/` before acting, and works under it for the whole
+    session. The profile is the contract whether the session was spawned or
+    opened by hand: rule 9 binds the side that delegates, this one binds the
+    side that arrives.
 
 11. **A refused `update` is a redirect.** An agent whose `chisel update` is
     refused for a v1 layout does not stop there: it chains onto the

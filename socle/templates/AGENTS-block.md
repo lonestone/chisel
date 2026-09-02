@@ -28,12 +28,10 @@ where the breaks are):
 - The spec document is the source of truth for requirements and sole status.
   The matching work document holds the Mason's program design, worklog and
   implementation checkboxes.
-- A blocker always has the mandatory shared project-level signal (the dated
-  journal report and, when configured, its coordination item). When an active
-  work document exists, record detailed task-specific blocker information
-  there; before it exists, the shared report is the only record. Never put
-  implementation blocker detail in the spec document, and interactive
-  availability does not waive these records.
+- A blocker always leaves a written trace in the task's own documents, signed
+  with its author's role plus the date and the time, with the ruling on it
+  recorded in the same place — the form and the destinations are
+  `.agents/methodology.md` ("Escalation, and the blocked-task report").
 - The invoking session is the **Foreman** (`.agents/profiles/foreman.md`): it
   runs the formula, and it holds the interview, the mechanical verify and the
   close itself. Every other step is a fresh sub-agent it spawns — Architect,

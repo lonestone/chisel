@@ -652,7 +652,14 @@ Related tasks:
   glossary entry, "Zone ownership", the persist-the-program-design passage, the
   Program Design row of the phase table, the two-axis review paragraph.
 - [ ] `socle/agents/discipline.md` — the plan-first rule, the zone-owner rule,
-  and **rule 6**, whose blocker destination becomes the work document.
+  and **rule 6**, ~~whose blocker destination becomes the work document~~.
+  Amended 2026-09-02 per G15 (`review-360-decisions.md`, Addendum 3): rule 6's
+  blocker trace lives in the task's documents — implementation blockers in the
+  active work document, pre-`plan` blockers in the spec document's Notes —
+  signed with the author's role plus date and time, and whoever rules on the
+  block records the ruling in the same place; no shared journal line, no
+  separate escalation bead. (Amendment rule of §Acceptance Criteria, applied
+  by analogy to this Deliverable line.)
 - [ ] `socle/templates/AGENTS-block.md` — what a session tracks, and where.
 - [ ] `socle/agents/profiles/mason.md` — the work document is the Mason's file;
   every write the profile prescribes lands there; the prohibition becomes

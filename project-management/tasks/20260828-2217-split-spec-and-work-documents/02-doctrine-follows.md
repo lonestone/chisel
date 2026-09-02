@@ -1,6 +1,6 @@
 # 02 — Doctrine follows
 
-**Status:** 🔴 Not Started
+**Status:** 🟡 In Progress
 **Blocked by:** 01 — templates and installer (complete). This slice writes the
 doctrine that names the two documents defined there; it unblocks slices 03 and
 04.
@@ -18,16 +18,19 @@ This slice closes the following parent criteria from
 §Acceptance Criteria; their full wording and the governing system design stay
 there.
 
-- [ ] **no-file-says-the-spec-file** — `grep -rn "the spec file" socle/`
-  returns nothing. In this slice's owned files, every occurrence becomes the
-  precise document it means.
+- [ ] **no-file-says-the-spec-file** (the parent task's closing check — this
+  slice contributes to it, never closes it) — `grep -rn "the spec file"
+  socle/` returns nothing at task close. In this slice's owned files, every
+  occurrence becomes the precise document it means.
 - [ ] **the-roles-name-the-work-document** — `grep -rl "work document"
   socle/agents/profiles/` lists `mason.md`, `architect.md`, `inspector.md` and
   `foreman.md`; their contracts assign creation, evidence, findings, and
   archival consistently with the parent spec.
-- [ ] **the-program-design-has-left-the-spec** (doctrine share) — `grep -rn
-  "Design section" socle/` returns nothing. The methodology and Mason profile
-  put program design and implementation checkboxes in the work document; the
+- [ ] **the-program-design-has-left-the-spec** (doctrine share of the parent
+  task's closing check — this slice contributes to it, never closes it) —
+  `grep -rn "Design section" socle/` returns nothing at task close. The
+  methodology and Mason profile put program design and implementation
+  checkboxes in the work document; the
   spec document retains system design, intent, criteria, seams, and status.
 - [ ] **suite-green** (slice share) —
   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passes with zero failures.
@@ -45,12 +48,16 @@ not a decision surface for this slice. Apply its document boundary exactly:
   document, and resumes from implementation checkboxes in the work document.
 - The thread owner maintains the sole status in the spec document, and at
   `close` archives both documents together.
-- A blocker uses the methodology's shared dated journal/coordination report as
-  the project-level signal, while its detailed task-specific record belongs in
-  the active work document. Before a work document exists, only the shared
-  report exists; under this legacy slice's parent decisions 9–10, this combined
-  plain `.md` artifact temporarily serves as that work record. Neither record
-  substitutes for the other, and the profiles, discipline rule 6, and AGENTS
+- A blocker leaves a written trace in the task's documents (G15, superseding
+  the 2026-08-31 Option A revision kept below as history): implementation
+  blockers in the active work document, pre-`plan` blockers in the spec
+  document's Notes; each entry signed with the author's role plus date and
+  time, and whoever rules on the block records the ruling in the same place.
+  No shared journal line, no separate escalation bead — in beads mode the
+  task's own bead takes the native blocked status; in auto without beads the
+  session reports the block directly to the human. Under this legacy slice's
+  parent decisions 9–10, this combined plain `.md` artifact temporarily
+  serves as the work record. The profiles, discipline rule 6, and AGENTS
   block must agree.
 - The Inspector judges the diff against the whole spec document, reads the
   work document as evidence, and writes findings there without becoming its
@@ -334,6 +341,144 @@ Resume point: the Architect returned VALIDATED on this final plan; all four
 corrections are now applied. Run the focused cross-carrier audits and full
 owned verification sequence, then commit the green correction.
 
+### Post-review correction/resume checklist — round 5 (fresh Inspector + G15)
+
+Persisted 2026-09-02 by the thread owner after Owner arbitration of the fresh
+Inspector's report on `9e26b29...HEAD` (findings ST1–ST4, S1–S5). The S1
+ruling is recorded as G15, Addendum 3 of
+`project-management/review-360-decisions.md`; S5 stays parked for chantier 3
+(template on this slice's avoid list). Revised 2026-09-02 after a first
+Architect pass returned NOT VALIDATED (three blocking defects, eight
+non-blocking remarks — all folded in below). As in round 3: the completed
+historical checklists above are history, never reused — several of their
+checked items assert the very rule G15 deletes, and they stay below as
+history, never erased. Fresh Architect validation is required before typing
+resumes.
+
+Dispositions of the remaining findings, ruled 2026-09-02 by the thread owner
+(foreman):
+
+- **ST3 (ragged wraps)** — fix folded into the Mason items below: every
+  paragraph the round touches is rewrapped to the file's prevailing ~79
+  columns.
+- **ST4 (lost rationale)** — split ruling: the auto bullet's deleted
+  rationale "(the Checker reviews it, it does not author it)" is restored
+  (folded into the Mason items below); the deleted escalation-terminates
+  clause STAYS deleted — that deletion is ratified by G15 point 3, no action.
+
+Items. Each names its actor; the Mason types only socle carriers and
+work-side material, never this document's spec-side sections:
+
+- [x] **(Mason) G15 rewrite** across the seven carriers (methodology,
+  discipline rule 6, AGENTS block, Mason, Architect, Inspector, Foreman):
+  every blocker leaves a written trace in the task's documents —
+  implementation blockers in the active work document, pre-`plan` blockers in
+  the spec document's Notes; each entry signed with the author's role plus
+  date and time; whoever rules on the block — the Owner, or the Foreman in
+  auto — the ruling is recorded in the same place, signed the same way
+  (G15 point 7, ruled 2026-09-02). The mandatory shared journal ⚠️ line and the
+  separate blocking `escalation` bead are removed: in beads mode the task's
+  own bead takes the native blocked status; in auto without beads the session
+  reports the block directly to the human. Escalation itself is unchanged —
+  one rung up, above the Foreman the human — and oral availability waives no
+  record. Where methodology's blocked-task-report passage is rewritten, name
+  B3(b) (`review-360-decisions.md`) as retired by G15, so the deletion traces
+  to a ruling. Two ripples outside the carriers go to the worklog as
+  proposals, not fixes: `socle/agents/skills/retro/SKILL.md:42` becomes a
+  re-pointing (not a rename) for slice 4; the beads skill documents no
+  blocked-status write yet, so this item's "native blocked status" is a
+  proposal against `socle/agents/skills/chisel-beads/CHANGING-CASE.md:123-149`,
+  which
+  documents `--status in_progress` and no blocked-status write.
+- [x] **(Mason) Deduplicate the blocker rule (ST2)**: its full form is
+  defined once in methodology ("Escalation, and the blocked-task report");
+  the other six carriers state the duty in one line and point there. The
+  Architect's one line must keep its pre-`plan` case: its blockers land in
+  the spec document's Notes, the exclusion stays "implementation blocker
+  detail" (never a flat "never the spec document"), joined with its existing
+  assumption rule.
+- [x] **(Mason) ST1**: discipline's invocation becomes `work on slice
+  <spec-document>`.
+- [x] **(Mason) Invariant-6 residuals (S3)**: methodology's lifecycle line
+  persists the draft at `plan` (not "at plan validation"); discipline stops
+  calling the persisted design "approved" — draft persisted at `plan`,
+  validated at `plan-review`.
+- [x] **(Mason) S2**: foreman's Mason-revision passage names the work
+  document as the revision's destination.
+- [x] **(Mason) ST4 share**: restore the auto bullet's "(the Checker reviews
+  it, it does not author it)" rationale in methodology's Zone ownership.
+- [x] **(Thread owner) S4**: this document's acceptance-criteria block
+  qualifies `no-file-says-the-spec-file` and
+  `the-program-design-has-left-the-spec` as the parent task's closing checks,
+  contributed to — never closed — by this slice.
+- [x] **(Thread owner, wording approved by the Owner before it lands) Parent
+  spec amendment**: strike and date the rule-6 Deliverable line in the parent
+  spec, pointing at G15. The line sits under the parent's 🤖 AGENT ZONE (the
+  zone the convention retires, parent decisions 1 and 10 — the accepted
+  intermediate state), and
+  the amendment rule invoked lives in the parent spec's §Acceptance Criteria
+  ("An amended criterion is never erased: strike the original, date the new
+  version below it") — written for acceptance criteria, applied here by
+  analogy, said so in place. The parent spec is outside both maps of this
+  slice: the touch is logged in the worklog and reported under the proposal
+  door.
+- [x] **(Thread owner) This document's own System design**: its blocker
+  bullet is rewritten to state G15 (trace in the task's documents, role plus
+  date and time, Owner ruling recorded, no shared journal line, native beads
+  status), superseding the 2026-08-31 Option A revision — which stays below
+  as history, never erased.
+- [x] **(Thread owner) This document's Verification sequence**: steps 2 and 4
+  are rewritten against G15 — the "mandatory shared blocker signal" and "the
+  shared project-level signal is unconditional" audits become their G15
+  equivalents (trace in the task's documents, signed role + date and time,
+  Owner ruling recorded, no journal line, native beads status, one rung up).
+- [x] **(Mason) Rewrap (ST3)**: the ragged wraps this slice introduced in
+  the seven carriers — `methodology.md:291`, `methodology.md:412`,
+  `mason.md:167`, `architect.md:52`, plus discipline rule 6 already reopened
+  above — to the prevailing ~79 columns, and every paragraph the Mason's own
+  items rewrite. The thread owner rewraps what it writes on the spec side.
+- [x] **(Mason)** Re-run the verification sequence (as rewritten): the
+  three greps, the cross-carrier blocker audit against G15,
+  `git diff --check`, and the exact suite.
+
+Verified no-change findings, recorded so round 6 does not reopen them (first
+Architect pass): G15 point 4 (Foreman by mode) is already carried by
+`methodology.md:53`, `AGENTS-block.md:37` and `foreman.md:63-64`; G15 point 6
+by `architect.md:3`; the methodology Glossary rows (`methodology.md:23-24`)
+enumerate sections, not content, so the blocker trace needs no glossary edit.
+The Checker exception holds under G15 and gets more true, not less:
+pre-`plan` blockers land exactly where `checker.md:3` and `:27` already send
+its findings (the spec document's Notes), `000-template.spec.md:136-138`
+scopes Notes generically, and checker.md carries no record duty of its own
+because discipline rule 6 is ambient — checker.md and the templates
+legitimately stay on the avoid list.
+
+Resume point: the Architect returned VALIDATED on this revised round-5 plan
+(second pass, 2026-09-02), the Owner approved it, and all items are applied —
+thread-owner items by the thread owner, (Mason) items by a fresh Mason. The
+round-6 Inspector reviewed the uncommitted diff; its two escalations (the
+socle-internal `review-360-decisions.md` reference, and G15 point 4's auto
+half) await the Owner's ruling before commit.
+
+### Post-review dispositions — round 6 (Inspector on the uncommitted diff)
+
+Ruled 2026-09-02 by the thread owner (foreman), Owner arbitration on the two
+escalations:
+
+- **ST-A / SP4 (Owner, 2026-09-02)** — the socle must not name
+  `review-360-decisions.md`: methodology's retirement sentence quotes and
+  dates the Owner ruling inline instead, per the file's own precedent. Full
+  traceability stays in chisel's records. → Mason.
+- **SP3 (Owner, 2026-09-02)** — G15 point 4's auto half becomes doctrine:
+  foreman.md gains one sentence (in auto, the Foreman orchestrates, decides
+  within what it owns — rarely — and sends the rest up) and its
+  business-context claim is qualified by mode. → Mason.
+- **ST-D** — one-word disambiguation in inspector.md ("blocking-report
+  semantics", not the retired `escalation` item). → Mason.
+- **ST-B, ST-C, SP1, ST-E** — fixed by the thread owner: spec-side rewraps,
+  the stale resume point, the missing outside-map worklog entry, and the
+  status line (🔴 → 🟡).
+
 #### Implementation worklog
 
 - 2026-08-31 — **mason** — Methodology: replaced single-file task vocabulary
@@ -413,6 +558,114 @@ owned verification sequence, then commit the green correction.
   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`: PASS — 9 scenarios, 94
   assertions passed, 0 failed.
 
+- 2026-09-02 14:55 — **foreman** — Outside-map touch, logged per the round-5
+  item and reported under the proposal door: the parent spec's rule-6
+  Deliverable line received its strike-through + dated G15 amendment (parent
+  spec is in neither map of this slice; wording approved by the Owner before
+  landing). Same door, lower weight: `project-management/review-360-decisions.md`
+  received the Owner's G15 entry, points 1–7 (the Owner's own decision record,
+  written by the thread owner as scribe).
+- 2026-09-02 15:34 — **mason** — Round-5 G15 rewrite, carrier by carrier.
+  `methodology.md` ("Escalation, and the blocked-task report"): the two-record
+  rule is replaced by the single reference definition — the trace lives in the
+  task's own documents (implementation blockers in the active work document,
+  pre-`plan` blockers in the spec document's Notes), every entry signed with
+  its author's role plus the date and the time, whoever rules on the block
+  (the Owner, or the Foreman in auto within what it owns) records the ruling
+  in the same place and the same way, oral availability waives no record, and
+  discovery follows §B1 · Where task statuses live — the task's own bead takes
+  beads' native blocked status, auto without beads reports directly to the
+  human. The retired form is named as retired: no mandatory dated ⚠️ journal
+  line and no separate blocking `escalation` item, with G15 retiring what
+  decision B3(b) had let survive, so the deletion traces to a ruling.
+- 2026-09-02 15:34 — **mason** — ST2 deduplication: the full form is defined
+  once in methodology; the six other carriers now state the duty in one line
+  and point at that section. `discipline.md` rule 6, `AGENTS-block.md`,
+  `mason.md`, `inspector.md` and `foreman.md` each carry the one-line duty
+  with the signature rule and the pointer. `architect.md` keeps its pre-`plan`
+  case in that one line — its blocker notes land in the spec document's Notes,
+  signed `architect` plus date and time, and the exclusion stays
+  "implementation blocker detail never goes there" rather than a flat "never
+  the spec document" — joined with its existing assumption rule, which writes
+  to the same Notes.
+- 2026-09-02 15:34 — **mason** — ST1, S3, S2 and the ST4 share: discipline's
+  step invocation becomes `work on slice <spec-document>` (rule 10);
+  methodology's lifecycle line persists the draft at `plan` and names
+  `plan-review` as where it is validated; discipline rule 2 stops calling the
+  persisted design "approved" (draft at `plan`, validated at `plan-review`);
+  `foreman.md`'s Mason-revision verdict names the work document as the
+  revision's destination; methodology's Zone ownership auto bullet regains
+  "(the Checker reviews it, it does not author it)". The deleted
+  escalation-terminates clause was left deleted, per G15 point 3.
+- 2026-09-02 15:34 — **mason** — ST3 rewraps: the four named ragged wraps
+  (methodology's Mason-brief paragraph, its artifact-ladder paragraph,
+  `mason.md`'s third Input, `architect.md`'s plan-review bullet) plus every
+  paragraph these items rewrote. One extra in-carrier rewrap, reported rather
+  than silent: the cost-gradient paragraph of `methodology.md` carried an
+  88-column line this slice had introduced (`work on slice <spec-document>`),
+  outside the four the plan names; it is rewrapped with the paragraph, no
+  wording changed. No other pre-existing over-wide line was touched.
+- 2026-09-02 15:34 — **mason** — Verification, raw. `grep -rn "the spec file"
+  socle/`: 10 matches, all in the five formulas plus
+  `socle/agents/skills/retro/SKILL.md:42` — none in the seven carriers.
+  `grep -rl "work document" socle/agents/profiles/`: exactly `mason.md`,
+  `architect.md`, `inspector.md`, `foreman.md`. `grep -rn "Design section"
+  socle/`: 5 matches, formulas only. Cross-carrier G15 audit over
+  journal/bead/shared-signal/availability/"no human"/escalation language: the
+  only surviving journal-plus-bead blocker mention is methodology's own
+  retirement sentence; the other `journal` hits are the narrative-memory
+  section, the reading list, the paths line and the Mason's worklog-shape
+  line; the `no human` hits are zone ownership and arbitration semantics, not
+  records. Persistence-ordering audit over methodology, Mason, Architect and
+  discipline: draft persisted at `plan`, validated at `plan-review`, no
+  post-validation persistence cycle. `git diff --check`: clean. Exact gate
+  `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`: PASS — 9 scenarios, 94
+  assertions passed, 0 failed.
+- 2026-09-02 15:34 — **mason** — Two ripple proposals, under the proposal
+  door: reported, not acted on, both outside this slice's files map.
+  (1) `socle/agents/skills/retro/SKILL.md:42` ("Any blocker or escalation
+  written into the spec file") needs a **re-pointing**, not a rename: under
+  G15 a retro reads implementation blockers in the work document and
+  pre-`plan` blockers in the spec document's Notes. Size: one line, plus
+  possibly line 38's "spec file's persisted Design". Risk: low — a skill, no
+  code; but it is slice 4's territory (`the spec file` is a task-closing
+  grep). Clean delivery of this slice does not depend on it.
+  (2) `socle/agents/skills/chisel-beads/CHANGING-CASE.md:123-149` documents
+  `bd create` plus `bd update --status in_progress` and no blocked-status
+  write at all, so the "native blocked status" this doctrine now names has no
+  documented procedure behind it. Size: a passage in one skill, plus whatever
+  `bd` actually offers for a blocked status. Risk: medium — it asserts a tool
+  capability nobody has verified here. Clean delivery of this slice does not
+  depend on it either; the doctrine states the intent, the skill would state
+  the mechanics.
+
+- 2026-09-02 16:05 — **mason** — Round-6 dispositions applied, three carrier
+  edits. ST-A/SP4: `methodology.md:154-157` no longer names a chisel-internal
+  file — the retirement sentence now quotes and dates the ruling inline
+  ("Ruled by the Owner on 2026-09-02: \"c'est pas dans le journal du projet,
+  c'est dans les documents de travail\" — which retires the report form an
+  earlier ruling had let survive"), following the precedent of the same file's
+  `chisel-auto-light` bullet at :118-121. Substance kept: no mandatory dated
+  ⚠️ journal line, no separate blocking `escalation` item; the internal path
+  and the `G15`/`B3(b)` labels are gone, date and substance only, with full
+  traceability staying in chisel's own records. SP3: `foreman.md:3` and
+  `:11-16` — the business-context claim is qualified ("as much of it as its
+  mode gives it") and the auto half is stated in one sentence (in auto the
+  Foreman orchestrates, decides within what it owns — rarely, its knowledge of
+  the project being thin — and sends everything else one rung up); the default
+  half was deliberately left to the paragraph that already carries it at
+  `:18-19`, so the addition introduces no repetition. ST-D:
+  `inspector.md:39` — "that blocking escalation semantics" becomes "that
+  blocking-report semantics", disambiguating from the retired `escalation`
+  item.
+- 2026-09-02 16:05 — **mason** — Round-6 evidence: `grep -rn
+  "review-360-decisions" socle/` returns zero hits, and so does `grep -rnE
+  "G15|B3\(b\)" socle/`; every touched paragraph re-wraps at or under 79
+  columns (the remaining over-wide lines in the three files are pre-existing
+  and untouched); `git diff --check`: clean; exact gate
+  `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`: PASS — 9 scenarios, 94
+  assertions passed, 0 failed. Nothing committed.
+
 The implementation worklog records each completed checkbox with the affected
 carrier(s), the precise vocabulary/ownership invariant checked, and the
 command/result when one ran. It records any outside-map touch as a proposal
@@ -431,18 +684,24 @@ gate.
    Mason, Architect, Inspector and Foreman.
 2. Read the seven modified files in one pass against the ownership invariants
    above: no Mason spec write, Inspector findings in work, Checker’s pre-plan
-   Notes exception intact, sole spec status, archive-both at close, mandatory
-   shared blocker signal, and detailed blocker record in the active work
-   document (never the spec document), Inspector reports without applying its
-   own findings, Mason owns typing, and close distinguishes typed pairs from a
-   sliced parent with no own work document.
+   Notes exception intact, sole spec status, archive-both at close, blocker
+   trace in the task's documents per G15 (implementation blockers in the
+   active work document, pre-`plan` blockers in the spec document's Notes,
+   signed role plus date and time, rulings recorded in place, no shared
+   journal line, no separate escalation bead), Inspector reports without
+   applying its own findings, Mason owns typing, and close distinguishes
+   typed pairs from a sliced parent with no own work document.
 3. Run the exact installer seam:
    `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`.
 4. Run a focused cross-carrier audit over methodology, discipline, AGENTS
    block, Architect, Inspector, Mason and Foreman: search every occurrence of
-   human-gate/interactive-availability/"no human" blocker language and confirm
-   that the shared project-level signal is unconditional, active work records
-   hold detail, pre-work has shared-only reporting, and the spec never holds
+   human-gate/interactive-availability/"no human"/journal/bead blocker
+   language and confirm the G15 shape everywhere — the trace lives in the
+   task's documents, signed role plus date and time, whoever rules records
+   the ruling in the same place, no shared journal line or separate
+   escalation bead survives, beads mode uses the task bead's native blocked
+   status, auto without beads reports directly to the human, escalation stays
+   one rung up, oral availability waives no record, and the spec never holds
    implementation blocker detail.
 5. Audit the persistence/validation ordering across methodology, Mason and
    Architect: the Mason creates and persists a draft at `plan`, the Architect
