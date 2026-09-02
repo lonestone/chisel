@@ -1,6 +1,6 @@
 # 04 — Skills follow
 
-**Status:** 🟡 In Progress (typed and diff-reviewed 2026-09-02; commit and close pending)
+**Status:** 🟢 Complete (2026-09-02)
 **Blocked by:** 02 — doctrine follows (complete 2026-09-02). The review skill
 judges "the whole spec document" as the doctrine slice defines it. Shares no
 file with slice 3 (complete) or slice 5.
@@ -19,18 +19,18 @@ to one task-closing check; full wording and the governing system design stay
 in `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
 §Acceptance Criteria.
 
-- [ ] **spec-axis-judges-the-whole-spec** (owned in full) — `grep -n
+- [x] **spec-axis-judges-the-whole-spec** (owned in full) — `grep -n
   "Context, Scope, Acceptance Criteria, Seams"
   socle/agents/skills/code-review/SKILL.md` returns nothing; the skill's
   spec-source and Spec sub-agent steps make the whole spec document, system
   design included, the requirement, and the work document evidence only — a
   divergence between the two designs being a finding to judge.
-- [ ] **slice-task-emits-spec-documents-only** (owned in full) — `grep -n
+- [x] **slice-task-emits-spec-documents-only** (owned in full) — `grep -n
   "Design — persisted at plan time" socle/agents/skills/slice-task/SKILL.md`
   returns nothing; each slice is published as `<NN>-<slug>.spec.md`, the
   emitted template carries no Design section, and it says the implementing
   session creates the matching work document at its `plan` step.
-- [ ] **beads-and-retro-name-the-right-document** (owned in full) — `grep -n
+- [x] **beads-and-retro-name-the-right-document** (owned in full) — `grep -n
   "the persisted Design" socle/agents/skills/chisel-beads/SKILL.md` and
   `grep -n "The spec file's persisted Design, implementation checkboxes"
   socle/agents/skills/retro/SKILL.md` both return nothing, while `grep -n
@@ -38,7 +38,7 @@ in `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
   beads skill's "1 · What owns what" gives intent, acceptance criteria and
   seams to the spec document and program design plus checkboxes to the work
   document; `--spec-id` still points at the spec document.
-- [ ] **upstream-notes-tell-the-truth** (owned in full) — the `changes` field
+- [x] **upstream-notes-tell-the-truth** (owned in full) — the `changes` field
   of the `x-upstream` block of `code-review`, `slice-task` and `retro`
   records the divergence this task adds. `chisel-beads` is our own and has
   none.
@@ -50,7 +50,7 @@ in `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
   repo-wide grep at zero. The retro line is a **re-pointing, not a rename**
   (recorded proposal from slice 02): blockers now live in the task's
   documents, so the Sources line must say where they actually are.
-- [ ] **suite-green** (slice share) —
+- [x] **suite-green** (slice share) —
   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passes with zero
   failures.
 
@@ -748,3 +748,11 @@ four files, still no commit. No blocker.
 
 Created 2026-09-02 at the start of slice 04, in accordance with the parent
 spec's intermediate-convention decision.
+
+- 2026-09-02 18:20 — **foreman** — Slice closed at commit `d251d12`. Both
+  Inspector axes passed; findings S-1..S-4 and P-3 applied before commit;
+  P-4/P-5 handled by the thread owner (P-5: the parent criterion's stale
+  seven-count amended strike-and-dated under the Owner's standing go). The
+  no-file-says-the-spec-file share left the repo-wide grep at zero; the
+  parent criterion stays unticked until task close. Archival of the pair
+  happens at task `close`.
