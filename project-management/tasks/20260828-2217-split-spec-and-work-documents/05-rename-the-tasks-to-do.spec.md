@@ -305,12 +305,12 @@ treatment of edge case (g). Commit.
 exactly its two allowed lines.
 
 **Why this sequencing survives an interruption.** The self-rename is last, its
-commit carries only its own two acts (3a, 3b), and it is preceded (step 2) by the repoint that makes
-this document's own parent citation true at the new name. So at every
-boundary the file is complete and consistent, under one of two names, and the
-Resume block at the top of this section names both. Any fresh session
-re-runs the parent's first command, reads what is left, and restarts at the
-first unticked box in §6.
+commit carries only its own two acts (3a, 3b), and it is preceded (step 2) by
+the repoint that makes this document's own parent citation true at the new
+name. So at every boundary the file is complete and consistent, under one of
+two names, and the Resume block at the top of this section names both. Any
+fresh session re-runs the parent's first command, reads what is left, and
+restarts at the first unticked box in §6.
 
 ### 4 · Edge cases, ruled in writing
 
@@ -352,9 +352,14 @@ command already printed exactly the two allowed lines. **That is false and
 edge case (g) is the true statement:** measured 2026-09-02 18:20, the command
 prints FOUR lines — the two allowed fictional paths, plus the two
 forward-looking `.spec.md` paths this document itself introduces (the resume
-invocation at `:105` and §5 command 6 at `:492`). Those two are transient and
-self-healing: they name files that step 1 and step 3 create, so they resolve
-before verification. What must be byte-identical BEFORE and AFTER is the pair
+invocation of the Resume block, and the `git log --follow` spot-check of §5
+command 6). Those two are located by section and name rather than by line
+number, deliberately: the earlier drafts of this ruling pointed at `:388` and
+then at `:492`, and both rotted as the file grew — the third correction is the
+one that removes the coordinate instead of updating it, which is what §3's
+anchoring rule says to do. Those two paths are transient and self-healing:
+they name files that step 1 and step 3 create, so they resolve before
+verification. What must be byte-identical BEFORE and AFTER is the pair
 of FICTIONAL lines, not the command's whole output.
 
 **(c) Line anchors and code fences — one anchor, no fences.** One citation
@@ -726,6 +731,31 @@ too, since the design is the deliverable of `plan`.*
   Command 6 shows `--follow` walking straight through the rename commit into
   the file's pre-rename history, so no history was lost.
 
+- **2026-09-02 19:12 — `mason` — Inspector Standards findings folded in.**
+  Both review axes passed; the three findings were all in this work record,
+  none in the renamed or repointed files, and none touched a criterion.
+  - *The `## Notes` section had gone stale.* It still said "nothing is renamed
+    and nothing is committed yet", false since `0c9ee19`. Rewritten to state
+    what actually happened — five commits, all eight files renamed, the four
+    criteria green — and to record the Architect's round 2, which the section
+    omitted entirely. Corrected in place: Notes is a status paragraph, not a
+    never-erased log, and the never-erased history lives here in §7.
+  - *Edge (b)'s pointer had rotted a third time.* It named §5 command 6 at
+    `:492`; step 3b's insertion pushed the command to `:526`. **Fixed by
+    removing the coordinate rather than updating it** — the ruling now points
+    by section and name ("the `git log --follow` spot-check of §5 command 6",
+    "the resume invocation of the Resume block"), which is what §3's anchoring
+    rule prescribes and which cannot rot again. Two successive corrections of
+    the same number were the evidence that updating it was the wrong repair.
+  - *One line had run to 100 columns.* The round-2 "two acts (3a, 3b)"
+    rewording did not re-wrap its paragraph. Re-wrapped to the file's ~78
+    columns; no word changed.
+  - *Not touched, and why:* the three Spec-axis findings are escalations to the
+    Owner and are not the Mason's to act on; the parent spec and every other
+    file were left alone. One pre-existing 87-column line survives in edge (a)
+    — its overflow is a single 57-character inline path that cannot be broken
+    without splitting the path, and it was not among the findings.
+
 **Left alone, deliberately.** The status line of this document still reads
 🔴 Not Started, and flipping it is not the Mason's act: parent decision 3 gives
 the single status to the thread owner. Two consequences of edge case (e) travel
@@ -737,6 +767,18 @@ once the task is marked 🟢 at its `close`.
 ## Notes
 
 Created 2026-09-02 at the start of slice 05. Program design persisted
-2026-09-02 18:20 by `mason` and revised 2026-09-02 18:41 after the Architect's
-round-1 NOT VALIDATED; nothing is renamed and nothing is committed yet — the
-`plan` step ordered design and persistence only.
+2026-09-02 18:20 by `mason`, revised 18:41 after the Architect's round-1
+NOT VALIDATED, and revised again 18:52 after round 2, which returned
+VALIDATED with three design-record fixes.
+
+**Typed, renamed and verified 2026-09-02** across five commits — `0c9ee19`
+(the plan, and the evidentiary snapshot of the BEFORE inventory), `fd1e252`
+(the six other files), `3bb0c79` (the parent spec), `7233023` (this document's
+own self-rename and its paste), `9c189b4` (the verification record). All eight
+files of the inventory carry `.spec.md`, all 29 external citations are
+repointed, and the four acceptance criteria are green: both rename commands
+silent, the citation command down to its two allowed fictional paths, the
+archive untouched, the suite at 9 scenarios / 94 assertions / 0 failed. The
+`Status:` line above is the thread owner's to move, not the Mason's (parent
+decision 3); §4 edge case (e) says what that flip will legitimately do to the
+second rename command. Step-by-step detail is in §7, the worklog.
