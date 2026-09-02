@@ -913,7 +913,7 @@ matched proves nothing once it goes green):
 - **Two more live citers of the old filename exist, correctly outside this
   slice's map and outside `old-template-cited-nowhere`'s scope** (that
   criterion's grep does not reach either) — named here so their survival
-  reads as deliberate, not missed. `project-management/tasks/20260826-2302-chisel-dogfoods-itself.md`
+  reads as deliberate, not missed. `project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md`
   (🟠, blocked, not this slice's file) cites the old path twice and carries
   an unchecked deliverable, "`project-management/000-task-file-template.md`
   pointers repaired" — this slice's own repointing of the repo's
@@ -1008,7 +1008,7 @@ Strategy given the eight-line headroom under the cap.
 6. *Two live citers of the old filename sit outside the criterion's scope, and
    the Notes above read as if none existed.* Both are correctly out of this
    slice's map; naming them costs a line and stops a later reader thinking they
-   were missed. `project-management/tasks/20260826-2302-chisel-dogfoods-itself.md`
+   were missed. `project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md`
    (open, 🟠) carries an unchecked deliverable "`project-management/000-task-file-template.md`
    pointers repaired" — the very pointer decision 9 repairs, so shipping the
    derived copies satisfies it; that file is slice 5's. And

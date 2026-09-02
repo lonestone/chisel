@@ -713,12 +713,12 @@ therefore proving a deletion.
 every file under `project-management/tasks/`. Six files are not complete, and
 they are exactly the six the interview named:
 
-- `project-management/tasks/20260806-0959-chisel-v1.md` (🔴)
-- `project-management/tasks/20260806-0959-chisel-v1/06-pilot-migration.md` (🔴)
-- `project-management/tasks/20260806-0959-chisel-v1/07-release.md` (🔴)
-- `project-management/tasks/20260826-1512-chisel-v2.md` (🔴)
-- `project-management/tasks/20260826-1512-chisel-v2/06-upgrade-v2-and-log-md.md` (🟠)
-- `project-management/tasks/20260826-2302-chisel-dogfoods-itself.md` (🟠)
+- `project-management/tasks/20260806-0959-chisel-v1.spec.md` (🔴)
+- `project-management/tasks/20260806-0959-chisel-v1/06-pilot-migration.spec.md` (🔴)
+- `project-management/tasks/20260806-0959-chisel-v1/07-release.spec.md` (🔴)
+- `project-management/tasks/20260826-1512-chisel-v2.spec.md` (🔴)
+- `project-management/tasks/20260826-1512-chisel-v2/06-upgrade-v2-and-log-md.spec.md` (🟠)
+- `project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md` (🟠)
 
 Every other file under `tasks/` is complete, and
 `project-management/archive/` is untouched. The two slice FOLDERS keep their
@@ -729,7 +729,7 @@ nine files; the real number is smaller, and the difference matters because it
 makes slice 5 cheap. Three files carry a citation naming one of the six with
 its `.md` extension:
 
-- `project-management/tasks/20260826-2302-chisel-dogfoods-itself.md` — three
+- `project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md` — three
   citations of the chisel-v2 parent, and the file is itself renamed
 - `project-management/tasks/20260826-1512-chisel-v2/05-chisel-beads-convention.md`
   — one citation
@@ -738,9 +738,9 @@ its `.md` extension:
 
 Two more carry a bare-slug citation of a renamed slice, without an extension,
 so nothing breaks but they should be made consistent:
-`project-management/tasks/20260806-0959-chisel-v1.md` (naming
+`project-management/tasks/20260806-0959-chisel-v1.spec.md` (naming
 `06-pilot-migration` and `07-release`) and
-`project-management/tasks/20260826-1512-chisel-v2.md` (naming
+`project-management/tasks/20260826-1512-chisel-v2.spec.md` (naming
 `06-upgrade-v2-and-log-md`). The changelog cites tasks by their time id
 ("task `20260826-1512-chisel-v2`"), never by filename, so it needs nothing.
 
@@ -965,7 +965,7 @@ way, as this spec already does elsewhere.
 6. *That same criterion cannot see bare-filename citations.* Its pattern
    requires the `project-management/tasks/` prefix, so the citations in
    `project-management/tasks/20260826-1512-chisel-v2/07-docs-and-dedup.md` and
-   in `project-management/tasks/20260826-2302-chisel-dogfoods-itself.md` that
+   in `project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md` that
    name a file by its bare name are invisible to it. The migration inventory in
    the Notes catches them and the rename slice will act on that inventory, so
    nothing is lost — but the criterion is a weaker net than the prose around it

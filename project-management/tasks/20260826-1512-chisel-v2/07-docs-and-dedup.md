@@ -66,7 +66,7 @@ readings, and the two ACs above are rewritten accordingly.**
 
 **AC2 asks for "the matrix (piloting × coordination)".** The audit round
 retired that framing: *"Vocabulary: 'a default + options', the matrix is
-retired"* (parent, `20260826-1512-chisel-v2.md:366-374`). Writing the matrix
+retired"* (parent, `20260826-1512-chisel-v2.spec.md:366-374`). Writing the matrix
 back into PHILOSOPHY §4 and `methodology.md` would ship the vocabulary the
 Owner replaced.
 
@@ -159,7 +159,7 @@ A line marked ↷ is deliberately NOT settled here and names its new owner.
 - ↷ **The CLI does not read glue §A** — `init` hardcodes `project-management/` (`06:266-270`; inventory §4:115). Behaviour, not documentation: fixing it changes what `init` writes and what the golden tree contains. **New owner: the Owner**, as a post-v2 task — it predates v2 and touches the installer, not the docs.
 - ↷ **`render` only checks three of the four rendered profiles** (`installer.sh:251` loops `architect mason inspector`; `checker` is installed and rendered but unverified). Test coverage, not documentation, and the suite budget is the Owner's. **New owner: the Owner** — reported, not fixed.
 - ↷ **`chisel-setup`'s §B3 verbatim question stays binary.** Making it three-valued is questionnaire work that reaches `upgrade-v2` too, and no AC asks for it. The glue §B3 names the presets instead (ruling R3). **New owner: the Owner**, if a three-way setup question is ever wanted.
-- ↷ **The dogfooding task** `20260826-2302-chisel-dogfoods-itself.md` is post-v2 and untouched (parent `:277`).
+- ↷ **The dogfooding task** `20260826-2302-chisel-dogfoods-itself.spec.md` is post-v2 and untouched (parent `:277`).
 - ↷ **06's two real pilots** and the parity re-verification stay the Owner's (`06:240-244`).
 - ↷ **Beads routing into the doctrine** (`05:238-241`, "slice 07 owns any further routing"): **settled by ruling** — no beads vocabulary enters `discipline.md` or `methodology.md` beyond the one place the Owner's digest needs it (the blocking `escalation` bead, named as a §B-conditional mechanic). The convention stays reachable through §B1 and the skill's own description. No further routing is added.
 
@@ -462,7 +462,7 @@ not compress.
 - **`bin/chisel.sh`.** Not touched. The refusal message keeps its wording (the
   redirect is written in `discipline.md`), and `init`'s hardcoded
   `project-management/` is the Owner's, post-v2.
-- **The task `20260826-2302-chisel-dogfoods-itself.md`** — post-v2. 07 does not
+- **The task `20260826-2302-chisel-dogfoods-itself.spec.md`** — post-v2. 07 does not
   read it, does not advance it.
 - **06's pilots and the parity re-verification** — the Owner's.
 - **Formula step bodies.** Only the three headers and the two name strings

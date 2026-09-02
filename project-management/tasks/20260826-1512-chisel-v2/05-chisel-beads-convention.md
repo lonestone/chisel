@@ -342,7 +342,7 @@ outside this repo** (`test/fixtures/brownfield` → `git init` → one commit �
 
 **Note without stopping — an unrelated in-flight change.** Partway through
 step 3, `git status` showed
-`project-management/tasks/20260826-2302-chisel-dogfoods-itself.md` modified
+`project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md` modified
 by what is evidently a parallel session (an Owner ruling on that task's own
 question, unrelated to this slice). Left untouched and unstaged throughout,
 per the standing rule against `git add -A`/`git add .` in this repo.

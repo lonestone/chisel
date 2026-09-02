@@ -511,9 +511,9 @@ searching the full old path string in the named file (anchoring rule, head of
       persisted"). Two effects: the file becomes tracked so `git mv` can move
       it at step 3, and the commit is the evidentiary snapshot holding the
       verbatim BEFORE paste (edge case (g)).
-- [ ] **Step 1a** — `git mv` rename-set entries 1–6 to their `.spec.md` targets.
-- [ ] **Step 1b** — repoint the citations of entries 1–6: parent spec `:716`–`:721`, `:732`, `:741`, `:743`, `:968`; `20260826-2302-chisel-dogfoods-itself.spec.md:4`, `:115`, `:158`; 🟢 `07-docs-and-dedup.md:69` (anchor preserved), `:162`, `:465`; 🟢 `05-chisel-beads-convention.md:345`; 🟢 `01-templates-and-installer.md:916`, `:1011`.
-- [ ] **Step 1c** — commands 1–4 of §5 read; diff read line by line; explicit `git add` of the renamed and repointed paths; commit.
+- [x] **Step 1a** — `git mv` rename-set entries 1–6 to their `.spec.md` targets.
+- [x] **Step 1b** — repoint the citations of entries 1–6: parent spec `:716`–`:721`, `:732`, `:741`, `:743`, `:968`; `20260826-2302-chisel-dogfoods-itself.spec.md:4`, `:115`, `:158`; 🟢 `07-docs-and-dedup.md:69` (anchor preserved), `:162`, `:465`; 🟢 `05-chisel-beads-convention.md:345`; 🟢 `01-templates-and-installer.md:916`, `:1011`.
+- [x] **Step 1c** — commands 1–4 of §5 read; diff read line by line; explicit `git add` of the renamed and repointed paths; commit.
 - [ ] **Step 2a** — `git mv` the parent spec (entry 7) to `…split-spec-and-work-documents.spec.md`.
 - [ ] **Step 2b** — repoint its 10 citations: 🟢 `01:21`, 🟢 `02:17`, `:87`, 🟢 `03:19`, `:105`, 🟢 `04:19`, `:117`, `:172`, and this document `:17`, `:80`.
 - [ ] **Step 2c** — commands 1–4 of §5 read; explicit `git add`; commit.
@@ -604,7 +604,32 @@ too, since the design is the deliverable of `plan`.*
   stay untracked and unstaged, at this and every step. The commit freezes the
   verbatim BEFORE inventory paste of §1 (edge case (g)) and makes the file
   tracked, which is what lets step 3a move it with `git mv`. Nothing renamed
-  yet. Hash recorded in the step-1 entry below.
+  yet. Committed as **`0c9ee19`** "Persist the rename plan".
+- **2026-09-02 18:56 — `mason` — Step 1 done: the six other files renamed and
+  repointed.** `git mv` on rename-set entries 1–6 (git recorded all six as
+  `R`, so `--follow` will cross them), then their citations repointed in the
+  five citing files of §2 rows 1–6.
+  **19 citations repointed, and the per-file counts matched §2 exactly** —
+  parent spec 10, `20260826-2302-chisel-dogfoods-itself.spec.md` 3,
+  🟢 `07-docs-and-dedup.md` 3, 🟢 `05-chisel-beads-convention.md` 1,
+  🟢 `01-templates-and-installer.md` 2 (19 = 2+1+1+6+1+8, rows 1–6). Every
+  repoint was located by searching the full old path string, not by line
+  number, per the anchoring rule of §3; the bare filename form was used as the
+  search key because it subsumes the prefixed form, so a single pass fixed
+  both shapes of citation.
+  *Edge cases that fired, as designed:* the line anchor of 🟢
+  `07-docs-and-dedup.md:69` survived intact as
+  `20260826-1512-chisel-v2.spec.md:366-374` (edge (c)); the three fictional
+  payroll occurrences in 🟢 `05-chisel-beads-convention.md` — including the
+  hyphen-wrapped one at `:307`–`:308` — were left untouched while the real
+  citation in the same file was repointed (edge (b)); and the citation command
+  is legitimately red at this point, printing six extra MISSING lines that all
+  come from this document's own §1 BEFORE paste and nothing else (verified by
+  a per-path citer sweep), which is precisely what step 3b exists to close
+  (edge (g)).
+  *State read before committing:* command 1 lists exactly the two self files;
+  command 2 prints nothing; the restated command 4 returns only the eight
+  parent-spec citations that step 2 owns; `git diff --check` clean.
 
 ## Notes
 

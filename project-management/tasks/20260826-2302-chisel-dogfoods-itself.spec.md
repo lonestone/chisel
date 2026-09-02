@@ -1,7 +1,7 @@
 # Chisel equips itself with the socle it ships
 
 **Status:** 🟠 Blocked — starts once chisel v2 is closed
-(`20260826-1512-chisel-v2.md`)
+(`20260826-1512-chisel-v2.spec.md`)
 
 ---
 
@@ -112,7 +112,7 @@ those rules, not around them.
 
 ## Slices & Dependencies
 
-- **Depends on:** `20260826-1512-chisel-v2.md` — the socle must stop moving
+- **Depends on:** `20260826-1512-chisel-v2.spec.md` — the socle must stop moving
   before it is installed.
 - **Related:** slice 06 of the v2 task (the pilot migrations of other repos
   answer the same question from the other side).
@@ -155,7 +155,7 @@ not a text to copy.
 
 ## References
 
-- `project-management/tasks/20260826-1512-chisel-v2.md` — the v2 task, its
+- `project-management/tasks/20260826-1512-chisel-v2.spec.md` — the v2 task, its
   audit round and its post-audit rulings
 - `../factory-bench/research/audit-process-dur.md` — where the drift this
   task addresses was measured
