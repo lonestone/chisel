@@ -12,5 +12,10 @@ methodology it ships.
   (`work on task <file>` / `work on slice <file>`); plan approved by the human
   and PERSISTED into the file before any code; two-axis review at completion.
 - New task file names: `scripts/task-id.sh <intention>`.
+- Anything worth remembering lives in the repo — task files, the decisions
+  record (`project-management/review-360-decisions.md`), the doctrine — never
+  in an assistant's private memory: future agents are not necessarily the
+  same assistant (Owner ruling G17, 2026-09-02). Role reuse follows ruling
+  G16: reviewers fresh, the Mason reused within a live thread.
 - The canonical socle now lives in `socle/` (imported from the music-downloader
   pilot at slice 01).

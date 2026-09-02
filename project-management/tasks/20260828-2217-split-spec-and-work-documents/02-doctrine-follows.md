@@ -1,6 +1,6 @@
 # 02 — Doctrine follows
 
-**Status:** 🟡 In Progress
+**Status:** ✅ Complete (2026-09-02)
 **Blocked by:** 01 — templates and installer (complete). This slice writes the
 doctrine that names the two documents defined there; it unblocks slices 03 and
 04.
@@ -22,7 +22,7 @@ there.
   slice contributes to it, never closes it) — `grep -rn "the spec file"
   socle/` returns nothing at task close. In this slice's owned files, every
   occurrence becomes the precise document it means.
-- [ ] **the-roles-name-the-work-document** — `grep -rl "work document"
+- [x] **the-roles-name-the-work-document** — `grep -rl "work document"
   socle/agents/profiles/` lists `mason.md`, `architect.md`, `inspector.md` and
   `foreman.md`; their contracts assign creation, evidence, findings, and
   archival consistently with the parent spec.
@@ -32,7 +32,7 @@ there.
   methodology and Mason profile put program design and implementation
   checkboxes in the work document; the
   spec document retains system design, intent, criteria, seams, and status.
-- [ ] **suite-green** (slice share) —
+- [x] **suite-green** (slice share) —
   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passes with zero failures.
 
 ## System design
@@ -480,6 +480,14 @@ escalations:
   status line (🔴 → 🟡).
 
 #### Implementation worklog
+
+- 2026-09-02 17:12 — **foreman** — Slice closed at commit `863094c`. Slice
+  shares verified green: zero "the spec file" / "Design section" matches in
+  the seven carriers (remaining matches owned by slices 03–04), profiles
+  grep lists exactly mason/architect/inspector/foreman, suite 94/94. The two
+  parent-closing criteria stay unticked by design — this slice contributes,
+  the task closes them. Round-5/6 corrections and the G15 arbitration are
+  recorded above; archival of the pair happens at task `close`.
 
 - 2026-08-31 — **mason** — Methodology: replaced single-file task vocabulary
   with the symmetric spec/work document model; assigned status and review

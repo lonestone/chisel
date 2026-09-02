@@ -22,16 +22,18 @@
 # kept. `.agents/formulas/chisel-auto-light.formula.toml` empties both: it is
 # an instrument built to be measured, not a notch on either axis.
 #
-# This file owns the ORDER and the GATES, nothing else. The content and the
-# progress belong to the spec file; the know-how of each step belongs to the
-# skill that step names; the contract of each role belongs to its profile in
+# This file owns the ORDER and the GATES, nothing else. The requirements, the
+# review surface and the task's sole status belong to the spec document; the
+# program design and the progress belong to the work document the Mason
+# creates at `plan`; the know-how of each step belongs to the skill that step
+# names; the contract of each role belongs to its profile in
 # `.agents/profiles/`; the reasoning belongs to `.agents/methodology.md`.
 # Roles are roster names — a vendor or model name never appears here. Every
 # write goes through the glue `.agents/project.md` (§A paths, §B tracker
 # convention, §D living docs, §F gate commands, §G glossary and decisions).
 
 formula = "chisel-default"
-description = "Chisel task pipeline, the default: every decision gate awaits the human (the Owner). The spec file owns the content; this formula owns the order and the gates."
+description = "Chisel task pipeline, the default: every decision gate awaits the human (the Owner). The spec document owns the content and the status, the work document the progress; this formula owns the order and the gates."
 version = 1
 type = "workflow"
 
@@ -40,7 +42,7 @@ description = "Short slug of the task (used in titles)"
 required = true
 
 [vars.spec]
-description = "Path to the task spec file (markdown, chisel template)"
+description = "Path to the task spec document (markdown, from the spec template)"
 required = true
 
 # ── CREATE ────────────────────────────────────────────────────────────────
@@ -71,9 +73,12 @@ type = "task"
 needs = ["interview"]
 description = """
 Role: Architect — contract `.agents/profiles/architect.md`.
-Write {{spec}} from the task file template declared in `.agents/project.md`
-§A, named with the task id script declared there. Respect the reading
-gradient: 🧑 zones short and decision-rich, detail in the 🤖 zone.
+Write {{spec}} from the spec template declared in `.agents/project.md` §A,
+named with the task id script declared there. Respect the reading gradient:
+the spec document's two 🧑 zones — REVIEW CAREFULLY, then REVIEW IF RELEVANT
+— short and decision-rich, the detail ordered after them rather than cut.
+There is no agent zone: the Mason's working space is the separate work
+document it creates at `plan`.
 Run the sizing check OUT LOUD, always, in its two questions. Does this fit a
 single fresh context window AND end in one demoable, verifiable pass? Yes →
 the task is its own single slice, no breakdown artifact. No → cut it with the
@@ -89,8 +94,9 @@ convention of §B.
 The Foreman then COMMITS the spec, as it does at `close`: a task can sit at
 "spec done" for a long time, and what is not saved does not survive that wait.
 Then STOP: the session that creates does not implement. The build starts
-fresh from the file — `work on task <file>`, or `work on slice <file>` for a
-slice whose blockers are all done.
+fresh from the spec/work pair — `work on task <spec-document>`, or `work on
+slice <spec-document>` for a slice whose blockers are all done; the
+implementing session creates the work document itself at `plan`.
 """
 
 [[steps]]
@@ -113,19 +119,23 @@ type = "task"
 needs = ["spec-review"]
 description = """
 Role: Mason — contract `.agents/profiles/mason.md`.
+FIRST create the matching work document: {{spec}}'s path with `.spec.md`
+replaced by `.work.md`, same directory, from the work template declared in
+`.agents/project.md` §A.
 The PROGRAM DESIGN, written by the session that will implement it: the target
 file tree, the seam signatures, the state and migration notes, the TDD order,
 the decisions the spec left to the implementation, and the short list of
 evergreen doc pages (declared in `.agents/project.md` §D, never inside the
-task workspace) to write at close. PERSIST it into the Design section of
-{{spec}} BEFORE any code — a design that lives only in the conversation does
-not exist. Cite the references it relies on: whoever reads next follows links,
-not vibes.
+task workspace) to write at close. PERSIST it into that work document, under
+its Program Design heading, BEFORE any code — a design that lives only in the
+conversation does not exist. Cite the references it relies on: whoever reads
+next follows links, not vibes.
 It is written when the work starts, not when the spec is written: a task can
 sit at "spec done" for a long time, and pseudo-code ages badly while the
 system design ages well — the architecture moves far less than the code.
 Read the ambient layer declared in `.agents/project.md` §C, then {{spec}} in
-full plus what it links to (parent spec, prior art), and update its status.
+full plus what it links to (parent spec, prior art). {{spec}} is read-only to
+the Mason: its sole status belongs to the thread owner.
 """
 [steps.gate]
 type = "human"
@@ -141,8 +151,9 @@ type = "task"
 needs = ["plan"]
 description = """
 Role: Architect — contract `.agents/profiles/architect.md`.
-Read the slice and the program design persisted at `plan`, and nothing else;
-then answer VALIDATED or corrections. Typing needs VALIDATED.
+Read {{spec}} and the program design the Mason persisted at `plan` in the
+matching work document, and nothing else; then answer VALIDATED or
+corrections. Typing needs VALIDATED.
 """
 
 [[steps]]
@@ -152,9 +163,10 @@ type = "task"
 needs = ["plan-review"]
 description = """
 Role: Mason — contract `.agents/profiles/mason.md`.
-Execute the program design persisted at `plan`, ticking the implementation
-checkboxes in {{spec}} as you go — they are the resume point. The full suite
-is the next step's job.
+Execute the program design persisted at `plan` in the matching work document,
+ticking its implementation checkboxes as you go — they are the resume point —
+and keeping its worklog as the session's written trace. The full suite is the
+next step's job.
 """
 [steps.gate]
 type = "human"
@@ -184,8 +196,11 @@ needs = ["verify"]
 description = """
 Role: Inspector — contract `.agents/profiles/inspector.md`.
 Follow the `code-review` skill. The diff is handed over with its fixed point
-pinned, together with the path to {{spec}}, whose 🧑 zones are the
-requirements of the Spec axis.
+pinned, together with the path to {{spec}} — the WHOLE spec document, system
+design included, is the requirement of the Spec axis — and the path to its
+matching work document, which is evidence only: a divergence between the two
+designs is a finding, never a requirement to judge against. Findings are
+written into the work document.
 """
 
 [[steps]]
@@ -196,18 +211,24 @@ needs = ["diff-review"]
 description = """
 Actor: the Foreman.
 Apply the arbitrated findings — anything that must be typed goes through the
-Mason contract. Set the status of {{spec}}, tick acceptance criteria and
-deliverables against reality, then move it to the archive declared in
-`.agents/project.md` §A. Add the dated entry to the changelog declared in §A
-and record the closing coordination state per the §B convention. Update the
-roadmap declared in §A only when it exists AND a roadmap-level change was
-made — it belongs to the Owner.
-Promote the evergreen material: as-built seams, state machines and
-integration diagrams move from the Design into the living docs declared in
-§D, never inside the task workspace — start from its architecture index
+Mason contract.
+Promote the evergreen material FIRST, each piece from the document that
+carries it: system-design and architecture diagrams from {{spec}}, as-built
+seams, state machines and program-design diagrams from the matching work
+document. They move into the living docs declared in `.agents/project.md` §D,
+never inside the task workspace — start from its architecture index
 (default `doc/architecture/ARCHITECTURE.md`); update the README when the
 change is relevant to it. Protocol and evergreen pages stay generic — a
 temporary rewrite label is never branded as part of the work system.
+Then the bookkeeping: set the status of {{spec}}, tick its acceptance criteria
+and deliverables against reality, and move BOTH FILES to the archive declared
+in `.agents/project.md` §A — the spec document and its matching work document
+together, because sharing a directory moves neither. A sliced parent has no
+work document of its own: archive the parent spec document together with its
+slice folder. Add the dated entry to the changelog declared in §A and record
+the closing coordination state per the §B convention. Update the roadmap
+declared in §A only when it exists AND a roadmap-level change was made — it
+belongs to the Owner.
 Run `retro`, sort its proposals by gravity, and PROPOSE them to each touched
 zone's owner; accepted ones are written in.
 Then the Foreman COMMITS and PUSHES.

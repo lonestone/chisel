@@ -837,3 +837,30 @@ sur une échelle. Nom retenu par composition des deux existants :
   Foreman en auto — sa décision est notée au même endroit que la trace du
   blocage, signée rôle + date et heure. Le point (2) se lit donc « quiconque
   répond », l'Owner en étant le cas nommé.
+
+## Addendum 4 (2026-09-02) — réutilisation des rôles, et où vit la mémoire
+
+- ✅ **G16 — Reviewers frais, Maçon réutilisé dans un fil vivant.** Tranché à
+  l'oral (2026-09-02), pendant la slice 03 du chantier 2. Les rôles de
+  jugement (Architect, Inspector) sont spawnes **frais** quand ils découvrent
+  un travail — séparation des pouvoirs ; le même Architect peut re-valider un
+  plan qu'il vient de retoquer (il vérifie la résolution de ses propres
+  findings). Le **Maçon est réutilisé** : celui qui écrit le plan porte aussi
+  les corrections du plan-review ET l'implémentation — « inutile de créer un
+  second maçon ». Le « build fresh from the spec/work pair » de la
+  méthodologie reste vrai pour la **reprise** (fil interrompu, autre session,
+  autre jour) : c'est ce que le document de travail persisté garantit, pas la
+  continuité d'un fil vivant.
+  **Porteur dû, par la porte des propositions :** cette règle doit vivre dans
+  le socle (le profil Foreman, qui possède le spawn, et/ou la méthodologie),
+  hors de toute carte de slice du chantier 2 — à embarquer avec les résidus
+  `AGENTS.md` / `profiles/README.md` déjà consignés.
+- ✅ **G17 — Rien de ce projet ne va dans la mémoire privée d'un assistant.**
+  Tranché à l'oral (2026-09-02), verbatim : « Ta mémoire, je m'en fous. Moi,
+  je veux enregistrer ça dans chisel. Il faut que les futurs toi ne fassent
+  pas la même erreur — et les futurs toi, c'est pas forcément des Claude. »
+  Toute connaissance qui mérite de survivre est persistée dans le dépôt — le
+  code, les documents de tâche, ce fichier de décisions, la doctrine — jamais
+  dans la mémoire propre d'un outil. Appliqué sur-le-champ : la note de
+  mémoire écrite plus tôt ce jour est supprimée, remplacée par G16 ici et par
+  une ligne d'instruction dans `AGENTS.md`.
