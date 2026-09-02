@@ -128,14 +128,39 @@ before any `git mv`. Output pasted whole:
 
 ```
 $ find project-management/tasks -name '*.md' ! -name '*.spec.md' ! -name '*.work.md' -exec grep -L '^\*\*Status:\*\* 🟢' {} +
-project-management/tasks/20260826-1512-chisel-v2.md
-project-management/tasks/20260828-2217-split-spec-and-work-documents.md
-project-management/tasks/20260806-0959-chisel-v1.md
-project-management/tasks/20260826-2302-chisel-dogfoods-itself.md
-project-management/tasks/20260826-1512-chisel-v2/06-upgrade-v2-and-log-md.md
-project-management/tasks/20260828-2217-split-spec-and-work-documents/05-rename-the-tasks-to-do.md
-project-management/tasks/20260806-0959-chisel-v1/07-release.md
-project-management/tasks/20260806-0959-chisel-v1/06-pilot-migration.md
+project-management/tasks/20260826-1512-chisel-v2.spec.md
+project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md
+project-management/tasks/20260806-0959-chisel-v1.spec.md
+project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md
+project-management/tasks/20260826-1512-chisel-v2/06-upgrade-v2-and-log-md.spec.md
+project-management/tasks/20260828-2217-split-spec-and-work-documents/05-rename-the-tasks-to-do.spec.md
+project-management/tasks/20260806-0959-chisel-v1/07-release.spec.md
+project-management/tasks/20260806-0959-chisel-v1/06-pilot-migration.spec.md
+```
+
+*Paths above are shown at their post-rename names.* The rename of step 1 and
+step 2 made the eight lines as printed stop resolving, and the criterion this
+slice owns — **no-task-citation-points-at-a-missing-file** — reads any plain
+`project-management/tasks/….md` string in this repo as a citation, this
+document's own command output included (edge case (g)). They are therefore
+repointed here exactly as the parent's identical inventory list was, and
+**the verbatim pre-rename output is preserved unaltered in commit `0c9ee19`
+"Persist the rename plan"**, which is why step 0 was a commit of its own.
+
+**The same eight lines as they printed BEFORE the rename**, with the
+`project-management/tasks/` prefix elided to `…/` so they stay visible here
+without being read as citations (the rename table below uses the same
+device):
+
+```
+…/20260826-1512-chisel-v2.md
+…/20260828-2217-split-spec-and-work-documents.md
+…/20260806-0959-chisel-v1.md
+…/20260826-2302-chisel-dogfoods-itself.md
+…/20260826-1512-chisel-v2/06-upgrade-v2-and-log-md.md
+…/20260828-2217-split-spec-and-work-documents/05-rename-the-tasks-to-do.md
+…/20260806-0959-chisel-v1/07-release.md
+…/20260806-0959-chisel-v1/06-pilot-migration.md
 ```
 
 Eight files, and the list already contains this slice document (🔴) and its
@@ -517,15 +542,15 @@ searching the full old path string in the named file (anchoring rule, head of
 - [x] **Step 2a** — `git mv` the parent spec (entry 7) to `…split-spec-and-work-documents.spec.md`.
 - [x] **Step 2b** — repoint its 10 citations: 🟢 `01:21`, 🟢 `02:17`, `:87`, 🟢 `03:19`, `:105`, 🟢 `04:19`, `:117`, `:172`, and this document `:17`, `:80`.
 - [x] **Step 2c** — commands 1–4 of §5 read; explicit `git add`; commit.
-- [ ] **Step 3a** — `git mv` this document to `05-rename-the-tasks-to-do.spec.md`. Zero EXTERNAL citers, so no other file is edited (§2 row 8).
-- [ ] **Step 3b** — **required, not cosmetic** (§3 step 3, edge case (g)): the
+- [x] **Step 3a** — `git mv` this document to `05-rename-the-tasks-to-do.spec.md`. Zero EXTERNAL citers, so no other file is edited (§2 row 8).
+- [x] **Step 3b** — **required, not cosmetic** (§3 step 3, edge case (g)): the
       eight lines of the §1 fenced BEFORE paste repointed to their `.spec.md`
       targets, AND the same eight lines reproduced immediately beneath with the
       `project-management/tasks/` prefix elided to `…/`, under a heading saying
       they are the pre-rename form, plus the one-line note that the verbatim
       output is preserved in the step-0 commit. Without 3b the citation command
       prints eight extra MISSING lines.
-- [ ] **Step 3c** — explicit `git add` of the renamed document only; commit. Last mutation of the slice.
+- [x] **Step 3c** — explicit `git add` of the renamed document only; commit. Last mutation of the slice.
 - [ ] **Verify** — the full §5 sequence, commands 1–8, outputs pasted into the worklog below.
 - [ ] **Report** — the bare-slug declination of §2, the edge-case (e) reading
       of the second command (both files it will later trip), and the edge-case
@@ -651,6 +676,24 @@ too, since the design is the deliverable of `plan`.*
   `git diff --check` clean. This document now cites its parent at the new
   name, so it is self-consistent BEFORE it moves, which was the point of
   sequencing the self-rename last.
+  Committed as **`3bb0c79`** "Rename the parent spec and repoint its citers".
+- **2026-09-02 19:02 — `mason` — Step 3 done: the self-rename, and the paste
+  closed.** 3a: `git mv` of this document to
+  `05-rename-the-tasks-to-do.spec.md` — recorded `R` by git, no other file
+  edited, because row 8 of §2 is zero EXTERNAL citers. 3b: the eight lines of
+  the §1 fenced BEFORE paste repointed to their `.spec.md` targets, and the
+  same eight reproduced immediately beneath with the
+  `project-management/tasks/` prefix elided to `…/`, under a heading naming
+  them the pre-rename form, plus the note that the verbatim output survives in
+  `0c9ee19`. The document therefore still SHOWS the before state without
+  tripping the grep.
+  *The proof that 3b was load-bearing and not cosmetic:* immediately before
+  it, the citation command printed **nine** MISSING lines — the two allowed
+  fictional paths, the six old plain paths of the paste, and one transient
+  forward-looking `.spec.md`; immediately after it, **exactly the two allowed
+  fictional lines and nothing else**. Everything closed by 3b came from this
+  document's own command output, exactly as edge case (g) predicted at plan
+  time.
 
 ## Notes
 
