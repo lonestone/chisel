@@ -1,6 +1,6 @@
 # 03 — Formulas follow
 
-**Status:** 🟡 In Progress (typed and diff-reviewed 2026-09-02; commit and close pending)
+**Status:** 🟢 Complete (2026-09-02)
 **Blocked by:** 02 — doctrine follows (complete 2026-09-02). The step bodies
 point at the profile contracts and the methodology that slice rewrote.
 
@@ -19,7 +19,7 @@ two task-closing ones; full wording and the governing system design stay in
 `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
 §Acceptance Criteria.
 
-- [ ] **formulas-send-the-work-to-the-work-document** (owned in full by this
+- [x] **formulas-send-the-work-to-the-work-document** (owned in full by this
   slice) — `grep -rn "checkboxes in {{spec}}" socle/agents/formulas/` returns
   nothing. Given each of the five formulas, When its `plan`, `type`,
   `diff-review` and `close` steps are read, Then the program design is
@@ -37,12 +37,12 @@ two task-closing ones; full wording and the governing system design stay in
   task's closing check) — after this slice, `grep -rn "Design section"
   socle/agents/formulas/` returns nothing (five matches today, one per
   formula); the persist instruction names the work document.
-- [ ] **no-agent-zone-in-formulas** (slice criterion, from parent
+- [x] **no-agent-zone-in-formulas** (slice criterion, from parent
   G14 point 7: the 🤖 zone disappears from the spec) — `grep -rn "AGENT
   ZONE\|🤖" socle/agents/formulas/` returns nothing; the reading-gradient
   line each formula carries describes the spec document's two 🧑 zones and
   the Mason-owned work document instead.
-- [ ] **suite-green** (slice share) —
+- [x] **suite-green** (slice share) —
   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passes with zero
   failures (the formulas parsing check needs a python with `tomllib`; that
   PATH provides it).
@@ -729,3 +729,8 @@ touch neighbouring files and stay out of this slice's map:
 `socle/agents/skills/retro/SKILL.md:42` (slice 04, a re-pointing rather than
 a rename) and the chisel-beads blocked-status gap (unowned; the doctrine
 names a native blocked status the beads skill does not document yet).
+
+- 2026-09-02 17:20 — **foreman** — Slice closed at commit `fd1dc95`. Both
+  Inspector axes passed; ST-1 aligned before commit; the two parent-closing
+  criteria stay unticked by design (this slice contributes, the task closes
+  them). Archival of the pair happens at task `close`.

@@ -246,7 +246,13 @@ against the pre-work state before trusting it.
 
   The archive is untouched: `git status` shows no change under
   `project-management/archive/`. Run the first BEFORE the rename — it must
-  list the seven unfinished files, this spec included, or it proves nothing.
+  ~~list the seven unfinished files, this spec included, or it proves
+  nothing~~. Amended 2026-09-02 by the thread owner under the Owner's
+  standing go (the snapshot predates the slice-02/03/04 status bookkeeping,
+  which moves the count as slices close): the first command's BEFORE output
+  IS the rename inventory — it must list every unfinished file, this spec
+  included, and the list is pasted whole into the slice-05 work record
+  before any rename, or it proves nothing.
 
 - [ ] **no-task-citation-points-at-a-missing-file** — every cited path of the
   shape `project-management/tasks/….md` resolves, except two fictional ones.

@@ -28,15 +28,16 @@ one of those three things is actually happening.
 edges, priority. Those are the facts another agent needs about work it is not
 doing, and they are the facts a query has to answer without opening files.
 
-**The task file owns everything else, including progress INSIDE the task.**
-Intent, acceptance criteria, seams, the persisted Design — and the
-implementation checkboxes, which are the resume point when a session dies. They
-never move into the database. A bead is a coordination record, not a copy of the
-spec.
+**The task's own documents own everything else, including progress INSIDE the
+task.** The spec document owns intent, acceptance criteria, seams and the
+system design; the work document the implementing session creates beside it at
+`plan` owns the program design and the implementation checkboxes, which are the
+resume point when a session dies. None of it moves into the database. A bead is
+a coordination record, not a copy of the spec.
 
 The line matters in one direction in particular: if you find yourself pasting
-what the work IS into a bead, stop — the bead should be pointing at the file
-that already says it.
+what the work IS into a bead, stop — the bead should be pointing at the
+document that already says it.
 
 ## 2 · Creating a bead
 
@@ -45,16 +46,18 @@ One shape, always:
 ```sh
 bd create "<the task's title>" \
   --type task --priority <0-4> \
-  --spec-id "<path to the task file, from the repo root>" \
+  --spec-id "<path to the task's spec document, from the repo root>" \
   --actor <architect|checker|inspector|mason> \
   --silent
 ```
 
 - **`--spec-id` is the whole link.** It is a native field, made for exactly
-  this: pointing at the specification document.
+  this: pointing at the specification document. The work document beside it
+  needs no pointer of its own: its path is the spec document's with `.work.md`
+  in place of `.spec.md`.
 - **`design` and `acceptance_criteria` stay EMPTY**, and so does the
-  description. They live in the file `--spec-id` names. Never pass `--design`,
-  `--design-file` or `--acceptance` for a chisel task.
+  description. They live in the spec document `--spec-id` names. Never pass
+  `--design`, `--design-file` or `--acceptance` for a chisel task.
 - **`--actor` is the ROLE, not a person.** The four are
   `architect`, `checker`, `inspector`, `mason` — the roster's own roles (see
   `.agents/profiles/`) — which is what makes the audit trail readable as a
@@ -72,7 +75,7 @@ bd show <id>
 ○ probe-i71 · Slice 01 — thing   [● P1 · OPEN]
 Owner: architect · Type: task
 Created: 2026-08-26 · Updated: 2026-08-26
-Spec: project-management/tasks/20260826-1512-x/01-thing.md
+Spec: project-management/tasks/20260826-1512-x/01-thing.spec.md
 
 DESCRIPTION
   (none)
@@ -93,11 +96,12 @@ different things, so both are said plainly:
   none`) rather than start filling the fields.
 - **`bd lint` will warn on every bead here, by design.** It checks each issue
   for an `## Acceptance Criteria` section, and this convention keeps the
-  acceptance criteria in the task file on purpose — so a correct bead reports
-  `⚠ Missing: ## Acceptance Criteria` and `bd lint` exits 1. There is no config
-  key to scope it. **Do not run it, and do not wire it into anything**; a lint
-  whose every finding is expected teaches everyone to ignore lint. The check
-  that matters here is `bd show`: a `Spec:` line and `(none)` under DESCRIPTION.
+  acceptance criteria in the spec document on purpose — so a correct bead
+  reports `⚠ Missing: ## Acceptance Criteria` and `bd lint` exits 1. There is
+  no config key to scope it. **Do not run it, and do not wire it into
+  anything**; a lint whose every finding is expected teaches everyone to
+  ignore lint. The check that matters here is `bd show`: a `Spec:` line and
+  `(none)` under DESCRIPTION.
 
 ## 3 · The session routine
 

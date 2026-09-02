@@ -1,17 +1,17 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/PRD asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the task's spec document asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
 x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/code-review
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "adapted: spec source is the task file, not the originating issue/PRD; project paths resolve via .agents/project.md"
+  changes: "adapted: spec source is the task's spec document, not the originating issue/PRD; project paths resolve via .agents/project.md; a task is now two documents — the whole spec document, system design included, is the requirement of the Spec axis, and its matching work document is evidence only, never a requirement to judge against"
 ---
 
 Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 - **Standards** — does the code conform to this repo's documented coding standards?
-- **Spec** — does the code faithfully implement the originating issue / PRD / spec?
+- **Spec** — does the code implement the whole spec document, system design included?
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
@@ -32,11 +32,15 @@ Before going further, confirm the fixed point resolves (`git rev-parse <fixed-po
 Look for the originating spec, in this order:
 
 1. A path the user passed as an argument.
-2. The task file for the current work under the task workspace declared in
-   `.agents/project.md` (default `/project-management/tasks/`, or its archive
-   `/project-management/archive/`) matching the branch name or feature. The
-   task file's 🧑 zones (Context, Scope, Acceptance Criteria, Seams) are the
-   spec; its 🤖 agent zone is context, not requirements.
+2. The task's spec document — `<name>.spec.md` — under the task workspace
+   declared in `.agents/project.md` (default `/project-management/tasks/`, or
+   its archive `/project-management/archive/`, where a closed task's
+   documents — both, when a work document exists — sit together) matching the
+   branch name or feature. The WHOLE spec document is the requirement, system
+   design included. Its matching `<name>.work.md` beside it is evidence only,
+   never a requirement to judge against: a divergence between the spec
+   document's system design and the work document's program design is a
+   finding.
 3. Task references in the commit messages.
 4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
 
@@ -83,10 +87,10 @@ strongest model.
 **Spec sub-agent prompt** — include:
 
 - The diff command and commit list.
-- The path or fetched contents of the spec.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
+- The path (or fetched contents) of the spec document — the requirement — and of its matching work document when one exists, labelled as evidence only.
+- The brief: "Report: (a) requirements the spec document asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong; (d) any divergence between the spec document's system design and the work document's program design — report it as a finding, and never judge the diff against the program design. Quote the spec line for each finding. Under 400 words."
 
-If the spec is missing, skip the Spec sub-agent and note this in the final report.
+If no spec document is found, skip the Spec sub-agent and note this in the final report.
 
 ### 5. Aggregate
 

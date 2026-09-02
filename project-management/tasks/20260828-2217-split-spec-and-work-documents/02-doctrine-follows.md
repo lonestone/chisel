@@ -1,6 +1,6 @@
 # 02 — Doctrine follows
 
-**Status:** ✅ Complete (2026-09-02)
+**Status:** 🟢 Complete (2026-09-02)
 **Blocked by:** 01 — templates and installer (complete). This slice writes the
 doctrine that names the two documents defined there; it unblocks slices 03 and
 04.

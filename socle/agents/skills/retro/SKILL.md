@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/in-progress/retro
   sha: 6654f6b60cd9d5be8b54c6fafe44346dabeb3b76
-  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (spec file, worklog, diff, journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by discipline.md rule 8; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of every formula, not only on user request."
+  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (the task's spec document, and its work document with the program design, the checkboxes and the worklog, plus the diff and the journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by discipline.md rule 8; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of every formula, not only on user request; a blocker is read where the task's own documents keep it rather than in the project journal."
 ---
 
 You are suggesting improvements to the **working rules** — the steering
@@ -35,11 +35,19 @@ retro built on the diff sees the destination, not the road.
 control, so it says what was actually decided rather than what was
 discussed:
 
-- The spec file's persisted Design, implementation checkboxes, and Notes —
-  including whatever was noted without stopping along the way.
-- The worklog and the journal entry it produced.
+- The task's **spec document** — its 🧑 decisions, and its Notes, written
+  before a work document existed.
+- Its **work document** — the program design, the implementation checkboxes,
+  the worklog, Notes & Snippets and the Inspector's findings, including
+  whatever was noted without stopping along the way.
 - The diff and commit messages of the session (`git log`, `git diff`).
-- Any blocker or escalation written into the spec file.
+- The dated journal entry the work produced.
+- Any blocker, and the ruling on it, where the task keeps it: an
+  implementation blocker in the work document, one met before `plan` in the
+  spec document's Notes, each signed with its author's role plus the date and
+  the time. The form and the destinations are in `.agents/methodology.md`
+  ("Escalation, and the blocked-task report") — there is no journal line and
+  no separate escalation item to go looking for.
 
 ## Steps
 
@@ -95,11 +103,12 @@ discussed:
 ### Implementation vs review
 
 All work goes through two stages: implementation and review. The
-implementation session (Architect planning, Mason typing) carries the most
-context pressure — exploration, writing code, debugging failures. The review
-session (Inspector) carries the least — it receives a diff, no exploration
-needed. This is why coding standards belong with the reviewer, not the
-implementer: enforcement is cheapest where context pressure is lowest.
+implementation session (the Mason designing its program design at `plan`,
+then typing it) carries the most context pressure — exploration, writing
+code, debugging failures. The review session (Inspector) carries the least —
+it receives a diff, no exploration needed. This is why coding standards
+belong with the reviewer, not the implementer: enforcement is cheapest where
+context pressure is lowest.
 
 ### Files
 

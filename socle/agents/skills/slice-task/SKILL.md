@@ -6,7 +6,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/to-tickets
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "adapted: publishes slices into the task folder; 'ticket' reserved for external trackers; project paths resolve via .agents/project.md"
+  changes: "adapted: publishes slices into the task folder; 'ticket' reserved for external trackers; project paths resolve via .agents/project.md; each slice is published as one <NN>-<slug>.spec.md spec document whose emitted template carries no program design and no agent zone — the implementing session creates the matching .work.md at its plan step"
 ---
 
 # Slice Task
@@ -80,12 +80,16 @@ Iterate until the user approves the breakdown.
 
 ### 5. Publish the slices
 
-Write one file per slice under the task workspace declared in
+Write one spec document per slice under the task workspace declared in
 `.agents/project.md` (default
-`/project-management/tasks/<time-id>-<feature-slug>/<NN>-<slug>.md`), where
-`<time-id>` comes from `scripts/task-id.sh` and `<NN>` numbers the slices from
-`01` in dependency order (blockers first). The parent task file (if one exists)
-stays in place and links to the slice folder.
+`/project-management/tasks/<time-id>-<feature-slug>/<NN>-<slug>.spec.md`),
+where `<time-id>` comes from `scripts/task-id.sh` and `<NN>` numbers the
+slices from `01` in dependency order (blockers first). The parent spec
+document (if one exists) stays in place and links to the slice folder.
+
+No work document is created here. The session that implements a slice creates
+the matching `<NN>-<slug>.work.md` beside it at its `plan` step, from the work
+template declared in §A · Task workspace of `.agents/project.md`.
 
 Work the **frontier**: any slice whose blockers are all done. For a purely
 linear chain that means top to bottom.
@@ -97,29 +101,27 @@ linear chain that means top to bottom.
 **Status:** 🔴 Not Started
 **Blocked by:** <numbers/titles of the slices that gate this one, or "None — can start immediately">
 
+---
+
+> 🧑 **REVIEW CAREFULLY** — human decision surface. Read it all before code.
+
 **What to build:** the end-to-end behaviour this slice makes work, from the
 user's perspective — not a layer-by-layer implementation list.
 
 ## Acceptance criteria
 
-- [ ] Criterion 1 (machine-verifiable)
-- [ ] Criterion 2 (machine-verifiable)
+- [ ] **descriptive-name** (machine-verifiable)
+- [ ] **suite-green** — all tests pass
 
 ---
 
-> 🧑 **REVIEW IF RELEVANT** — design, persisted from the approved plan (empty at slicing time).
-
-## Design — persisted at plan time
-
-_To be filled by the implementing session when its plan is approved._
-
----
-
-> 🤖 **AGENT ZONE** — working space; humans skim or skip.
+> 🧑 **REVIEW IF RELEVANT** — notes written before the work document exists.
 
 ## Notes
 
-_Wiring, migration notes, TDD order, worklog — filled during implementation._
+_The spec review's findings, a pre-`plan` blocker — only what is written into
+this document before its work document exists. Not the Mason's working space:
+its notes, snippets and worklog live in the work document._
 
 </slice-template>
 
@@ -129,6 +131,8 @@ produced a snippet that encodes a decision more precisely than prose can
 (state machine, reducer, schema, type shape), inline it and note briefly that
 it came from a prototype. Trim to the decision-rich parts.
 
-The **Design** section is different: it is written at PLAN time by the
-implementing session, right before the code — target shapes, signatures and
-illustrative snippets are welcome there because they are hours old, not weeks.
+The program design is different, and it does not live in this document at
+all: it is written at PLAN time by the implementing session, right before the
+code, and persisted into the matching `.work.md` — target shapes, signatures
+and illustrative snippets are welcome there because they are hours old, not
+weeks. That file also carries the worklog and the implementation checkboxes.
