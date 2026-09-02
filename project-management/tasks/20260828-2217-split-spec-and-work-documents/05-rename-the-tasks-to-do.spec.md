@@ -551,8 +551,8 @@ searching the full old path string in the named file (anchoring rule, head of
       output is preserved in the step-0 commit. Without 3b the citation command
       prints eight extra MISSING lines.
 - [x] **Step 3c** — explicit `git add` of the renamed document only; commit. Last mutation of the slice.
-- [ ] **Verify** — the full §5 sequence, commands 1–8, outputs pasted into the worklog below.
-- [ ] **Report** — the bare-slug declination of §2, the edge-case (e) reading
+- [x] **Verify** — the full §5 sequence, commands 1–8, outputs pasted into the worklog below.
+- [x] **Report** — the bare-slug declination of §2, the edge-case (e) reading
       of the second command (both files it will later trip), and the edge-case
       (g) treatment of this document's own inventory paste, reported to the
       spawner.
@@ -693,7 +693,46 @@ too, since the design is the deliverable of `plan`.*
   forward-looking `.spec.md`; immediately after it, **exactly the two allowed
   fictional lines and nothing else**. Everything closed by 3b came from this
   document's own command output, exactly as edge case (g) predicted at plan
-  time.
+  time. Committed as **`7233023`** "Rename the rename slice itself".
+- **2026-09-02 19:05 — `mason` — Verification: all eight commands green.** Run
+  from the repo root on a tree clean apart from the two untracked Owner files,
+  and run **before any status line was flipped**, per edge case (e). Raw
+  output:
+
+  ```
+  1. find … ! -name '*.spec.md' ! -name '*.work.md' -exec grep -L '🟢'   → (nothing)
+  2. find … -name '*.spec.md' -exec grep -l '🟢'                          → (nothing)
+  3. citation criterion
+     MISSING project-management/tasks/20260826-1200-fix-payroll-export.md
+     MISSING project-management/tasks/20260826-1512-x/01-thing.spec.md
+  4. bare-name sweep, this document excluded                              → (nothing)
+  5. git status --porcelain project-management/archive/                   → (nothing)
+  6. git log --follow -- …/20260826-2302-chisel-dogfoods-itself.spec.md
+     fd1e252 Rename the unfinished tasks to spec documents
+     bfb5e2a Dogfood : l'Owner tranche pour la copie réelle installée par init
+     7807bcf Task post-v2 : chisel s'équipe du socle qu'il livre
+  7. git diff --check                                                     → (nothing)
+  8. PATH="/opt/homebrew/bin:$PATH" bash test/run.sh
+     === 9 scenarios, 94 assertions passed, 0 failed ===
+  ```
+
+  Commands 1 and 2 both print nothing, so
+  **tasks-still-to-do-are-renamed** holds in both directions. Command 3 prints
+  exactly the two allowed fictional paths, so
+  **no-task-citation-points-at-a-missing-file** holds. Command 5 is empty, so
+  **archive-untouched** holds. Command 8 matches the 2026-08-28 baseline
+  assertion for assertion, so **suite-green** holds and the rename is invisible
+  to the suite, as expected — nothing in the code parses a task filename.
+  Command 6 shows `--follow` walking straight through the rename commit into
+  the file's pre-rename history, so no history was lost.
+
+**Left alone, deliberately.** The status line of this document still reads
+🔴 Not Started, and flipping it is not the Mason's act: parent decision 3 gives
+the single status to the thread owner. Two consequences of edge case (e) travel
+with that flip and are repeated here so they are not read as regressions —
+command 2 will legitimately print `…/05-rename-the-tasks-to-do.spec.md` once
+this slice is marked 🟢, and `…/20260828-2217-split-spec-and-work-documents.spec.md`
+once the task is marked 🟢 at its `close`.
 
 ## Notes
 
