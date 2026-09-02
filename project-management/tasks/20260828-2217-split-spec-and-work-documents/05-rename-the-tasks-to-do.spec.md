@@ -1,6 +1,6 @@
 # 05 — Rename the tasks to do
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete (2026-09-02)
 **Blocked by:** 01 — templates and installer (complete): the convention has
 to be written down before files are renamed to match it. Slices 02–04 are
 complete; this is the last slice of the task.
@@ -17,21 +17,21 @@ This slice owns two parent criteria in full; full wording stays in
 `project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
 §Acceptance Criteria (the first carries a dated amendment of 2026-09-02).
 
-- [ ] **tasks-still-to-do-are-renamed** (owned in full, as amended) — the
+- [x] **tasks-still-to-do-are-renamed** (owned in full, as amended) — the
   parent's two commands both print nothing after the rename. The first
   command's BEFORE output IS the rename inventory: it is run before any
   rename, must list every unfinished file (this task's parent spec and this
   slice document included), and is pasted whole into this document's work
   record before the first `git mv`.
-- [ ] **no-task-citation-points-at-a-missing-file** (owned in full at task
+- [x] **no-task-citation-points-at-a-missing-file** (owned in full at task
   level — this slice is its last mover) — the parent's citation command
   prints exactly the two allowed fictional paths
   (`…/20260826-1200-fix-payroll-export.md` and
   `…/20260826-1512-x/01-thing.spec.md`) and nothing else, after every rename
   and repoint.
-- [ ] **archive-untouched** (slice criterion, from the parent's command
+- [x] **archive-untouched** (slice criterion, from the parent's command
   block) — `git status` shows no change under `project-management/archive/`.
-- [ ] **suite-green** (slice share) —
+- [x] **suite-green** (slice share) —
   `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` passes with zero
   failures.
 
@@ -763,6 +763,29 @@ with that flip and are repeated here so they are not read as regressions —
 command 2 will legitimately print `…/05-rename-the-tasks-to-do.spec.md` once
 this slice is marked 🟢, and `…/20260828-2217-split-spec-and-work-documents.spec.md`
 once the task is marked 🟢 at its `close`.
+
+### Inspector findings — diff-review, and close
+
+- 2026-09-02 19:05 — **foreman** — Slice closed at commit `65dae26` (the
+  operation itself: `0c9ee19`..`9c189b4`). Both Inspector axes passed; the
+  three Standards findings were fixed in `65dae26`. Per edge case (e), the
+  parent's second rename command now legitimately prints this file — the
+  convention working, not a regression. Three Spec-axis findings are
+  **escalations awaiting the Owner at task `close`**, recorded here per G17:
+  1. Parent decision 10's licence ("until the formulas slice lands") has
+     expired: this slice's program design was persisted in this combined
+     document while the landed formulas mandate a `.work.md` at `plan`. The
+     repo ships a convention its last slice did not follow — accept as an
+     archived intermediate state, or open a follow-up.
+  2. Two `.spec.md` files carry pre-convention content: the parent spec's
+     five 🤖 AGENT ZONE banners, and this document's combined work record.
+     No criterion catches it; decisions 9–10 accept it; the Owner rules at
+     `close`.
+  3. In the parent spec: the 2026-08-28 dated inventory snapshot was
+     repointed to post-rename names (the BEFORE state is preserved in
+     `0c9ee19` and `…/`-elided in this document's §1), and the Notes'
+     "should be made consistent" on bare slugs stands unamended against
+     this slice's reasoned, twice-endorsed declination.
 
 ## Notes
 
