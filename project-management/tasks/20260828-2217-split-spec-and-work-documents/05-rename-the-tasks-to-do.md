@@ -14,7 +14,7 @@ taches à faire »).
 ## Acceptance criteria
 
 This slice owns two parent criteria in full; full wording stays in
-`project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
+`project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
 §Acceptance Criteria (the first carries a dated amendment of 2026-09-02).
 
 - [ ] **tasks-still-to-do-are-renamed** (owned in full, as amended) — the
@@ -77,7 +77,7 @@ read, not renamed, not committed.
 
 ## References
 
-- Parent: `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
+- Parent: `project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
   §Acceptance Criteria (tasks-still-to-do-are-renamed as amended 2026-09-02,
   no-task-citation-points-at-a-missing-file), §Implementation Decisions 9–10,
   the slice-5 entry of §Slices & Dependencies.
@@ -514,9 +514,9 @@ searching the full old path string in the named file (anchoring rule, head of
 - [x] **Step 1a** — `git mv` rename-set entries 1–6 to their `.spec.md` targets.
 - [x] **Step 1b** — repoint the citations of entries 1–6: parent spec `:716`–`:721`, `:732`, `:741`, `:743`, `:968`; `20260826-2302-chisel-dogfoods-itself.spec.md:4`, `:115`, `:158`; 🟢 `07-docs-and-dedup.md:69` (anchor preserved), `:162`, `:465`; 🟢 `05-chisel-beads-convention.md:345`; 🟢 `01-templates-and-installer.md:916`, `:1011`.
 - [x] **Step 1c** — commands 1–4 of §5 read; diff read line by line; explicit `git add` of the renamed and repointed paths; commit.
-- [ ] **Step 2a** — `git mv` the parent spec (entry 7) to `…split-spec-and-work-documents.spec.md`.
-- [ ] **Step 2b** — repoint its 10 citations: 🟢 `01:21`, 🟢 `02:17`, `:87`, 🟢 `03:19`, `:105`, 🟢 `04:19`, `:117`, `:172`, and this document `:17`, `:80`.
-- [ ] **Step 2c** — commands 1–4 of §5 read; explicit `git add`; commit.
+- [x] **Step 2a** — `git mv` the parent spec (entry 7) to `…split-spec-and-work-documents.spec.md`.
+- [x] **Step 2b** — repoint its 10 citations: 🟢 `01:21`, 🟢 `02:17`, `:87`, 🟢 `03:19`, `:105`, 🟢 `04:19`, `:117`, `:172`, and this document `:17`, `:80`.
+- [x] **Step 2c** — commands 1–4 of §5 read; explicit `git add`; commit.
 - [ ] **Step 3a** — `git mv` this document to `05-rename-the-tasks-to-do.spec.md`. Zero EXTERNAL citers, so no other file is edited (§2 row 8).
 - [ ] **Step 3b** — **required, not cosmetic** (§3 step 3, edge case (g)): the
       eight lines of the §1 fenced BEFORE paste repointed to their `.spec.md`
@@ -630,6 +630,27 @@ too, since the design is the deliverable of `plan`.*
   *State read before committing:* command 1 lists exactly the two self files;
   command 2 prints nothing; the restated command 4 returns only the eight
   parent-spec citations that step 2 owns; `git diff --check` clean.
+  Committed as **`fd1e252`** "Rename the unfinished tasks to spec documents".
+- **2026-09-02 18:59 — `mason` — Step 2 done: the parent spec renamed and
+  repointed.** `git mv` on rename-set entry 7, then its **10 citations
+  repointed, per-file counts matching §2 row 7 exactly**: 🟢
+  `01-templates-and-installer.md` 1, 🟢 `02-doctrine-follows.md` 2, 🟢
+  `03-formulas-follow.md` 2, 🟢 `04-skills-follow.md` 3, and this document 2.
+  *One deliberate restriction, and it is the reason step 2 could not be a
+  blind full-string pass.* This document holds THREE occurrences of the
+  parent's old path, not two: the citations at `:17` and `:80` on its spec
+  side, which are step 2b's, and one at `:132` inside the §1 fenced BEFORE
+  paste, which is step 3b's and had to stay verbatim for one more commit. So
+  in this file only, the repoint was applied to the two spec-side lines and
+  the paste occurrence was left alone; every other file took the full-string
+  pass. Counted and asserted line by line rather than trusted.
+  *State after:* command 1 lists exactly this document — the last unrenamed
+  file; command 2 prints nothing; the restated command 4 **already returns
+  nothing outside this document**, so every external citation in the repo is
+  now correct and only this document's own self-citation remains;
+  `git diff --check` clean. This document now cites its parent at the new
+  name, so it is self-consistent BEFORE it moves, which was the point of
+  sequencing the self-rename last.
 
 ## Notes
 

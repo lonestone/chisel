@@ -14,7 +14,7 @@ boundary.
 ## Acceptance criteria
 
 This slice closes the following parent criteria from
-`project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
+`project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
 §Acceptance Criteria; their full wording and the governing system design stay
 there.
 
@@ -84,7 +84,7 @@ findings to the spec document's Notes, so its existing wording remains true.
 ## References
 
 - Parent system design and decisions:
-  `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
+  `project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
   §Architecture and §Implementation Decisions.
 - Owner rulings:
   `project-management/review-360-decisions.md`, entry “G14 — Le split spec /

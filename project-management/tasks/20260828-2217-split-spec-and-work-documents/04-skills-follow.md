@@ -16,7 +16,7 @@ divergence in their `x-upstream` block.
 
 This slice owns four parent criteria in full and contributes the final share
 to one task-closing check; full wording and the governing system design stay
-in `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
+in `project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
 §Acceptance Criteria.
 
 - [x] **spec-axis-judges-the-whole-spec** (owned in full) — `grep -n
@@ -114,7 +114,7 @@ slice 3 or slice 5.
 ## References
 
 - Parent system design and decisions:
-  `project-management/tasks/20260828-2217-split-spec-and-work-documents.md`,
+  `project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
   §Architecture, §Implementation Decisions, the slice-4 entry of §Slices &
   Dependencies, and the four criteria named above.
 - Owner rulings: `project-management/review-360-decisions.md`, G14, G15
@@ -169,7 +169,7 @@ reason to go read where it was drawn, never to draw it.
 
 The slice document above (six criteria, System design, Files map,
 Verification); the parent spec
-`project-management/tasks/20260828-2217-split-spec-and-work-documents.md`
+`project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`
 (§Architecture with its section-boundary table and naming rule,
 §Implementation Decisions 1, 2, 5, 6, 7, 11 and 12, the slice-4 entry of
 §Slices & Dependencies, the four criteria this slice owns, and §Notes &
