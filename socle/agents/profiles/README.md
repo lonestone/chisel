@@ -54,6 +54,13 @@ so keep it unique across profiles and equal to the file's own name. A file
 without frontmatter — this README, for instance — is documentation, and no
 definition is rendered from it.
 
+A generated definition carries **no model field**. A profile's frontmatter
+declares a `tier`, which says how much judgement the role's work needs, and
+that tier is **resolved at read time** by the delegating agent, at the moment
+it spawns the role. Which concrete model a tier means is resolved through the
+cascade in "Model tiers (and how they resolve)" of `.agents/methodology.md`;
+choosing it belongs to each dev's own plumbing, not to chisel.
+
 ## How a role is spawned
 
 **Inline at spawn** is the rule, not a fallback, and it holds whatever the
@@ -64,8 +71,8 @@ not change.
 
 **A fresh session** is the second path, and for typing it is mandatory when the
 tool cannot spawn: open one, give it the profile file to read and the same
-brief — `work on slice <file>` for a Mason working a slice, which is also the
-case where the role needs a full context window of its own.
+brief — `work on slice <spec-document>` for a Mason working a slice, which is
+also the case where the role needs a full context window of its own.
 
 Either way the contract is the same file. Nothing about a role lives in the
 adapter: the adapter only knows how to *spawn*.
