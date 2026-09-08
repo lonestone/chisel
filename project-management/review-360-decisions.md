@@ -864,3 +864,16 @@ sur une échelle. Nom retenu par composition des deux existants :
   dans la mémoire propre d'un outil. Appliqué sur-le-champ : la note de
   mémoire écrite plus tôt ce jour est supprimée, remplacée par G16 ici et par
   une ligne d'instruction dans `AGENTS.md`.
+
+## Addendum 5 (2026-09-02) — règle de rédaction
+
+- ✅ **G18 — Prose directe, pas de prose maniérée.** Tranché à l'oral
+  (2026-09-02). Le maniérisme substitue l'image à l'énoncé direct — « a dial
+  worth turning » pour « a parameter worth varying », « earns its keep » pour
+  « this point still matters ». Ces tournures servent à montrer l'auteur, pas
+  à porter l'idée, et le lecteur le sent : il travaille plus pour que
+  l'auteur parade. Règle : l'énoncé direct d'abord ; une image seulement
+  quand elle porte une information que l'énoncé direct ne porte pas.
+  S'applique à tout texte produit — doctrine du socle, documents de tâche,
+  rapports d'agents, consignes de spawn. Entrée pour les règles de rédaction
+  du chantier 5, qui fera le tri dans les textes déjà livrés.
