@@ -14,7 +14,7 @@ taches à faire »).
 ## Acceptance criteria
 
 This slice owns two parent criteria in full; full wording stays in
-`project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
+`project-management/archive/20260828-2217-split-spec-and-work-documents.spec.md`,
 §Acceptance Criteria (the first carries a dated amendment of 2026-09-02).
 
 - [x] **tasks-still-to-do-are-renamed** (owned in full, as amended) — the
@@ -77,7 +77,7 @@ read, not renamed, not committed.
 
 ## References
 
-- Parent: `project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
+- Parent: `project-management/archive/20260828-2217-split-spec-and-work-documents.spec.md`,
   §Acceptance Criteria (tasks-still-to-do-are-renamed as amended 2026-09-02,
   no-task-citation-points-at-a-missing-file), §Implementation Decisions 9–10,
   the slice-5 entry of §Slices & Dependencies.
@@ -102,7 +102,7 @@ This slice renames its own document. The resume invocation is therefore true in
 two forms, and the later one wins:
 
 ```
-work on slice project-management/tasks/20260828-2217-split-spec-and-work-documents/05-rename-the-tasks-to-do.spec.md
+work on slice project-management/archive/20260828-2217-split-spec-and-work-documents/05-rename-the-tasks-to-do.spec.md
 ```
 
 If that path does not exist, the self-rename has not happened yet and the file
@@ -129,11 +129,11 @@ before any `git mv`. Output pasted whole:
 ```
 $ find project-management/tasks -name '*.md' ! -name '*.spec.md' ! -name '*.work.md' -exec grep -L '^\*\*Status:\*\* 🟢' {} +
 project-management/tasks/20260826-1512-chisel-v2.spec.md
-project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md
+project-management/archive/20260828-2217-split-spec-and-work-documents.spec.md
 project-management/tasks/20260806-0959-chisel-v1.spec.md
 project-management/tasks/20260826-2302-chisel-dogfoods-itself.spec.md
 project-management/tasks/20260826-1512-chisel-v2/06-upgrade-v2-and-log-md.spec.md
-project-management/tasks/20260828-2217-split-spec-and-work-documents/05-rename-the-tasks-to-do.spec.md
+project-management/archive/20260828-2217-split-spec-and-work-documents/05-rename-the-tasks-to-do.spec.md
 project-management/tasks/20260806-0959-chisel-v1/07-release.spec.md
 project-management/tasks/20260806-0959-chisel-v1/06-pilot-migration.spec.md
 ```

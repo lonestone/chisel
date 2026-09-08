@@ -5,6 +5,27 @@ ships.
 
 ---
 
+## 24. 2026-09-02 — The split ships: one task file becomes a spec and a work document
+
+Chantier 2 closes, five slices in one day. A task is now two files: the
+`.spec.md` the human approves and the reviewer judges against, and the
+`.work.md` the Mason creates at `plan` and owns entirely. The doctrine, the
+five formulas and the four satellite skills all teach the same boundary;
+"the spec file" no longer appears anywhere in the socle; the unfinished task
+files carry the new names and the done history keeps the old ones.
+
+Four Owner rulings landed mid-task and are recorded in the decisions file:
+G15 (a blocker's trace lives in the task's documents, signed role plus date
+and time, whoever rules records the ruling in place — no journal line, no
+escalation bead), G16 (reviewers spawn fresh, the Mason is reused from plan
+to typing within a live thread), G17 (nothing project-relevant goes into an
+assistant's private memory — the repo is the only memory), and G18 (direct
+statement over mannered prose, an input for chantier 5's writing rules).
+
+The task's own slice records could not follow the convention they shipped —
+they predate it — and are archived as-is by Owner ruling, with the slice-05
+Inspector's three escalations recorded in the rename slice's close entry.
+
 ## 23. 2026-08-28 — Roles remodel closed: the doctrine catches up, and a switch dies
 
 The two documents that still described the pre-remodel system are made to

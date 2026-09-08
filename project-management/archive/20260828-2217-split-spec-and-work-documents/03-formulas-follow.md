@@ -16,7 +16,7 @@ or into a 🤖 agent zone the spec no longer has.
 
 This slice closes one parent criterion in full and contributes its share to
 two task-closing ones; full wording and the governing system design stay in
-`project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
+`project-management/archive/20260828-2217-split-spec-and-work-documents.spec.md`,
 §Acceptance Criteria.
 
 - [x] **formulas-send-the-work-to-the-work-document** (owned in full by this
@@ -102,13 +102,13 @@ file with slice 4 or slice 5.
 ## References
 
 - Parent system design and decisions:
-  `project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
+  `project-management/archive/20260828-2217-split-spec-and-work-documents.spec.md`,
   §Architecture, §Implementation Decisions, and the slice-3 entry of
   §Slices & Dependencies.
 - Owner rulings: `project-management/review-360-decisions.md`, G14 (the
   split) and G15, Addendum 3 (blocker trace in the task's documents).
 - Slice-02 precedent (doctrine wording the formulas must agree with):
-  `project-management/tasks/20260828-2217-split-spec-and-work-documents/02-doctrine-follows.md`.
+  `project-management/archive/20260828-2217-split-spec-and-work-documents/02-doctrine-follows.md`.
 
 ---
 

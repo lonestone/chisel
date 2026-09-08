@@ -18,7 +18,7 @@ from the stale local copy they replace) and the one link in `PHILOSOPHY.md`.
 ## Acceptance criteria
 
 Cite these by name from the parent spec
-(`project-management/tasks/20260828-2217-split-spec-and-work-documents.spec.md`,
+(`project-management/archive/20260828-2217-split-spec-and-work-documents.spec.md`,
 section "Acceptance Criteria"). This slice closes seven of them outright,
 plus its share of the suite-green criterion; the rest belong to slices 2–5
 and are not restated here as if they were this slice's to close (see
