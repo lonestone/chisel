@@ -146,6 +146,8 @@ architecture, domain pages) live, outside the task workspace? -->
 
 - **Living docs root:** `doc/**` (outside the task workspace declared in
   Section A)
+- **Architecture index:** `doc/architecture/ARCHITECTURE.md` — the page the
+  `close` step of every formula starts a promotion from
 - Boilerplate variant: `apps/documentation` (THE doc reference — business +
   architecture, no split)
 
