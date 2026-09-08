@@ -445,6 +445,24 @@ slice|half the spend|target ~` and fails if any of them appears. None of the
 wording above contains one, and this note exists so a later revision of the
 design does not introduce one by accident.
 
+**Proposal door, `mason` at `type`, 2026-09-08 17:24 CEST — three "Tracker
+section" carriers look unowned by any slice.** Renaming the methodology
+carrier to §B2 leaves four, and the spec's Verification accepts them
+(wayfinder, slice-task, code-review, triage). Slice 03 removes only the
+`triage` one, with its file. So `socle/agents/skills/wayfinder/SKILL.md:30`,
+`slice-task/SKILL.md:17` and `code-review/SKILL.md:18` keep pointing at
+"`.agents/project.md`, Tracker section" **permanently** — a title that does
+not exist in the template, which is the same defect A1 (1) was raised to fix,
+and the thing discipline rule 11 forbids. Parent Implementation Decision 2
+hands the *bare-number* citations (`§B`, `§C`, `§F`, `§H`) to chantier 5;
+these three are a wrong *title*, so they may fall through that gap. The three
+evaluations: **size** — three one-clause edits, identical to the one just
+typed; **risk** — low, but all three are outside this slice's files map
+(`socle/agents/skills/` is explicitly files-to-avoid, and one is slice 02's
+neighbourhood); **can I deliver cleanly without it** — yes, entirely: this
+slice's criterion is about its own carrier and is met, so nothing here is held
+together by a workaround. Reported, not acted on. Not a blocker.
+
 ## Diff-Review Findings
 
 Written by the Inspector at `diff-review`.
