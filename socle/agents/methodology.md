@@ -11,7 +11,7 @@ are `.agents/formulas/`; the **ambient invariants** are
 Provenance: fusion of the Lonestone task lifecycle (creation → work →
 completion, a dated journal) with patterns from
 [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) and dex's
-"Why Software Factories Fail" series. Full analysis: `SDD-bench/fusion-pierrick-pocock.md`.
+"Why Software Factories Fail" series.
 
 ---
 
@@ -32,7 +32,7 @@ completion, a dated journal) with patterns from
 
 We do NOT use the word "ticket" for local work. It is reserved for items in an
 external tracker (Linear, GitHub Issues), if/when one is wired up — see
-`.agents/project.md`, Tracker section.
+§B2 · Link to an external tracker of `.agents/project.md`.
 
 ---
 
@@ -62,9 +62,12 @@ nothing places a preset on it independently. `chisel-auto-light` empties both
 axes: it is an instrument built to be measured against the others, not a notch
 on either.
 
-**Factory = auto × beads** — the only combination that requires beads,
-because only it needs queues, lanes and asynchronous gate lists. Plain auto
-is one chained session and needs none.
+**A factory is a possible destination, not a cell of this product.** Whether
+it belongs inside chisel is an open question: chisel stays light enough to fit
+into any repo, and a factory implies a lot of bespoke work. Until a real need
+settles that question, no factory machinery is described here — no queues, no
+lanes, no asynchronous gate lists. Plain auto is one chained session and needs
+none of them.
 
 **The invocation-posture principle.** Piloting — which preset governs this
 run — is chosen per invocation, never baked into the project as a permanent
@@ -321,8 +324,9 @@ factored well enough, so fix the file, not the Mason's context.
 
 ## Model tiers (and how they resolve)
 
-Nothing in this socle names a model or a vendor. It speaks in three **tiers**,
-the same three the roster uses:
+The normative text of this socle names no model: what a step or a role declares
+is a **tier**. Tool names are not covered by that rule and appear wherever they
+are useful. The three tiers are the same three the roster uses:
 
 | Tier | What it is for | Roles |
 |---|---|---|
@@ -433,9 +437,14 @@ baselines, archive). Promote system-design and architecture diagrams from the
 spec document's source, and promote program-design diagrams from the work
 document. Prefer `doc/architecture/` for as-built seams and integration
 diagrams; add `doc/domain/` when the glossary needs a home. The task workspace
-is narrative and planning — not the living architecture. Protocol wording
-stays generic: do not brand temporary rewrite labels as if they were part of
-the work system.
+is narrative and planning — not the living architecture.
+
+**Keep temporary rewrite labels out of the promoted pages.** A temporary
+rewrite label is the name a migration gives itself while it runs — "v2", "the
+new pipeline", "phase 3". It means nothing to a reader who arrives after the
+migration has ended. An evergreen page says what the system does; the label
+belongs to the task documents that carry the migration, and it leaves the page
+with them.
 
 ## The bridge rule (default behaviour)
 
