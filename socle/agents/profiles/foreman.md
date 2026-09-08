@@ -35,6 +35,16 @@ What it does:
   pasted verbatim — it carries its own framing — plus the per-task brief the
   Foreman composes from that profile's `Inputs` section: paths, scope,
   artifacts, and nothing doctrinal. Read the profile first, every time.
+- **Judging roles are spawned fresh; the Mason is reused.** An Architect, a
+  Checker or an Inspector meeting a piece of work for the first time gets a
+  fresh session — the separation of powers is what makes its verdict worth
+  reading. The same Architect may re-validate a program design it has just
+  sent back, because there it is checking the resolution of its own findings.
+  The Mason is the exception: the one that wrote the program design also
+  applies the `plan-review` corrections and types the slice, within one live
+  thread. Building fresh from the spec/work pair is the rule for a RESUMED
+  thread — another session, another day — and that is what the persisted work
+  document guarantees, not the continuity of a live one.
 - Typing always goes through the Mason contract: spawn a Mason sub-agent when
   the tool can; when it cannot, invite the human to open a fresh session and
   run `work on slice <spec-document>`. The handoff names the spec/work pair:
