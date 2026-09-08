@@ -193,8 +193,7 @@ seams, state machines and program-design diagrams from the matching work
 document. They move into the living docs declared in `.agents/project.md` §D,
 never inside the task workspace — start from its architecture index
 (default `doc/architecture/ARCHITECTURE.md`); update the README when the
-change is relevant to it. Protocol and evergreen pages stay generic — a
-temporary rewrite label is never branded as part of the work system.
+change is relevant to it.
 Then the bookkeeping: set the status of {{spec}}, tick its acceptance criteria
 and deliverables against reality, and move BOTH FILES to the archive declared
 in `.agents/project.md` §A — the spec document and its matching work document
