@@ -69,12 +69,7 @@ the only difference is the paperwork.
     opened by hand: rule 9 binds the side that delegates, this one binds the
     side that arrives.
 
-11. **A refused `update` is a redirect.** An agent whose `chisel update` is
-    refused for a v1 layout does not stop there: it chains onto the
-    `upgrade-v2` skill and proposes the upgrade instead of stopping at the
-    refusal, then puts the new glue questions to the human.
-
-12. **A section reference names its file and its title.** When a document you
+11. **A section reference names its file and its title.** When a document you
     write or edit cites a section of another file, the first mention carries
     both — "§A · Task workspace of `.agents/project.md`" — never a bare
     number; later mentions in the same document may shorten it. A reader must
@@ -95,7 +90,7 @@ Not everything starts as a feature idea:
 | Situation | Use | Then |
 |---|---|---|
 | Something's broken (hard bug, flake, regression) | `diagnosing-bugs` — build a repeatable failing check first, THEN theorize; regression test before the fix | the fix lands as normal work |
-| A design question that talking cannot settle | `prototype` — throwaway code, one command to run; keep the answer, delete the code | back into the interview |
+| A design question that talking cannot settle | `prototype` — throwaway code, one command to run; keep the answer, and keep the code on a throwaway branch out of main with a pointer to that branch | back into the interview |
 | Reading legwork (docs, API facts) | `research` — background agent, cited markdown file | feeds the interview |
 | So big and foggy it cannot even be sliced | `wayfinder` — map the open DECISIONS first, resolve them one by one | then the spec document and its slices |
 | A spare moment to make the codebase nicer to work in | `improve-codebase-architecture` | produces an idea → normal flow |
