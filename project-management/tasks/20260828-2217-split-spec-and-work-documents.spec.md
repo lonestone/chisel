@@ -1,6 +1,6 @@
 # Split the task file into a spec document and a work document
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete (2026-09-02)
 
 ---
 
@@ -131,23 +131,23 @@ review. "Returns nothing" therefore proves a real deletion. The match counts
 and the carrier lists are in the Notes; a Mason that rewords a grep re-runs it
 against the pre-work state before trusting it.
 
-- [ ] **two-templates-shipped** — `test -f socle/templates/000-template.spec.md
+- [x] **two-templates-shipped** — `test -f socle/templates/000-template.spec.md
   && test -f socle/templates/000-template.work.md && test !
   -f socle/templates/000-task-file-template.md` passes.
 
-- [ ] **old-template-cited-nowhere** — `grep -rn "000-task-file-template"
+- [x] **old-template-cited-nowhere** — `grep -rn "000-task-file-template"
   socle/ bin/ test/ AGENTS.md PHILOSOPHY.md` returns nothing. The scope stops
   there on purpose: what is under `project-management/` is history, and the
   Owner's migration ruling leaves history alone.
 
-- [ ] **both-templates-installed-and-managed** — Given a fresh `chisel init`,
+- [x] **both-templates-installed-and-managed** — Given a fresh `chisel init`,
   When the tree is listed, Then both templates exist under
   `project-management/`, the old one does not, and `chisel check` reports both
   as managed. Mechanically: `grep -c "000-template"
   test/fixtures/golden-tree.txt` returns 2, and `grep -n
   "000-task-file-template" test/fixtures/golden-tree.txt` returns nothing.
 
-- [ ] **spec-document-is-all-review-surface** — `grep -n "AGENT ZONE"
+- [x] **spec-document-is-all-review-surface** — `grep -n "AGENT ZONE"
   socle/templates/000-template.spec.md` and `grep -n "🧑"
   socle/templates/000-template.work.md` both return nothing; Given the two
   templates, When read, Then the spec document is entirely a review surface
@@ -155,7 +155,7 @@ against the pre-work state before trusting it.
   marker because it has one owner. This reads the templates only; the profiles
   are covered by **the-roles-name-the-work-document**.
 
-- [ ] **the-spec-keeps-a-notes-section-for-pre-plan-writers** — Given
+- [x] **the-spec-keeps-a-notes-section-for-pre-plan-writers** — Given
   `socle/templates/000-template.spec.md`, When read, Then it carries a Notes
   section scoped to what is written before a work document exists — the spec
   review's findings, and the assumptions a gateless preset records — and says
@@ -163,24 +163,24 @@ against the pre-work state before trusting it.
   `socle/agents/profiles/checker.md`, When read, Then its instruction to write
   findings into the Notes of the spec still resolves to a real section.
 
-- [ ] **named-criteria-in-the-spec-template** — `grep -n "Criterion 1"
+- [x] **named-criteria-in-the-spec-template** — `grep -n "Criterion 1"
   socle/templates/000-template.spec.md` returns nothing; Given the template's
   Acceptance Criteria guidance, When read, Then it requires a name per
   criterion, understandable in place, and states that an amended criterion is
   struck with its dated replacement below rather than rewritten by erasure.
 
-- [ ] **work-document-owns-the-program-design** — Given
+- [x] **work-document-owns-the-program-design** — Given
   `socle/templates/000-template.work.md`, When read, Then it carries the
   program design and its pseudo-code, the worklog, the implementation
   checkboxes, Notes & Snippets and the diff-review findings, and says who
   creates it and when: the implementing session, at `plan`, in the spec's own
   directory, named by replacing the `.spec.md` suffix with `.work.md`.
 
-- [ ] **the-program-design-has-left-the-spec** — `grep -rn "Design section"
+- [x] **the-program-design-has-left-the-spec** — `grep -rn "Design section"
   socle/` returns nothing. One grep covering three slices; its eight carriers
   today are listed in the Notes.
 
-- [ ] **no-file-says-the-spec-file** — `grep -rn "the spec file" socle/`
+- [x] **no-file-says-the-spec-file** — `grep -rn "the spec file" socle/`
   returns nothing. With two files per task the phrase names nothing precise,
   so every occurrence becomes **the spec document** or **the work document**,
   whichever it means. This is the criterion that gives the doctrine slice
@@ -188,7 +188,7 @@ against the pre-work state before trusting it.
   AGENTS block, the Architect and Inspector profiles, the two formula headers
   — and it is why the vocabulary rename is in scope rather than a nicety.
 
-- [ ] **the-roles-name-the-work-document** — `grep -rl "work document"
+- [x] **the-roles-name-the-work-document** — `grep -rl "work document"
   socle/agents/profiles/` lists `mason.md`, `architect.md`, `inspector.md` and
   `foreman.md`. The phrase appears nowhere in the socle today, so this bites
   from the first line written. Given those four profiles, When read, Then the
@@ -196,7 +196,7 @@ against the pre-work state before trusting it.
   it and never edits it, the Inspector reads it as evidence and writes its
   findings into it, and the Foreman archives it with its spec at `close`.
 
-- [ ] **formulas-send-the-work-to-the-work-document** — `grep -rn "checkboxes
+- [x] **formulas-send-the-work-to-the-work-document** — `grep -rn "checkboxes
   in {{spec}}" socle/agents/formulas/` returns nothing; Given each of the five
   formulas, When its `plan`, `type`, `diff-review` and `close` steps are read,
   Then the program design is persisted into the work document, the checkboxes
@@ -205,21 +205,21 @@ against the pre-work state before trusting it.
   requirement and the work document as evidence, and `close` **archives both
   files**, promoting the evergreen material out of the work document first.
 
-- [ ] **spec-axis-judges-the-whole-spec** — `grep -n "Context, Scope,
+- [x] **spec-axis-judges-the-whole-spec** — `grep -n "Context, Scope,
   Acceptance Criteria, Seams" socle/agents/skills/code-review/SKILL.md`
   returns nothing; Given the skill's spec-source and Spec sub-agent steps,
   When read, Then the requirement is the whole spec document, system design
   included, and the work document is evidence only, never a reference to judge
   against — a divergence between the two designs being a finding to judge.
 
-- [ ] **slice-task-emits-spec-documents-only** — `grep -n "Design — persisted
+- [x] **slice-task-emits-spec-documents-only** — `grep -n "Design — persisted
   at plan time" socle/agents/skills/slice-task/SKILL.md` returns nothing;
   Given the skill's publishing step and its emitted slice template, When read,
   Then each slice is published as `<NN>-<slug>.spec.md`, the template carries
   no Design section, and it says the implementing session creates the matching
   work document at its plan step.
 
-- [ ] **beads-and-retro-name-the-right-document** — `grep -n "the persisted
+- [x] **beads-and-retro-name-the-right-document** — `grep -n "the persisted
   Design" socle/agents/skills/chisel-beads/SKILL.md` and `grep -n "The spec
   file's persisted Design, implementation checkboxes"
   socle/agents/skills/retro/SKILL.md` both return nothing, while `grep -n
@@ -229,12 +229,12 @@ against the pre-work state before trusting it.
   the program design and the checkboxes, and `--spec-id` still points at the
   spec document.
 
-- [ ] **upstream-notes-tell-the-truth** — Given the three vendored skills this
+- [x] **upstream-notes-tell-the-truth** — Given the three vendored skills this
   task edits — `code-review`, `slice-task`, `retro` — When the `changes` field
   of their `x-upstream` block is read, Then it records the divergence this
   task adds, so whoever syncs upstream next knows the fork moved.
 
-- [ ] **tasks-still-to-do-are-renamed** — Given every task file under
+- [x] **tasks-still-to-do-are-renamed** — Given every task file under
   `project-management/tasks/`, When its status line is read, Then the
   unfinished ones carry `.spec.md` and the completed ones keep their plain
   name. Both directions must print nothing — copy them whole, one line each:
@@ -254,7 +254,7 @@ against the pre-work state before trusting it.
   included, and the list is pasted whole into the slice-05 work record
   before any rename, or it proves nothing.
 
-- [ ] **no-task-citation-points-at-a-missing-file** — every cited path of the
+- [x] **no-task-citation-points-at-a-missing-file** — every cited path of the
   shape `project-management/tasks/….md` resolves, except two fictional ones.
   It must print those two and nothing else:
 
@@ -271,7 +271,7 @@ against the pre-work state before trusting it.
   it. The rename slice works from the migration inventory in the Notes, not
   from this command.
 
-- [ ] **suite-green** — `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`
+- [x] **suite-green** — `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh`
   passes with zero failures. The `PATH` prefix is mandatory here and the
   reason is in the Notes.
 
@@ -628,7 +628,7 @@ Related tasks:
 
 ## Deliverables
 
-- [ ] `socle/templates/000-template.spec.md` (new) — the review surface:
+- [x] `socle/templates/000-template.spec.md` (new) — the review surface:
   Status, Context, Scope, Acceptance Criteria (named, never erased), Seams,
   Architecture / system design with the files map, Implementation Decisions,
   Testing Strategy, Slices & Dependencies, Deliverables, References, Notes
@@ -636,28 +636,28 @@ Related tasks:
   one-work-document rule, the archive-both rule, and the sentence that a spec
   with no work document beside it has never been typed. Two 🧑 zones, no agent
   zone.
-- [ ] `socle/templates/000-template.work.md` (new) — the working material:
+- [x] `socle/templates/000-template.work.md` (new) — the working material:
   program design and pseudo-code, worklog, implementation checkboxes, Notes &
   Snippets, diff-review findings. Says who creates it, when, where and under
   what name. No zone marker anywhere in it.
-- [ ] `socle/templates/000-task-file-template.md` — deleted.
-- [ ] `bin/chisel.sh` — one source constant becomes two, one manifest line
+- [x] `socle/templates/000-task-file-template.md` — deleted.
+- [x] `bin/chisel.sh` — one source constant becomes two, one manifest line
   becomes two, one install copy becomes two.
-- [ ] `test/fixtures/golden-tree.txt` — both templates listed, the old one
+- [x] `test/fixtures/golden-tree.txt` — both templates listed, the old one
   gone.
-- [ ] `socle/agents/project.md.tpl` — section "A · Task workspace" declares two
+- [x] `socle/agents/project.md.tpl` — section "A · Task workspace" declares two
   templates; section "B1 · Where task statuses live" carries the suffixed file
   names and drops the three-zone description.
-- [ ] `socle/agents/skills/upgrade-v2/SKILL.md` — names two managed templates.
-- [ ] `AGENTS.md`, `PHILOSOPHY.md` — repointed.
-- [ ] `project-management/000-template.spec.md`,
+- [x] `socle/agents/skills/upgrade-v2/SKILL.md` — names two managed templates.
+- [x] `AGENTS.md`, `PHILOSOPHY.md` — repointed.
+- [x] `project-management/000-template.spec.md`,
   `project-management/000-template.work.md` — this repo's own copies, taken
   from the socle source and not from the stale copy they replace (see the
   Notes).
-- [ ] `socle/agents/methodology.md` — template pointer, reading-gradient
+- [x] `socle/agents/methodology.md` — template pointer, reading-gradient
   glossary entry, "Zone ownership", the persist-the-program-design passage, the
   Program Design row of the phase table, the two-axis review paragraph.
-- [ ] `socle/agents/discipline.md` — the plan-first rule, the zone-owner rule,
+- [x] `socle/agents/discipline.md` — the plan-first rule, the zone-owner rule,
   and **rule 6**, ~~whose blocker destination becomes the work document~~.
   Amended 2026-09-02 per G15 (`review-360-decisions.md`, Addendum 3): rule 6's
   blocker trace lives in the task's documents — implementation blockers in the
@@ -666,26 +666,26 @@ Related tasks:
   block records the ruling in the same place; no shared journal line, no
   separate escalation bead. (Amendment rule of §Acceptance Criteria, applied
   by analogy to this Deliverable line.)
-- [ ] `socle/templates/AGENTS-block.md` — what a session tracks, and where.
-- [ ] `socle/agents/profiles/mason.md` — the work document is the Mason's file;
+- [x] `socle/templates/AGENTS-block.md` — what a session tracks, and where.
+- [x] `socle/agents/profiles/mason.md` — the work document is the Mason's file;
   every write the profile prescribes lands there; the prohibition becomes
   exact.
-- [ ] `socle/agents/profiles/architect.md` — validates the work document at
+- [x] `socle/agents/profiles/architect.md` — validates the work document at
   `plan-review`, never edits it.
-- [ ] `socle/agents/profiles/inspector.md` — the spec document is the
+- [x] `socle/agents/profiles/inspector.md` — the spec document is the
   requirement, the work document is evidence and is where the findings are
   written.
-- [ ] `socle/agents/profiles/foreman.md` — the passage on a Mason revising its
+- [x] `socle/agents/profiles/foreman.md` — the passage on a Mason revising its
   own program design, and the close duties including archiving both files.
-- [ ] The five files of `socle/agents/formulas/` — `plan`, `type`,
+- [x] The five files of `socle/agents/formulas/` — `plan`, `type`,
   `diff-review`, `close`, and the headers that name the spec file.
-- [ ] `socle/agents/skills/code-review/SKILL.md`,
+- [x] `socle/agents/skills/code-review/SKILL.md`,
   `socle/agents/skills/slice-task/SKILL.md`,
   `socle/agents/skills/chisel-beads/SKILL.md`,
   `socle/agents/skills/retro/SKILL.md`. Three of the four are vendored and
   carry an `x-upstream` block whose `changes` field is updated: `code-review`,
   `slice-task`, `retro`. `chisel-beads` is our own and has none.
-- [ ] The six unfinished task files renamed, their citers repointed, this
+- [x] The six unfinished task files renamed, their citers repointed, this
   task's own files renamed.
 
 ## Notes & Snippets
@@ -1071,6 +1071,22 @@ Testing Strategy says the line cap is inherited and dies with the Deno port.
 The Checker's closing observation is also taken: the installer's "no pointer
 into thin air" check already catches a forgotten template pointer for free, and
 the Testing Strategy now says so.
+
+
+## Retrospective
+
+Written at `close`, 2026-09-02. Five slices, five review rounds each shape:
+plan persisted → two-round Architect validation → typing → fresh Inspector.
+What worked: the two-round plan review caught real defects before typing
+every time (a re-decided 🧑 zone, an unsatisfiable verification oracle, a
+missed carrier); the grep-based criteria made every slice's claim checkable
+by anyone. What cost: four Owner rulings had to be made mid-task (G15–G18)
+because the spec's blocker doctrine and the orchestration rules were less
+settled than the split itself; and the task's own slices could not follow
+the convention they were shipping — the combined documents are archived
+as-is (Owner ruling, 2026-09-02, accepting the slice-05 Inspector's three
+escalations in the recorded state). Lesson: a task that changes a convention
+should expect to be the last thing migrated to it.
 
 ## References
 
