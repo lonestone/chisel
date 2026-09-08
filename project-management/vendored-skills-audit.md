@@ -375,6 +375,20 @@ project that moves the script breaks silently. Low severity.
 
 ---
 
+**Post-audit addendum (2026-09-08, foreman)** — two findings from the
+skill's first real use under the two-document convention (slicing the
+joints-and-minors task):
+
+- Its slicing-time rule "avoid specific file paths in What to build and the
+  criteria — they go stale" contradicts a text-repair task whose criteria
+  ARE path-naming greps with recorded counts. The parent spec won on the
+  spot; the skill needs a carve-out for text-surface tasks or the rule
+  softened to a default.
+- Its emitted slice template is narrower than the Architect profile requires:
+  no files-to-modify/files-to-avoid map, no Verification, no References. All
+  three slices added them by hand to match the house style; the emitted
+  template should carry them.
+
 ## codebase-design (with DEEPENING.md and DESIGN-IT-TWICE.md)
 
 Named in `socle/agents/profiles/checker.md`, mission — the Checker proposes
