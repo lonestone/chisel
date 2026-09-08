@@ -397,6 +397,13 @@ is a failure of this slice. Same for `tracker-pointer-resolves`, which drops
 
 ## Notes & Snippets
 
+- 2026-09-08 — **foreman** — Ruling on the proposal-door finding below: no
+  gap. Slice 02's spec owns the three surviving Tracker-section carriers
+  explicitly — its `tracker-pointer-resolves` share names
+  `wayfinder/SKILL.md:30`, `slice-task/SKILL.md:17`,
+  `code-review/SKILL.md:18`, and its files map lists all three. The repoints
+  land there; nothing falls through.
+
 **Before-counts, verified by `mason` at `plan`, 2026-09-08, branch
 `review-360`.** Each command was run against this working tree, not copied
 from the spec. The table carries **sixteen grep rows plus the suite baseline —
