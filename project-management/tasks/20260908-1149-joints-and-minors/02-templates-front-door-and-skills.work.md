@@ -819,7 +819,7 @@ finding is closed and not merely recorded.
       doctrine pointer reinstated at the end of the first Context paragraph
       of both work templates, install-relative in the source and
       repo-relative in the mirror (1e)
-- [ ] Edit 2 — `README.md`: the gradient paragraphs at 19-31, and the setup
+- [x] Edit 2 — `README.md`: the gradient paragraphs at 19-31, and the setup
       block at 38-46
 - [ ] Edit 3 — `PHILOSOPHY.md` lines 68-136: the reading-gradient belief at
       68-73 (3a), the two-designs belief at 78-84 (3b), the think/type belief

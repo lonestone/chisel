@@ -18,32 +18,38 @@ beliefs behind the design: [PHILOSOPHY.md](./PHILOSOPHY.md).
 
 By default, every gate stays at the human. A task starts as an interview
 (one question at a time, a recommended answer with each), which shapes a
-**reading-gradient** spec file: the decisions worth reviewing carefully sit
-at the top, program design underneath, the agent's working notes at the
-bottom — detail is never cut, only ordered.
+**reading-gradient** spec document: the decisions worth reviewing carefully
+sit at the top, the rest ordered after them — detail is never cut, only
+ordered. That document holds the requirement and nothing else; the program
+design and the working notes live in a work document beside it, created by
+the session that implements the task.
 
 **Seams** — the public boundaries a feature is tested through — are agreed
 before any code is typed. A fresh session then plans against the real code
-and **persists the plan into the spec file** before writing a line: a plan
-that only lives in the conversation is invisible to the next session, to the
-completion review, and to a crash. Typing can be delegated to a cheaper
-model from that persisted plan; the Architect who planned it never types
-what it planned.
+and **persists the plan into the work document** before writing a line: a
+plan that only lives in the conversation is invisible to the next session, to
+the completion review, and to a crash. Typing runs from that persisted plan,
+and it can run on a cheaper model; whoever reviews a design never types the
+work it approved.
 
 At completion, a **two-axis review** checks Standards (the repo's own
 conventions) and Spec (did the work do what the 🧑 zones asked, and nothing
 more) side by side — never merged into one list, so one axis cannot mask the
 other.
 
-## The one choice setup actually shows you
+## Setup, after init
 
-`chisel init` asks one question beyond your paths, written as one line in
-`.agents/project.md` and changeable later by re-running the question:
+`chisel init` installs the socle with safe defaults and asks nothing. The
+questionnaire is the `chisel-setup` skill, run afterwards in an agent
+session: it reads the repo, proposes each section of `.agents/project.md` one
+at a time, and writes back what you confirm. Re-run it later to revisit a
+single section.
 
-- **§B1 · Where task statuses live, of `.agents/project.md`.** The default
-  is the task files themselves — nothing to install. The other answer is a
-  committed `bd` database when a repo wants queries instead of a reading
-  session; adding it later is tooled and only touches open tasks.
+The answer worth knowing about up front is **§B1 · Where task statuses live,
+of `.agents/project.md`.** The default is the task files themselves —
+nothing to install. The other answer is a committed `bd` database when a repo
+wants queries instead of a reading session; adding it later is tooled and
+only touches open tasks.
 
 ## The upgrade path
 
