@@ -120,10 +120,13 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       published → **`§B · Coordination`**;
       `socle/agents/skills/code-review/SKILL.md:18` means where task files
       live → **`§B · Coordination`**.
-      *Today:* `grep -rn "Tracker section" socle/` → **5** across 5 files;
+      *Today:* `grep -rn "Tracker section" socle/` → ~~**5** across 5 files~~
+      **4** across 4 files (re-measured 2026-09-09: slice 01 repointed the
+      methodology carrier; the four left are wayfinder, slice-task,
+      code-review and triage);
       `grep -rn "§B · Coordination" socle/` → **0**;
       `grep -rn "§B2 · Link to an external tracker" socle/` → **0**.
-      The criterion closes at slice 03, when the fifth carrier leaves with the
+      The criterion closes at slice 03, when the last carrier leaves with the
       `triage` file.
 - [ ] **factory-claim-degraded** (this slice's one carrier) —
       `PHILOSOPHY.md:134` stops presenting the factory as a product cell and
@@ -199,8 +202,9 @@ unreviewable.
 
 - Re-run each criterion command above and record the after-count beside the
   before-count.
-- `grep -rn "Tracker section" socle/` must drop from 5 to 2 (the methodology
-  carrier, slice 01's, and the triage carrier, slice 03's), and both
+- `grep -rn "Tracker section" socle/` must drop from ~~5 to 2~~ 4 to 1 (the
+  triage carrier, slice 03's; the methodology carrier was slice 01's and is
+  already gone — re-measured 2026-09-09), and both
   `grep -rn "§B · Coordination" socle/` and
   `grep -rn "§B2 · Link to an external tracker" socle/` must be non-zero.
 - `diff` the two spec templates against each other and the two work templates
@@ -289,3 +293,10 @@ as a failure.
 one dated entry recording the pass, the three removals and the standing
 intention on `triage`. It is not in this slice's map, which lists only the two
 template mirrors under `project-management/`. See slice 03's Notes.
+
+**Foreman note, 2026-09-09 · `foreman`.** The `tracker-pointer-resolves`
+arithmetic was written before slice 01 landed. Slice 01 repointed the
+methodology carrier (commit `3ec5ac5`), so this slice starts from 4 carriers,
+not 5, and leaves 1, not 2. Both figures are struck and re-measured above; the
+three carriers this slice repoints are unchanged. Spotted by slice 01's
+Inspector as a heads-up.

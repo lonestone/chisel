@@ -1,6 +1,6 @@
 # 01 — Doctrine and glue text
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete (2026-09-09)
 **Blocked by:** None — can start immediately. Run before slice 03, which
 removes carriers this slice would otherwise rename.
 
@@ -27,24 +27,24 @@ re-run against this working tree on 2026-09-08 and its count recorded.
 
 **Owned in full by this slice.**
 
-- [ ] **architecture-index-declared** — §D · Documentation reference of
+- [x] **architecture-index-declared** — §D · Documentation reference of
       `socle/agents/project.md.tpl` declares an "Architecture index" field
       whose default is `doc/architecture/ARCHITECTURE.md`.
       *Today:* `grep -c "Architecture index" socle/agents/project.md.tpl` → **0**.
       §D starts at line 142.
-- [ ] **sdd-bench-pointer-gone** — `grep -rn "SDD-bench" socle/` returns
+- [x] **sdd-bench-pointer-gone** — `grep -rn "SDD-bench" socle/` returns
       nothing.
       *Today:* **1** — `socle/agents/methodology.md:14`.
-- [ ] **model-claim-scoped** — `grep -n "Nothing in this socle names a model
+- [x] **model-claim-scoped** — `grep -n "Nothing in this socle names a model
       or a vendor" socle/agents/methodology.md` returns nothing, and the
       replacement sentence restricts the claim to models and tiers.
       *Today:* **1** — `socle/agents/methodology.md:324`.
-- [ ] **tiers-prose-only** — `socle/agents/profiles/README.md` states that a
+- [x] **tiers-prose-only** — `socle/agents/profiles/README.md` states that a
       tier is resolved at read time by the delegator at spawn, and that a
       generated definition carries no model field.
       *Today:* `grep -cE "resolved at read time|no model field"
       socle/agents/profiles/README.md` → **0**. The rule is stated nowhere.
-- [ ] **rewrite-label-selfstanding** — `grep -rn "rewrite label"
+- [x] **rewrite-label-selfstanding** — `grep -rn "rewrite label"
       socle/agents/formulas/` returns nothing, and exactly one socle file
       carries the rule, stated so that it is understood without its original
       context.
@@ -56,7 +56,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       inside the `doc/architecture/` paragraph, where the clause reads as a
       trailing aside). The surviving copy is the methodology one, rewritten to
       name what a temporary rewrite label is and to give an example.
-- [ ] **update-redirect-rule-gone** — `socle/agents/discipline.md` has 11
+- [x] **update-redirect-rule-gone** — `socle/agents/discipline.md` has 11
       numbered rules, none of them the `update` redirect, and
       `grep -c "upgrade-v2" bin/chisel.sh` is at least 1.
       *Today:* `grep -cE "^[0-9]+\. " socle/agents/discipline.md` → **12**.
@@ -65,13 +65,13 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       its title) survives and becomes rule 11.
       `grep -c "upgrade-v2" bin/chisel.sh` → **2**, already satisfied; the CLI
       is not edited.
-- [ ] **role-reuse-in-socle** — `socle/agents/profiles/foreman.md` states
+- [x] **role-reuse-in-socle** — `socle/agents/profiles/foreman.md` states
       ruling G16: judging roles are spawned fresh, the Mason is reused from
       plan through typing within a live thread.
       *Today:* `grep -c "G16" socle/agents/profiles/foreman.md` → **0**; the
       rule lives only in this repo's `AGENTS.md:18-19`. The two-part spawn
       bullet this statement follows is at line 34.
-- [ ] **suite-green** (this slice's own run) — `bash test/run.sh`, run with a
+- [x] **suite-green** (this slice's own run) — `bash test/run.sh`, run with a
       `python3` that has `tomllib`, reports 0 failed, with the "integrity: no
       pointer into thin air" scenario passing.
       *Today:* `PATH=/opt/homebrew/bin:$PATH bash test/run.sh` → **9
@@ -80,7 +80,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
 
 **Split with another slice — this slice does its half only.**
 
-- [ ] **prototype-capture-aligned** (clauses 1 and 2 only) — `grep -n "delete
+- [x] **prototype-capture-aligned** (clauses 1 and 2 only) — `grep -n "delete
       the code" socle/agents/discipline.md` returns nothing, and the prototype
       side-lane row names the throwaway branch and its pointer.
       *Today:* `grep -c "delete the code" socle/agents/discipline.md` → **1**
@@ -90,7 +90,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       branches written in exactly one place — is slice 02's, in
       `socle/agents/skills/prototype/SKILL.md`. **This slice must not write
       that cleanup sentence**, or "exactly one place" becomes two. See Notes.
-- [ ] **tracker-pointer-resolves** (this slice's one carrier) —
+- [x] **tracker-pointer-resolves** (this slice's one carrier) —
       `socle/agents/methodology.md:35` names a section that exists. It means
       the external tracker (the reserved word "ticket"), so per parent
       Implementation Decision 1 it becomes **`§B2 · Link to an external
@@ -101,7 +101,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       `grep -rn "§B2 · Link to an external tracker" socle/` → **0**.
       The criterion closes at slice 03, when the fifth carrier leaves with the
       `triage` file.
-- [ ] **factory-claim-degraded** (this slice's one carrier) —
+- [x] **factory-claim-degraded** (this slice's one carrier) —
       `socle/agents/methodology.md:65` stops presenting the factory as a
       product cell and presents it as a possible destination, perhaps outside
       chisel; no beads machinery is written.
@@ -109,7 +109,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       **2** (`socle/agents/methodology.md:65`, `PHILOSOPHY.md:134`).
       Co-owned with slice 02, which holds the `PHILOSOPHY.md` carrier. The
       full grep goes empty only when both have landed.
-- [ ] **work-on-invocation-current** (this slice's one carrier) —
+- [x] **work-on-invocation-current** (this slice's one carrier) —
       `socle/agents/profiles/README.md:67` names `<spec-document>` instead of
       `work on slice <file>`.
       *Today:* `grep -rn "work on slice <file>\|work on task <file>" socle/
@@ -240,3 +240,16 @@ as a failure.
 one dated entry recording the pass, the three removals and the standing
 intention on `triage`; this slice's files-to-avoid map excludes all of
 `project-management/`. See slice 03's Notes.
+
+**Closed, 2026-09-09 · `foreman`.** Typed in six commits (`3ec5ac5`,
+`65c505e`, `10d3ff1`, `7c44d5d`, `07e804f`, `e19775f`) from the program design
+in `01-doctrine-and-glue-text.work.md`; fixed point `e0df27f`, inspected at
+`39e1619`. Inspector verdict: Standards PASS, Spec PASS, twelve criteria
+satisfied (the four shared ones for this slice's share only, as written
+above), no escalation. Suite after: 9 scenarios, 94 assertions, 0 failed.
+Findings and their disposition: S1, a mannered clause in
+`socle/agents/profiles/foreman.md` — the Mason corrects it in a follow-up
+commit; Sp1, stale "rule 12" citations in the work document and the parent
+spec — parent corrected by the foreman, work document by the Mason; Sp2
+informational, no action. The heads-up on slice 02's arithmetic is applied in
+slice 02's spec, dated today.

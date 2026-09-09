@@ -300,7 +300,8 @@ left to application, decided here so no session has to guess.
    `code-review:18` (where task files live) → §B · Coordination;
    `triage:48` → moot, the file leaves with F1.11.
    Each reference carries the section title with the number, which is the form
-   rule 12 of the discipline already requires.
+   rule 11 of the discipline already requires (rule 12 until slice 01 deleted
+   the update-redirect rule and renumbered it — corrected 2026-09-09).
 2. **No section-reference sweep.** The bare `§B`, `§C`, `§F`, `§B1` and `§H`
    citations that remain across the profiles, the formulas, `discipline.md`
    and the three chisel skills are chantier 5's, by name, in the decisions
@@ -612,6 +613,12 @@ Owner disagrees, the fix is fewer rulings per chantier, not a thinner table.
 spec. Every claim about the current state above was produced by running its
 command against this working tree, not read from an earlier report; where the
 360 review's own report and this repo disagreed, the repo won.
+
+**Foreman note, 2026-09-09 · `foreman`.** Implementation Decision 1 cited
+"rule 12" of the discipline for the section-reference form. Slice 01 deleted
+rule 11 and renumbered 12 to 11 (commit `65c505e`), so the citation now reads
+"rule 11", with the old number kept in parentheses. Found by slice 01's
+Inspector (finding Sp1); no ruling changed.
 
 ## Retrospective
 
