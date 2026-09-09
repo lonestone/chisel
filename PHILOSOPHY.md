@@ -65,12 +65,13 @@ artifacts, Pocock's skills as the engine.
 
 These are the beliefs chisel is built on:
 
-- **Review is the bottleneck, so optimize for reading.** Task files use a
-  *reading gradient*: what the human must review carefully is short and at
-  the top (🧑 context, scope, acceptance criteria, seams); design worth
-  checking comes next (🧑 if relevant); the agent's verbose working notes
-  sink to the bottom (🤖). Detail is never cut — it is ordered. Humans
-  re-read again ⇒ quality comes back.
+- **Review is the bottleneck, so optimize for reading.** The spec document
+  uses a *reading gradient*: what the human must review carefully is short
+  and at the top (🧑 context, scope, acceptance criteria, seams); design
+  worth checking comes next (🧑 if relevant). Detail is never cut — it is
+  ordered. The agent's verbose working notes are not at the bottom of that
+  file, they are in the work document beside it. Humans re-read again ⇒
+  quality comes back.
 - **Ambient by default, ceremony on demand.** The discipline applies to
   every conversation (read the project context, plan first, verify before
   "done"). The agent detects when a chat has become real work and proposes
@@ -78,16 +79,18 @@ These are the beliefs chisel is built on:
 - **Two designs, two moments.** The system design (how the pieces talk) is
   settled at creation time and reviewed there — a slice is ready to produce
   when it is settled, not before. The program design (files, signatures,
-  test order) happens at each slice's plan step, with the real code in view
-  — and once validated it is **persisted into the slice file before any
-  code is typed**. A plan that only lives in the conversation is invisible
-  to the completion review, to dependent slices, and to re-runs.
+  test order) happens at each slice's plan step, with the real code in view,
+  and it is **persisted into the work document before any code is typed**. A
+  plan that only lives in the conversation is invisible to the completion
+  review, to dependent slices, and to re-runs.
 - **Think and type are different jobs.** Planning needs a frontier model
   and a human gate; typing from a complete persisted brief doesn't. The
-  **plan is the delegation boundary**: product, architecture and program
-  design are never delegated; execution can be, to a faster/cheaper model,
-  with the planner reviewing the diff. (Validated in production — this
-  repo's own slices were typed by a cheaper model from persisted designs.)
+  **system design is the delegation boundary**: product, architecture and
+  the seams the work is tested through are never delegated; the program
+  design and the typing go together, to a faster and cheaper model, and the
+  diff is read by a fresh reviewer who never wrote it. (Validated in
+  production — this repo's own slices were typed by a cheaper model from
+  persisted designs.)
 - **Humans own the gates — and a 🧑 zone's owner follows who approved it, not
   simply "the human".** Seams (where we test) are agreed before code. Plans
   are approved before typing. Slicing is validated before publication. An
@@ -114,26 +117,27 @@ Three situations, one discipline:
   task when the work outgrows the chat. This is not a mode: it is what the
   default behaves like when there is nothing to file.
 - **One task** — two sessions. CREATE: an interview (grilling) shapes the
-  task file — context, scope, acceptance criteria, seams — and logs it in
-  the journal. WORK: a fresh session reads the file, plans against the real
-  code, gets the plan approved and persisted, offers to delegate the typing,
-  then builds and closes (lint/tests/build, browser check if UI, the
-  journal, living docs).
-- **A parent task with slices** — big features: a parent task plus thin
-  vertical slices with dependency edges. Any slice whose blockers are done
-  can start, each in a fresh session following the one-task WORK shape.
+  spec document — context, scope, acceptance criteria, seams — and logs it
+  in the journal. WORK: a fresh session reads the spec document, plans
+  against the real code, gets that plan approved and persisted into the work
+  document beside it, then builds and closes (lint/tests/build, browser
+  check if UI, the journal, living docs).
+- **A parent task with slices** — big features: a parent spec document plus
+  thin vertical slices with dependency edges. Any slice whose blockers are
+  done can start, each in a fresh session that plans into its own work
+  document and follows the one-task WORK shape.
 
-On top of that discipline, chisel runs as **one default plus two options**.
-The default holds every gate at the human. Two options add to it, and each
-is independent of the other: **beads** (a status database, repo state,
-additive — nothing above it changes) and **auto** (permission to run
-without stopping, asked for per invocation — never the project's permanent
-setting). Three presets combine them: `chisel-default` (the discipline
-above, exactly), `chisel-supervised` (the same steps with one asynchronous
-gate — the Owner approves the spec, nothing else), `chisel-auto` (no gates;
-a doubting step escalates instead). **Factory = auto × beads** — the only
-combination that needs beads, for its queues and asynchronous gate lists;
-plain auto is one chained session and needs none.
+On top of that discipline, chisel ships five presets — `chisel-default`,
+`chisel-light`, `chisel-supervised`, `chisel-auto` and `chisel-auto-light`.
+They differ in how much of the run stops at a human and how much a fresh
+reviewer checks instead. Which preset governs a run is the human's choice at
+that invocation, never the project's permanent setting. **Beads** — a
+committed status database — is a separate, additive axis: a beads-equipped
+repo stays fully usable under the default.
+
+**A factory is a possible destination, not a cell of this product.** We have
+not decided whether it belongs inside chisel at all, so we describe none of
+its machinery here.
 
 An earlier design named these situations with size-based labels instead —
 they read as **work sizes**, where the framing above reads as **piloting

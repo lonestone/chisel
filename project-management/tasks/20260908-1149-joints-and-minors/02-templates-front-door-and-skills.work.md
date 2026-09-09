@@ -821,7 +821,7 @@ finding is closed and not merely recorded.
       repo-relative in the mirror (1e)
 - [x] Edit 2 — `README.md`: the gradient paragraphs at 19-31, and the setup
       block at 38-46
-- [ ] Edit 3 — `PHILOSOPHY.md` lines 68-136: the reading-gradient belief at
+- [x] Edit 3 — `PHILOSOPHY.md` lines 68-136: the reading-gradient belief at
       68-73 (3a), the two-designs belief at 78-84 (3b), the think/type belief
       at 85-90 (3c), the two pipeline bullets at 116-124 (3d), and the
       preset/auto/factory paragraph at 126-136 rewritten as two paragraphs
