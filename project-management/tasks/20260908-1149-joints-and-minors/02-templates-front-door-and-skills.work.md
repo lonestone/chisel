@@ -827,7 +827,7 @@ finding is closed and not merely recorded.
       preset/auto/factory paragraph at 126-136 rewritten as two paragraphs
       (3e)
 - [x] Edit 4 — `AGENTS.md`: the task-lifecycle bullet at 10-13
-- [ ] Edit 5 — the three A1 carriers: `wayfinder/SKILL.md:30`,
+- [x] Edit 5 — the three A1 carriers: `wayfinder/SKILL.md:30`,
       `slice-task/SKILL.md:17`, `code-review/SKILL.md:18`; then a suite run
 - [ ] Edit 6 — `upgrade-v2/SKILL.md:12-13` (both counts: the profiles and the
       presets) and `retro/SKILL.md:117`

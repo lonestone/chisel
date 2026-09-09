@@ -14,7 +14,7 @@ x-upstream:
 Break a plan, task, or conversation into **slices** — tracer-bullet vertical
 slices, each declaring the slices that **block** it.
 
-Where slices are published is defined in `.agents/project.md`, Tracker section.
+Where slices are published is defined in §B · Coordination of `.agents/project.md`.
 
 ## Process
 
