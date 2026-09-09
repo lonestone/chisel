@@ -261,3 +261,20 @@ reason.
   Deliverables require is task-closing work, written by the thread owner at
   the parent's `close`, not a slice deliverable. Same handling as the
   previous chantier (CHANGELOG entry 24 was written at its close).
+
+- 2026-09-09 — **foreman** — Plan-review round 1 APPROVED (program design at
+  `9ae6743`; four non-blocking findings on the work document, applied at
+  typing). Four spec figures had moved since 2026-09-08 because slices 01 and
+  02 landed: the `triage` side-lane row is at `discipline.md:97` (not 102),
+  the `prototype` row to protect at 93 (not 98), `grep -rn "Tracker section"
+  socle/` is at 1 (not 5), the README carrier at `README.md:66` (not 60). The
+  criteria and their after-counts are unchanged. Two Architect answers kept:
+  three green commits, each removal carrying its own fixture lines (the
+  spec's "touched once" is about slice order, not commit count); the moved
+  page's new path is written nowhere, per parent Implementation Decision 3.
+  Two escalations ruled by the thread owner under the Owner's standing go:
+  E-1, the page's path stays unwritten (it sits beside the script it drives;
+  `README.md` is closed slice 02's file); E-2, the present-tense skill count
+  in `project-management/vendored-skills-audit.md` gets a dated one-line
+  addendum from the foreman at the parent's `close`, alongside the CHANGELOG
+  entry. Both reported to the Owner as reversible.
