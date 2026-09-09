@@ -36,8 +36,6 @@
 .agents/skills/domain-modeling/ADR-FORMAT.md
 .agents/skills/domain-modeling/CONTEXT-FORMAT.md
 .agents/skills/domain-modeling/SKILL.md
-.agents/skills/grill-with-docs
-.agents/skills/grill-with-docs/SKILL.md
 .agents/skills/grilling
 .agents/skills/grilling/SKILL.md
 .agents/skills/handoff

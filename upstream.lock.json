@@ -19,11 +19,6 @@
     "path": "skills/engineering/domain-modeling",
     "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
   },
-  "grill-with-docs": {
-    "repo": "mattpocock/skills",
-    "path": "skills/engineering/grill-with-docs",
-    "sha": "2ab958093e83e0ec752e6c1c5932da465bf23e0c"
-  },
   "grilling": {
     "repo": "mattpocock/skills",
     "path": "skills/productivity/grilling",
