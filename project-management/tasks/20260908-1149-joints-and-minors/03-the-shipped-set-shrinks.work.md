@@ -620,3 +620,226 @@ already landed and verified above), and the CHANGELOG entry (task-closing).
 ## Diff-Review Findings
 
 Written by the Inspector at `diff-review`.
+
+**Verdict — Standards axis: PASS. Spec axis: PASS.** Reported side by side,
+never merged. Signed `inspector`, 2026-09-09 20:18 CEST (this session's system
+clock, which reads earlier than the `type` entry's stamp above).
+
+Fixed point `ce5beef`, HEAD `232e016`, four commits: `6a8a457`, `3f85960`,
+`beb397f`, `232e016`. Reviewed from the slice spec including its Notes to the
+last entry, the parent spec in full, and this work document as evidence only.
+The Inspector wrote none of the diff and none of the plan.
+
+### Standards axis — PASS
+
+Everything below was re-run against the tree, not read from this document.
+
+- **The diff is nine files and nothing else.** `git diff -M --stat
+  ce5beef..HEAD`: the four deleted pages, the rename, `discipline.md`,
+  `upstream.lock.json`, `test/fixtures/golden-tree.txt`, and this work
+  document.
+- **The move is a pure rename.** `git diff -M --raw` reads
+  `R100 socle/agents/skills/sync-upstream/SKILL.md ->
+  socle/scripts/sync-upstream/SKILL.md`, blob `79594f9` on both sides, and
+  `--summary` reads `rename socle/{agents/skills => scripts}/sync-upstream/SKILL.md
+  (100%)` — zero content lines.
+- **The deletions are whole directories.** `git ls-tree -r ce5beef` lists one
+  file under `grill-with-docs/` and three under `triage/`; `git ls-tree -r
+  HEAD` and the working tree list none under either path, and nothing was
+  left behind.
+- **`test/fixtures/golden-tree.txt` is the only `test/` file touched, and its
+  diff is exactly eight `-` lines with no `+` line** — two for
+  `grill-with-docs`, two for `sync-upstream`, four for `triage`. The file is
+  still `LC_ALL=C`-sorted and still ends with a newline.
+- **`socle/agents/discipline.md` loses exactly one line**, the `triage`
+  side-lane row. Lines 1-93 are byte-identical to `ce5beef`, so the
+  `prototype` row at line 93 — clause 2 of slice 01's
+  `prototype-capture-aligned` — is intact. The table keeps its header and
+  five rows; the numbered rules stay at 11.
+- **`upstream.lock.json` still parses**, holds **14** entries, sorted, no
+  blank line, trailing newline present, and every key is backed by a
+  directory under `socle/agents/skills/` (`[]`). The three skill directories
+  with no entry are `chisel-beads`, `chisel-setup` and `upgrade-v2`.
+- **No surviving reference to the three pages.** `grep -rn` for
+  `grill-with-docs`, `triage` and `agents/skills/sync-upstream` over `socle/`,
+  `bin/`, `test/`, `README.md`, `PHILOSOPHY.md`, `AGENTS.md` and `CLAUDE.md`
+  returns nothing. `README.md:66` still names `sync-upstream` as maintainer
+  tooling and still claims no path, so it stays true.
+- **The moved page's `socle/…` paths are correct where they now sit.** Judged,
+  not taken on trust: the page is not in the set `chisel init` copies —
+  `managed_relative_files` (`bin/chisel.sh:161-179`) finds files under
+  `agents/skills`, `agents/formulas` and `agents/profiles` only, and the sole
+  script it names is `scripts/task-id.sh`, copied by one explicit `cp` at
+  `bin/chisel.sh:280`; nothing globs `socle/scripts/`. So the page is
+  repo-side maintainer tooling, its own body says to run it from the chisel
+  repo, and `socle/scripts/sync-upstream.sh` really is where it says. The
+  installed-form rule no longer binds it, and the move retires the defect
+  rather than moving it.
+- **Every commit is green, verified by running it, not by reasoning.** Each of
+  the three content commits was checked out in a scratch worktree and the
+  suite run: `6a8a457` fixture 96 / lock 15, `3f85960` fixture 92 / lock 14,
+  `beb397f` fixture 90 / lock 14 — **9 scenarios, 94 assertions, 0 failed**
+  every time. The worktree was removed afterwards.
+- **Commit messages.** Four imperative English subjects, a body that states
+  the ruling and the evidence, and the `Co-Authored-By` trailer on each.
+- **`git diff --check`** clean over the range.
+- **The amendment rule is respected.** Edit 3b's superseded paragraph is kept
+  verbatim inside `~~ … ~~` — one paragraph, so the strike renders — and the
+  replacement is dated and signed `mason` at `type`. The two other additions
+  made at typing carry the same stamp.
+- **Prose is direct** (ruling G18), English (Implementation Decision 11), and
+  wrapped; one added prose line runs to 82 characters, which is below the
+  threshold of a finding.
+
+**S1 — non-blocking.** File:
+`project-management/tasks/20260908-1149-joints-and-minors/03-the-shipped-set-shrinks.work.md`,
+the "The fixture diff is deletions only" paragraph of the `type` worklog
+entry. Defect: the paragraph names the range `ce5beef..HEAD` and then states
+"The slice's diffstat is 8 files, 460 deletions, 0 insertions". That figure is
+exact for `ce5beef..beb397f` — re-verified: `8 files changed, 460
+deletions(-)` — but `ce5beef..HEAD` now reads 9 files, 466 deletions, 155
+insertions, because HEAD is the work-document commit itself. A reader
+re-running the stated command gets different numbers and cannot tell which is
+wrong. Fix: name the code range, `ce5beef..beb397f`, for the diffstat
+sentence. Blocking: no — the evidence is right, only its range label is loose,
+and the fixture claim in the same paragraph does hold over `ce5beef..HEAD`.
+
+Nothing else on this axis. In particular the stale "15 lock entries" comment
+at `socle/scripts/sync-upstream.sh:144` is **not** a finding against this
+slice: `git log -L` dates it to `5efa793`, 2026-08-06, it is a comment inside
+a fetch-once guard that reads no count, and the file is on this slice's
+files-to-avoid map. The Mason recorded it rather than sweeping it, which is
+the right call under parent Implementation Decision 2.
+
+### Spec axis — PASS
+
+**Every criterion command of the slice spec, re-run against this tree.** All
+four owned criteria are at 0 and match this document's after-counts exactly.
+
+| Criterion | Command | Result |
+|---|---|---|
+| `sync-upstream-unshipped` | `ls -d socle/agents/skills/sync-upstream` | does not exist |
+| | page beside its script | `socle/scripts/sync-upstream/SKILL.md`, next to `sync-upstream.sh` |
+| | `grep -n "sync-upstream" test/fixtures/golden-tree.txt` | 0 |
+| `grill-with-docs-gone` | `grep -rn "grill-with-docs" socle/ upstream.lock.json test/fixtures/golden-tree.txt` | 0 |
+| `triage-unshipped` | `grep -rn "triage" socle/ upstream.lock.json test/fixtures/golden-tree.txt` | 0 |
+| `tracker-pointer-resolves` (1st half) | `grep -rn "Tracker section" socle/` | 0 |
+| `suite-green` | `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` | 9 scenarios, 94 assertions, 0 failed |
+
+And the spec's five extra checks: the rename shape is `R100`; `wc -l
+test/fixtures/golden-tree.txt` is **90**; the lock parses to **14**; the
+lock-to-directory check prints `[]`; `git diff --check` is clean. The suite's
+formula parse check reported **PASS**, not SKIP; both byte-for-byte golden
+comparisons passed, both `tree_size > 40` floor guards held, the `integrity:
+no pointer into thin air` scenario stayed green with its two mutation probes
+caught, and the 600-line cap line still reads 592 as the spec predicted.
+
+**`tracker-pointer-resolves` closes here, both halves, verified
+independently.** First half: the grep is empty. Second half: every
+section-title citation in `socle/` names a section that exists in
+`socle/agents/project.md.tpl` — `methodology.md:35` and `wayfinder/SKILL.md:30`
+→ `§B2 · Link to an external tracker` (line 103), `slice-task/SKILL.md:17` →
+`§B · Coordination` (line 43), `code-review/SKILL.md:18`,
+`slice-task/SKILL.md:92`, `methodology.md:5` and `discipline.md:74` → `§A ·
+Task workspace` (line 14). That is seven citations, two more than the Mason's
+five; both extras resolve, so the criterion is green on the wider reading as
+well as the narrow one. A wider sweep of every bare `§` reference in `socle/`
+also lands only on letters that exist (A, B, B1, B2, C, D, E, F, G, H). No
+edit was needed in any of those files, and none was made.
+
+**Nothing outside the Files map was touched, and there is no scope creep.**
+`README.md`, `socle/scripts/sync-upstream.sh`, `test/installer.sh`,
+`test/run.sh`, `test/lib.sh`, `test/TESTS.md` and `bin/chisel.sh` are all
+absent from the diff. No file belonging to slices 01 or 02 was touched, with
+`socle/agents/discipline.md` the parent's accepted overlap, limited to its one
+row. The two untracked Owner files are still untracked and appear nowhere in
+the range.
+
+**The two things a review of this slice alone must not read as missing work
+are indeed not missing.** The four Tracker-section renames landed in slices 01
+and 02 and are verified above; the CHANGELOG entry is task-closing, ruled so
+by the thread owner on 2026-09-08 in the slice spec's Notes.
+
+**Sp1 — non-blocking, and it is the foreman's to apply at `close`.** File:
+`project-management/vendored-skills-audit.md`, lines 3-10. Defect: escalation
+E-2, ruled 2026-09-09, gives the audit "a dated one-line addendum" for its
+present-tense skill count. Two further present-tense claims in the same
+opening paragraph also stop being true with this slice, and a one-line
+addendum about the count alone would leave them standing: the paragraph lists
+`grill-with-docs` and `triage` among the sixteen skills that "declare an
+`x-upstream` lineage" under `socle/agents/skills/` (lines 5 and 7), and it
+names `sync-upstream` among "the four remaining skills in the directory"
+(line 9), which it no longer is. Fix: word the addendum so it covers all
+three — the directory now holds fourteen vendored skills and three
+chisel-native ones, `grill-with-docs` and `triage` deleted under rulings F1.10
+and F1.11, `sync-upstream` moved to `socle/scripts/`. Blocking: no. It is a
+dated record, correct for the day it was written, and it is neither this
+slice's file nor inside any criterion's grep scope.
+
+### Escalations for the Owner
+
+**None new.** Nothing in this diff touches scope or a 🧑 zone. The two
+questions this slice raised were already ruled on 2026-09-09 and applied as
+ruled: E-1, the moved page's new path stays unwritten; E-2, the audit gets a
+dated addendum from the foreman at the parent's `close` — see Sp1 for the
+wording that ruling needs.
+
+### Close-out view for the parent task
+
+This is the last slice, so the whole-task picture, measured today rather than
+carried forward.
+
+**All 24 named criteria of the parent are green on this tree**, each confirmed
+by re-running its own command: `tracker-pointer-resolves`,
+`wayfinding-notes-gone`, `architecture-index-declared` (the field is at
+`socle/agents/project.md.tpl:149` with the default the criterion names),
+`sdd-bench-pointer-gone`, `sync-upstream-unshipped`, `readme-init-truthful`
+(`README.md:41-45`), `readme-gradient-current`, `template-zone-owner` (0 and 1
+in both template copies), `factory-claim-degraded`
+(`socle/agents/methodology.md:65`, `PHILOSOPHY.md:138`),
+`philosophy-presets-current` (five presets named at `PHILOSOPHY.md:130-131`,
+and the preset is the human's choice at invocation, not a project setting),
+`tiers-prose-only` (`socle/agents/profiles/README.md:57-60`),
+`model-claim-scoped` (`socle/agents/methodology.md:327-328`),
+`profiles-uncounted`, `prototype-capture-aligned` (the close-time cleanup is
+written once, at `socle/agents/skills/prototype/SKILL.md:31`),
+`retro-block-pointer-accurate`, `template-sediment-gone` — the only
+`**Status:**` line left in each spec template is the one inside the fenced
+skeleton the template prescribes, not a header of the file's own —
+`rewrite-label-selfstanding` (0 in `socle/agents/formulas/`, one socle file
+carrying the rule), `update-redirect-rule-gone` (11 numbered rules, none of
+them the redirect, `grep -c upgrade-v2 bin/chisel.sh` = 2),
+`grill-with-docs-gone`, `triage-unshipped`, `work-on-invocation-current`,
+`agents-md-persist-destination` (`AGENTS.md:13`), `role-reuse-in-socle`
+(`socle/agents/profiles/foreman.md:38-45`), and `suite-green`.
+
+**None of the 24 is open.** What is still open is close-time bookkeeping, and
+all of it is the foreman's:
+
+- The parent spec and this slice's spec both still read `**Status:** 🔴 Not
+  Started`, and the parent still carries 31 unticked boxes across its criteria
+  and deliverables. Slices 01 and 02 are already 🟢 Complete.
+- **CHANGELOG entry 25** — not on disk; the newest entry is 24 (chantier 2,
+  2026-09-02). It must record the pass, the three removals and the standing
+  intention on `triage`, per the parent's Deliverables and rule 8 of the
+  discipline.
+- **The retrospective in the parent spec** — not on disk; the section is still
+  the placeholder.
+- **The `vendored-skills-audit.md` addendum** — escalation E-2, wording per
+  Sp1 above.
+- The archive move of the parent spec together with this slice folder, and the
+  closing coordination state, per the `close` step of
+  `socle/agents/formulas/chisel-auto.formula.toml`.
+
+**Deliverables the parent asks for that are not yet on disk:** the dated
+CHANGELOG entry, and the retrospective. Everything else is present — the three
+slice spec documents with their work documents, the socle repaired against the
+seven rulings with the 24 criteria verified, `grill-with-docs` and `triage`
+out, `sync-upstream` out of the shipped set and beside its script, ruling G16
+stated at `socle/agents/profiles/foreman.md:38`, and
+`test/fixtures/golden-tree.txt` matching the new shipped set with the suite
+green.
+
+**No evergreen material is waiting to be promoted from this slice.** It added
+no seam, no state machine and no diagram; its whole content is three pages
+leaving the shipped set, which the CHANGELOG entry records.
