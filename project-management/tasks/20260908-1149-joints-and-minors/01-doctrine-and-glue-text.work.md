@@ -35,7 +35,7 @@ the suite and the counts can be checked after each file rather than at the end.
   cascade). Both exist installed. `doc/architecture/ARCHITECTURE.md`, the new
   §D default, is neither shape — it is a project path in the glue template,
   exactly as the five formulas already name it — so it adds no pointer.
-- **Rule 12 of the discipline** (a section reference names its file and its
+- **Rule 11 of the discipline** (a section reference names its file and its
   title) governs the two references written: "§B2 · Link to an external
   tracker of `.agents/project.md`" and the methodology section named by title.
 - **G18, direct prose.** Statement first; an image only where it carries what
@@ -277,7 +277,7 @@ thread" — the content, not the label. Checked at plan:
 `grep -rn "ruling [A-Z]\?[0-9]" socle/` returns nothing, so no shipped socle
 file cites a ruling id anywhere, and `review-360-decisions.md` does not exist
 in an equipped repo — the id would be a reference a reader cannot follow, and
-discipline rule 12 asks the opposite of that. So the bullet states the rule
+discipline rule 11 asks the opposite of that. So the bullet states the rule
 and names no id. Recorded here rather than improvised, and reported to the
 spawner: if the Owner would rather the label be traceable in the socle, the
 fix is one parenthesis in one bullet.
@@ -375,6 +375,27 @@ is a failure of this slice. Same for `tracker-pointer-resolves`, which drops
   design did not mention it ("Nothing else in that sentence changes"). No word
   changed; only the line break moved, from after "which is also the" to after
   "which is". Recorded because the design said nothing else would change.
+
+- **2026-09-09 18:26 CEST · `mason` · post-inspection corrections (fresh
+  Mason, resumed thread).** Built from the persisted spec/work pair, not from
+  any earlier session. Two Inspector findings closed, and nothing else.
+  **S1** — in `socle/agents/profiles/foreman.md`, the role-reuse bullet
+  justified spawning judging roles fresh with the image "the separation of
+  powers is what makes its verdict worth reading". Ruling G18 wants the
+  statement, and the image carried no information the statement does not, so
+  the clause now reads: "a fresh reviewer has no stake in the work it judges
+  and has not already read the intended meaning into it". The bullet's other
+  sentences are unchanged; the paragraph was re-wrapped to 80 columns and
+  still occupies eleven lines, `foreman.md:38-48`. **Sp1** — two citations in this document still gave
+  the section-reference rule as discipline rule 12, the number it carried
+  before Edit 2 of this slice deleted rule 11 and renumbered 12 to 11 (commit
+  `65c505e`). The design bullet under "Rules this design works under" and the
+  Open question 1 note now both say rule 11. The three remaining "rule 12"
+  mentions describe the renumbering or its before-state — the Edit 2b design
+  paragraph, the Edit 2 checkbox, and the before-count table row — and are
+  correct as written, so they stand. `grep -rn "separation of powers" socle/`
+  is empty; the suite is 9 scenarios, 94 assertions, 0 failed; `git diff
+  --check` clean.
 
 ## Implementation Checkboxes
 
