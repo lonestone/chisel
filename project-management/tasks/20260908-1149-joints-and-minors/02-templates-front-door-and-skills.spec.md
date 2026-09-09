@@ -300,3 +300,24 @@ methodology carrier (commit `3ec5ac5`), so this slice starts from 4 carriers,
 not 5, and leaves 1, not 2. Both figures are struck and re-measured above; the
 three carriers this slice repoints are unchanged. Spotted by slice 01's
 Inspector as a heads-up.
+
+**Foreman rulings at `plan`, 2026-09-09 · `foreman`.** Two points raised by the
+Mason's program design (work document, commit `9ff9088`), decided by the
+thread owner under the Owner's standing go:
+
+1. *Proposal door, `PHILOSOPHY.md:112-124`.* The pipeline bullets still
+   describe the retired single task file ("shapes the task file", "gets the
+   plan approved and persisted", no work document). Ruled IN for this slice:
+   it is the same defect the parent ruled in for `README.md:19-31`, in a file
+   the slice already opens, one bullet list in size. The Files map range for
+   `PHILOSOPHY.md` extends to 112-136. No criterion is added; the edit is
+   judged by the Architect and the Inspector on the two existing axes.
+2. *Mirror diff of the work templates.* After F1.8 deletes the header block,
+   the two work templates would be byte-identical, so the Verification
+   bullet's "only surviving difference" has nothing to survive for that pair.
+   Reading applied: the bullet binds the spec pair as written; for the work
+   pair, byte-identical is acceptable, and so is a single one-line difference
+   of the same kind (a doctrine pointer in install-relative form in the
+   source, repo-relative in the mirror) if the Architect keeps the Mason's
+   recommendation to reinstate one. Parent Implementation Decision 7 is
+   read the same way.
