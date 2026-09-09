@@ -6,7 +6,11 @@ Created by `mason` at `plan`, 2026-09-09. Spec:
 ## Program Design
 
 Persisted at `plan` by `mason`, 2026-09-09 18:34 CEST, from the spec's
-approved system design.
+approved system design. Revised at `plan-review` round 1 by `mason`,
+2026-09-09 18:55 CEST, applying the Architect's findings and the five foreman
+rulings the spec's Notes now carry; the Worklog lists what each one changed.
+Nothing is typed from this document until a second `plan-review` answers
+VALIDATED.
 
 Every edit below is one clause of prose, one table row, or a header block
 deleted. No function, branch or data structure is added, so there is no seam
@@ -47,7 +51,18 @@ after each file rather than at the end.
 - **Rule 11 of the discipline** (a section reference names its file and its
   title) governs every reference written: `§B · Coordination of
   `.agents/project.md``, `§B2 · Link to an external tracker of
-  `.agents/project.md``, `"Zone ownership" of `.agents/methodology.md``.
+  `.agents/project.md``, `"Zone ownership" of `.agents/methodology.md``,
+  `"The two designs — and why they do not happen at the same moment" of
+  `.agents/methodology.md``.
+- **Each edited file keeps its own line-wrapping convention.** Four of the
+  skill pages are written one line per unit — a paragraph, a numbered rule or
+  a bullet is a single physical line, whatever its length: `wayfinder`
+  (longest line 693 characters), `code-review` (476), `prototype` (401),
+  `slice-task` (355). Every target text for those four lands as **one line**,
+  never rewrapped to 78 columns, so the diff shows one changed line and the
+  file stays internally consistent. `retro` and `upgrade-v2` wrap at roughly
+  80 columns in the regions this slice touches, and the targets there rewrap
+  to match. Measured at `plan-review` round 1.
 - **No internal identifier ships.** No ruling id, no `review-360-decisions.md`
   file name, no chantier number in any socle file, any template, `README.md`,
   `PHILOSOPHY.md` or `AGENTS.md`. Checked at plan:
@@ -62,7 +77,9 @@ after each file rather than at the end.
 ### Edit 1 — the four template files (B1 and F1.8)
 
 Line numbers are as of this working tree, 2026-09-09, branch `review-360`,
-HEAD `f60512e`.
+HEAD `f60512e`, and re-checked at `plan-review` round 1 against HEAD
+`c8bd130`: every line reference in this design still resolves, because the
+three commits in between touched only `project-management/`.
 
 **1a · F1.8, the files' own Status/Version headers.** In each of the four
 files the header block sits between the H1 and `## Context`, and the whole
@@ -130,15 +147,66 @@ header block F1.8 deletes. So after edit 1a:
 
 - the **spec** pair still differs on exactly one line, the new B1 pointer
   (1b);
-- the **work** pair becomes **byte-identical**, because nothing else in that
-  file names the methodology.
+- the **work** pair would become **byte-identical**, because nothing else in
+  that file names the methodology.
 
-The slice spec's Verification bullet ("the only surviving difference must be
-the methodology link's relative form") and parent Implementation Decision 7
-("Keep that difference") therefore cannot both be satisfied for the work pair.
-This is a finding against the two documents, not a licence to invent a
-difference. See Open question 2 — the Architect rules whether the work
-template keeps a doctrine pointer of its own.
+That second consequence was the finding this design reported at `plan`: the
+Verification bullet as written and parent Implementation Decision 7 could not
+both be satisfied for the work pair. It is now settled from the other side, by
+two decisions this design applies rather than argues:
+
+- the Architect answered open question 2 **yes** — each work template keeps
+  one doctrine pointer of its own, install-relative in the source and
+  repo-relative in the mirror. That is edit **1e**, and it restores the
+  one-line difference the parent decision tells this slice to keep;
+- the slice spec's Verification bullet is **amended** (struck and dated
+  2026-09-09 by the thread owner): the only surviving difference in each pair
+  is now "the relative form of the one doctrine pointer each template keeps".
+  With 1b and 1e that assertion is true of both pairs, and the design verifies
+  against the amended wording — one differing line per pair, and that line is
+  a doctrine pointer.
+
+**1d · the orphaned self-reference at line 13 of both spec templates**, taken
+in the same commit as 1a because 1a is what orphans it. The sentence reads
+"Version 3 keeps the reading gradient but moves the agent working space into
+that other file" — a reference to a version number that, once the header block
+goes, the file no longer states anywhere. The subject becomes the document
+itself:
+
+> A spec with no work document beside it has never been typed. The spec
+> document keeps the reading gradient but moves the agent working space into
+> that other file.
+
+Same sentence in both spec templates, so the pair still differs on exactly one
+line. No criterion greps it; it is the tail of F1.8's own deletion, not a new
+claim.
+
+**1e · one doctrine pointer reinstated in each work template**, at the end of
+the first Context paragraph (line 17 today, ending "…read start to finish.").
+One sentence, one line, and nothing else: the sibling link to the spec
+template that line 6 carried is **not** restored, so the templates gain no
+second pointer and no after-count moves. The section named is the one that
+actually explains the split — verified at `plan-review` round 1:
+`socle/agents/methodology.md:236` is `## The two designs — and why they do not
+happen at the same moment`. The section "The two documents" that the first
+round of this design named is a section of the *spec template*, not of the
+methodology, and naming it would have shipped a pointer into thin air.
+
+Source, `socle/templates/000-template.work.md`, install-relative:
+
+> The reasoning behind the split is "The two designs — and why they do not
+> happen at the same moment" of `.agents/methodology.md`.
+
+Mirror, `project-management/000-template.work.md`, repo-relative per parent
+Implementation Decision 7:
+
+> The reasoning behind the split is "The two designs — and why they do not
+> happen at the same moment" of
+> [methodology.md](../socle/agents/methodology.md).
+
+This is the one line on which the work mirror differs from its source, and it
+is the same kind of difference the spec pair keeps at 1b. Both forms satisfy
+rule 11 of the discipline: the reference names its file and its title.
 
 ### Edit 2 — `README.md` (A4, and the stale gradient paragraph)
 
@@ -200,12 +268,112 @@ which is what the criterion greps. `README.md:60-62` mentions the
 `sync-upstream` skill but claims no path, so it needs no edit here (parent
 Implementation Decision 3).
 
-### Edit 3 — `PHILOSOPHY.md` (the preset count, and E1)
+### Edit 3 — `PHILOSOPHY.md` (the beliefs, the pipeline, the presets, and E1)
 
-One paragraph, lines 126-136, carrying three stale claims: auto framed as a
-permission (retired by ruling G10), "Three presets" where there are five, and
-the factory as a product cell. Rewritten as two paragraphs. The preset
-placements are taken from `socle/agents/methodology.md:47-55`, read at plan.
+The range is **68-136**, per the slice spec's Files map as the foreman rulings
+of 2026-09-09 leave it: rulings 1 and 5 ruled in the beliefs at 68-90 and the
+pipeline bullets at 112-124 alongside the paragraph at 126-136. Every one of
+them is the same defect — text that still teaches the retired single task
+file, or a role that no longer exists — in a file this slice already opens.
+No criterion is added: the Architect and the Inspector judge these edits on
+the two existing axes.
+
+Five sub-edits, all prose, all inside `## 3. Our conclusions` and `## 4. The
+methodology, in brief`. Lines 74-77 (ambient by default), 91-106 (the gates
+belief, forks, one folder), 138-142 (the retired size-based labels) and
+144-149 (the reference list) are untouched.
+
+**3a · the reading-gradient belief, lines 68-73.** The bullet still puts "the
+agent's verbose working notes" at the bottom of the same file, in a third 🤖
+zone that the spec/work split retired — the same claim the README rewrite
+(edit 2a) removes from the front door. The gradient itself is unchanged; what
+moves is where the working notes live:
+
+> - **Review is the bottleneck, so optimize for reading.** The spec document
+>   uses a *reading gradient*: what the human must review carefully is short
+>   and at the top (🧑 context, scope, acceptance criteria, seams); design
+>   worth checking comes next (🧑 if relevant). Detail is never cut — it is
+>   ordered. The agent's verbose working notes are not at the bottom of that
+>   file, they are in the work document beside it. Humans re-read again ⇒
+>   quality comes back.
+
+"Task files use a *reading gradient*" becomes "The spec document uses", which
+is the same substitution edit 2a and edit 4 make in the other two front-door
+files. Nothing in `test/` greps the 🤖 marker or this bullet:
+`PHILOSOPHY.md` is not installed and appears nowhere in
+`test/fixtures/golden-tree.txt` — checked at `plan-review` round 1.
+
+**3b · the two-designs belief, lines 78-84.** One clause: the program design
+is persisted into the **work document**, not into "the slice file".
+
+> - **Two designs, two moments.** The system design (how the pieces talk) is
+>   settled at creation time and reviewed there — a slice is ready to produce
+>   when it is settled, not before. The program design (files, signatures,
+>   test order) happens at each slice's plan step, with the real code in view,
+>   and it is **persisted into the work document before any code is typed**. A
+>   plan that only lives in the conversation is invisible to the completion
+>   review, to dependent slices, and to re-runs.
+
+Two words go with the clause: "and once validated it is persisted" becomes
+"and it is persisted", because the order is the other way round — the design
+is persisted at `plan` and validated at `plan-review`, which is what rule 2 of
+`.agents/discipline.md` states. Recorded because the ruling named the persist
+destination and not this.
+
+**3c · the think/type belief, lines 85-90.** Two stale claims in one sentence.
+"with the planner reviewing the diff" contradicts
+`socle/agents/profiles/architect.md:61-63` — the diff is the Inspector's, and
+the Inspector is never its author — and "product, architecture and program
+design are never delegated" contradicts
+`socle/agents/profiles/mason.md:85-89`, where the delegation boundary is the
+*system* design and the program design is the Mason's own:
+
+> - **Think and type are different jobs.** Planning needs a frontier model
+>   and a human gate; typing from a complete persisted brief doesn't. The
+>   **system design is the delegation boundary**: product, architecture and
+>   the seams the work is tested through are never delegated; the program
+>   design and the typing go together, to a faster and cheaper model, and the
+>   diff is read by a fresh reviewer who never wrote it. (Validated in
+>   production — this repo's own slices were typed by a cheaper model from
+>   persisted designs.)
+
+The delegation-boundary clause is the second one, and only the diff clause was
+named in the ruling. It is taken because leaving it would ship a sentence that
+contradicts the Mason contract three words after a sentence corrected to agree
+with the Inspector's. Reported here so the Architect can strike it without
+touching the rest of 3c. Lines 56 and 179 also say "delegation boundary" and
+are **not** touched: 56 is the history section and 179 the reference list,
+both outside the ruled range.
+
+**3d · the pipeline bullets, lines 116-124** — two of the three bullets in the
+112-124 block ruling 1 of the spec's Notes ruled in, from this design's own
+proposal door. The "One task" bullet
+describes an interview shaping "the task file" and a session that "gets the
+plan approved and persisted" with no work document anywhere, and it offers to
+delegate the typing, which is no longer an offer: typing goes through the
+Mason contract by one of two mandatory paths
+(`socle/agents/methodology.md:280-283`). The journal mention stays — it is
+true and it is the only place this section names it.
+
+> - **One task** — two sessions. CREATE: an interview (grilling) shapes the
+>   spec document — context, scope, acceptance criteria, seams — and logs it
+>   in the journal. WORK: a fresh session reads the spec document, plans
+>   against the real code, gets that plan approved and persisted into the work
+>   document beside it, then builds and closes (lint/tests/build, browser
+>   check if UI, the journal, living docs).
+> - **A parent task with slices** — big features: a parent spec document plus
+>   thin vertical slices with dependency edges. Any slice whose blockers are
+>   done can start, each in a fresh session that plans into its own work
+>   document and follows the one-task WORK shape.
+
+The ambient bullet at 112-115 is unchanged: it names no task file and no
+persist destination.
+
+**3e · the preset paragraph and E1, lines 126-136.** One paragraph carrying
+three stale claims: auto framed as a permission (retired by ruling G10),
+"Three presets" where there are five, and the factory as a product cell.
+Rewritten as two paragraphs. The preset placements are taken from
+`socle/agents/methodology.md:47-55`, read at plan.
 
 > On top of that discipline, chisel varies on two axes, and they vary
 > independently: the **human gates** (who stops the run and reads) and the
@@ -222,19 +390,21 @@ placements are taken from `socle/agents/methodology.md:47-55`, read at plan.
 > status database — is a separate, additive axis: a beads-equipped repo stays
 > fully usable under the default.
 >
-> **A factory is a possible destination, not a cell of this product.** Whether
-> it belongs inside chisel stays an open question: chisel is meant to be light
-> enough to drop into any repo, and a factory implies a lot of bespoke work.
-> No factory machinery is described until a real need settles that question.
+> **A factory is a possible destination, not a cell of this product.** We have
+> not decided whether it belongs inside chisel at all, so we describe none of
+> its machinery here.
 
-The factory paragraph is deliberately shorter than the one slice 01 landed in
-`socle/agents/methodology.md:65-70` and shares no sentence with it beyond the
-opening claim, which is the claim itself. Ruling E1 names both files, so both
-carry it; the parent criterion requires a surviving sentence in each.
-
-Lines 138-142 (the retired size-based labels) and lines 144-149 (the
-reference list) are untouched. Lines 112-124 are untouched — see Notes &
-Snippets, proposal door.
+**The factory paragraph, corrected at `plan-review` round 1.** The first round
+kept a middle sentence — "chisel is meant to be light enough to drop into any
+repo, and a factory implies a lot of bespoke work" — that near-duplicated
+`socle/agents/methodology.md:66-67` while the note beside it claimed the two
+files shared only the opening claim. The note was wrong, and the duplication
+was the real defect: the reasons belong to the methodology, which is where a
+reader goes for them. Compressed to the claim plus the open question, in the
+essay's own first-person voice, which is how the rest of `PHILOSOPHY.md`
+speaks. What the two files now share is the opening claim and nothing else —
+and that claim is what ruling E1 requires in each, the parent criterion asking
+for a surviving sentence in both.
 
 ### Edit 4 — `AGENTS.md` (the persist destination, and the invocation form)
 
@@ -275,24 +445,23 @@ line is one long paragraph of three sentences. The middle sentence is the
 "Wayfinding operations" reference, which no glue section defines; it is
 deleted outright. The first is repointed to §B2, because the sentence is about
 the issue tracker (parent Implementation Decision 1). The third is unchanged.
-Result:
+Result — **one physical line**, as line 30 is today, quoted here unwrapped
+because that is how it has to land in a file written one line per unit:
 
-> **Where the map, its child tickets, blocking, and frontier queries
-> physically live is tracker-specific.** The issue tracker is defined in §B2 ·
-> Link to an external tracker of `.agents/project.md`. If no tracker has been
-> provided, default to the local-markdown tracker.
+> **Where the map, its child tickets, blocking, and frontier queries physically live is tracker-specific.** The issue tracker is defined in §B2 · Link to an external tracker of `.agents/project.md`. If no tracker has been provided, default to the local-markdown tracker.
 
 Only the deletion and the repoint are taken. The rest of ruling A1 (2) — the
 wayfinder made local-first — is chantier 6, and no other line of this file
 moves.
 
-**5b · `socle/agents/skills/slice-task/SKILL.md:17`.** Whole line replaced:
+**5b · `socle/agents/skills/slice-task/SKILL.md:17`.** Whole line replaced,
+and it stays one line:
 
-> Where slices are published is defined in §B · Coordination of
-> `.agents/project.md`.
+> Where slices are published is defined in §B · Coordination of `.agents/project.md`.
 
 **5c · `socle/agents/skills/code-review/SKILL.md:18`.** Only the closing
-clause after the em dash changes:
+clause after the em dash changes; line 18 is a single 259-character line and
+remains one line, so the diff is one changed line:
 
 > … — see §B · Coordination of `.agents/project.md`.
 
@@ -307,20 +476,18 @@ there and not here.
 "v2 replaces them with an ambient discipline core, three workflow presets and
 three role profiles, and it renames the narrative journal." F1.2 stops the
 count of the profiles: "three role profiles" → "the role profiles". Do not
-substitute a new number. The same clause also counts the presets at three
-where `socle/agents/formulas/` holds five — see Open question 1; this design
-takes the criterion-only edit unless the Architect rules otherwise, and the
-line rewraps to 80 columns.
-
-Criterion-only form:
-
-> v2 replaces them with an ambient discipline core, three workflow presets and
-> the role profiles, and it renames the narrative journal.
-
-Form if Open question 1 is answered yes:
+substitute a new number. The same clause also counted the presets at three
+where `socle/agents/formulas/` holds five; open question 1 asked whether to
+extend the de-counting to them, the Architect answered **yes** and the thread
+owner ruled it in (ruling 4 of the spec's Notes). Both counts go, in one
+clause. This is the form that lands, and the line rewraps to 80 columns:
 
 > v2 replaces them with an ambient discipline core, the workflow presets and
 > the role profiles, and it renames the narrative journal.
+
+Two figures, one edit: `grep -rn "three role profiles" socle/` → 0 (the
+criterion) and `grep -rn "three workflow presets" socle/` → 0 (the ruling).
+The second count was measured at `plan-review` round 1: **1**, this same line.
 
 Lines 9-11 of this file, which name `.agents/rules/task-*.md` and
 `.agents/workflows.md`, are **not touched**: `test/installer.sh:404-405`
@@ -339,14 +506,13 @@ false: `socle/templates/AGENTS-block.md:14` points a reader at
 a throwaway branch out of main plus a context pointer — and never says when
 that branch may go. Measured at plan: the cleanup habit is written in **zero**
 places anywhere in `socle/`. This slice writes it **once**, appended to rule
-6, and touches no other file with it. Target text, appended to the end of rule
-6:
+6, and touches no other file with it. Rule 6 is a single 401-character line,
+as is every numbered rule in that file, so the cleanup sentences are appended
+**to that same line** rather than added below it — the file gains no new line
+and the diff shows rule 6 changed. Target text, appended to the end of line
+31, quoted here unwrapped because that is how it must land:
 
-> **The branch goes at close.** When the task that consumed the answer closes,
-> the throwaway branches it points at are deleted — the validated decision is
-> in the main branch by then, and the prototype has nothing left to prove.
-> Deleting them earlier throws away the primary source while the decision is
-> still being applied.
+> **The branch goes at close.** When the task that consumed the answer closes, the throwaway branches it points at are deleted — the validated decision is in the main branch by then, and the prototype has nothing left to prove. Deleting them earlier throws away the primary source while the decision is still being applied.
 
 `socle/agents/skills/prototype/UI.md:100-105` and `LOGIC.md:71` describe the
 capture and say nothing about when the branch may go; they stay that way, so
@@ -363,18 +529,38 @@ Ordered so each step is verifiable on its own, and the step that writes new
 `.agents/…` pointers (edit 5, the only one the integrity scenario can judge)
 gets a suite run immediately behind it.
 
-1. **Edit 1**, the four template files — one commit. Verify:
-   `template-zone-owner` (both spec templates: `Human, always` → 0,
-   `Zone ownership` → 1), `template-sediment-gone` (`^\*\*Status:\*\*` → 0 and
-   `^\*\*Version:\*\*` → 0 in all four; the fenced `**Status:** [Status Emoji &
-   Text]` still present in both spec templates), and the two pairwise diffs.
+1. **Edit 1** (1a, 1b, 1c, 1d, 1e), the four template files — one commit.
+   Verify: `template-zone-owner` (both spec templates: `Human, always` → 0,
+   `Zone ownership` → 1); `template-sediment-gone`, whose counts are **not**
+   zero across the board — `^\*\*Status:\*\*` → **1** in each spec template
+   (the fenced `**Status:** [Status Emoji & Text]` at line 71, unindented
+   inside the fenced Spec Document Template block, which the slice spec
+   forbids deleting) and → **0** in each work template, `^\*\*Version:\*\*` → **0** in
+   all four; and the two pairwise diffs, each showing exactly one differing
+   line, the doctrine pointer of 1b and 1e. Measured before the edit:
+   `^\*\*Status:\*\*` 2 / 2 / 1 / 1 and `^\*\*Version:\*\*` 1 in each of the
+   four. The Notes & Snippets table already states this row; the step now
+   agrees with it.
 2. **Edit 2**, `README.md` — one commit. Verify `readme-init-truthful`
    (`asks one question` → 0, `chisel-setup` → 1) and
    `readme-gradient-current` (`persists the plan into the spec file` → 0).
-3. **Edit 3**, `PHILOSOPHY.md` — one commit. Verify
-   `philosophy-presets-current` (`Three presets` → 0, the five named) and the
-   full `factory-claim-degraded` grep over `socle/ PHILOSOPHY.md README.md`
-   → 0, which closes that criterion since slice 01 took the other carrier.
+3. **Edit 3** (3a, 3b, 3c, 3d, 3e), `PHILOSOPHY.md` lines 68-136 — one
+   commit. Verify `philosophy-presets-current` (`Three presets` → 0, the five
+   named) and the full `factory-claim-degraded` grep over
+   `socle/ PHILOSOPHY.md README.md` → 0, which closes that criterion since
+   slice 01 took the other carrier. Then the ruled-in edits, which carry no
+   criterion of their own and are verified by reading plus five greps over
+   `PHILOSOPHY.md`, each measured at 1 today and expected 0 after:
+   `sink to the bottom` and `Task files use a` (3a),
+   `persisted into the slice file` (3b),
+   `with the planner reviewing the diff` (3c),
+   `offers to delegate the typing` (3d). Note that `shapes the task file`
+   greps 0 already, because the phrase is split across lines 116-117; the
+   distinctive string for that clause is `task file — context`, 1 today,
+   0 after. Read 68-136 through once
+   afterwards: the three beliefs, the three pipeline bullets and the two new
+   paragraphs must tell one story about the spec/work pair, the same one
+   `README.md` tells after edit 2a.
 4. **Edit 4**, `AGENTS.md` — one commit. Verify
    `agents-md-persist-destination` (`work document` → ≥ 1) and the full
    `work-on-invocation-current` grep over `socle/ AGENTS.md` → 0, which closes
@@ -385,7 +571,11 @@ gets a suite run immediately behind it.
    `wayfinding-notes-gone` → 0. **Then run the suite**: this is the step that
    writes installed pointers.
 6. **Edit 6**, `upgrade-v2` and `retro` — one commit. Verify
-   `profiles-uncounted` → 0 and `retro-block-pointer-accurate` → 0.
+   `profiles-uncounted` → 0, `retro-block-pointer-accurate` → 0, and the
+   ruled-in second count `grep -rn "three workflow presets" socle/` → 0.
+   Check that lines 9-11 of `upgrade-v2/SKILL.md` still cite
+   `.agents/rules/task-*.md` and `.agents/workflows.md`: the suite asserts
+   that this file, and only this file, cites the retired v1 layer.
 7. **Edit 7**, `prototype` — one commit. Verify clause 3 of
    `prototype-capture-aligned`: `grep -rl "the throwaway branches it points
    at" socle/` → exactly one file, and rule 6 read through.
@@ -421,7 +611,7 @@ read, never staged, and `git add -A` / `git add .` are never used.
 | Criterion | This slice's share | The other share | Who closes it |
 |---|---|---|---|
 | `tracker-pointer-resolves` | the three carriers `wayfinder:30`, `slice-task:17`, `code-review:18` (edit 5) | `methodology.md:35` — slice 01, landed; `triage:48` — slice 03, leaves with its file | slice 03. After this slice the grep is **1**, not 0, and that is the design |
-| `factory-claim-degraded` | `PHILOSOPHY.md:134` (edit 3) | `methodology.md:65` — slice 01, landed | **this slice**: it is the second to land, so its run of the full grep takes it to 0 |
+| `factory-claim-degraded` | `PHILOSOPHY.md:134` (edit 3e) | `methodology.md:65` — slice 01, landed | **this slice**: it is the second to land, so its run of the full grep takes it to 0 |
 | `work-on-invocation-current` | `AGENTS.md:12` (edit 4) | `profiles/README.md:67` — slice 01, landed | **this slice**, same reason |
 | `prototype-capture-aligned` | clause 3 only: the cleanup sentence, written once, in `prototype/SKILL.md` (edit 7) | clauses 1 and 2 in `discipline.md` — slice 01, landed (`delete the code` gone, the row naming the throwaway branch at line 93) | **this slice**: both other clauses are already green, so clause 3 closes it |
 | `suite-green` | this slice's own run (step 8) | every slice runs it | each slice for its own run; slice 03 for the fixture |
@@ -434,45 +624,34 @@ three landed halves were re-checked against this tree —
 `socle/`, `grep -n "delete the code" socle/agents/discipline.md` → 0 and
 `grep -n "throwaway branch" socle/agents/discipline.md` → 1 at line 93.
 
-### Open questions for the Architect
+### Open questions — both answered at `plan-review` round 1
+
+Kept as a record of what was asked and how it was ruled. **No open question
+remains against this design**, which is the state the Mason contract requires
+before typing.
 
 **1 · `upgrade-v2/SKILL.md:12` counts the presets at three, in the same clause
-F1.2 edits. Extend the edit, or leave it?** The sentence reads "an ambient
-discipline core, three workflow presets and three role profiles".
-`socle/agents/formulas/` holds five formula files, so "three workflow presets"
-is false by the same verified-count defect F1.2 exists to remove, one clause
-away from the words the criterion names. `profiles-uncounted` greps only
-"three role profiles", so the criterion goes green either way.
-**Recommendation: extend it** — "the workflow presets and the role profiles",
-the same de-counting F1.2 applies to the profiles, in the same sentence, at no
-extra reading cost for a reviewer. Both forms are written out in edit 6a; say
-which one lands. Not decided here because the count of the presets is not a
-carrier this slice's spec lists, and stretching a criterion is a scope
-decision.
+F1.2 edits. Extend the edit, or leave it?** Asked because the count of the
+presets is not a carrier this slice's spec listed, and stretching a criterion
+is a scope decision. **Answered yes** by the Architect and ruled in by the
+thread owner: one clause, a file the map already assigns, no criterion added.
+The de-counted form is the only one edit 6a now carries, and the step-6
+verification greps both counts.
 
 **2 · After F1.8 the two work templates carry no pointer to the doctrine and
 no link to the spec template. Reinstate one clause, or ship them
-pointer-free?** The `**Version:**` block being deleted is the only place
-either work template names `methodology.md`, and the only place it links to
-its sibling spec template. The spec templates lose nothing, because B1's new
-bullet puts a methodology reference back. Two consequences, both real: the
-shipped work template stops pointing a reader at the doctrine that explains
-it, and the two work templates become byte-identical, which makes the slice
-spec's Verification bullet and parent Implementation Decision 7 unsatisfiable
-for that pair (see edit 1c). **Recommendation: reinstate one clause**, at the
-end of the work template's first Context paragraph — "The reasoning behind the
-split is 'The two documents' of `.agents/methodology.md`" in the source and
-the repo-relative link in the mirror. That restores the doctrine pointer, and
-restores the one-line difference the parent decision tells this slice to keep.
-Not decided here: the slice spec is explicit that "the whole header goes", and
-adding prose to a shipped template is more than the deletion F1.8 orders.
-Whichever way it is ruled, edit 1c's finding stands and the Verification
-bullet needs its wording fixed by whoever owns that document — this slice may
-not edit a `.spec.md`.
-
-Both questions are about the *how* at its boundary with scope, and neither
-blocks: the criterion-only branch of each is written out above and is
-deliverable as it stands.
+pointer-free?** Asked because the slice spec is explicit that "the whole
+header goes", and adding prose to a shipped template is more than the deletion
+F1.8 orders. **Answered yes, with a boundary**: one doctrine pointer per work
+template, one sentence at the end of the first Context paragraph, and *not* the
+sibling link to the spec template as well — no after-count moves. That is edit
+1e. The section it names was corrected in the same round: the first round of
+this design named "The two documents", which is a section of the spec
+template and not of the methodology; the real heading is
+`socle/agents/methodology.md:236`, "The two designs — and why they do not
+happen at the same moment". The Verification bullet that edit 1c reported
+against has been amended by the thread owner rather than left standing, so the
+finding is closed and not merely recorded.
 
 ## Worklog
 
@@ -495,6 +674,68 @@ deliverable as it stands.
   working tree; every one matched the slice spec, including both struck
   figures the 2026-09-09 foreman note re-measured. Nothing typed in any
   carrier.
+- **2026-09-09 18:55 CEST · `mason` · `plan-review` round 1, corrections.** A
+  fresh Mason on a resumed thread: the session that wrote the first round is
+  gone, so this round was built from the persisted spec/work pair and nothing
+  else. Read the role contract, `socle/agents/discipline.md`, the `plan` and
+  `plan-review` steps of `chisel-auto`, this slice's spec in full including
+  the five foreman rulings of 2026-09-09, and every target the findings name:
+  `PHILOSOPHY.md:64-140`, `socle/agents/methodology.md:60-75`, `230-250` and
+  `275-295`, `socle/agents/profiles/architect.md:55-70`, the four one-line-
+  per-unit skill files, both work templates and both spec templates. Applied
+  the eight findings — what each one changed:
+  **1 (blocks)** — the pipeline bullets at `PHILOSOPHY.md:112-124` are now
+  edit **3d**, with target text for both bullets: the spec document replaces
+  "the task file", the plan is persisted into the work document, the offer to
+  delegate the typing is gone (typing goes through the Mason contract, not an
+  offer), the journal mention stays, and the slices bullet gains its own work
+  document. Checkbox and order-of-operations step 3 extended to 68-136.
+  **2 (blocks)** — step 1 of the order of operations no longer asks for
+  `^\*\*Status:\*\*` → 0 in all four templates: it is 1 in each spec template
+  (the fenced line 71 the spec forbids deleting) and 0 in each work template,
+  `^\*\*Version:\*\*` → 0 in all four. The step now agrees with the table in
+  Notes & Snippets, which was already right.
+  **3 (blocks)** — the reinstated pointer is edit **1e** and names
+  "The two designs — and why they do not happen at the same moment" of
+  `.agents/methodology.md` (heading verified at line 236), install-relative
+  in the source template and as a repo-relative link in the mirror. The
+  section named in round 1, "The two documents", belongs to the spec
+  template and would have pointed into thin air.
+  **4** — the `PHILOSOPHY.md` factory paragraph (3e) is compressed to the
+  claim plus the open question, in the essay's own voice, and the note beside
+  it is corrected: it claimed the two files shared only the opening claim
+  while the middle sentence near-duplicated `socle/agents/methodology.md:66-67`.
+  Now they share the opening claim and nothing else.
+  **5** — a new rule under "Rules this design works under" records the
+  one-line-per-unit convention of `wayfinder` (693), `code-review` (476),
+  `prototype` (401) and `slice-task` (355), and the targets in edits 5a, 5b,
+  5c and 7 are quoted unwrapped, as single lines. `retro` and `upgrade-v2`
+  keep the rewrap to 80 columns.
+  **6** — the orphaned "Version 3" self-reference at line 13 of both spec
+  templates is edit **1d**, taken in the same commit as 1a because 1a is what
+  orphans it: the subject becomes "The spec document".
+  **7** — no change, recorded: the `code-review` repoint to `§B ·
+  Coordination` stands on parent Implementation Decision 1, and the residual
+  imprecision (task files live under `§A · Task workspace of
+  `.agents/project.md``) is written down as chantier 5's in Notes & Snippets.
+  **8** — `PHILOSOPHY.md:68-84` and `89-90` are edits **3a**, **3b** and
+  **3c**, with target text: the working notes move out of the spec document
+  into the work document beside it, the program design is persisted into the
+  work document, and the diff is read by a fresh reviewer who never wrote it.
+  Both open questions are landed as ruled: the de-counted `upgrade-v2` form
+  (Q1) is the only form edit 6a now carries, and one doctrine pointer per work
+  template (Q2) is edit 1e, without the sibling link. The mirror-diff
+  verification in edit 1c now reads against the spec's amended bullet — one
+  differing line per pair, and that line a doctrine pointer.
+  Six new figures were measured against HEAD `c8bd130` and recorded in Notes &
+  Snippets, one per ruled-in edit that has no criterion. Two decisions of my
+  own, both flagged in place for the Architect to strike: dropping "and once
+  validated" from 3b, because the design is persisted at `plan` and validated
+  at `plan-review`, not the reverse; and correcting the delegation-boundary
+  clause inside 3c, because the ruling named the diff clause in the same
+  sentence and leaving the other would ship a contradiction with
+  `socle/agents/profiles/mason.md`. Nothing typed in any carrier: this round
+  edits the work document only, and the second `plan-review` gates the typing.
 
 ## Implementation Checkboxes
 
@@ -502,16 +743,24 @@ deliverable as it stands.
       (`socle/templates/000-template.spec.md` 3-5,
       `project-management/000-template.spec.md` 3-5,
       `socle/templates/000-template.work.md` 3-8,
-      `project-management/000-template.work.md` 3-8) and the B1 zone table
-      plus its bullet in both spec templates
+      `project-management/000-template.work.md` 3-8); the B1 zone table plus
+      its bullet in both spec templates (1b); the orphaned "Version 3"
+      self-reference at line 13 of both spec templates (1d); and the one
+      doctrine pointer reinstated at the end of the first Context paragraph
+      of both work templates, install-relative in the source and
+      repo-relative in the mirror (1e)
 - [ ] Edit 2 — `README.md`: the gradient paragraphs at 19-31, and the setup
       block at 38-46
-- [ ] Edit 3 — `PHILOSOPHY.md`: the preset/auto/factory paragraph at 126-136,
-      rewritten as two paragraphs
+- [ ] Edit 3 — `PHILOSOPHY.md` lines 68-136: the reading-gradient belief at
+      68-73 (3a), the two-designs belief at 78-84 (3b), the think/type belief
+      at 85-90 (3c), the two pipeline bullets at 116-124 (3d), and the
+      preset/auto/factory paragraph at 126-136 rewritten as two paragraphs
+      (3e)
 - [ ] Edit 4 — `AGENTS.md`: the task-lifecycle bullet at 10-13
 - [ ] Edit 5 — the three A1 carriers: `wayfinder/SKILL.md:30`,
       `slice-task/SKILL.md:17`, `code-review/SKILL.md:18`; then a suite run
-- [ ] Edit 6 — `upgrade-v2/SKILL.md:12-13` and `retro/SKILL.md:117`
+- [ ] Edit 6 — `upgrade-v2/SKILL.md:12-13` (both counts: the profiles and the
+      presets) and `retro/SKILL.md:117`
 - [ ] Edit 7 — `prototype/SKILL.md` rule 6: the close-time cleanup sentence,
       written once
 - [ ] Verification — every criterion command re-run, after-count recorded
@@ -555,9 +804,30 @@ landed in between, exactly as the foreman note of 2026-09-09 says: `§B2 · Link
 to an external tracker` is already 1 rather than 0, and `Tracker section` is 4
 rather than 5. `Factory = auto` and the `work on …` grep are each down to
 their single remaining carrier, which is this slice's. No figure contradicts
-the spec.
+the spec. The Architect re-measured all sixteen rows and the suite baseline at
+round 1 and found them exact; none of them moves below.
 
-**Five extra facts checked at plan, not in the spec.**
+**Six figures added at `plan-review` round 1**, for the material the foreman
+rulings brought in. Each was run against this working tree at HEAD `c8bd130`.
+None carries a criterion: they are the verification handle for edits that are
+judged by reading.
+
+| Command | Measured | Expected after this slice |
+|---|---|---|
+| `grep -rn "three workflow presets" socle/` | 1 — `upgrade-v2:12` | **0** (ruling 4, edit 6a) |
+| `grep -c "sink to the bottom" PHILOSOPHY.md` | 1 (line 72) | **0** (edit 3a) |
+| `grep -c "Task files use a" PHILOSOPHY.md` | 1 (line 68) | **0** (edit 3a) |
+| `grep -c "persisted into the slice file" PHILOSOPHY.md` | 1 (line 82) | **0** (edit 3b) |
+| `grep -c "with the planner reviewing the diff" PHILOSOPHY.md` | 1 (line 89) | **0** (edit 3c) |
+| `grep -c "offers to delegate the typing" PHILOSOPHY.md` | 1 (line 119) | **0** (edit 3d) |
+
+One near-miss recorded so it is not read as a pass: `grep -c "shapes the task
+file" PHILOSOPHY.md` is **0 today**, because the phrase straddles lines
+116-117. It proves nothing either way; `task file — context` (1 today, 0
+after) is the string that does.
+
+**Seven extra facts checked against the tree, not in the spec** — five at
+`plan`, two more at `plan-review` round 1.
 
 - `socle/agents/project.md.tpl` really carries `## B · Coordination` (line 43)
   and `### B2 · Link to an external tracker` (line 103), so all three A1
@@ -571,11 +841,24 @@ the spec.
   repo. So the socle sources must keep install-relative pointers, and
   `socle/templates/000-template.work.md:6` pointing at
   `/project-management/000-template.spec.md` is correct in installed form —
-  which is also why deleting it costs a real navigation link (Open question 2).
+  which is also why deleting it costs a real navigation link. Open question 2
+  was ruled to reinstate the doctrine pointer only, so that navigation link
+  stays deleted (edit 1e).
 - `test/fixtures/golden-tree.txt` is a **path listing**: no installed file's
   content is compared byte for byte. A text edit inside an installed template
   or skill page therefore cannot fail the tree comparison, and this slice
   renames nothing.
+- `socle/agents/methodology.md:236` is `## The two designs — and why they do
+  not happen at the same moment`, and it is the only heading in `socle/` that
+  matches "The two designs". "The two documents" is a heading of the *spec
+  template* (line 30 there) and of nothing in the methodology — which is why
+  edit 1e names the former and the first round of this design was wrong to
+  name the latter.
+- `PHILOSOPHY.md` is not part of the installed tree: it appears nowhere in
+  `test/fixtures/golden-tree.txt`, and the integrity scenario scans only
+  `AGENTS.md`, `.agents/`, `.claude/agents/` and `.codex/agents/`. Edit 3 can
+  therefore be verified by reading and by the greps above, and nothing in
+  `test/` pins its wording.
 
 **One thing the suite pins that is easy to trip on.** `test/installer.sh:281`
 greps the whole installed `.agents/` for `40 lines|8 lines|half of the
@@ -598,13 +881,38 @@ outside the line range its spec assigns (`PHILOSOPHY.md` lines 126-142);
 owns are about lines 126-136 and are met without touching 112-124, so nothing
 here is held together by a workaround. Reported, not acted on. Not a blocker.
 
-**Nothing was found wrong in the slice spec's counts.** The two findings
-against the documents are both about instructions rather than figures, and
-both are recorded above where the work happens: edit 1c (the mirror-diff
-verification becomes unsatisfiable for the work pair once F1.8 deletes the
-line that carried the difference) and Open question 2 (the doctrine pointer
-the same deletion removes). Neither is edited into the spec: a `.spec.md` is
-read-only to this role.
+**Ruled IN, 2026-09-09 — the proposal door above is now work.** The thread
+owner ruled the bullets in (ruling 1 of the spec's Notes) and the Architect
+found the design non-compliant for leaving them alone; a second ruling
+(ruling 5) added the beliefs at 68-90 for the same reason. The `PHILOSOPHY.md`
+range in the slice spec's Files map is **68-136**, and the edits are 3a
+through 3d. The paragraph above is kept as the trace of how the material
+arrived: reported through the proposal door at `plan`, ruled at `plan`, not
+taken by the Mason's own initiative.
+
+**Nothing was found wrong in the slice spec's counts** — at `plan`, and again
+at `plan-review` round 1, where the Architect re-measured all sixteen
+before-counts and the suite baseline and found them exact. The two findings
+this design raised against the documents were both about instructions rather
+than figures, and both are now closed from the other side: the mirror-diff
+Verification bullet was amended by the thread owner (struck and dated), and
+the doctrine pointer the deletion removed is reinstated by edit 1e. No
+`.spec.md` was edited by this role, at either round.
+
+**What round 1 found against this design, and where each fix lives.** Three
+blocking findings: the untouched pipeline bullets (now edit 3d), the wrong
+`**Status:**` after-count in step 1 of the order of operations (now stated as
+1 in each spec template and 0 in each work template, matching the table
+above), and a pointer naming a section that does not exist (now edit 1e,
+naming `socle/agents/methodology.md:236`). Four non-blocking: the factory
+paragraph's near-duplication (compressed, and its note corrected, at 3e), the
+one-line-per-unit convention of four skill files (a rule of its own above, and
+the targets in edits 5a, 5b, 5c and 7 quoted unwrapped), the orphaned
+"Version 3" self-reference (edit 1d), and the `§B · Coordination` repoint of
+`code-review`, which stands: parent Implementation Decision 1 assigns that
+section by name, and the residual imprecision — the reader lands one section
+short of `§A · Task workspace of `.agents/project.md``, where task files
+actually live — is recorded here as chantier 5's, not repaired by this slice.
 
 ## Diff-Review Findings
 
