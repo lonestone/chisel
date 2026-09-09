@@ -831,7 +831,7 @@ finding is closed and not merely recorded.
       `slice-task/SKILL.md:17`, `code-review/SKILL.md:18`; then a suite run
 - [x] Edit 6 — `upgrade-v2/SKILL.md:12-13` (both counts: the profiles and the
       presets) and `retro/SKILL.md:117`
-- [ ] Edit 7 — `prototype/SKILL.md` rule 6: the close-time cleanup sentence,
+- [x] Edit 7 — `prototype/SKILL.md` rule 6: the close-time cleanup sentence,
       written once
 - [ ] Verification — every criterion command re-run, after-count recorded
       beside its before-count in the Worklog
