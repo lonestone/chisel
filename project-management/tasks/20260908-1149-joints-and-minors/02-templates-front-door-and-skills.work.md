@@ -119,7 +119,8 @@ list becomes (first and last bullets unchanged):
 >   mockup over three paragraphs.
 > - In the default preset the zone's owner is you, the human. Who owns which
 >   zone under the other presets is "Zone ownership" of
->   `.agents/methodology.md`.
+>   ~~`.agents/methodology.md`.~~
+>   [methodology.md](/.agents/methodology.md).
 > - The 🧑 zones carry their owner's decisions. Surface a conflict; never
 >   silently contradict one.
 > - There is no agent zone here. The coding agent's working space is the work
@@ -127,6 +128,16 @@ list becomes (first and last bullets unchanged):
 
 Verified at plan: `socle/agents/methodology.md:103` is `## Zone ownership`, so
 the reference resolves.
+
+**Amended 2026-09-09 at `type` by `mason`, applying finding N1 of
+`plan-review` round 2.** The struck line wrote the pointer as a bare path
+where the mirror wrote it as a markdown link, so the pair would have differed
+on markup as well as on relative form. The source template now writes the same
+markdown link, install-relative — `[methodology.md](/.agents/methodology.md).`
+against the mirror's `[methodology.md](../socle/agents/methodology.md).` — one
+pointer, two relative forms, per parent Implementation Decision 7. The pointer
+sits alone on its own line in both files, which is what leaves the pair
+differing on exactly that one line.
 
 **In the mirror `project-management/000-template.spec.md` the same bullet
 carries the repo-relative form**, per parent Implementation Decision 7:
@@ -194,8 +205,8 @@ methodology, and naming it would have shipped a pointer into thin air.
 
 Source, `socle/templates/000-template.work.md`, install-relative:
 
-> The reasoning behind the split is "The two designs — and why they do not
-> happen at the same moment" of `.agents/methodology.md`.
+> ~~The reasoning behind the split is "The two designs — and why they do not~~
+> ~~happen at the same moment" of `.agents/methodology.md`.~~
 
 Mirror, `project-management/000-template.work.md`, repo-relative per parent
 Implementation Decision 7:
@@ -207,6 +218,20 @@ Implementation Decision 7:
 This is the one line on which the work mirror differs from its source, and it
 is the same kind of difference the spec pair keeps at 1b. Both forms satisfy
 rule 11 of the discipline: the reference names its file and its title.
+
+**Amended 2026-09-09 at `type` by `mason`, applying findings N1 and N2 of
+`plan-review` round 2.** The struck source form wrote the pointer as a bare
+path and let the sentence end on the same line as "of", so the pair would have
+differed on one changed line plus one added line — and on markup as well as on
+relative form. Both files now break the sentence so that the pointer stands
+alone on the last line, and both write it as a markdown link. Source:
+
+> The reasoning behind the split is "The two designs — and why they do not
+> happen at the same moment" of
+> [methodology.md](/.agents/methodology.md).
+
+The mirror form above is unchanged, and the pair differs on exactly that one
+line — the same shape edit 1b already had.
 
 ### Edit 2 — `README.md` (A4, and the stale gradient paragraph)
 
@@ -375,24 +400,50 @@ three stale claims: auto framed as a permission (retired by ruling G10),
 Rewritten as two paragraphs. The preset placements are taken from
 `socle/agents/methodology.md:47-55`, read at plan.
 
-> On top of that discipline, chisel varies on two axes, and they vary
-> independently: the **human gates** (who stops the run and reads) and the
-> **validation sub-agents** (which fresh reviewers run — a Checker on the
-> spec, an Architect on the program design, an Inspector on the diff). Five
-> presets place themselves on those two axes: `chisel-default` (every gate at
-> the human, all three reviewers), `chisel-light` (two gates — the spec, and
-> the diff review the human holds himself — no reviewers),
-> `chisel-supervised` (one gate, the Owner approving the spec, all three
-> reviewers), `chisel-auto` (no gate; a doubting step blocks and reports
-> instead, all three reviewers) and `chisel-auto-light` (no gate, no
-> reviewer). Which preset governs a run is the human's choice at each
-> invocation, never a permanent project setting. **Beads** — a committed
+> ~~On top of that discipline, chisel varies on two axes, and they vary~~
+> ~~independently: the **human gates** (who stops the run and reads) and the~~
+> ~~**validation sub-agents** (which fresh reviewers run — a Checker on the~~
+> ~~spec, an Architect on the program design, an Inspector on the diff). Five~~
+> ~~presets place themselves on those two axes: `chisel-default` (every gate at~~
+> ~~the human, all three reviewers), `chisel-light` (two gates — the spec, and~~
+> ~~the diff review the human holds himself — no reviewers),~~
+> ~~`chisel-supervised` (one gate, the Owner approving the spec, all three~~
+> ~~reviewers), `chisel-auto` (no gate; a doubting step blocks and reports~~
+> ~~instead, all three reviewers) and `chisel-auto-light` (no gate, no~~
+> ~~reviewer). Which preset governs a run is the human's choice at each~~
+> ~~invocation, never a permanent project setting.~~ **Beads** — a committed
 > status database — is a separate, additive axis: a beads-equipped repo stays
 > fully usable under the default.
 >
 > **A factory is a possible destination, not a cell of this product.** We have
 > not decided whether it belongs inside chisel at all, so we describe none of
 > its machinery here.
+
+**Amended 2026-09-09 at `type` by `mason`, applying finding N3 of
+`plan-review` round 2.** The struck preamble restated the two axes almost word
+for word from `socle/agents/methodology.md:41-45` — "and they vary
+independently", the two parenthetical definitions, "Five presets place
+themselves on those two axes". The methodology owns those definitions and its
+table owns the placements; the essay's job here is to say that there are five
+presets and name them. Recast in `PHILOSOPHY.md`'s own first-person voice, and
+the Beads sentence and the factory paragraph carry through unchanged:
+
+> On top of that discipline, chisel ships five presets — `chisel-default`,
+> `chisel-light`, `chisel-supervised`, `chisel-auto` and `chisel-auto-light`.
+> They differ in how much of the run stops at a human and how much a fresh
+> reviewer checks instead. Which preset governs a run is the human's choice at
+> that invocation, never the project's permanent setting. **Beads** — a
+> committed status database — is a separate, additive axis: a beads-equipped
+> repo stays fully usable under the default.
+>
+> **A factory is a possible destination, not a cell of this product.** We have
+> not decided whether it belongs inside chisel at all, so we describe none of
+> its machinery here.
+
+The criterion is unaffected: "Three presets" leaves the file, the five are
+named, and auto is not described as a project permission. The placements
+themselves are one file away, in the table the reference list at the foot of
+`PHILOSOPHY.md` already points at.
 
 **The factory paragraph, corrected at `plan-review` round 1.** The first round
 kept a middle sentence — "chisel is meant to be light enough to drop into any
@@ -472,7 +523,7 @@ there and not here.
 
 ### Edit 6 — `upgrade-v2` (F1.2) and `retro` (F1.6)
 
-**6a · `socle/agents/skills/upgrade-v2/SKILL.md:12-13.** The sentence reads
+**6a · `socle/agents/skills/upgrade-v2/SKILL.md:12-13`.** The sentence reads
 "v2 replaces them with an ambient discipline core, three workflow presets and
 three role profiles, and it renames the narrative journal." F1.2 stops the
 count of the profiles: "three role profiles" → "the role profiles". Do not
@@ -482,12 +533,25 @@ extend the de-counting to them, the Architect answered **yes** and the thread
 owner ruled it in (ruling 4 of the spec's Notes). Both counts go, in one
 clause. This is the form that lands, and the line rewraps to 80 columns:
 
-> v2 replaces them with an ambient discipline core, the workflow presets and
-> the role profiles, and it renames the narrative journal.
+> ~~v2 replaces them with an ambient discipline core, the workflow presets and~~
+> ~~the role profiles, and it renames the narrative journal.~~
 
 Two figures, one edit: `grep -rn "three role profiles" socle/` → 0 (the
 criterion) and `grep -rn "three workflow presets" socle/` → 0 (the ruling).
 The second count was measured at `plan-review` round 1: **1**, this same line.
+
+**Amended 2026-09-09 at `type` by `mason`, applying finding N5 of
+`plan-review` round 2.** The struck target stopped at "narrative journal." and
+so quoted only part of line 13: the `chisel update` REFUSES sentence starts on
+that same line and runs to line 16, and rewrapping 12-16 around a target that
+ends mid-line would have dropped it. The target is the whole 12-16 block, with
+the two counts gone and the REFUSES sentence carried through word for word:
+
+> v2 replaces them with an ambient discipline core, the workflow presets and the
+> role profiles, and it renames the narrative journal. `chisel update` REFUSES
+> such a repo by design — updating it would leave two normative discourses side
+> by side, and `chisel check` would report neither. This skill is the way
+> through, and it is the only one.
 
 Lines 9-11 of this file, which name `.agents/rules/task-*.md` and
 `.agents/workflows.md`, are **not touched**: `test/installer.sh:404-405`
@@ -583,8 +647,14 @@ gets a suite run immediately behind it.
    9 scenarios, 94 assertions, 0 failed, with the formula parse check
    reporting PASS and not SKIP and the integrity scenario green. Then
    `git diff --check`, then `grep -rn "socle/" ` over the six edited skill and
-   template paths to prove no repo-path leak into installed text. Then record
-   every after-count beside its before-count in the Worklog.
+   template paths to prove no repo-path leak into installed text. Expected
+   result, recorded 2026-09-09 at `type` by `mason` from finding N4 of
+   `plan-review` round 2: **0** in each of the six skill pages and **0** in
+   each of the two `socle/templates/` sources, and exactly **1** in each of
+   the two `project-management/` mirrors — the repo-relative doctrine pointer
+   parent Implementation Decision 7 requires there. A mirror hit is the
+   design, not a leak. Then record every after-count beside its before-count
+   in the Worklog.
 
 Commits use explicit paths only. `project-management/review-360-notes.md` and
 `project-management/review-360-analysis.md` are untracked Owner files: never
@@ -739,7 +809,7 @@ finding is closed and not merely recorded.
 
 ## Implementation Checkboxes
 
-- [ ] Edit 1 — the four template files: the Status/Version headers deleted
+- [x] Edit 1 — the four template files: the Status/Version headers deleted
       (`socle/templates/000-template.spec.md` 3-5,
       `project-management/000-template.spec.md` 3-5,
       `socle/templates/000-template.work.md` 3-8,

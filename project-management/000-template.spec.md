@@ -1,8 +1,5 @@
 # Task Spec Template & Standards
 
-**Status:** 🟢 Complete
-**Version:** 3 (spec / work split; see [methodology.md](../socle/agents/methodology.md))
-
 ## Context
 
 The spec document is the human review surface, the requirement against which a
@@ -10,20 +7,24 @@ diff is judged, and the archive record of what was asked. It contains no
 program design, pseudo-code, worklog or implementation checkboxes: these are
 in the work document, created at `plan` by the implementing session.
 
-A spec with no work document beside it has never been typed. Version 3 keeps
-the reading gradient but moves the agent working space into that other file.
+A spec with no work document beside it has never been typed. The spec document
+keeps the reading gradient but moves the agent working space into that other
+file.
 
 ## The two zones
 
 | Zone | Who reads it | What belongs there |
 |---|---|---|
-| 🧑 **REVIEW CAREFULLY** | Human, always, before code | Context, Scope, named Acceptance Criteria, Seams, Architecture / system design |
-| 🧑 **REVIEW IF RELEVANT** | Human, for medium/large tasks | Implementation Decisions, Testing Strategy, Slices & Dependencies, Deliverables, References, Notes, Retrospective |
+| 🧑 **REVIEW CAREFULLY** | The zone's owner, before any code | Context, Scope, named Acceptance Criteria, Seams, Architecture / system design |
+| 🧑 **REVIEW IF RELEVANT** | The zone's owner, for medium/large tasks | Implementation Decisions, Testing Strategy, Slices & Dependencies, Deliverables, References, Notes, Retrospective |
 
 - The 🧑 REVIEW CAREFULLY zone must fit in working memory. Prefer a diagram or
   mockup over three paragraphs.
-- The 🧑 zones are the human's decisions. Surface a conflict; never silently
-  contradict one.
+- In the default preset the zone's owner is you, the human. Who owns which
+  zone under the other presets is "Zone ownership" of
+  [methodology.md](../socle/agents/methodology.md).
+- The 🧑 zones carry their owner's decisions. Surface a conflict; never
+  silently contradict one.
 - There is no agent zone here. The coding agent's working space is the work
   document, a different file with a different owner.
 

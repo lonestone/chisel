@@ -1,11 +1,5 @@
 # Task Work Document Template & Standards
 
-**Status:** 🟢 Complete
-**Version:** 1 (born at the spec / work split; the coding agent's own file —
-see the spec template,
-[000-template.spec.md](/project-management/000-template.spec.md), and
-[methodology.md](/.agents/methodology.md))
-
 ## Context
 
 The work document is the coding agent's own file: its program design and
@@ -14,7 +8,9 @@ Snippets, and the findings the Inspector writes at `diff-review`. One file,
 one owner — no zone marker anywhere in it, because the reading-gradient
 distinction (what the human must read carefully vs skim) does not apply to
 working material nobody but the agent and its reviewers read start to
-finish.
+finish. The reasoning behind the split is "The two designs — and why they do
+not happen at the same moment" of
+[methodology.md](/.agents/methodology.md).
 
 **Who creates it, when, where, under what name.** The implementing session
 — the Mason — creates it at its `plan` step, never earlier. It lives beside
