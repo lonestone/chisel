@@ -1081,3 +1081,287 @@ actually live — is recorded here as chantier 5's, not repaired by this slice.
 ## Diff-Review Findings
 
 Written by the Inspector at `diff-review`.
+
+**`inspector`, 2026-09-09 19:32 CEST.** Fixed point `f5bd1e3`, HEAD `d2d3d6a`,
+eight commits (`c2bc3f7`, `6b70982`, `6ac3950`, `fa7c090`, `9459433`,
+`ca96266`, `19af4db`, `d2d3d6a`), reviewed as `git diff f5bd1e3...HEAD`. A
+fresh Inspector: it wrote none of this diff and none of its plan. The two axes
+are reported side by side and are not merged or re-ranked against each other.
+Read: this slice's spec in full including the five foreman rulings of
+2026-09-09, the parent spec (§Scope, §Acceptance Criteria, §Architecture,
+§Implementation Decisions, §Slices & Dependencies, §Notes), this work document
+as evidence only, slice 01's closed pair, `.agents/discipline.md`, the
+`inspector` profile, the `code-review` skill and its smell baseline, and the
+decisions record for A1, A3, A4, B1, E1, E2, F1, G10 and G18. Every criterion
+command was re-run against this working tree by this role, not read from the
+tables above.
+
+### Verdicts
+
+- **Standards: PASS.** Two non-blocking findings, both judgement calls on
+  wording.
+- **Spec: PASS.** Three non-blocking findings; one of them carries an
+  escalation, because its fix is above this slice.
+
+### Standards axis
+
+**S1 · `socle/agents/skills/prototype/SKILL.md:31` — an image where the direct
+statement was already there. Non-blocking.** The appended cleanup sentence ends
+"the validated decision is in the main branch by then, and the prototype has
+nothing left to prove." The first half is the reason; "has nothing left to
+prove" restates it as a figure. Parent Implementation Decision 12 (ruling G18)
+asks for the direct statement first and an image only where it carries
+information the statement does not. Fix: end the clause at "by then", or say
+"and the question it was built to settle is settled". Nothing else in the diff
+trips G18 — the README, `AGENTS.md` and the four `PHILOSOPHY.md` beliefs are
+direct throughout.
+
+**S2 · `socle/templates/000-template.spec.md:23-25` and
+`project-management/000-template.spec.md:23-25` — the B1 pointer reads as an
+identity, not as a location. Non-blocking.** The bullet says: "Who owns which
+zone under the other presets is "Zone ownership" of [methodology.md](…)." A
+section is where the answer lives, not the answer. Ruling B1's own wording is
+"voir `methodology.md`, "Zone ownership"". Fix: "…is settled in "Zone
+ownership" of …", or "…, see "Zone ownership" of …". Ships in both templates,
+so the fix is two identical one-word edits. The reference itself satisfies rule
+11 of the discipline (file and title, both named) and resolves —
+`socle/agents/methodology.md:103` is `## Zone ownership`.
+
+**Everything else on this axis was checked and is clean.** Every pointer
+written into shipped socle text is in installed form: `grep -c "socle/"` is 0
+in each of the six edited skill pages and 0 in both `socle/templates/` sources,
+and exactly 1 in each `project-management/` mirror — the repo-relative doctrine
+pointer parent Implementation Decision 7 requires. The only surviving `socle/`
+mentions inside `socle/` are `sync-upstream/SKILL.md` and
+`AGENTS-block.md:10`, neither of them this slice's. No ruling id, no `G16`-style
+label and no decisions-record file name appears in any shipped socle file, any
+template, `README.md` or `PHILOSOPHY.md`; the three occurrences in `AGENTS.md`
+(lines 17-20) are pre-existing and outside the edited bullet. All four new
+section references name both the file and the section title, and all four
+targets exist (`project.md.tpl:43` and `:103`, `methodology.md:103` and `:236`).
+The amendment rule is respected in this document at every round-2 edit — N1 at
+1b, N1/N2 at 1e, N3 at 3e, N5 at 6a all strike the original in place and date
+the replacement; N4 at step 8 adds rather than retracts, so it needs no strike.
+The one-line-per-unit convention of `wayfinder`, `code-review`, `prototype` and
+`slice-task` holds — each of those four files shows exactly one changed line
+and gains none. `retro` and `upgrade-v2` rewrap inside 80 columns. No added
+prose line anywhere exceeds 80 display columns; the only longer added lines are
+the two zone-table rows, which were already long. All eight commit subjects are
+imperative English and all eight carry the `Co-Authored-By` trailer.
+`git diff --check` is clean on the range and on each of the eight commits
+individually. Nothing is typed in slice 03's territory: no `test/`, no `bin/`,
+no `upstream.lock.json`, no fixture, no CHANGELOG, and none of `triage/`,
+`grill-with-docs/` or `sync-upstream/`. On the smell baseline, the one
+duplication in the diff — the factory claim stated in both `PHILOSOPHY.md:138`
+and `socle/agents/methodology.md:65` — is what ruling E1 and the parent
+criterion require in each file, so the repo standard overrides the smell; the
+reasons live in the methodology only, which is the split the round-1 correction
+made.
+
+### Spec axis
+
+**Sp1 · `PHILOSOPHY.md:132-133` — the recast preset sentence contradicts the
+doctrine it summarises. Non-blocking, and the strongest finding on this axis.**
+The new text reads: "They differ in how much of the run stops at a human and
+how much a fresh reviewer checks instead." `instead` asserts that fresh
+reviewers substitute for human gates. The shipped doctrine says the opposite:
+`socle/agents/methodology.md:41-45` states that the two axes "vary
+independently", and its table at 48-55 shows `chisel-light` with two human
+gates and no reviewers and `chisel-auto-light` with neither — fewer gates *and*
+fewer reviewers, which no substitution reading survives. The struck original
+carried "they vary independently" correctly; finding N3 was right that the
+essay should stop restating the methodology's definitions, but the recast
+dropped a true claim and put a false one in its place. Fix, one sentence:
+"They differ along two independent axes — how much of the run stops at a human,
+and how many fresh reviewers check the work." Not blocking:
+`philosophy-presets-current` passes on its own terms (`Three presets` → 0, the
+five named, auto not framed as a project permission), and nothing in `test/`
+pins this wording.
+
+**Sp2 · `PHILOSOPHY.md:88-89` — one third of the delegation boundary is
+paraphrased. Non-blocking.** The recast clause names "product, architecture and
+the seams the work is tested through". The doctrine it was recast to agree with
+names three different things, twice and identically:
+`socle/agents/profiles/mason.md:85-87` and
+`socle/agents/methodology.md:283-285` both read "the architecture, the scope,
+and the seams the work is tested through". `product` is the essay's own older
+word and it survived the edit unexamined. Fix: "architecture, scope and the
+seams the work is tested through". The rest of the clause is exact, and the
+recast is otherwise the right call — see the ruling below on the two flagged
+points.
+
+**Sp3 · `socle/agents/skills/code-review/SKILL.md:18` — the repoint lands on a
+section that exists but does not carry what the sentence promises.
+Non-blocking; escalated, because the fix is above this slice.** The line now
+reads "work is tracked as task files under the task workspace declared in
+`.agents/project.md` (default `/project-management/tasks/`; …
+`/project-management/archive/`) — see §B · Coordination of
+`.agents/project.md`." The task workspace — tasks
+root, tasks, archive, and the two template paths, including the two defaults
+this very sentence quotes — is declared in **§A · Task workspace** of
+`socle/agents/project.md.tpl` (lines 14-42). `§B · Coordination` (line 43)
+carries only B1, where statuses live, and B2, the external-tracker link. So a
+reader who follows the pointer for the workspace does not find it. The diff is
+NOT at fault: parent Implementation Decision 1 assigns this carrier to
+`§B · Coordination` by name and by reason ("`code-review:18` (where task files
+live) → §B · Coordination"), and the Mason applied it verbatim, which is what
+this slice was asked to do. The consequence is that the criterion
+`tracker-pointer-resolves` will close at slice 03 with one citation still
+sending a reader one section short. This document parks the residue as chantier
+5's; that is the wrong home — chantier 5 owns the *bare* `§B` / `§C` / `§F` /
+`§B1` / `§H` citations, and this citation is fully formed. It therefore has no
+owner. See Escalations.
+
+**Every criterion command, re-run by `inspector` against this working tree.**
+The result below is the Inspector's own measurement; every figure agrees with
+the after-counts this document records, with no exception.
+
+| Criterion | Command | Measured now | Verdict |
+|---|---|---|---|
+| `wayfinding-notes-gone` | `grep -rn "Wayfinding operations" socle/` | 0 | ✅ closes |
+| `readme-init-truthful` | `grep -c "asks one question" README.md` / `grep -c "chisel-setup" README.md` | 0 / 1 | ✅ closes |
+| `readme-gradient-current` | `grep -c "persists the plan into the spec file" README.md` | 0 | ✅ closes |
+| `template-zone-owner` | `Human, always` / `Zone ownership`, source and mirror spec templates | 0 / 0 and 1 / 1 | ✅ closes |
+| `philosophy-presets-current` | `grep -c "Three presets" PHILOSOPHY.md`; five named; auto not a project permission | 0; five named at 130-131; `grep -i permission PHILOSOPHY.md` → 0 | ✅ closes |
+| `profiles-uncounted` | `grep -rn "three role profiles" socle/` | 0 | ✅ closes |
+| `retro-block-pointer-accurate` | `grep -rn "rendered into the AGENTS block" socle/` | 0; and `AGENTS-block.md:14` verified to point rather than inline | ✅ closes |
+| `template-sediment-gone` | `^\*\*Status:\*\*` / `^\*\*Version:\*\*` in the four files | spec source 1 / 0, spec mirror 1 / 0, work source 0 / 0, work mirror 0 / 0; the one hit in each spec file is the fenced `**Status:** [Status Emoji & Text]` at line 72, which the spec forbids deleting and which still stands | ✅ closes |
+| `agents-md-persist-destination` | `grep -c "work document" AGENTS.md` | 1, at line 12 | ✅ closes |
+| `suite-green` (this run) | `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` | 9 scenarios, 94 assertions, 0 failed; formula parse check PASS, no SKIP in the run; integrity scenario green | ✅ closes |
+| `prototype-capture-aligned` cl. 3 | `grep -rl "the throwaway branches it points at" socle/` | exactly 1 file, `prototype/SKILL.md`; `UI.md:100-105` and `LOGIC.md:71` still say nothing about when the branch may go. Clauses 1 and 2 re-verified: `delete the code` → 0 in `discipline.md`, the side-lane row at `discipline.md:93` names the throwaway branch and its pointer | ✅ **closes the whole criterion** |
+| `factory-claim-degraded` | `grep -rn "Factory = auto" socle/ PHILOSOPHY.md README.md` | 0; both surviving sentences present the factory as a possible destination (`methodology.md:65`, `PHILOSOPHY.md:138`) | ✅ **closes** — this slice was second to land |
+| `work-on-invocation-current` | `grep -rn "work on slice <file>\|work on task <file>" socle/ AGENTS.md` | 0; and every one of the seven surviving invocation sites names `<spec-document>` | ✅ **closes** |
+| `tracker-pointer-resolves` | `grep -rn "Tracker section" socle/`; `§B · Coordination`; `§B2 · Link to an external tracker` | 1 (`triage/SKILL.md:48` only), 2, 2 | ✅ this slice's three carriers done; **1 remaining is by design** — it leaves with the `triage` file at slice 03 |
+
+**The two pairwise template diffs, re-run.** `diff` of the spec pair returns
+exactly one differing line (25), and `diff` of the work pair exactly one (13);
+in both cases the line is the doctrine pointer —
+`[methodology.md](/.agents/methodology.md).` in the source against
+`[methodology.md](../socle/agents/methodology.md).` in the mirror. That
+satisfies the Verification bullet as amended on 2026-09-09 and parent
+Implementation Decision 7, for both pairs. Each template also carries
+exactly one markdown link in total, so there is no second pointer to drift.
+
+**Scope.** No creep. The diff touches fourteen files and every one of them is
+in the amended Files map: the four templates, `README.md`, `PHILOSOPHY.md`
+(inside 68-136), `AGENTS.md`, the six skill pages, and this work document. The
+three edits that go beyond the letter of a ruling each came through the gate
+rather than through the Mason's initiative — 1d (the orphaned "Version 3"
+self-reference, round-1 finding 6, and it is 1a that orphans it), 1e (the
+reinstated doctrine pointer, open question 2 answered by the Architect and
+ruled at foreman ruling 3), and the delegation-boundary half of 3c (foreman
+ruling 5, which names `PHILOSOPHY.md:89-90`). Nothing was swept: the bare `§B`
+/ `§C` / `§F` / `§B1` / `§H` citations elsewhere in the same files are
+untouched, per parent Implementation Decision 2. No `.spec.md` was edited by
+the Mason in this range, and no status was changed.
+
+**Consistency of the spec/work story, everywhere the diff rewrites it.**
+Checked and coherent across all five surfaces: the plan is persisted into the
+work document in `README.md:29`, `AGENTS.md:12`, `PHILOSOPHY.md:83` and
+`PHILOSOPHY.md:122-123`; the diff is read by a fresh reviewer who never wrote
+it at `PHILOSOPHY.md:91`, which now agrees with
+`socle/agents/profiles/inspector.md` and `architect.md`; the agent's working
+space is the work document in both template pairs and in `PHILOSOPHY.md:72-73`;
+and `README.md:32` states the design/typing separation the right way round
+("whoever reviews a design never types the work it approved"). No surface left
+in the diff still teaches the single task file.
+
+### The two points the Mason flagged — ruled
+
+**The proposal door at `PHILOSOPHY.md:75-78` ("proposes a task file"): the
+Mason's handling was correct, and the residue is left standing as loose.** The
+belief says the agent "detects when a chat has become real work and proposes a
+task file". Rule 5 of `socle/agents/discipline.md` has the agent propose "the
+pipeline (a spec document and its formula)", so `a task file` is one degree
+less precise than the doctrine. It is not the retired single-file model:
+`task file` survives as the collective term for the pair in 34 places across
+`socle/` and in this repo's own `AGENTS.md:6`, `:15`, `:16` and `README.md:5`,
+`:49` — none of which this pass was asked to change. The lines were declared
+untouched by name in the approved program design, so taking them silently would
+have been the scope creep the discipline forbids, and reporting them through the
+proposal door is exactly what rule 6 asks for. **No finding against the diff.**
+Whether the clause is worth a one-word edit is the Owner's call, not the
+Inspector's — see Escalations.
+
+**The recast of the delegation-boundary belief (3c): sound, in scope, and it
+removes two verifiable falsehoods.** The pre-diff sentence said the plan is the
+delegation boundary, that "program design" is never delegated, and that the
+planner reviews the diff. All three are false against the socle as shipped:
+`socle/agents/methodology.md:283-285` and `socle/agents/profiles/mason.md:85-89`
+put the boundary at the *system* design and make the program design the Mason's
+own, and `socle/agents/profiles/inspector.md` (Prohibitions) plus
+`architect.md` make the diff a fresh reviewer's and never its author's. Foreman
+ruling 5 ruled `PHILOSOPHY.md:89-90` in by name, and the delegation clause sits
+inside 85-90, so this is inside the amended range and not an extension of it.
+The Architect approved it as doctrine already shipped, and the Inspector's own
+reading of the two shipped carriers confirms the substance. The only defect
+left in the recast clause is the paraphrased third term — finding **Sp2** — and
+that is a word, not the judgement.
+
+### Escalations — for the Owner alone
+
+**E-1 · `code-review:18` points one section short, and the fix is a parent
+ruling.** Finding **Sp3**. Repairing it means amending parent Implementation
+Decision 1 to send that carrier to `§A · Task workspace of `.agents/project.md``
+(or to name both sections, since the sentence covers tracking and workspace
+both). This slice may not edit the parent, and slice 03 closes
+`tracker-pointer-resolves` on a grep that will pass either way. Three options,
+in the Owner's hands: amend the decision and fix the line at `close` of this
+slice; hand it to slice 03 alongside the `triage` carrier; or accept it and
+give it a real owner other than chantier 5, whose remit is bare citations and
+does not cover a fully formed pointer aimed at the wrong section. The Inspector
+recommends the first: it is one line, in a file already open in this pass, and
+it is the same defect class the whole chantier exists to close.
+
+**E-2 · the two front-door riders now reach further than the Owner approved in
+writing, and the Owner should confirm.** The Owner approved `README.md:19-31`
+and `PHILOSOPHY.md:126-142` as riders. The thread owner then extended the
+`PHILOSOPHY.md` range to 68-136 under the standing go (foreman rulings 1 and
+5), and reported the extension as reversible. The diff spends that extension in
+full: three beliefs and two pipeline bullets, all of them the same defect class,
+none of them adding a criterion. The Inspector finds every one of those edits
+defensible on both axes and recommends confirming them. Recorded here because
+the boundary of a 🧑-zone rider is the Owner's to hold, not the reviewer's.
+
+**E-3 · `PHILOSOPHY.md:75-78`, the residue left standing.** The Owner may rule
+the clause in for a one-word edit at `close` ("a task file" → "a spec
+document"), or leave it for chantier 5's writing-rules pass. Not a blocker
+either way, and the Mason was right not to touch it.
+
+### Heads-up for slice 03
+
+- **Nothing this slice typed will need undoing.** No file under `test/`,
+  `bin/`, `upstream.lock.json`, `test/fixtures/golden-tree.txt`, the CHANGELOG,
+  `triage/`, `grill-with-docs/` or `sync-upstream/` appears in the diff, and no
+  line written here points at any of the three pages slice 03 removes.
+  `grep -n "triage\|grill-with-docs\|sync-upstream"` over the fourteen touched
+  files returns exactly one hit — `README.md:66`, the `sync-upstream` line under
+  "Other commands", which describes it as tooling for maintainers of this repo
+  and claims no path. It stays true after the move to `socle/scripts/`, which is
+  what parent Implementation Decision 3 predicted; slice 03 needs no README
+  edit, and `README.md` stays on its files-to-avoid map.
+- **`tracker-pointer-resolves` is down to its last carrier and it is slice
+  03's:** `socle/agents/skills/triage/SKILL.md:48`. Deleting the directory
+  closes the criterion. Read finding **Sp3** first, though: if the Owner rules
+  E-1 into slice 03, that slice also owns a one-line fix in
+  `socle/agents/skills/code-review/SKILL.md`, which is otherwise on its
+  files-to-avoid map.
+- **The golden tree is untouched and stays comparable.** This slice renamed,
+  added and deleted no file, so the eight lines slice 03 removes from
+  `test/fixtures/golden-tree.txt` are exactly the eight the parent counted. The
+  fixture is a path listing, so none of the text edits above can affect it.
+- **The suite baseline slice 03 inherits is 9 scenarios, 94 assertions, 0
+  failed**, formula parse check PASS. Two assertions to keep in view while
+  editing the fixture: `test/installer.sh:404-405` pins
+  `.agents/skills/upgrade-v2/SKILL.md` as the only file allowed to name the
+  retired v1 layer — this slice edited lines 12-16 of that file and left 9-11
+  intact, so the pin still holds — and `integrity: no pointer into thin air`
+  now has three more `.agents/…` pointers to resolve than before this slice
+  (`§B`/`§B2` citations of `.agents/project.md` and the two template doctrine
+  links). All resolve today; a removal that deletes a target would surface
+  there.
+- **The prototype cleanup sentence is now a single-home rule.** It lives only
+  at `socle/agents/skills/prototype/SKILL.md:31`. Slice 03 removes the `triage`
+  side-lane row from `socle/agents/discipline.md`; the `prototype` row two lines
+  above it (line 93) carries clause 2 of `prototype-capture-aligned` and must
+  survive that edit intact.
