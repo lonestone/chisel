@@ -807,6 +807,100 @@ finding is closed and not merely recorded.
   `socle/agents/profiles/mason.md`. Nothing typed in any carrier: this round
   edits the work document only, and the second `plan-review` gates the typing.
 
+- **2026-09-09 19:21 CEST · `mason` · `type`.** A fresh Mason on a resumed
+  thread again: the session that wrote the program design is gone, so the
+  typing was built from the persisted spec/work pair and nothing else. Read
+  the role contract, `socle/agents/discipline.md`, the `type` step of
+  `socle/agents/formulas/chisel-auto.formula.toml`, this slice's spec in full
+  including the five foreman rulings of 2026-09-09, the parent's
+  §Implementation Decisions, and every carrier before touching it. Applied the
+  four actionable findings of `plan-review` round 2 to this document first —
+  each struck in place and dated where the edit it touches is described (N1 and
+  N2 at edits 1b and 1e, N3 at edit 3e, N4 at step 8 of the order of
+  operations, N5 at edit 6a, which also had an unclosed code span in its
+  heading). N6 was a nit and changed nothing. Then typed the eight steps of
+  the order of operations, one commit each, explicit paths only.
+- **Commits of the run, in order.** `c2bc3f7` the four templates (1a, 1b, 1d,
+  1e) · `6b70982` `README.md` (2a, 2b) · `6ac3950` `PHILOSOPHY.md` 68-136
+  (3a-3e) · `fa7c090` `AGENTS.md` (edit 4) · `9459433` the three A1 carriers
+  (edit 5, with the suite re-run behind it) · `ca96266` `upgrade-v2` and
+  `retro` (edit 6) · `19af4db` `prototype` rule 6 (edit 7).
+- **Every criterion command re-run, before → after.**
+
+  | Command | Before | After | Expected |
+  |---|---|---|---|
+  | `grep -rn "Wayfinding operations" socle/` | 1 | **0** | 0 ✓ |
+  | `grep -c "asks one question" README.md` | 1 | **0** | 0 ✓ |
+  | `grep -c "chisel-setup" README.md` | 0 | **1** | 1 ✓ |
+  | `grep -c "persists the plan into the spec file" README.md` | 1 | **0** | 0 ✓ |
+  | `grep -c "Human, always"` source / mirror spec template | 1 / 1 | **0 / 0** | 0 / 0 ✓ |
+  | `grep -c "Zone ownership"` source / mirror spec template | 0 / 0 | **1 / 1** | 1 / 1 ✓ |
+  | `grep -c "Three presets" PHILOSOPHY.md` | 1 | **0** | 0 ✓ |
+  | `grep -rn "three role profiles" socle/` | 1 | **0** | 0 ✓ |
+  | `grep -rn "rendered into the AGENTS block" socle/` | 1 | **0** | 0 ✓ |
+  | `^\*\*Status:\*\*` / `^\*\*Version:\*\*`, source spec template | 2 / 1 | **1 / 0** | 1 / 0 ✓ |
+  | `^\*\*Status:\*\*` / `^\*\*Version:\*\*`, mirror spec template | 2 / 1 | **1 / 0** | 1 / 0 ✓ |
+  | `^\*\*Status:\*\*` / `^\*\*Version:\*\*`, source work template | 1 / 1 | **0 / 0** | 0 / 0 ✓ |
+  | `^\*\*Status:\*\*` / `^\*\*Version:\*\*`, mirror work template | 1 / 1 | **0 / 0** | 0 / 0 ✓ |
+  | `grep -c "work document" AGENTS.md` | 0 | **1** | ≥ 1 ✓ |
+  | `grep -rn "Tracker section" socle/` | 4 | **1** (`triage:48`) | 1 ✓ |
+  | `grep -rn "§B · Coordination" socle/` | 0 | **2** | 2 ✓ |
+  | `grep -rn "§B2 · Link to an external tracker" socle/` | 1 | **2** | 2 ✓ |
+  | `grep -rn "Factory = auto" socle/ PHILOSOPHY.md README.md` | 1 | **0** | 0 — closes ✓ |
+  | `grep -rn "work on slice <file>\|work on task <file>" socle/ AGENTS.md` | 1 | **0** | 0 — closes ✓ |
+  | `grep -rl "the throwaway branches it points at" socle/` | 0 files | **1 file** | exactly 1 ✓ |
+  | `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` | 9 / 94 / 0 | **9 scenarios, 94 assertions, 0 failed** | 9 / 94 / 0 ✓ |
+
+- **The six ruled-in figures, which carry no criterion, before → after.**
+
+  | Command | Before | After |
+  |---|---|---|
+  | `grep -rn "three workflow presets" socle/` | 1 | **0** |
+  | `grep -c "sink to the bottom" PHILOSOPHY.md` | 1 | **0** |
+  | `grep -c "Task files use a" PHILOSOPHY.md` | 1 | **0** |
+  | `grep -c "persisted into the slice file" PHILOSOPHY.md` | 1 | **0** |
+  | `grep -c "with the planner reviewing the diff" PHILOSOPHY.md` | 1 | **0** |
+  | `grep -c "task file — context" PHILOSOPHY.md` | 1 | **0** |
+
+  `grep -c "offers to delegate the typing" PHILOSOPHY.md` also went 1 → **0**.
+- **The two pairwise diffs, against the spec's amended Verification bullet.**
+  Each pair differs on exactly one line, and that line is the doctrine
+  pointer: the spec pair at line 25
+  (`  [methodology.md](/.agents/methodology.md).` against
+  `  [methodology.md](../socle/agents/methodology.md).`) and the work pair at
+  line 13, the same two forms unindented. Nothing else survives in either
+  pair. `**Status:** [Status Emoji & Text]` still stands at line 72 of both
+  spec templates, inside the fenced Spec Document Template block.
+- **The rest of step 8.** Formula parse check PASS, no SKIP anywhere in the
+  run; integrity scenario green. `git diff --check` clean before each of the
+  seven commits and after the last. `grep -c "socle/"` over the edited paths:
+  **0** in each of the six skill pages and **0** in both `socle/templates/`
+  sources, **1** in each of the two `project-management/` mirrors — the
+  repo-relative pointer parent Implementation Decision 7 requires, which is
+  finding N4's expected result exactly. No internal identifier shipped:
+  `grep -rn "ruling [A-Z]\?[0-9]\|G1[0-9]\|review-360-decisions\|chantier"`
+  over `socle/`, `README.md`, `PHILOSOPHY.md` and the two mirrors returns 0.
+  The two untracked Owner files were never read, staged or committed, and
+  `git add` named every path explicitly at every step.
+- **Two things decided in the session, both small and both recorded here.**
+  First, the recast preset paragraph (N3) states that the presets differ in
+  how much of the run stops at a human and how much a fresh reviewer checks,
+  and does not add a mid-paragraph link to the placement table: the reference
+  list at the foot of `PHILOSOPHY.md` already points at the methodology, and
+  the design leaves that list untouched. Second, the first commit of the run
+  (`c2bc3f7`) was made with the post-commit hook disabled; the six that follow
+  ran it and its notice was ignored, as the brief instructs. The hook is
+  post-commit and informational, so nothing about the tree differs.
+- **One residue left standing on purpose, reported not typed.** The "Ambient
+  by default" belief at `PHILOSOPHY.md:75-78` still says the agent "proposes a
+  task file". The program design declares those lines untouched by name, and
+  the phrase is not the retired single-file model — rule 5 of
+  `socle/agents/discipline.md` does have the agent propose a spec document and
+  its formula — so it is loose rather than false. Size: three words. Risk:
+  none, inside a file this slice already opens, but outside what the design
+  assigns. Can I deliver cleanly without it: yes, entirely. Not a blocker, not
+  acted on.
+
 ## Implementation Checkboxes
 
 - [x] Edit 1 — the four template files: the Status/Version headers deleted
@@ -833,9 +927,9 @@ finding is closed and not merely recorded.
       presets) and `retro/SKILL.md:117`
 - [x] Edit 7 — `prototype/SKILL.md` rule 6: the close-time cleanup sentence,
       written once
-- [ ] Verification — every criterion command re-run, after-count recorded
+- [x] Verification — every criterion command re-run, after-count recorded
       beside its before-count in the Worklog
-- [ ] `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` → 9 scenarios, 94
+- [x] `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` → 9 scenarios, 94
       assertions, 0 failed, parse check PASS not SKIP; then `git diff --check`
 
 ## Notes & Snippets
