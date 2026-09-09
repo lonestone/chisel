@@ -826,7 +826,7 @@ finding is closed and not merely recorded.
       at 85-90 (3c), the two pipeline bullets at 116-124 (3d), and the
       preset/auto/factory paragraph at 126-136 rewritten as two paragraphs
       (3e)
-- [ ] Edit 4 — `AGENTS.md`: the task-lifecycle bullet at 10-13
+- [x] Edit 4 — `AGENTS.md`: the task-lifecycle bullet at 10-13
 - [ ] Edit 5 — the three A1 carriers: `wayfinder/SKILL.md:30`,
       `slice-task/SKILL.md:17`, `code-review/SKILL.md:18`; then a suite run
 - [ ] Edit 6 — `upgrade-v2/SKILL.md:12-13` (both counts: the profiles and the
