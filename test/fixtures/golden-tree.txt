@@ -59,10 +59,6 @@
 .agents/skills/tdd/SKILL.md
 .agents/skills/tdd/mocking.md
 .agents/skills/tdd/tests.md
-.agents/skills/triage
-.agents/skills/triage/AGENT-BRIEF.md
-.agents/skills/triage/OUT-OF-SCOPE.md
-.agents/skills/triage/SKILL.md
 .agents/skills/upgrade-v2
 .agents/skills/upgrade-v2/SKILL.md
 .agents/skills/wayfinder
