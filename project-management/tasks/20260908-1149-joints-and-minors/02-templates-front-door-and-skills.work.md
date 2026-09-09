@@ -118,7 +118,8 @@ list becomes (first and last bullets unchanged):
 > - The 🧑 REVIEW CAREFULLY zone must fit in working memory. Prefer a diagram or
 >   mockup over three paragraphs.
 > - In the default preset the zone's owner is you, the human. Who owns which
->   zone under the other presets is "Zone ownership" of
+>   ~~zone under the other presets is "Zone ownership" of~~
+>   zone under the other presets is settled in "Zone ownership" of
 >   ~~`.agents/methodology.md`.~~
 >   [methodology.md](/.agents/methodology.md).
 > - The 🧑 zones carry their owner's decisions. Surface a conflict; never
@@ -143,12 +144,20 @@ differing on exactly that one line.
 carries the repo-relative form**, per parent Implementation Decision 7:
 
 > - In the default preset the zone's owner is you, the human. Who owns which
->   zone under the other presets is "Zone ownership" of
+>   ~~zone under the other presets is "Zone ownership" of~~
+>   zone under the other presets is settled in "Zone ownership" of
 >   [methodology.md](../socle/agents/methodology.md).
 
 This is the one line on which the mirror differs from the source — the same
 role line 4 played before F1.8 deleted it. The criterion greps `Human,
 always` (→ 0) and `Zone ownership` (→ ≥ 1); both hold in both forms.
+
+**Amended 2026-09-09 19:40 CEST at `close` by `mason`, applying finding S2
+of `diff-review`.** The struck line stated the section as an
+identity — the answer *is* a section — where a section is only where the
+answer lives. Both templates now read "is settled in "Zone ownership" of",
+the same three words in each, so the pair still differs on exactly one line:
+the doctrine pointer.
 
 **1c · what edit 1 does to the mirror diff, recorded because the spec's
 Verification asks for something that will no longer be true.** Measured at
@@ -355,8 +364,10 @@ design are never delegated" contradicts
 
 > - **Think and type are different jobs.** Planning needs a frontier model
 >   and a human gate; typing from a complete persisted brief doesn't. The
->   **system design is the delegation boundary**: product, architecture and
->   the seams the work is tested through are never delegated; the program
+>   ~~**system design is the delegation boundary**: product, architecture and~~
+>   ~~the seams the work is tested through are never delegated; the program~~
+>   **system design is the delegation boundary**: the architecture, the scope,
+>   and the seams the work is tested through are never delegated; the program
 >   design and the typing go together, to a faster and cheaper model, and the
 >   diff is read by a fresh reviewer who never wrote it. (Validated in
 >   production — this repo's own slices were typed by a cheaper model from
@@ -369,6 +380,13 @@ with the Inspector's. Reported here so the Architect can strike it without
 touching the rest of 3c. Lines 56 and 179 also say "delegation boundary" and
 are **not** touched: 56 is the history section and 179 the reference list,
 both outside the ruled range.
+
+**Amended 2026-09-09 19:40 CEST at `close` by `mason`, applying finding Sp2
+of `diff-review`.** The struck target text kept the essay's own older word,
+`product`, for one of the three terms. The doctrine names the three
+identically in two places — `socle/agents/profiles/mason.md:85-87` and
+`socle/agents/methodology.md:283-285` — "the architecture, the scope, and the
+seams the work is tested through", and that is what ships.
 
 **3d · the pipeline bullets, lines 116-124** — two of the three bullets in the
 112-124 block ruling 1 of the spec's Notes ruled in, from this design's own
@@ -430,8 +448,11 @@ the Beads sentence and the factory paragraph carry through unchanged:
 
 > On top of that discipline, chisel ships five presets — `chisel-default`,
 > `chisel-light`, `chisel-supervised`, `chisel-auto` and `chisel-auto-light`.
-> They differ in how much of the run stops at a human and how much a fresh
-> reviewer checks instead. Which preset governs a run is the human's choice at
+> ~~They differ in how much of the run stops at a human and how much a fresh~~
+> ~~reviewer checks instead.~~
+> They differ along two independent axes — how much of the run stops at a
+> human, and how many fresh reviewers check the work.
+> Which preset governs a run is the human's choice at
 > that invocation, never the project's permanent setting. **Beads** — a
 > committed status database — is a separate, additive axis: a beads-equipped
 > repo stays fully usable under the default.
@@ -444,6 +465,16 @@ The criterion is unaffected: "Three presets" leaves the file, the five are
 named, and auto is not described as a project permission. The placements
 themselves are one file away, in the table the reference list at the foot of
 `PHILOSOPHY.md` already points at.
+
+**Amended 2026-09-09 19:40 CEST at `close` by `mason`, applying finding Sp1
+of `diff-review`.** The struck sentence said the presets differ in how much
+stops at a human "and how much a fresh reviewer checks instead". `instead`
+makes fresh reviewers a substitute for human gates; the doctrine at
+`socle/agents/methodology.md:41-45` says the two axes vary independently, and
+its table at 48-55 shows `chisel-auto-light` with neither. The shipped
+sentence is now "They differ along two independent axes — how much of the run
+stops at a human, and how many fresh reviewers check the work.", rewrapped
+across the paragraph with no other word changed.
 
 **The factory paragraph, corrected at `plan-review` round 1.** The first round
 kept a middle sentence — "chisel is meant to be light enough to drop into any
@@ -514,12 +545,21 @@ and it stays one line:
 clause after the em dash changes; line 18 is a single 259-character line and
 remains one line, so the diff is one changed line:
 
-> … — see §B · Coordination of `.agents/project.md`.
+> ~~… — see §B · Coordination of `.agents/project.md`.~~
+> … — see §A · Task workspace of `.agents/project.md`.
 
 `socle/agents/skills/triage/SKILL.md:48` is the fourth carrier and is **not
 touched**: it leaves with its file at slice 03, which is why that file is on
 this slice's files-to-avoid map and why `tracker-pointer-resolves` closes
 there and not here.
+
+**Amended 2026-09-09 19:40 CEST at `close` by `mason`, applying finding Sp3
+of `diff-review` and foreman ruling 7.** Parent Implementation Decision 1 is
+amended (struck and dated) so this carrier points at `§A · Task workspace of
+`.agents/project.md``, which is the section the sentence itself describes;
+`§B · Coordination` holds only B1 and B2. `slice-task:17` keeps
+`§B · Coordination`, so that grep stays non-zero. Still one line, still one
+changed line in the diff.
 
 ### Edit 6 — `upgrade-v2` (F1.2) and `retro` (F1.6)
 
@@ -576,7 +616,8 @@ as is every numbered rule in that file, so the cleanup sentences are appended
 and the diff shows rule 6 changed. Target text, appended to the end of line
 31, quoted here unwrapped because that is how it must land:
 
-> **The branch goes at close.** When the task that consumed the answer closes, the throwaway branches it points at are deleted — the validated decision is in the main branch by then, and the prototype has nothing left to prove. Deleting them earlier throws away the primary source while the decision is still being applied.
+> ~~**The branch goes at close.** When the task that consumed the answer closes, the throwaway branches it points at are deleted — the validated decision is in the main branch by then, and the prototype has nothing left to prove. Deleting them earlier throws away the primary source while the decision is still being applied.~~
+> **The branch goes at close.** When the task that consumed the answer closes, the throwaway branches it points at are deleted — the validated decision is in the main branch by then. Deleting them earlier throws away the primary source while the decision is still being applied.
 
 `socle/agents/skills/prototype/UI.md:100-105` and `LOGIC.md:71` describe the
 capture and say nothing about when the branch may go; they stay that way, so
@@ -586,6 +627,14 @@ naming the throwaway branch and its pointer, at line 93) — this slice does not
 open that file. The phrase "the throwaway branches it points at" is the
 distinctive string the after-count greps for; it appears nowhere in `socle/`
 today.
+
+**Amended 2026-09-09 19:40 CEST at `close` by `mason`, applying finding S1 of
+`diff-review`.** The struck target text closed on a figure — "and the
+prototype has nothing left to prove" — that restated the reason already
+given by the clause before it. Parent Implementation Decision 12 (ruling G18)
+asks for the direct statement and an image only where it adds something. The
+sentence now ends at "by then". Rule 6 stays one line, and the file gains
+none.
 
 ### Order of operations
 
@@ -900,6 +949,49 @@ finding is closed and not merely recorded.
   none, inside a file this slice already opens, but outside what the design
   assigns. Can I deliver cleanly without it: yes, entirely. Not a blocker, not
   acted on.
+- **2026-09-09 19:40 CEST · `mason` · `close`, follow-up commit.** A fresh
+  Mason on a resumed thread. Read the role contract
+  (`socle/agents/profiles/mason.md`), `socle/agents/discipline.md`, this
+  slice's spec in full including foreman rulings 6-9 of 2026-09-09, the
+  Diff-Review Findings of this document, and parent Implementation Decision 1
+  as amended today. Applied the five wording corrections foreman rulings 6 and
+  7 sent here, with the Inspector's fixes as written, and nothing else:
+  **S1** · `socle/agents/skills/prototype/SKILL.md:31` — the appended cleanup
+  sentence now ends at "by then"; the closing figure "and the prototype has
+  nothing left to prove" is gone, per parent Implementation Decision 12
+  (ruling G18). Rule 6 stays one line and the file gains none.
+  **S2** · `socle/templates/000-template.spec.md:24` and its mirror
+  `project-management/000-template.spec.md:24` — the zone-table pointer reads
+  as a location, not an identity: "is settled in "Zone ownership" of". The
+  three added words are identical in both files, so the pair still differs on
+  exactly one line, the doctrine pointer.
+  **Sp1** · `PHILOSOPHY.md:132-133` — "and how much a fresh reviewer checks
+  instead" asserted substitution; the paragraph now reads "They differ along
+  two independent axes — how much of the run stops at a human, and how many
+  fresh reviewers check the work.", which is what
+  `socle/agents/methodology.md:41-45` says. The rest of the paragraph rewrapped
+  with no other word changed.
+  **Sp2** · `PHILOSOPHY.md:88-89` — the delegation boundary now names the
+  doctrine's three terms, "the architecture, the scope, and the seams the work
+  is tested through", per `socle/agents/profiles/mason.md:85-87` and
+  `socle/agents/methodology.md:283-285`; the essay's older word `product` is
+  gone.
+  **Sp3 / E-1** · `socle/agents/skills/code-review/SKILL.md:18` — repointed to
+  `§A · Task workspace of `.agents/project.md``, the section the sentence
+  itself describes, per foreman ruling 7 and the amended parent Implementation
+  Decision 1. One line, still one line. This document's parking of the residue
+  under chantier 5 is struck and dated in Notes & Snippets: it was never
+  chantier 5's, whose remit is bare citations.
+  Every place this document quoted the old target text of those five lines is
+  struck in place with a dated amendment note, per the amendment rule. No
+  `.spec.md` was edited here and no status changed. Verified before the commit:
+  `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` → 9 scenarios, 94
+  assertions, 0 failed; `git diff --check` clean; `diff` of the two spec
+  templates → exactly one differing line, the pointer at 25;
+  `grep -rn "§B · Coordination" socle/` → 1, `slice-task:17`, as ruling 7
+  intends; `grep -rn "nothing left to prove" socle/` → 0. The two untracked
+  Owner files were never read, staged or committed; every path was named
+  explicitly to `git add`.
 
 ## Implementation Checkboxes
 
@@ -1076,7 +1168,14 @@ the targets in edits 5a, 5b, 5c and 7 quoted unwrapped), the orphaned
 `code-review`, which stands: parent Implementation Decision 1 assigns that
 section by name, and the residual imprecision — the reader lands one section
 short of `§A · Task workspace of `.agents/project.md``, where task files
-actually live — is recorded here as chantier 5's, not repaired by this slice.
+actually live — ~~is recorded here as chantier 5's, not repaired by this
+  slice.~~ **Superseded 2026-09-09 19:40 CEST at `close` by `mason`:** it was
+  never chantier 5's — chantier 5 owns the *bare* `§B` / `§C` / `§F` / `§B1` /
+  `§H` citations, and this pointer is fully formed. Foreman ruling 7 amended
+  parent Implementation Decision 1 and the line is repaired in this slice's
+  follow-up commit, not parked. Same for the round-1 disposition of finding 7
+  recorded in the worklog above, which sent the residue to the same wrong
+  home.
 
 ## Diff-Review Findings
 

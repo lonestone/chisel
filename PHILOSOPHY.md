@@ -85,8 +85,8 @@ These are the beliefs chisel is built on:
   review, to dependent slices, and to re-runs.
 - **Think and type are different jobs.** Planning needs a frontier model
   and a human gate; typing from a complete persisted brief doesn't. The
-  **system design is the delegation boundary**: product, architecture and
-  the seams the work is tested through are never delegated; the program
+  **system design is the delegation boundary**: the architecture, the scope,
+  and the seams the work is tested through are never delegated; the program
   design and the typing go together, to a faster and cheaper model, and the
   diff is read by a fresh reviewer who never wrote it. (Validated in
   production — this repo's own slices were typed by a cheaper model from
@@ -129,11 +129,11 @@ Three situations, one discipline:
 
 On top of that discipline, chisel ships five presets — `chisel-default`,
 `chisel-light`, `chisel-supervised`, `chisel-auto` and `chisel-auto-light`.
-They differ in how much of the run stops at a human and how much a fresh
-reviewer checks instead. Which preset governs a run is the human's choice at
-that invocation, never the project's permanent setting. **Beads** — a
-committed status database — is a separate, additive axis: a beads-equipped
-repo stays fully usable under the default.
+They differ along two independent axes — how much of the run stops at a
+human, and how many fresh reviewers check the work. Which preset governs a
+run is the human's choice at that invocation, never the project's permanent
+setting. **Beads** — a committed status database — is a separate, additive
+axis: a beads-equipped repo stays fully usable under the default.
 
 **A factory is a possible destination, not a cell of this product.** We have
 not decided whether it belongs inside chisel at all, so we describe none of

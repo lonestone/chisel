@@ -15,7 +15,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
-In this repo, work is tracked as task files under the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`; completed tasks in the archive, default `/project-management/archive/`) — see §B · Coordination of `.agents/project.md`.
+In this repo, work is tracked as task files under the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`; completed tasks in the archive, default `/project-management/archive/`) — see §A · Task workspace of `.agents/project.md`.
 
 ## Process
 
