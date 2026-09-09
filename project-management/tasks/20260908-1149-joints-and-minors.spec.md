@@ -297,7 +297,10 @@ left to application, decided here so no session has to guess.
    `methodology.md:35` (the reserved word "ticket") → §B2;
    `wayfinder:30` (the issue tracker) → §B2;
    `slice-task:17` (where slices are published) → §B · Coordination;
-   `code-review:18` (where task files live) → §B · Coordination;
+   `code-review:18` (where task files live) → ~~§B · Coordination~~
+   §A · Task workspace (amended 2026-09-09 by the foreman at slice 02's
+   `diff-review`: the sentence names the task workspace, which §A defines;
+   §B holds only B1 and B2);
    `triage:48` → moot, the file leaves with F1.11.
    Each reference carries the section title with the number, which is the form
    rule 11 of the discipline already requires (rule 12 until slice 01 deleted
@@ -619,6 +622,15 @@ command against this working tree, not read from an earlier report; where the
 rule 11 and renumbered 12 to 11 (commit `65c505e`), so the citation now reads
 "rule 11", with the old number kept in parentheses. Found by slice 01's
 Inspector (finding Sp1); no ruling changed.
+
+**Foreman note, 2026-09-09 · `foreman`.** Implementation Decision 1 sent
+`code-review:18` to §B · Coordination. Slice 02 applied it verbatim; its
+Inspector (finding Sp3, escalation E-1) showed the sentence describes where
+the task workspace is declared, which is §A · Task workspace of
+`.agents/project.md`, while §B holds only B1 and B2. The decision is amended
+above, struck and dated, and the line is corrected in slice 02's follow-up
+commit. `slice-task:17` keeps §B · Coordination, so the `§B · Coordination`
+grep of `tracker-pointer-resolves` stays non-zero.
 
 ## Retrospective
 

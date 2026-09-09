@@ -352,3 +352,25 @@ escalations) leaves three points to the thread owner:
    and 2; this extends that rider inside the same file and is reported to
    the Owner as reversible.
    Escalation 4 is record only and stands confirmed.
+
+**Foreman rulings at `diff-review`, 2026-09-09 · `foreman`.** Inspector verdict
+Standards PASS, Spec PASS (work document, commit `e42f3b8`). Disposition:
+
+6. *S1, S2, Sp1, Sp2* (wording: the prototype cleanup sentence's closing
+   figure, "is" for "is settled in" in the zone-table bullet of both spec
+   templates, the lost independence claim of the two axes in
+   `PHILOSOPHY.md`, "product" for "scope" in the delegation-boundary belief)
+   go to the Mason in one follow-up commit, with the Inspector's fixes as
+   written.
+7. *Sp3 / E-1.* Ruled: parent Implementation Decision 1 is amended (struck and
+   dated) so `code-review:18` points at `§A · Task workspace of
+   .agents/project.md`, which the sentence itself describes. The Mason
+   corrects the line in the same follow-up commit. The work document's
+   parking of this under chantier 5 is wrong, as the Inspector said: chantier
+   5 owns bare citations; this one is fully formed and is fixed here.
+8. *E-2.* The `PHILOSOPHY.md` rider at 68-136 stands as ruled at `plan` and
+   `plan-review`; reported to the Owner as reversible.
+9. *E-3.* `PHILOSOPHY.md:75-78` "proposes a task file" is left standing: the
+   Inspector confirms "task file" survives as the collective term across the
+   socle and this repo's own front door, so the wording is loose, not false.
+   No action in this chantier.
