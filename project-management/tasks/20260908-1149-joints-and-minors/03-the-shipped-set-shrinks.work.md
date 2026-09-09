@@ -183,7 +183,7 @@ by one explicit `cp` at `bin/chisel.sh:279-281`. Nothing copies
 `socle/scripts/` as a tree, so a directory added there is not installed and no
 CLI change is needed.
 
-**3b · the page's own `socle/…` paths stay as they are, and that is a
+~~**3b · the page's own `socle/…` paths stay as they are, and that is a
 judgement, not an omission.** The page names `socle/agents/skills/` once
 (line 9) and `socle/scripts/sync-upstream.sh` three times (lines 11, 25, 41).
 They are **repo-side** paths, and correct: the page's own third paragraph says
@@ -197,7 +197,42 @@ that defect by construction. After this slice `grep -rln "socle/"
 socle/agents/` is empty; the only remaining carrier inside `socle/` is
 `socle/templates/AGENTS-block.md:10`, which is slice 02's file and correct as
 written (it tells a reader of an equipped repo where to edit the block *in the
-chisel repo*).
+chisel repo*).~~
+
+**3b · the page's own `socle/…` paths stay as they are, and that is a
+judgement, not an omission.** Amended 2026-09-09 21:14 CEST by `mason` at
+`type`, applying `plan-review` findings 1 and 2; the struck version above
+mis-cited the paragraph and overstated the carrier claim. The page names
+`socle/agents/skills/` once (line 9) and `socle/scripts/sync-upstream.sh`
+three times (lines 11, 25, 41). They are **repo-side** paths, and correct: the
+page's **second body paragraph, lines 15-18**, says "Run this from the chisel
+repo, not from an equipped project", the script it drives really is at
+`socle/scripts/sync-upstream.sh`, and after the move the page is maintainer
+tooling for this repo that no equipped project receives. So the installed-form
+rule does not bind it any more. It bound it *before* the move, and was being
+broken: it was the only page under `socle/agents/` — the pages tree
+`chisel init` copies wholesale — carrying repo-side paths, which resolve
+nowhere in an equipped repo. The move retires that defect by construction.
+
+The carrier claim, scoped to what it can actually support: after this slice
+`grep -rln "socle/" socle/agents/` is empty, so **no page of the copied tree
+carries a repo-side path**. Three files inside `socle/` still do, and all
+three are correct where they sit — measured after the move:
+
+| Carrier | Why it is right |
+|---|---|
+| `socle/scripts/sync-upstream.sh` | the script itself, repo-side maintainer tooling, never installed |
+| `socle/scripts/sync-upstream/SKILL.md` | the page this slice moves, now repo-side beside that script |
+| `socle/templates/AGENTS-block.md:10` | slice 02's file; it tells a reader of an equipped repo where to edit the block *in the chisel repo* |
+
+The two `socle/scripts/` carriers are **correctly repo-side**: neither is in
+the set `chisel init` copies, so neither can resolve nowhere in an equipped
+repo. The third one's text *is* shipped — `bin/chisel.sh:48` reads
+`$SOCLE/templates/AGENTS-block.md` and writes the block into the equipped
+repo's `AGENTS.md`, which is why it carries no line in the golden fixture yet
+still reaches a reader — and its repo-side path is deliberate there: it points
+a reader of an equipped repo at the file to edit in the chisel repo. So the
+claim that holds is about `socle/agents/`, not about shipped text in general.
 
 **3c · the fixture.** Lines 58-59 as measured today.
 
@@ -327,6 +362,20 @@ fixture edit that failed to land.
   two untracked Owner files `project-management/review-360-notes.md` and
   `project-management/review-360-analysis.md` are never read, staged or
   committed.
+- No edit to the surviving mentions of the two deleted skills that live
+  outside `socle/`, the lock and the fixture. Added 2026-09-09 21:14 CEST by
+  `mason` at `type`, applying `plan-review` finding 3:
+  `project-management/vendored-skills-audit.md`,
+  `project-management/CHANGELOG.md`,
+  `project-management/review-360-decisions.md` and the archived task files
+  still name `grill-with-docs` and `triage`. They are dated records or Owner
+  files — a record of what was true when it was written is not made false by a
+  later removal, and rewriting one would falsify the history the criteria are
+  checked against. The criterion greps are scoped to `socle/`,
+  `upstream.lock.json` and `test/fixtures/golden-tree.txt`, so none of them
+  sees these files. The audit's present-tense skill count gets a dated
+  one-line addendum from the foreman at the parent's `close` (escalation E-2,
+  ruled 2026-09-09), alongside the CHANGELOG entry.
 
 ### Open questions
 
@@ -383,18 +432,104 @@ nil, and this slice delivers cleanly without it.
   2026-09-08 and are recorded above, dated and signed, with the spec left
   untouched. Nothing typed in any carrier.
 
+- **2026-09-09 21:14 CEST · `mason` · `type`.** Fresh Mason on a resumed
+  thread: the Mason that wrote the design above is unreachable, so this
+  session built from the persisted pair and nothing else. Read the role
+  contract (`socle/agents/profiles/mason.md`), `socle/agents/discipline.md`,
+  the `type` step of `socle/agents/formulas/chisel-auto.formula.toml`, this
+  repo's `AGENTS.md`, the slice spec in full including its Notes to the last
+  entry (2026-09-09, foreman: four moved figures and the rulings that bind
+  this slice), and this program design in full. Re-measured every
+  before-count against the tree at HEAD `ce5beef` before touching anything:
+  **all fifteen rows and the suite baseline matched the design exactly**, so
+  no blocker was raised and nothing was improvised. Executed the three edits
+  with the design's commands verbatim — no substitutions, no dry run needed
+  since the design records that all five `sed` commands were already dry-run
+  at `plan` on scratch copies. Three commits, one per removal or move, each
+  carrying its own fixture lines and each verified green before it was made;
+  then this document. Applied the four `plan-review` findings while typing:
+  1 and 2 rewrote Edit 3b (struck version kept above), 3 added a line to
+  "What this slice does NOT do", 4 is recorded in Notes & Snippets. Staging
+  named explicit paths throughout; `git add -A` and `git add .` were never
+  used and the two untracked Owner files were never read, staged or committed.
+
+  **Commits.**
+
+  | Commit | What it did |
+  |---|---|
+  | `6a8a457` | Unship the `grill-with-docs` skill — page deleted, lock entry removed, 2 fixture lines removed |
+  | `3f85960` | Unship the `triage` skill — three pages deleted, side-lane row removed, lock entry removed, 4 fixture lines removed |
+  | `beb397f` | Move the `sync-upstream` page beside the script it drives — `git mv`, 2 fixture lines removed |
+  | this one | Verification and the after-count roll-call in this document |
+
+  **Criterion roll-call — every command re-run against the finished tree.**
+
+  | Criterion / check | Before | After | Expected |
+  |---|---|---|---|
+  | `ls -d socle/agents/skills/sync-upstream` | exists, one file `SKILL.md` | **does not exist** | gone |
+  | the page beside its script | absent | `socle/scripts/sync-upstream/SKILL.md` | present |
+  | `grep -n "sync-upstream" test/fixtures/golden-tree.txt` | 2 (lines 58, 59) | **0** | 0 |
+  | `grep -rn "grill-with-docs" socle/ upstream.lock.json test/fixtures/golden-tree.txt` | 6 | **0** | 0 |
+  | `grep -rn "triage" socle/ upstream.lock.json test/fixtures/golden-tree.txt` | 40 | **0** | 0 |
+  | `grep -rn "Tracker section" socle/` | 1 (`triage/SKILL.md:48`) | **0** | 0 |
+  | `PATH="/opt/homebrew/bin:$PATH" bash test/run.sh` | 9 / 94 / 0 | **9 scenarios, 94 assertions, 0 failed** | unchanged |
+  | `wc -l test/fixtures/golden-tree.txt` | 98 | **90** | 90 |
+  | lock entry count | 16 | **14** | 14 |
+  | lock keys with no directory | `[]` | **`[]`** | `[]` |
+  | `git diff --check` | clean | **clean** | clean |
+  | `grep -rln "socle/" socle/agents/` | 1 file (`skills/sync-upstream/SKILL.md`) | **empty** | empty |
+  | the `prototype` side-lane row | line 93 | **line 93, byte-intact** | survives |
+  | Side lanes table rows | 6 | **5** | 5 |
+  | 600-line cap figure | 592 | **592** | 592, unchanged |
+
+  **Per-step figures, each measured before its commit.** After Edit 1: fixture
+  **96** lines, lock **15** entries and parsing, suite 9 / 94 / 0, parse check
+  PASS, integrity green. After Edit 2: fixture **92**, lock **14** and parsing
+  with `[]` keys missing a directory, suite 9 / 94 / 0, parse check PASS,
+  integrity green, the `prototype` row untouched and the table at five rows.
+  After Edit 3: fixture **90**, lock **14**, suite 9 / 94 / 0, parse check
+  PASS, integrity green.
+
+  **The rename shape, which is what `git mv` bought.** `git status --short -M`
+  read `R  socle/agents/skills/sync-upstream/SKILL.md ->
+  socle/scripts/sync-upstream/SKILL.md`; the commit's own summary reads
+  `rename socle/{agents/skills => scripts}/sync-upstream/SKILL.md (100%)`, and
+  `git diff -M --stat` shows it as `socle/{agents/skills =>
+  scripts}/sync-upstream/SKILL.md | 0` — a pure rename, zero content lines.
+
+  **The fixture diff is deletions only.** Over the slice's whole range
+  (`ce5beef..HEAD`) `git diff -- test/fixtures/golden-tree.txt` holds **8 `-`
+  lines and 0 `+` lines**. The slice's diffstat is 8 files, **460 deletions,
+  0 insertions**.
+
+  **`tracker-pointer-resolves`, both halves, verified rather than assumed.**
+  First half: the grep is empty now that `triage/SKILL.md` is gone. Second
+  half: all four surviving citers name a section that exists —
+  `methodology.md:35` and `wayfinder/SKILL.md:30` → `§B2 · Link to an external
+  tracker` (`socle/agents/project.md.tpl:103`), `slice-task/SKILL.md:17` →
+  `§B · Coordination` (line 43), `code-review/SKILL.md:18` → `§A · Task
+  workspace` (line 14). A fifth citer surfaced in the same grep and also
+  resolves: `slice-task/SKILL.md:92` → `§A · Task workspace`. No edit was
+  needed or made in any of those files.
+
+  **Nothing decided beyond the design.** No blocker, no deviation, no file
+  touched outside the design's map, and no open question closed by this
+  session: open questions 1 and 2 were both answered at `plan-review` and this
+  session applied those answers — three green commits, and the moved page's
+  new path written nowhere.
+
 ## Implementation Checkboxes
 
-- [ ] Edit 1 — `grill-with-docs`: delete the directory, remove its
+- [x] Edit 1 — `grill-with-docs`: delete the directory, remove its
       `upstream.lock.json` entry, remove its two `golden-tree.txt` lines —
       one commit, suite green
-- [ ] Edit 2 — `triage`: delete the directory, remove the side-lane row at
+- [x] Edit 2 — `triage`: delete the directory, remove the side-lane row at
       `socle/agents/discipline.md:97`, remove its `upstream.lock.json` entry,
       remove its four `golden-tree.txt` lines — one commit, suite green
-- [ ] Edit 3 — `sync-upstream`: `git mv` to `socle/scripts/sync-upstream`,
+- [x] Edit 3 — `sync-upstream`: `git mv` to `socle/scripts/sync-upstream`,
       remove its two `golden-tree.txt` lines — one commit, rename shape
       verified, suite green
-- [ ] Edit 4 — verification: every criterion command re-run with its
+- [x] Edit 4 — verification: every criterion command re-run with its
       after-count recorded beside its before-count; `wc -l` 90; lock parses to
       14 and every key still has its directory; rename shows as `R`;
       `git diff --check` clean; full suite 9 scenarios, 94 assertions, 0
@@ -454,6 +589,20 @@ expected `-` lines, at 39-40, 58-59 and 64-67; the Side lanes table keeps five
 rows with the `prototype` row untouched at line 93 and the closing paragraph
 intact. Nothing was written in the repo. The commands in the design are
 therefore the ones that were tested, not their approximations.
+
+**A stale entry count in `socle/scripts/sync-upstream.sh`, left as is.**
+Recorded 2026-09-09 21:14 CEST by `mason` at `type`, applying `plan-review`
+finding 4. Line 144 of that script carries the comment "15 lock entries
+usually share one repo — don't hit the network 15 times". The lock held
+**16** entries when this slice started and holds **14** now, so the comment
+was already wrong before the slice and is wrong by a different margin after
+it. It is a comment inside a loop guard, not a count the script reads: the
+`ensure_cache` fetch-once marker works whatever the number is, so nothing
+behaves differently. `socle/scripts/sync-upstream.sh` is on this slice's
+files-to-avoid map and the spec forbids editing it, so it is **left exactly as
+it is** — written down here so a reviewer reading 14 entries against a comment
+saying 15 does not mistake a pre-existing inaccuracy for damage this slice
+did. Worth one line at a later pass; out of scope for this one.
 
 **The CHANGELOG entry is task-closing, and that is settled.** The parent's
 Deliverables ask for a dated entry recording the pass, the three removals and
