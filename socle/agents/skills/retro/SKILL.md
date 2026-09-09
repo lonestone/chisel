@@ -114,8 +114,8 @@ context pressure is lowest.
 
 - `AGENTS.md` / `CLAUDE.md`: pushed into every session's context. Use
   sparingly — mostly navigation pointers to other files.
-- `.agents/discipline.md`: the ambient core, rendered into the AGENTS block.
-  Same sparing rule.
+- `.agents/discipline.md`: the ambient core, which the AGENTS block points a
+  reader at. Same sparing rule.
 - Coding standards: read during review, not implementation. Add navigation
   pointers to docs folders if a standards file grows past roughly 1,000
   lines.

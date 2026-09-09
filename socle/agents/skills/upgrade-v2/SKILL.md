@@ -9,11 +9,11 @@ disable-model-invocation: true
 A repo equipped with chisel v1 carries a normative layer that v2 retired: three
 rule files (`.agents/rules/task-*.md`) and a visual guide
 (`.agents/workflows.md`).
-v2 replaces them with an ambient discipline core, three workflow presets and
-three role profiles, and it renames the narrative journal. `chisel update`
-REFUSES such a repo by design — updating it would leave two normative
-discourses side by side, and `chisel check` would report neither. This skill is
-the way through, and it is the only one.
+v2 replaces them with an ambient discipline core, the workflow presets and the
+role profiles, and it renames the narrative journal. `chisel update` REFUSES
+such a repo by design — updating it would leave two normative discourses side
+by side, and `chisel check` would report neither. This skill is the way
+through, and it is the only one.
 
 It is a migration, not a command: **you move one thing at a time and the human
 validates each move**. Nothing here is batched, and nothing is done to a repo
