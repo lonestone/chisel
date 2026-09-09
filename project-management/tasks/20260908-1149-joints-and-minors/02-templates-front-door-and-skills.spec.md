@@ -168,7 +168,8 @@ reviewer judges deviations a posteriori.
   defaults and asks nothing; `chisel-setup` is the questionnaire, run
   afterwards, that fills `.agents/project.md`) and the stale gradient
   paragraph at lines 19-31.
-- `PHILOSOPHY.md` — E1 (the factory sentence at line 134) and the preset
+- `PHILOSOPHY.md` — range extended to 68-136 by the foreman rulings of
+  2026-09-09 in Notes — E1 (the factory sentence at line 134) and the preset
   count with auto's framing (lines 126-142).
 - `AGENTS.md` — the plan's persist destination and the invocation vocabulary,
   lines 10-13.
@@ -208,8 +209,11 @@ unreviewable.
   `grep -rn "§B · Coordination" socle/` and
   `grep -rn "§B2 · Link to an external tracker" socle/` must be non-zero.
 - `diff` the two spec templates against each other and the two work templates
-  against each other: the only surviving difference must be the methodology
-  link's relative form.
+  against each other: the only surviving difference must be ~~the methodology
+  link's relative form~~ the relative form of the one doctrine pointer each
+  template keeps (install-relative in `socle/templates/`, repo-relative in the
+  `project-management/` mirror) — amended 2026-09-09 at `plan-review`, see
+  the foreman rulings in Notes.
 - Confirm `**Status:** [Status Emoji & Text]` still stands inside the fenced
   Spec Document Template block of both spec templates.
 - `PATH=/opt/homebrew/bin:$PATH bash test/run.sh` — expect 9 scenarios, 94
@@ -321,3 +325,30 @@ thread owner under the Owner's standing go:
    source, repo-relative in the mirror) if the Architect keeps the Mason's
    recommendation to reinstate one. Parent Implementation Decision 7 is
    read the same way.
+
+**Foreman rulings at `plan-review`, 2026-09-09 · `foreman`.** The Architect's
+round-1 report (SEND BACK, eight findings, two open questions answered, four
+escalations) leaves three points to the thread owner:
+
+3. *Escalation 1, the mirror-diff bullet.* Ruling 2 above read around a
+   wording that F1.8 makes false. With the Architect's answer to open
+   question 2 (one doctrine pointer reinstated in each work template, one
+   line, install-relative in the source and repo-relative in the mirror) the
+   assertion becomes true again for both pairs. The Verification bullet is
+   amended accordingly, struck and dated, above.
+4. *Escalation 2, open question 1.* Ruled IN: `socle/agents/skills/upgrade-v2/SKILL.md:12`
+   drops the count of the presets in the same clause where F1.2 drops the
+   count of the profiles. One clause, a file the map already assigns, no
+   criterion added; a false count of the presets is the defect
+   `philosophy-presets-current` repairs one file over.
+5. *Escalation 3, finding 8.* Ruled IN: `PHILOSOPHY.md:68-84` (the 🤖 zone
+   and "persisted into the slice file", the retired single-file model) and
+   `PHILOSOPHY.md:89-90` ("with the planner reviewing the diff", which
+   contradicts the Architect profile: the Inspector reviews the diff and is
+   never its author) ride along with 112-136, for the same reason ruling 1
+   gave: the same defect, in a file the slice already opens, small. The
+   `PHILOSOPHY.md` range in the Files map is now 68-136. The Owner approved
+   this slice's README and PHILOSOPHY riders as staleness left by chantiers 1
+   and 2; this extends that rider inside the same file and is reported to
+   the Owner as reversible.
+   Escalation 4 is record only and stands confirmed.
