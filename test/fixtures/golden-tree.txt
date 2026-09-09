@@ -53,8 +53,6 @@
 .agents/skills/retro/SKILL.md
 .agents/skills/slice-task
 .agents/skills/slice-task/SKILL.md
-.agents/skills/sync-upstream
-.agents/skills/sync-upstream/SKILL.md
 .agents/skills/tdd
 .agents/skills/tdd/SKILL.md
 .agents/skills/tdd/mocking.md
