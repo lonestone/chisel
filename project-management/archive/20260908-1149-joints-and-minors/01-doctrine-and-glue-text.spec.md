@@ -19,7 +19,7 @@ spawns are fresh) written where the Foreman reads it. Nothing gains a
 function; every change is a one-clause edit.
 
 Full criterion wording lives in the parent,
-`project-management/tasks/20260908-1149-joints-and-minors.spec.md`,
+`project-management/archive/20260908-1149-joints-and-minors.spec.md`,
 §Acceptance Criteria. What follows is this slice's share, with each check
 re-run against this working tree on 2026-09-08 and its count recorded.
 
@@ -176,7 +176,7 @@ This slice does not touch that row.
 ## References
 
 - Parent spec:
-  `project-management/tasks/20260908-1149-joints-and-minors.spec.md` —
+  `project-management/archive/20260908-1149-joints-and-minors.spec.md` —
   §Scope (the per-ruling carrier table), §Acceptance Criteria (full wording),
   §Architecture (why `methodology.md`'s five edits stay in one slice),
   §Implementation Decisions 1, 2, 5, 6, 9, 10, 11, 12, and the slice-01 entry

@@ -1,7 +1,7 @@
 # 02 — Templates, front door and skills — work
 
 Created by `mason` at `plan`, 2026-09-09. Spec:
-`project-management/tasks/20260908-1149-joints-and-minors/02-templates-front-door-and-skills.spec.md`.
+`project-management/archive/20260908-1149-joints-and-minors/02-templates-front-door-and-skills.spec.md`.
 
 ## Program Design
 

@@ -486,7 +486,7 @@ suite fixture, so keeping it last means one fixture change reviewed once.
 ## Deliverables
 
 - [x] Three slice spec documents under
-      `project-management/tasks/20260908-1149-joints-and-minors/`, authored at
+      `project-management/archive/20260908-1149-joints-and-minors/`, authored at
       the `slice-task` step from this parent, each gaining its own work
       document at `plan`.
 - [x] The socle repaired against rulings A1, A3, A4, B1, E1, E2 and F1

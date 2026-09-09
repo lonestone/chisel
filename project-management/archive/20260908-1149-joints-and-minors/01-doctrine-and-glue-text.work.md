@@ -1,7 +1,7 @@
 # 01 — Doctrine and glue text — work
 
 Created by `mason` at `plan`, 2026-09-08. Spec:
-`project-management/tasks/20260908-1149-joints-and-minors/01-doctrine-and-glue-text.spec.md`.
+`project-management/archive/20260908-1149-joints-and-minors/01-doctrine-and-glue-text.spec.md`.
 
 ## Program Design
 

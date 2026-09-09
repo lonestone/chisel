@@ -18,7 +18,7 @@ discipline is rendered into the AGENTS block. Nothing gains a function; every
 change is a one-clause edit.
 
 Full criterion wording lives in the parent,
-`project-management/tasks/20260908-1149-joints-and-minors.spec.md`,
+`project-management/archive/20260908-1149-joints-and-minors.spec.md`,
 §Acceptance Criteria. What follows is this slice's share, with each check
 re-run against this working tree on 2026-09-08 and its count recorded.
 
@@ -227,7 +227,7 @@ unreviewable.
 ## References
 
 - Parent spec:
-  `project-management/tasks/20260908-1149-joints-and-minors.spec.md` —
+  `project-management/archive/20260908-1149-joints-and-minors.spec.md` —
   §Scope (the per-ruling carrier table and the two front-door riders ruled
   in), §Acceptance Criteria (full wording), §Implementation Decisions 1, 2, 7,
   11, 12, and the slice-02 entry of §Slices & Dependencies.

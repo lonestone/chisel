@@ -25,7 +25,7 @@ runner, library or scenario file is touched. The fixture changes by deletion
 only.
 
 Full criterion wording lives in the parent,
-`project-management/tasks/20260908-1149-joints-and-minors.spec.md`,
+`project-management/archive/20260908-1149-joints-and-minors.spec.md`,
 §Acceptance Criteria. What follows is this slice's share, with each check
 re-run against this working tree on 2026-09-08 and its count recorded.
 
@@ -182,7 +182,7 @@ named anywhere in the suite except the golden fixture.
 ## References
 
 - Parent spec:
-  `project-management/tasks/20260908-1149-joints-and-minors.spec.md` —
+  `project-management/archive/20260908-1149-joints-and-minors.spec.md` —
   §Scope (rows A3 (2), F1.10, F1.11), §Acceptance Criteria (full wording),
   §Seams ("Does a criterion need a suite change?" — the eight lines, and why
   this is the only slice allowed under `test/`), §Implementation Decisions 3

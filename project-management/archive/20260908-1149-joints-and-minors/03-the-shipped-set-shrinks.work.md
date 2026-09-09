@@ -1,7 +1,7 @@
 # 03 — The shipped set shrinks — work
 
 Created by `mason` at `plan`, 2026-09-09. Spec:
-`project-management/tasks/20260908-1149-joints-and-minors/03-the-shipped-set-shrinks.spec.md`.
+`project-management/archive/20260908-1149-joints-and-minors/03-the-shipped-set-shrinks.spec.md`.
 
 ## Program Design
 
@@ -692,7 +692,7 @@ Everything below was re-run against the tree, not read from this document.
   threshold of a finding.
 
 **S1 — non-blocking.** File:
-`project-management/tasks/20260908-1149-joints-and-minors/03-the-shipped-set-shrinks.work.md`,
+`project-management/archive/20260908-1149-joints-and-minors/03-the-shipped-set-shrinks.work.md`,
 the "The fixture diff is deletions only" paragraph of the `type` worklog
 entry. Defect: the paragraph names the range `ce5beef..HEAD` and then states
 "The slice's diffstat is 8 files, 460 deletions, 0 insertions". That figure is
