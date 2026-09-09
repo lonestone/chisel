@@ -9,6 +9,13 @@ declared verbatim forks, five declare an adaptation. The four remaining skills
 in the directory — `chisel-beads`, `chisel-setup`, `sync-upstream`,
 `upgrade-v2` — are chisel's own and are outside this audit.
 
+**Addendum, 2026-09-09 · `foreman`.** The paragraph above is the 2026-08-27
+state. Chantier 3 (`project-management/archive/20260908-1149-joints-and-minors.spec.md`)
+deleted `grill-with-docs` and `triage` and moved `sync-upstream` to
+`socle/scripts/`: fourteen skills now declare an `x-upstream` lineage, and the
+directory's own are three — `chisel-beads`, `chisel-setup`, `upgrade-v2`. The
+findings below on the two deleted skills stand as a record.
+
 Each was read in full, with its disclosed reference files, and judged against
 `socle/agents/methodology.md`, `socle/agents/discipline.md`, the five profiles
 and their `README.md`, the five formulas, `socle/templates/000-task-file-template.md`

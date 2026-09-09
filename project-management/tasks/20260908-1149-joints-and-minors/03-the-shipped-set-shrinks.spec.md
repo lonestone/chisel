@@ -1,6 +1,6 @@
 # 03 — The shipped set shrinks
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete (2026-09-09)
 **Blocked by:** None — no slice gates this one technically. **Run it last.** It
 removes two carriers slices 01 and 02 would otherwise rename, and it is the
 only slice that may edit anything under `test/`, so keeping it last means the
@@ -33,7 +33,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
 
 **Owned in full by this slice.**
 
-- [ ] **sync-upstream-unshipped** — `socle/agents/skills/sync-upstream/` does
+- [x] **sync-upstream-unshipped** — `socle/agents/skills/sync-upstream/` does
       not exist, the page sits beside its script under `socle/scripts/`, and
       `grep -n "sync-upstream" test/fixtures/golden-tree.txt` returns nothing.
       *Today:* the directory exists and holds one file, `SKILL.md`;
@@ -45,14 +45,14 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       keys are the sixteen Pocock-forked skills, and the four skill
       directories with no entry are `chisel-beads`, `chisel-setup`,
       `sync-upstream` and `upgrade-v2`.
-- [ ] **grill-with-docs-gone** — `grep -rn "grill-with-docs" socle/
+- [x] **grill-with-docs-gone** — `grep -rn "grill-with-docs" socle/
       upstream.lock.json test/fixtures/golden-tree.txt` returns nothing.
       *Today:* **6** — `socle/agents/skills/grill-with-docs/SKILL.md:2` (its
       `name`) and `:7` (its `x-upstream` path); `upstream.lock.json:22` and
       `:24` (the entry, lines 22-26); `test/fixtures/golden-tree.txt:39` and
       `:40`. The directory holds exactly one file. Zero inbound references
       from any other socle file, as ruling F1.10 states — verified.
-- [ ] **triage-unshipped** — `grep -rn "triage" socle/ upstream.lock.json
+- [x] **triage-unshipped** — `grep -rn "triage" socle/ upstream.lock.json
       test/fixtures/golden-tree.txt` returns nothing.
       *Today:* **40**, and all forty leave with the four edits below: **33**
       inside the three files of `socle/agents/skills/triage/` (`SKILL.md`,
@@ -63,7 +63,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       The standing intention — `triage` is worth revisiting when a real team
       tracker exists — is recorded in the CHANGELOG entry at the task's
       `close`, not here. See Notes.
-- [ ] **suite-green** — `bash test/run.sh`, run with a `python3` that has
+- [x] **suite-green** — `bash test/run.sh`, run with a `python3` that has
       `tomllib`, reports 0 failed, with the "integrity: no pointer into thin
       air" scenario passing.
       *Today:* `PATH=/opt/homebrew/bin:$PATH bash test/run.sh` → **9
@@ -75,7 +75,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
 
 **Shared — this slice removes the last carrier but cannot close it alone.**
 
-- [ ] **tracker-pointer-resolves** (its fifth and last carrier) —
+- [x] **tracker-pointer-resolves** (its fifth and last carrier) —
       `socle/agents/skills/triage/SKILL.md:48` leaves with its file under
       ruling F1.11, so no rename is needed there. Per parent Implementation
       Decision 1 that carrier is "moot".
@@ -278,3 +278,14 @@ reason.
   in `project-management/vendored-skills-audit.md` gets a dated one-line
   addendum from the foreman at the parent's `close`, alongside the CHANGELOG
   entry. Both reported to the Owner as reversible.
+- 2026-09-09 — **foreman** — Closed. Typed in three content commits
+  (`6a8a457`, `3f85960`, `beb397f`) plus the work document (`232e016`) from
+  the design at `9ae6743`; fixed point `ce5beef`; Inspector at `4828bca`:
+  Standards PASS, Spec PASS, every commit checked out green in a scratch
+  worktree. Fixture 98 → 90, lock 16 → 14, suite 9 scenarios, 94 assertions,
+  0 failed. `tracker-pointer-resolves` closes in both halves. Findings: S1, a
+  diffstat in the worklog labelled with the range up to HEAD while its figures
+  are those of the code range — left standing, the figures themselves are
+  right; Sp1, the audit addendum of E-2 must cover the two listed skills and
+  `sync-upstream` as well as the count — applied in the addendum written at
+  the parent's `close`.

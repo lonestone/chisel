@@ -5,6 +5,34 @@ ships.
 
 ---
 
+## 25. 2026-09-09 — Joints and minors: the socle stops contradicting the 360 rulings, and the shipped set shrinks
+
+Chantier 3 closes, three slices in two days. The doctrine, the glue template,
+the profiles, the formulas, the four task templates, the front door and six
+skills are aligned with the rulings the 360 review had already settled (A1,
+A3, A4, B1, E1, E2, F1): the tracker pointers name sections that exist
+(`§A · Task workspace`, `§B · Coordination`, `§B2 · Link to an external
+tracker` of `.agents/project.md`); the SDD-bench pointer and the update
+redirect rule are gone (the discipline has 11 rules); the model claim is
+scoped to the socle's own text; the tiers are prose; the zone tables name the
+zone's owner; `chisel init` asks nothing and `chisel-setup` is the
+questionnaire; the factory is a possible destination, not a product cell; the
+presets are five and counted nowhere; the role-reuse rule (judging roles
+fresh, the Mason reused within a live thread) is stated where the Foreman
+reads it; a consumed prototype branch is deleted at close, written once.
+
+Three removals: `grill-with-docs` and `triage` leave the socle (`triage` stays
+an intention, to return when an external tracker is wired), and
+`sync-upstream` leaves the shipped set for `socle/scripts/`, beside the script
+it drives. Golden tree 98 → 90 lines, upstream lock 16 → 14 entries, suite
+unchanged at 9 scenarios, 94 assertions, 0 failed.
+
+First chantier run end to end on the two-document model: every work document
+was created by its Mason at `plan`, every reviewer was a fresh session, and
+every correction was struck and dated in place. Task record archived at
+`project-management/archive/20260908-1149-joints-and-minors.spec.md` with its
+slice folder.
+
 ## 24. 2026-09-02 — The split ships: one task file becomes a spec and a work document
 
 Chantier 2 closes, five slices in one day. A task is now two files: the

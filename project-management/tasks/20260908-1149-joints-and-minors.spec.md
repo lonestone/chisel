@@ -1,6 +1,6 @@
 # Joints and minors pass
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete (2026-09-09)
 
 ---
 
@@ -149,76 +149,76 @@ and is machine-verifiable. Every grep below was RUN against this repo on
 amended criterion is struck and its dated replacement is added below it —
 never erased.
 
-- [ ] **tracker-pointer-resolves** — `grep -rn "Tracker section" socle/`
+- [x] **tracker-pointer-resolves** — `grep -rn "Tracker section" socle/`
       returns nothing, and every surviving citer names a section that exists:
       `§B · Coordination` of `.agents/project.md`, or `§B2 · Link to an
       external tracker`.
-- [ ] **wayfinding-notes-gone** — `grep -rn "Wayfinding operations" socle/`
+- [x] **wayfinding-notes-gone** — `grep -rn "Wayfinding operations" socle/`
       returns nothing.
-- [ ] **architecture-index-declared** — §D · Documentation reference of
+- [x] **architecture-index-declared** — §D · Documentation reference of
       `socle/agents/project.md.tpl` declares an "Architecture index" field
       whose default is `doc/architecture/ARCHITECTURE.md`.
-- [ ] **sdd-bench-pointer-gone** — `grep -rn "SDD-bench" socle/` returns
+- [x] **sdd-bench-pointer-gone** — `grep -rn "SDD-bench" socle/` returns
       nothing.
-- [ ] **sync-upstream-unshipped** — `socle/agents/skills/sync-upstream/` does
+- [x] **sync-upstream-unshipped** — `socle/agents/skills/sync-upstream/` does
       not exist, the page sits beside its script under `socle/scripts/`, and
       `grep -n "sync-upstream" test/fixtures/golden-tree.txt` returns nothing.
-- [ ] **readme-init-truthful** — `README.md` claims no question for `chisel
+- [x] **readme-init-truthful** — `README.md` claims no question for `chisel
       init`, and names `chisel-setup` as the questionnaire that fills
       `.agents/project.md` afterwards.
-- [ ] **readme-gradient-current** — `README.md` no longer places program
+- [x] **readme-gradient-current** — `README.md` no longer places program
       design or working notes inside the spec file, and no longer persists the
       plan into it: `grep -n "persists the plan into the spec file" README.md`
       returns nothing.
-- [ ] **template-zone-owner** — in both `socle/templates/000-template.spec.md`
+- [x] **template-zone-owner** — in both `socle/templates/000-template.spec.md`
       and `project-management/000-template.spec.md`: `grep -c "Human, always"`
       is 0, and each file names "Zone ownership" of `.agents/methodology.md`
       at least once.
-- [ ] **factory-claim-degraded** — `grep -rn "Factory = auto" socle/
+- [x] **factory-claim-degraded** — `grep -rn "Factory = auto" socle/
       PHILOSOPHY.md README.md` returns nothing, and the surviving sentence in
       each of the two files presents the factory as a possible destination,
       perhaps outside chisel.
-- [ ] **philosophy-presets-current** — `grep -n "Three presets"
+- [x] **philosophy-presets-current** — `grep -n "Three presets"
       PHILOSOPHY.md` returns nothing; the five presets are named, and auto is
       not described as a project permission.
-- [ ] **tiers-prose-only** — `socle/agents/profiles/README.md` states that a
+- [x] **tiers-prose-only** — `socle/agents/profiles/README.md` states that a
       tier is resolved at read time by the delegator at spawn, and that a
       generated definition carries no model field.
-- [ ] **model-claim-scoped** — `grep -n "Nothing in this socle names a model
+- [x] **model-claim-scoped** — `grep -n "Nothing in this socle names a model
       or a vendor" socle/agents/methodology.md` returns nothing, and the
       replacement sentence restricts the claim to models and tiers.
-- [ ] **profiles-uncounted** — `grep -rn "three role profiles" socle/`
+- [x] **profiles-uncounted** — `grep -rn "three role profiles" socle/`
       returns nothing.
-- [ ] **prototype-capture-aligned** — `grep -n "delete the code"
+- [x] **prototype-capture-aligned** — `grep -n "delete the code"
       socle/agents/discipline.md` returns nothing; the prototype side-lane row
       names the throwaway branch and its pointer; and the close-time cleanup
       of consumed prototype branches is written in exactly one place.
-- [ ] **retro-block-pointer-accurate** — `grep -rn "rendered into the AGENTS
+- [x] **retro-block-pointer-accurate** — `grep -rn "rendered into the AGENTS
       block" socle/` returns nothing.
-- [ ] **template-sediment-gone** — none of the four template files
+- [x] **template-sediment-gone** — none of the four template files
       (`socle/templates/000-template.spec.md`, `000-template.work.md`, and
       both `project-management/` mirrors) carries a `**Status:**` or
       `**Version:**` header line of its own.
-- [ ] **rewrite-label-selfstanding** — `grep -rn "rewrite label"
+- [x] **rewrite-label-selfstanding** — `grep -rn "rewrite label"
       socle/agents/formulas/` returns nothing, and exactly one socle file
       carries the rule, stated so that it is understood without its original
       context.
-- [ ] **update-redirect-rule-gone** — `socle/agents/discipline.md` has 11
+- [x] **update-redirect-rule-gone** — `socle/agents/discipline.md` has 11
       numbered rules, none of them the `update` redirect, and
       `grep -c "upgrade-v2" bin/chisel.sh` is at least 1.
-- [ ] **grill-with-docs-gone** — `grep -rn "grill-with-docs" socle/
+- [x] **grill-with-docs-gone** — `grep -rn "grill-with-docs" socle/
       upstream.lock.json test/fixtures/golden-tree.txt` returns nothing.
-- [ ] **triage-unshipped** — `grep -rn "triage" socle/ upstream.lock.json
+- [x] **triage-unshipped** — `grep -rn "triage" socle/ upstream.lock.json
       test/fixtures/golden-tree.txt` returns nothing.
-- [ ] **work-on-invocation-current** — `grep -rn "work on slice <file>\|work
+- [x] **work-on-invocation-current** — `grep -rn "work on slice <file>\|work
       on task <file>" socle/ AGENTS.md` returns nothing; every invocation
       names `<spec-document>`.
-- [ ] **agents-md-persist-destination** — this repo's `AGENTS.md` names the
+- [x] **agents-md-persist-destination** — this repo's `AGENTS.md` names the
       work document as where the plan is persisted.
-- [ ] **role-reuse-in-socle** — `socle/agents/profiles/foreman.md` states
+- [x] **role-reuse-in-socle** — `socle/agents/profiles/foreman.md` states
       ruling G16: judging roles are spawned fresh, the Mason is reused from
       plan through typing within a live thread.
-- [ ] **suite-green** — `bash test/run.sh`, run with a `python3` that has
+- [x] **suite-green** — `bash test/run.sh`, run with a `python3` that has
       `tomllib`, reports 0 failed, with the "integrity: no pointer into thin
       air" scenario passing.
 
@@ -485,21 +485,21 @@ suite fixture, so keeping it last means one fixture change reviewed once.
 
 ## Deliverables
 
-- [ ] Three slice spec documents under
+- [x] Three slice spec documents under
       `project-management/tasks/20260908-1149-joints-and-minors/`, authored at
       the `slice-task` step from this parent, each gaining its own work
       document at `plan`.
-- [ ] The socle repaired against rulings A1, A3, A4, B1, E1, E2 and F1
+- [x] The socle repaired against rulings A1, A3, A4, B1, E1, E2 and F1
       (sub-items 2, 3, 5, 6, 7, 8, 9, 10, 11), with the 24 named criteria
       above verified.
-- [ ] `grill-with-docs` and `triage` out of the socle; `sync-upstream` out of
+- [x] `grill-with-docs` and `triage` out of the socle; `sync-upstream` out of
       the shipped set and beside its script.
-- [ ] Ruling G16 stated in `socle/agents/profiles/foreman.md`.
-- [ ] `test/fixtures/golden-tree.txt` matching the new shipped set, suite
+- [x] Ruling G16 stated in `socle/agents/profiles/foreman.md`.
+- [x] `test/fixtures/golden-tree.txt` matching the new shipped set, suite
       green.
-- [ ] A dated CHANGELOG entry recording the pass, the three removals and the
+- [x] A dated CHANGELOG entry recording the pass, the three removals and the
       standing intention on `triage`.
-- [ ] A retrospective in this file at `close`.
+- [x] A retrospective in this file at `close`.
 
 ## References
 
@@ -632,6 +632,56 @@ above, struck and dated, and the line is corrected in slice 02's follow-up
 commit. `slice-task:17` keeps §B · Coordination, so the `§B · Coordination`
 grep of `tracker-pointer-resolves` stays non-zero.
 
+**Closed, 2026-09-09 · `foreman`.** Slices 01, 02 and 03 closed 🟢 with their
+Inspectors' verdicts recorded in each slice spec. Deliverables: the three
+slice pairs; the socle repaired against A1, A3, A4, B1, E1, E2 and F1 (24
+criteria green on the tree, re-run by slice 03's Inspector); `grill-with-docs`
+and `triage` gone, `sync-upstream` at `socle/scripts/`; the role-reuse rule at
+`socle/agents/profiles/foreman.md:38`; fixture 90 lines, lock 14, suite
+9/94/0; CHANGELOG entry 25; this retrospective. The audit's present-tense
+skill count received a dated addendum (slice 03 escalation E-2, Sp1).
+
 ## Retrospective
 
-Added at `close`: lessons and proposals. The Owner rules on its proposals.
+Written at `close`, 2026-09-09. Three slices in two days, each through the
+same shape: program design persisted in a work document → Architect
+validation (one round for slice 03, two for slice 02) → typing → fresh
+Inspector; six verdicts, six PASS. All 24 named criteria re-run green by the
+last Inspector.
+
+What worked. The two-document model carried its first real load: every role
+after the plan was a fresh session (the session tool that would have kept a
+Mason alive was unavailable the whole time), and each one rebuilt its
+understanding from the spec/work pair alone without a single misreading of
+intent — the promise chantier 2 made is now observed, not claimed. The
+plan-review caught what typing would have shipped: a pointer to a section
+that did not exist, an after-count that contradicted the design's own table,
+an edit the spec had ruled in and the design had left out. Strike-and-date
+amendments kept every correction traceable.
+
+What cost. Slice specs written on 2026-09-08 went stale as the earlier
+slices landed: line numbers moved, counts dropped, one "drop from 5 to 2"
+became "4 to 1". Every Mason re-measured at `plan` and none was misled, but
+each re-measurement was a dated note and a foreman correction. A parent
+Implementation Decision assigned a pointer to the wrong section of
+`.agents/project.md` and was applied verbatim through two reviews before the
+Inspector read the sentence it was attached to. The PHILOSOPHY rider grew
+from one paragraph (126-142) to 68-136 through two foreman rulings under the
+Owner's standing go; every edit is defensible and each was reviewed on both
+axes, but the essay is the Owner's and the growth is reported as reversible.
+
+Proposals, for the Owner to rule on:
+
+1. Slice specs should anchor on strings, not line numbers, and state that
+   every count is re-measured at `plan`; the `slice-task` skill should say
+   so. Line numbers are indicative the moment another slice lands.
+2. An Implementation Decision that assigns a section pointer should be
+   checked against the target file's headings when the spec is written, not
+   at `diff-review`.
+3. Confirm or reverse the two thread-owner rulings reported as reversible:
+   the `PHILOSOPHY.md` rider at 68-136, and the amendment of Implementation
+   Decision 1 (`code-review:18` → `§A · Task workspace`).
+4. Loose ends with no owner, small: `PHILOSOPHY.md:75-78` says "proposes a
+   task file" where the collective term is loose, not false; the comment at
+   `socle/scripts/sync-upstream.sh:144` counts 15 lock entries where there are
+   14. Either chantier 5 or a one-line fix at the Owner's convenience.
