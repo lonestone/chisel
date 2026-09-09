@@ -1,6 +1,6 @@
 # 02 — Templates, front door and skills
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete (2026-09-09)
 **Blocked by:** None — can start immediately. Run before slice 03, which
 deletes two skills this slice would otherwise repoint.
 
@@ -26,19 +26,19 @@ re-run against this working tree on 2026-09-08 and its count recorded.
 
 **Owned in full by this slice.**
 
-- [ ] **wayfinding-notes-gone** — `grep -rn "Wayfinding operations" socle/`
+- [x] **wayfinding-notes-gone** — `grep -rn "Wayfinding operations" socle/`
       returns nothing.
       *Today:* **1** — `socle/agents/skills/wayfinder/SKILL.md:30`. Only the
       deletion is taken here; the rest of ruling A1 (2), the wayfinder made
       local-first, is chantier 6.
-- [ ] **readme-init-truthful** — `README.md` claims no question for `chisel
+- [x] **readme-init-truthful** — `README.md` claims no question for `chisel
       init`, and names `chisel-setup` as the questionnaire that fills
       `.agents/project.md` afterwards.
       *Today:* `grep -c "asks one question" README.md` → **1** (line 40, under
       the heading "The one choice setup actually shows you" at line 38, which
       is itself part of the false claim — the whole block runs 38-46);
       `grep -c "chisel-setup" README.md` → **0**.
-- [ ] **readme-gradient-current** — `README.md` no longer places program
+- [x] **readme-gradient-current** — `README.md` no longer places program
       design or working notes inside the spec file, and no longer persists the
       plan into it: `grep -n "persists the plan into the spec file" README.md`
       returns nothing.
@@ -46,13 +46,13 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       spec file holding "program design underneath, the agent's working notes
       at the bottom" and a plan "persists the plan into the spec file", both
       retired by chantier 2.
-- [ ] **template-zone-owner** — in both `socle/templates/000-template.spec.md`
+- [x] **template-zone-owner** — in both `socle/templates/000-template.spec.md`
       and `project-management/000-template.spec.md`: `grep -c "Human,
       always"` is 0, and each file names "Zone ownership" of
       `.agents/methodology.md` at least once.
       *Today:* each file → `Human, always` **1** (the zone table, line 20),
       `Zone ownership` **0**.
-- [ ] **philosophy-presets-current** — `grep -n "Three presets"
+- [x] **philosophy-presets-current** — `grep -n "Three presets"
       PHILOSOPHY.md` returns nothing; the five presets are named, and auto is
       not described as a project permission.
       *Today:* `grep -c "Three presets" PHILOSOPHY.md` → **1** (line 131,
@@ -60,16 +60,16 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       are those three plus `chisel-auto-light` and `chisel-light`, per
       `socle/agents/formulas/`. Line 129 still calls auto a "permission to run
       without stopping"; ruling G10 retired that framing.
-- [ ] **profiles-uncounted** — `grep -rn "three role profiles" socle/`
+- [x] **profiles-uncounted** — `grep -rn "three role profiles" socle/`
       returns nothing.
       *Today:* **1** — `socle/agents/skills/upgrade-v2/SKILL.md:13`. The fix
       is "the role profiles"; do not substitute a new number.
-- [ ] **retro-block-pointer-accurate** — `grep -rn "rendered into the AGENTS
+- [x] **retro-block-pointer-accurate** — `grep -rn "rendered into the AGENTS
       block" socle/` returns nothing.
       *Today:* **1** — `socle/agents/skills/retro/SKILL.md:117`. Verified
       false: `socle/templates/AGENTS-block.md:14` points a reader at
       `.agents/discipline.md` rather than inlining it.
-- [ ] **template-sediment-gone** — none of the four template files carries a
+- [x] **template-sediment-gone** — none of the four template files carries a
       `**Status:**` or `**Version:**` header line **of its own**.
       *Today:* each of the four carries exactly two, at lines 3 and 4:
       `socle/templates/000-template.spec.md`,
@@ -83,12 +83,12 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       block: it is the header the template *prescribes* for real spec
       documents, not a header the template file carries of its own. A bare
       `grep -c '\*\*Status:\*\*'` counts 2 in the spec files for this reason.
-- [ ] **agents-md-persist-destination** — this repo's `AGENTS.md` names the
+- [x] **agents-md-persist-destination** — this repo's `AGENTS.md` names the
       work document as where the plan is persisted.
       *Today:* `grep -c "work document" AGENTS.md` → **0**;
       `AGENTS.md:12-13` reads "plan approved by the human and PERSISTED into
       the file".
-- [ ] **suite-green** (this slice's own run) — `bash test/run.sh`, run with a
+- [x] **suite-green** (this slice's own run) — `bash test/run.sh`, run with a
       `python3` that has `tomllib`, reports 0 failed, with the "integrity: no
       pointer into thin air" scenario passing.
       *Today:* `PATH=/opt/homebrew/bin:$PATH bash test/run.sh` → **9
@@ -99,7 +99,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
 
 **Split with another slice — this slice does its half only.**
 
-- [ ] **prototype-capture-aligned** (clause 3 only) — the close-time cleanup
+- [x] **prototype-capture-aligned** (clause 3 only) — the close-time cleanup
       of consumed prototype branches is written in exactly one place, and that
       place is `socle/agents/skills/prototype/SKILL.md`, beside rule 6's
       capture instruction.
@@ -111,7 +111,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       discipline.md`, the side-lane row naming the throwaway branch — are
       slice 01's. **This slice writes the cleanup sentence exactly once and
       touches no other file with it.** See Notes.
-- [ ] **tracker-pointer-resolves** (this slice's three carriers) — each names
+- [x] **tracker-pointer-resolves** (this slice's three carriers) — each names
       a section that exists, carrying the title with the number, per parent
       Implementation Decision 1:
       `socle/agents/skills/wayfinder/SKILL.md:30` means the issue tracker →
@@ -128,7 +128,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       `grep -rn "§B2 · Link to an external tracker" socle/` → **0**.
       The criterion closes at slice 03, when the last carrier leaves with the
       `triage` file.
-- [ ] **factory-claim-degraded** (this slice's one carrier) —
+- [x] **factory-claim-degraded** (this slice's one carrier) —
       `PHILOSOPHY.md:134` stops presenting the factory as a product cell and
       presents it as a possible destination, perhaps outside chisel; no beads
       machinery is written.
@@ -138,7 +138,7 @@ re-run against this working tree on 2026-09-08 and its count recorded.
       sentence and `philosophy-presets-current` land in the same paragraph:
       the new sentence cannot be stated coherently inside a paragraph that
       miscounts the presets.
-- [ ] **work-on-invocation-current** (this slice's one carrier) —
+- [x] **work-on-invocation-current** (this slice's one carrier) —
       `AGENTS.md:12` names `<spec-document>` instead of `work on task <file>`
       / `work on slice <file>`.
       *Today:* `grep -rn "work on slice <file>\|work on task <file>" socle/
@@ -374,3 +374,18 @@ Standards PASS, Spec PASS (work document, commit `e42f3b8`). Disposition:
    Inspector confirms "task file" survives as the collective term across the
    socle and this repo's own front door, so the wording is loose, not false.
    No action in this chantier.
+
+**Closed, 2026-09-09 · `foreman`.** Program design at `9ff9088`, corrected at
+`f5bd1e3` after plan-review round 1 (SEND BACK, eight findings), APPROVED at
+round 2 with six non-blocking findings applied at typing. Typed in seven
+commits (`c2bc3f7`, `6b70982`, `6ac3950`, `fa7c090`, `9459433`, `ca96266`,
+`19af4db`) plus the work document (`d2d3d6a`); fixed point `f5bd1e3`,
+inspected at `d2d3d6a` (`e42f3b8`): Standards PASS, Spec PASS. Follow-up
+commit `8399132` closes S1, S2, Sp1, Sp2 and Sp3 as ruled above. Criteria: all
+of this slice's own closed; `factory-claim-degraded`,
+`work-on-invocation-current` and `prototype-capture-aligned` close here;
+`tracker-pointer-resolves` stands at one carrier (`triage:48`) for slice 03.
+Both template pairs differ on exactly one line, the doctrine pointer. Suite
+after: 9 scenarios, 94 assertions, 0 failed. Reported to the Owner as
+reversible: the `PHILOSOPHY.md` rider at 68-136 (E-2) and the amendment of
+parent Implementation Decision 1 (E-1).
