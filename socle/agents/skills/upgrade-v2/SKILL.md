@@ -26,9 +26,9 @@ Run it from the repo being migrated.
 Say this out loud at the start, and hold to it:
 
 - **Task files and the archive.** Every file under the task workspace declared
-  in §A of the project's glue keeps its bytes — content, status lines,
-  checkboxes, all of it. The only file in that workspace this migration edits is
-  the journal, and it edits its NAME, not its content.
+  in §A · Task workspace of `.agents/project.md` keeps its bytes — content,
+  status lines, checkboxes, all of it. The only file in that workspace this
+  migration edits is the journal, and it edits its NAME, not its content.
 - **The project's own glue values.** §A's paths, the reading list, the gate
   commands: they were answered once, they stay answered. This migration ADDS
   the sections v1 had no equivalent for, and changes exactly one existing

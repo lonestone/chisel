@@ -39,7 +39,7 @@ finding that touches scope or a 🧑 zone escalates instead of being decided;
 auto/gateless runs retain that blocking-report semantics without allowing
 self-review mutation. Every act recorded in the project's coordination state
 is signed with the role name — `inspector` — as its actor, per the tracker
-convention of `.agents/project.md` §B.
+convention of §B · Coordination of `.agents/project.md`.
 
 ## Tier
 

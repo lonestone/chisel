@@ -30,8 +30,9 @@
 # names; the contract of each role belongs to its profile in
 # `.agents/profiles/`; the reasoning belongs to `.agents/methodology.md`.
 # Roles are roster names — a vendor or model name never appears here. Every
-# write goes through the glue `.agents/project.md` (§A paths, §B tracker
-# convention, §D living docs, §F gate commands, §G glossary and decisions).
+# write goes through the glue `.agents/project.md` (§A · Task workspace for
+# paths, §B · Coordination for the tracker convention, §D living docs, §F gate
+# commands, §G glossary and decisions).
 
 formula = "chisel-light"
 description = "Chisel task pipeline, light: the validation sub-agents removed, two human gates — the spec, and the diff review the human holds in place of the Inspector."

@@ -20,8 +20,9 @@ read, and it is what makes the rule below checkable.
 **Speak the user's language, not the toolkit's.** On screen: no "glue", no
 "socle", no "ledger", no "formula", no "bead", no section letters, no field
 names. Every option gets one line saying what it buys and what it costs, in
-words someone who has never read this repo would understand. The letters (§A,
-§B1…) are for the file and for you.
+words someone who has never read this repo would understand. The section
+letters and titles of `.agents/project.md` (§A · Task workspace,
+§B1 · Where task statuses live…) are for the file and for you.
 
 ## Step 0 — Precondition
 

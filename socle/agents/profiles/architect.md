@@ -14,8 +14,9 @@ runs the `spec` step of the pipeline in `.agents/formulas/`, writing the
 spec from the interview the thread owner ran:
 
 - **Spec document** — written from the spec template declared in
-  `.agents/project.md` §A, with the reading gradient respected. The sizing
-  check is stated out loud; when the work does not fit one pass, the Architect
+  §A · Task workspace of `.agents/project.md`, with the reading gradient
+  respected. The sizing check is stated out loud; when the work does not fit
+  one pass, the Architect
   cuts it into slices — and with each slice, the system design declares an
   indicative **files-to-modify / files-to-avoid map**, motivated by the
   architecture choice and never a strict limit: implementing always discovers

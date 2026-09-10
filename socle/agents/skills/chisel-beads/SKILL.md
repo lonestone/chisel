@@ -1,13 +1,13 @@
 ---
 name: chisel-beads
-description: Read this before creating, claiming, closing or syncing anything in a repo whose glue (`.agents/project.md` §B1) says the task statuses live in a committed `bd` database — and before running `git push` there.
+description: Read this before creating, claiming, closing or syncing anything in a repo whose glue (§B1 · Where task statuses live of `.agents/project.md`) says the task statuses live in a committed `bd` database — and before running `git push` there.
 ---
 
 # The chisel-beads convention
 
-This page applies when `.agents/project.md` §B1 says the task statuses live in a
-committed database. While §B1 says they live in the task files, nothing here
-applies and there is nothing to install.
+This page applies when §B1 · Where task statuses live of `.agents/project.md`
+says the task statuses live in a committed database. While §B1 says they live
+in the task files, nothing here applies and there is nothing to install.
 
 It is the ONE normative discourse for this repo's use of `bd`. The tool ships
 instructions of its own — a managed block in `AGENTS.md`/`CLAUDE.md`, a

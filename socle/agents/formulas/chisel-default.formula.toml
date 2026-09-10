@@ -29,8 +29,9 @@
 # names; the contract of each role belongs to its profile in
 # `.agents/profiles/`; the reasoning belongs to `.agents/methodology.md`.
 # Roles are roster names — a vendor or model name never appears here. Every
-# write goes through the glue `.agents/project.md` (§A paths, §B tracker
-# convention, §D living docs, §F gate commands, §G glossary and decisions).
+# write goes through the glue `.agents/project.md` (§A · Task workspace for
+# paths, §B · Coordination for the tracker convention, §D living docs, §F gate
+# commands, §G glossary and decisions).
 
 formula = "chisel-default"
 description = "Chisel task pipeline, the default: every decision gate awaits the human (the Owner). The spec document owns the content and the status, the work document the progress; this formula owns the order and the gates."

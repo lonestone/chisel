@@ -105,7 +105,8 @@ output rather than typing the whole thing blind:
 `chisel check` reports clean, and `bd ready` answers (even if the answer is
 "nothing ready" — the point is that it answers at all, proving the CLI still
 works with none of the tool's own instructions in place). Only then write
-`.agents/project.md` §B1: the verdict line becomes the database case, the
+§B1 · Where task statuses live of `.agents/project.md`: the verdict line
+becomes the database case, the
 **State** line becomes `- [x] initialised`, and the section names
 [SKILL.md](SKILL.md) as the convention — every later session resolves through
 that pointer, so it is not optional.

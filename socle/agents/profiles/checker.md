@@ -17,8 +17,9 @@ step of the pipeline in `.agents/formulas/`:
   design that is coherent on paper and foreign to the code it lands in is a
   blocking finding.
 - **The repo's own rules.** Resolved through the glue, never assumed: the
-  reading list of `.agents/project.md` §C and the living docs declared in
-  §D, plus `.agents/discipline.md`. A finding cites the rule it rests on.
+  reading list of §C · Reading list of `.agents/project.md` and the living
+  docs declared in §D · Documentation reference, plus
+  `.agents/discipline.md`. A finding cites the rule it rests on.
 - **A zone that cannot be read on its own.** A 🧑 zone is understood without
   opening another file. Codes with no meaning attached, a sentence that needs
   a second document before it parses, a reference by line number — each is a

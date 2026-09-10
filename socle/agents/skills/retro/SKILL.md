@@ -84,7 +84,8 @@ discussed:
   crucial piece of information was not available.
 
 4. For each candidate, resolve its **target file** via `.agents/project.md`
-   (the reading list of §C, the living docs of §D) rather than a hardcoded
+   (the reading list of §C · Reading list, the living docs of
+   §D · Documentation reference) rather than a hardcoded
    path — the same rule applies to a socle skill, a project doc, or
    `.agents/discipline.md` itself. Name the **zone owner** who accepts it:
    the Owner for anything ambient, the touched zone's owner for anything

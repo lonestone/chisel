@@ -68,7 +68,7 @@ human+Mason thread.
 
 Every act recorded in the project's coordination state is signed with the role
 name — `foreman` — as its actor, per the tracker convention of
-`.agents/project.md` §B.
+§B · Coordination of `.agents/project.md`.
 
 ## Tier
 

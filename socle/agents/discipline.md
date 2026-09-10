@@ -5,8 +5,9 @@ task artifact. A one-shot fix runs under the same discipline as a sliced feature
 the only difference is the paperwork.
 
 1. **Read before acting.** At session start, read the reading list declared in
-   `.agents/project.md` §C (by default the README and the most recent
-   journal entries). Say which documents and rules you are working under.
+   §C · Reading list of `.agents/project.md` (by default the README and the
+   most recent journal entries). Say which documents and rules you are working
+   under.
 
 2. **Plan first.** Even for a one-shot fix: say what you are about to do
    before doing it. Nothing half-decided crosses into code. When the work has

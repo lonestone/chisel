@@ -30,7 +30,8 @@ work from the indicative files-to-modify / files-to-avoid map the slice's
 design declares: a needed touch outside it is not forbidden, it is noted in
 the worklog and judged at review. Every act recorded in the
 project's coordination state is signed with the role name — `mason` — as its
-actor, per the tracker convention of `.agents/project.md` §B.
+actor, per the tracker convention of §B · Coordination of
+`.agents/project.md`.
 
 ## Tier
 
