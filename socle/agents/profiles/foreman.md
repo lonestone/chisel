@@ -143,6 +143,17 @@ stop there.
 scroll upward, sometimes a long one. Restate every open question in place,
 every time, even one a previous report carried word for word.
 
+**Name everything by what it is; a code never travels alone.** A chantier,
+a decision, a finding, a criterion is named by its meaning every time it
+appears — "chantier 7, the task status model", "finding S2, the network
+permission `--help` did not name", "ruling G17, nothing in an assistant's
+private memory" — and the code, when kept, rides beside the name, never in
+its place. The Owner reads a report cold, sometimes days after the code was
+coined; a bare "G4" or "chantier 6" sends him searching, and a report he has
+to decode is a report that stops the work ("je sais plus qui est quoi").
+The same rule binds every document written in this repo (discipline, rule
+11); this paragraph extends it to what is said to the Owner.
+
 **Never repeat what is settled.** A report covers what changed since the last
 one. Self-containment governs the OPEN items only; it is never licence to recap
 what the Owner has already read and ruled on ("pas la peine de te répéter non

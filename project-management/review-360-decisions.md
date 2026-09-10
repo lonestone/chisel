@@ -901,3 +901,23 @@ Inspector frais sur le diff vaut son prix). L'Owner a tranché l'inverse :
 Foreman (`project-management/archive/20260910-1535-deno-port.spec.md`), un
 seul agent planifie et frappe, le Foreman relit sur les deux axes. La
 réserve du Foreman reste consignée ici ; la revue du diff est la sienne.
+
+## Addendum 7 (2026-09-10) — un code ne voyage jamais seul
+
+- ✅ **G19 — Toute référence porte son nom simple, à chaque mention.**
+  Tranché à l'oral (2026-09-10), après un rapport du Foreman qui alignait
+  « le 7, puis le 6, puis le 8 », « F1.4 », « G4 », « S2 » : « je sais plus
+  qui est quoi. Tu peux noter de **toujours** remettre le nom simple de la
+  tache / référence ». Règle : un chantier, une décision, un finding, un
+  critère est nommé par ce qu'il est à chaque apparition — « chantier 7, le
+  modèle de statuts des tâches », « G17, rien dans la mémoire privée d'un
+  assistant » — et le code, s'il est gardé, accompagne le nom sans jamais le
+  remplacer. C'est la règle 11 de la discipline (nommer par le sens, citer
+  par fichier et titre), qui ne visait que les documents du dépôt, étendue
+  aux rapports et messages adressés à un humain, et durcie : la première
+  mention ne suffit pas, le lecteur d'un rapport arrive à n'importe quelle
+  ligne. Appliqué sur-le-champ dans `socle/agents/discipline.md` (règle 11)
+  et dans `socle/agents/profiles/foreman.md` (« Reporting to the Owner »).
+  Persisté ici et non dans une mémoire d'assistant, par G17 ; la note de
+  mémoire privée « foreman-report-shape » du 2026-08-28, antérieure à G17
+  et redondante avec le profil du Foreman, est supprimée à cette occasion.

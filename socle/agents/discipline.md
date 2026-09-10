@@ -72,10 +72,13 @@ the only difference is the paperwork.
     side that arrives.
 
 11. **Writing: name things by their meaning, and cite by file and title.**
-    Three rules, on every document written or edited in this repo. **Name
-    things by their meaning, not by a code** — an acceptance criterion is
-    `no-orphan-file`, not `AC2`; a decision is named by what it decided. When
-    a code genuinely must be cited, its meaning comes with it in parentheses.
+    Three rules, on every document written or edited in this repo and on
+    every report or message to a human. **Name things by their meaning, not
+    by a code** — an acceptance criterion is `no-orphan-file`, not `AC2`; a
+    decision is named by what it decided; a chantier is "chantier 7, the
+    task status model", never "chantier 7" alone. When a code genuinely must
+    be cited, its meaning comes with it, every time it appears, not only the
+    first: the reader of a report may arrive at any line.
     **A reference to another document names the file and the section title** —
     "§A · Task workspace of `.agents/project.md`" — never a bare number, and
     never a line number: a line number is wrong the next time the file is

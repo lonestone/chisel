@@ -5,6 +5,19 @@ ships.
 
 ---
 
+## 29. 2026-09-10 — A code never travels alone
+
+Ruling G19 (every reference carries its plain name, at every mention),
+recorded as Addendum 7 of the decisions record after a foreman report that
+lined up chantier numbers and decision letters the Owner could no longer
+place. Rule 11 of `socle/agents/discipline.md` (name by meaning, cite by
+file and title) now binds reports and messages to a human as well as
+documents, and asks for the meaning at every mention rather than the first;
+the Foreman profile's "Reporting to the Owner" gains the matching
+paragraph. The assistant memory note of 2026-08-28 on report shape,
+redundant with that profile section since ruling G17 (the repo is the only
+memory), is deleted.
+
 ## 28. 2026-09-10 — `@lonestone/chisel` 0.1.0 is on JSR
 
 The Owner published the package. The foreman's smoke test from an empty
