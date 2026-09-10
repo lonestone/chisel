@@ -2,6 +2,13 @@
 
 ## Context
 
+**The form of this file.** Program-design decisions, worklog entries and
+findings are named by what they say, never by a code; a code that genuinely
+must be cited carries its meaning in parentheses. A reference names its file
+and its section title — never a line number, which is wrong by the next edit
+— and says in one sentence what the reader finds there. The rule is the
+writing rule of `.agents/discipline.md`.
+
 The work document is the coding agent's own file: its program design and
 pseudo-code, its worklog, its implementation checkboxes, its Notes &
 Snippets, and the findings the Inspector writes at `diff-review`. One file,

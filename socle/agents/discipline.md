@@ -70,11 +70,19 @@ the only difference is the paperwork.
     opened by hand: rule 9 binds the side that delegates, this one binds the
     side that arrives.
 
-11. **A section reference names its file and its title.** When a document you
-    write or edit cites a section of another file, the first mention carries
-    both — "§A · Task workspace of `.agents/project.md`" — never a bare
-    number; later mentions in the same document may shorten it. A reader must
-    know where to go without searching.
+11. **Writing: name things by their meaning, and cite by file and title.**
+    Three rules, on every document written or edited in this repo. **Name
+    things by their meaning, not by a code** — an acceptance criterion is
+    `no-orphan-file`, not `AC2`; a decision is named by what it decided. When
+    a code genuinely must be cited, its meaning comes with it in parentheses.
+    **A reference to another document names the file and the section title** —
+    "§A · Task workspace of `.agents/project.md`" — never a bare number, and
+    never a line number: a line number is wrong the next time the file is
+    edited, so prose is cited by its section title plus a few verbatim words.
+    The first mention in a document carries file and title; later mentions in
+    the same document may shorten. **Every cross-reference says in one
+    sentence what the reader finds there**, so nobody has to open a file to
+    learn whether it was worth opening.
 
 ## The pipeline, for real scoped work
 

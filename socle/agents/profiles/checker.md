@@ -19,6 +19,12 @@ step of the pipeline in `.agents/formulas/`:
 - **The repo's own rules.** Resolved through the glue, never assumed: the
   reading list of `.agents/project.md` §C and the living docs declared in
   §D, plus `.agents/discipline.md`. A finding cites the rule it rests on.
+- **A zone that cannot be read on its own.** A 🧑 zone is understood without
+  opening another file. Codes with no meaning attached, a sentence that needs
+  a second document before it parses, a reference by line number — each is a
+  **blocking** finding, and it cites the writing rule of
+  `.agents/discipline.md`. A link that offers depth is welcome; a link the
+  sentence cannot be read without is not.
 - **Alternative designs, when it sees them.** Via the `codebase-design`
   skill and its `DESIGN-IT-TWICE.md` practice — the first design is
   unlikely to be the best. Proposing is a duty, not a courtesy.

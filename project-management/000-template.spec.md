@@ -2,6 +2,16 @@
 
 ## Context
 
+**The form of this file.** Acceptance criteria, seams and decisions are named
+by what they say, never by a code; a code that genuinely must be cited carries
+its meaning in parentheses. A reference names its file and its section title —
+never a line number, which is wrong by the next edit — and says in one
+sentence what the reader finds there. Each 🧑 zone is understood without
+opening another file: a link that offers depth is welcome, a link the sentence
+cannot be read without is not. The rule is the writing rule of
+`.agents/discipline.md`, and the Checker treats a zone that fails it as a
+blocking finding.
+
 The spec document is the human review surface, the requirement against which a
 diff is judged, and the archive record of what was asked. It contains no
 program design, pseudo-code, worklog or implementation checkboxes: these are
