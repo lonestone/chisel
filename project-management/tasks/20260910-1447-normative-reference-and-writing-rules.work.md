@@ -471,17 +471,37 @@ found that it copies top-level `agents/*.md` one by one, so the reference must
 be named there. Wrote this program design. Four findings against the spec,
 below — none of them blocks the work.
 
+**2026-09-10 — type, recorded by the foreman.** The agent's run typed the four
+groups in four commits (`19d31b2` reference created and installed, `3bbcb8b`
+methodology extracted and pointers retargeted, `6f67697` writing rules in the
+discipline, the templates and the Checker, `059cb18` the `§` sweep) and ended
+before group e. The foreman ticked the boxes and wrote the after-counts below
+after re-running every criterion command on `059cb18`.
+
+| Criterion | Before | After |
+|---|---|---|
+| `reference-exists` — `## ` sections | file absent | 3 (Glossary, Zone ownership, Model tiers) |
+| `methodology-is-the-why` — glossary rows / `### The cascade` | 10 / 1 | 0 / 0 (23 → 10 bold-first-column rows: the roster and the dex-phase tables stay, see Finding 2) |
+| `seam-defined-once` — files with a `Seam` table row / `reference.md` in tdd, codebase-design | methodology / 0, 0 | reference.md only / 1, 1 |
+| `writing-rule-in-discipline` — numbered rules / "line number" | 11 / 0 | 11 / 1 |
+| `form-in-templates` — "line number" spec, work / mirror diff lines | 0, 0 / 1, 1 | 1, 1 / 1, 1 |
+| `checker-duty` — "line number" / "blocking" | 0 / 4 | 1 / 5 |
+| `no-bare-first-citation` — files whose first mention of each section is titled | 4 of 21 | 22 of 22 (reference.md added) |
+| `reference-installed` — fixture mentions / lines / AGENTS-block | 0 / 90 / 0 | 1 / 91 / 1 |
+| `no-numeric-form-limit` | nothing | nothing |
+| `suite-green` | 9 / 94 / 0 | 9 / 94 / 0, parse check PASS, `git diff --check` clean, cap 592 |
+
 ## Implementation Checkboxes
 
-- [ ] Group a — `reference.md` created and wired (golden tree, AGENTS block,
+- [x] Group a — `reference.md` created and wired (golden tree, AGENTS block,
       `bin/chisel.sh`)
-- [ ] Group b — methodology extracted with its three pointer paragraphs,
+- [x] Group b — methodology extracted with its three pointer paragraphs,
       every pointer into the extracted sections retargeted, `Seam`
       deduplicated in `tdd` and `codebase-design`
-- [ ] Group c — discipline rule 11 rewritten and rule 3 retargeted, the form
+- [x] Group c — discipline rule 11 rewritten and rule 3 retargeted, the form
       note in both template pairs, the Checker duty
-- [ ] Group d — the `§` sweep
-- [ ] Group e — this document closed with the after-counts
+- [x] Group d — the `§` sweep
+- [x] Group e — this document closed with the after-counts
 
 ## Notes & Snippets
 
@@ -546,3 +566,34 @@ this chantier falsifies; recorded here if one is found.
 
 Written by the reviewer at the two-axis review. On this chantier the Foreman
 holds both axes itself (Addendum 6): no Inspector sub-agent runs.
+
+**2026-09-10 · `foreman`, both axes.** Range `c8571fb..059cb18`, 34 files.
+
+*Standards: PASS.* The three moved blocks are word-for-word the originals
+(word diff run: the glossary loses its "(uniform wording)" qualifier, the
+tiers section loses one sentence of why, which stays in methodology's pointer
+paragraph, and gains the pointer to the roster). Every pointer written is in
+installed form; no ruling id or decisions-record file name enters shipped
+text; the one Owner quotation in French in "Zone ownership" was already in
+methodology and moves as is. `bin/chisel.sh` gains three lines, the copy of
+one more file. Five commit messages carry the trailer. `git diff --check`
+clean. The formulas still parse (parse check PASS). Prose direct; rule 11,
+the Checker duty and the template notes read as statements.
+
+*Spec: PASS.* Every criterion command re-run by the foreman, figures in the
+table above. Two criteria are amended in the spec, struck and dated:
+`methodology-is-the-why` (the grep also matched the roster and the dex-phase
+tables, which are not normative definitions and stay) and
+`no-bare-first-citation` (21 carriers, not 19; 4 already passing; 22 after
+`reference.md` joins). Finding 3 accepted: the pointers in `project.md.tpl`
+§H and `user.md.tpl` at the removed methodology section had to be
+retargeted or they would point into thin air; outside the indicative map,
+inside the intent. Finding 4 as the spec instructed. No scope creep: 34 files,
+all in the map or in Finding 3. `PHILOSOPHY.md` and `README.md` checked by
+grep for a claim about the glossary, the tiers or zone ownership living in
+methodology: none.
+
+*One finding, non-blocking, S1.* The work document's Worklog and checkboxes
+were left at `plan` by the agent's run; closed here by the foreman, signed,
+rather than by a second agent (Addendum 6, token economy). Recorded so the
+signature mismatch reads as chosen.

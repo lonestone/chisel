@@ -1,6 +1,6 @@
 # Normative reference and writing rules
 
-**Status:** 🔴 Not Started
+**Status:** 🟢 Complete (2026-09-10)
 
 ---
 
@@ -79,40 +79,47 @@ Out (ruled or deferred elsewhere):
 Each is grep-verifiable; record the before-count and the after-count in the
 work document.
 
-- [ ] **reference-exists** — `socle/agents/reference.md` exists with three
+- [x] **reference-exists** — `socle/agents/reference.md` exists with three
       sections titled exactly `## Glossary`, `## Zone ownership`,
       `## Model tiers`; `grep -c "^## " socle/agents/reference.md` → 3 (a
       short intro above them is allowed, no other `##`).
-- [ ] **methodology-is-the-why** — `grep -c "^| \*\*" socle/agents/methodology.md`
-      → 0 (today 10 glossary rows); `grep -c "^### The cascade" socle/agents/methodology.md`
+- [x] **methodology-is-the-why** — ~~`grep -c "^| \*\*" socle/agents/methodology.md`
+      → 0 (today 10 glossary rows)~~ no glossary row left:
+      `grep -cE '^\| \*\*(Task|Spec document|Work document|Slice|Seam|Reading gradient|Blocking edge|Frontier|Expand|One-shot)\*\*' socle/agents/methodology.md`
+      → 0 (today 10); the roster and the dex-phase tables are not normative
+      definitions and stay (amended 2026-09-09 by the foreman at review: the
+      first grep matched 23 rows, 10 of them those two tables — the agent's
+      Finding 2). `grep -c "^### The cascade" socle/agents/methodology.md`
       → 0 (today 1); the three former sections are each replaced by one
       paragraph pointing at `reference.md` by file and title. Methodology
       keeps every "Why …" section untouched.
-- [ ] **seam-defined-once** — `grep -rln "^| \*\*Seam\*\*" socle/` → only
+- [x] **seam-defined-once** — `grep -rln "^| \*\*Seam\*\*" socle/` → only
       `socle/agents/reference.md`; `tdd/SKILL.md` and `codebase-design/SKILL.md`
       each contain `reference.md` once (today 0 / 0).
-- [ ] **writing-rule-in-discipline** — `grep -cE "^[0-9]+\. " socle/agents/discipline.md`
+- [x] **writing-rule-in-discipline** — `grep -cE "^[0-9]+\. " socle/agents/discipline.md`
       → 11 (today 11); rule 11's bold title names writing, and the rule body
       contains the three clauses (codes carry their meaning; file and title,
       never a line number; a cross-reference says what the reader finds).
       `grep -c "line number" socle/agents/discipline.md` ≥ 1 (today 0).
-- [ ] **form-in-templates** — `grep -c "line number" socle/templates/000-template.spec.md`
+- [x] **form-in-templates** — `grep -c "line number" socle/templates/000-template.spec.md`
       ≥ 1 and same for `000-template.work.md` (today 0 / 0); the mirrors are
       identical to their sources except the doctrine-pointer line:
       `diff` of each pair → exactly one differing line (today: one).
-- [ ] **checker-duty** — `grep -c "line-number\|line number" socle/agents/profiles/checker.md`
+- [x] **checker-duty** — `grep -c "line-number\|line number" socle/agents/profiles/checker.md`
       ≥ 1 (today 0) and the duty names "blocking".
-- [ ] **no-bare-first-citation** — for every file under `socle/` that
+- [x] **no-bare-first-citation** — for every file under `socle/` that
       contains `§`, the first match of `§[A-H][0-9]?` in that file is followed
       by ` · ` and the same sentence names `.agents/project.md`. Verification
-      command in the work document, run over all 19 files, before and after;
-      after: 19 of 19 pass (today 0 of 19 — measure it).
-- [ ] **reference-installed** — `grep -c "reference.md" test/fixtures/golden-tree.txt`
+      command in the work document, run over all ~~19~~ 21 files, before and
+      after; after: ~~19 of 19~~ 22 of 22 pass, `reference.md` included
+      (today ~~0 of 19~~ 4 of 21 — measured by the agent, Finding 1; amended
+      2026-09-10 by the foreman at review).
+- [x] **reference-installed** — `grep -c "reference.md" test/fixtures/golden-tree.txt`
       → 1 (today 0); `wc -l` → 91 (today 90); `grep -c "reference.md" socle/templates/AGENTS-block.md`
       ≥ 1 (today 0).
-- [ ] **no-numeric-form-limit** — `grep -nE "[0-9]+ (lines|words|characters)" socle/agents/reference.md socle/templates/000-template.*.md`
+- [x] **no-numeric-form-limit** — `grep -nE "[0-9]+ (lines|words|characters)" socle/agents/reference.md socle/templates/000-template.*.md`
       → nothing.
-- [ ] **suite-green** — `PATH=/opt/homebrew/bin:$PATH bash test/run.sh` →
+- [x] **suite-green** — `PATH=/opt/homebrew/bin:$PATH bash test/run.sh` →
       9 scenarios, 0 failed, formula parse check PASS (today 94 assertions;
       record the after-count, it may move only if a fixture-driven assertion
       counts files); `git diff --check` clean; `test/` stays under its
@@ -145,3 +152,15 @@ Written by the Foreman on 2026-09-10 under the Owner's fast-track ruling
 (`.agents/…`), never `socle/…`; no ruling id, no "G16"-style label, no
 decisions-record file name in shipped text. Every amendment to this file:
 strike the original, date the new version below it.
+
+**Closed, 2026-09-10 · `foreman`.** Fast track per Addendum 6: one agent
+planned (`b830bc4`) and typed (`19d31b2`, `3bbcb8b`, `6f67697`, `059cb18`);
+the foreman reviewed on both axes, PASS and PASS, findings in the work
+document. The agent's run ended before it closed its work document; the
+foreman closed it, signed. Two criteria amended above at review, struck and
+dated. The agent's Finding 3 (pointers in `project.md.tpl` §H and
+`user.md.tpl` retargeted from the removed methodology section to
+`reference.md`) is accepted as within intent. Suite 9 scenarios, 94
+assertions, 0 failed; golden tree 91 lines. The `§` sweep the chantiers 1 and
+3 deferred here is done: 22 of 22 shipped documents name file and title on
+the first mention of each section.

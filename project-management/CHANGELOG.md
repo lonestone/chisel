@@ -5,6 +5,25 @@ ships.
 
 ---
 
+## 26. 2026-09-10 — The normative reference, the writing rules, and the section sweep
+
+Chantier 5 closes on the Owner's fast track (one agent writes, the Foreman
+reviews). The glossary, the zone-ownership doctrine and the model tiers with
+their cascade leave `methodology.md` for one short reference,
+`.agents/reference.md`, installed with the socle and pointed at from the
+templates, the skills, the glue and the AGENTS block; methodology keeps a
+pointer paragraph in each place and is the essay of the why again. "Seam" is
+defined once; `tdd` and `codebase-design` keep a reminder line, the latter
+saying how Feathers' design seam relates to chisel's test seam. The writing
+rules the 360 review settled land in three places: rule 11 of the discipline
+(name things by their meaning, cite by file and section title, never a line
+number, say what the reader finds there), a form note at the top of both
+task templates, and a Checker duty (an unreadable spec zone is a blocking
+finding). Every shipped document names file and title on the first mention
+of each section of the glue. Golden tree 90 → 91, suite unchanged at
+9 scenarios, 94 assertions, 0 failed. Task record archived at
+`project-management/archive/20260910-1447-normative-reference-and-writing-rules.spec.md`.
+
 ## 25. 2026-09-09 — Joints and minors: the socle stops contradicting the 360 rulings, and the shipped set shrinks
 
 Chantier 3 closes, three slices in two days. The doctrine, the glue template,
