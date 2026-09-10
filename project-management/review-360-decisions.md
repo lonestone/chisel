@@ -893,3 +893,11 @@ le plan avant lancement et relit le résultat. C'est le régime `chisel-light`
 appliqué à un chantier qui s'y prête — mécanique, sans arbitrage restant —
 et non une révision de la doctrine : les rulings G16 (reviewers frais) et
 Addendum 3 (trace des blocages) restent la règle par défaut.
+
+**Extension au chantier 4 (2026-09-10).** À la clôture du chantier 5, le
+Foreman avait déconseillé la voie rapide pour le port Deno (du code, un
+Inspector frais sur le diff vaut son prix). L'Owner a tranché l'inverse :
+« go chantier 4 même méthodo ». Même application : spec écrite par le
+Foreman (`project-management/tasks/20260910-1535-deno-port.spec.md`), un
+seul agent planifie et frappe, le Foreman relit sur les deux axes. La
+réserve du Foreman reste consignée ici ; la revue du diff est la sienne.
