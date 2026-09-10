@@ -16,9 +16,10 @@ the only difference is the paperwork.
    formula (see below).
 
 3. **Zone-owner sections are law.** Sections marked 🧑 in any spec document
-   carry their owner's decisions — who that is follows the doctrine in
-   `.agents/methodology.md` ("Zone ownership"). Never contradict one silently:
-   if the work reveals a conflict with a 🧑 zone, stop and surface it.
+   carry their owner's decisions — who that is follows the rule in
+   `.agents/reference.md` ("Zone ownership"), which names the owner of each
+   zone under each preset. Never contradict one silently: if the work reveals
+   a conflict with a 🧑 zone, stop and surface it.
 
 4. **Verify before "done".** Run the project's gate commands declared in
    `.agents/project.md` §F (lint, tests, build; a browser check when UI

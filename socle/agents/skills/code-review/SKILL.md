@@ -74,7 +74,7 @@ Spawn both in a single turn, with whatever parallel sub-agent mechanism your too
 
 **Tier:** review is judgement work — run both sub-agents at the **frontier**
 tier. Which model that is resolves through the cascade in
-[methodology.md — Model tiers](../../methodology.md#model-tiers-and-how-they-resolve):
+[reference.md — Model tiers](../../reference.md#model-tiers):
 `.agents/user.md` first, then `.agents/project.md`, then your tool's
 strongest model.
 

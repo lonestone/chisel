@@ -187,8 +187,8 @@ ADRs recorded? Decisions LINK existing rationale — never duplicate it. -->
 means for THIS repo? Most have not, and leave this unset. This is the middle
 rung of the cascade — `.agents/user.md` (personal, never committed) wins over
 it, and the socle default catches whatever neither answers. What the tiers ARE
-and how they resolve is written once, in `.agents/methodology.md`, section
-"Model tiers (and how they resolve)"; do not restate it here.
+and how they resolve is written once, in `.agents/reference.md`, section
+"Model tiers"; do not restate it here.
 
 To set one, uncomment the lines below and name a model your team's tools all
 expose. A tier left unset simply falls through. -->

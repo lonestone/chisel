@@ -8,8 +8,9 @@ none at all, and that works — see below.
 
 It answers ONE question: on YOUR tool and YOUR account, which concrete model
 does each tier mean? The tiers themselves and the order in which this file is
-read are NOT restated here — they are written once, in `.agents/methodology.md`,
-section "Model tiers (and how they resolve)". Read that before editing this.
+read are NOT restated here — they are written once, in `.agents/reference.md`,
+section "Model tiers", which also gives the order of resolution. Read that
+before editing this.
 
 Everything below is commented out on purpose: an untouched copy of this file
 changes NOTHING. Resolution simply falls through to the team default in
@@ -26,7 +27,7 @@ commented out falls through to the next level of the cascade.
 - **mid:** <your tool's standard everyday model>
 - **cheap:** <your tool's fastest, least expensive model>
 
-What each tier is for: `.agents/methodology.md`, same section. -->
+What each tier is for: `.agents/reference.md`, same section. -->
 
 ## Notes for my sessions
 

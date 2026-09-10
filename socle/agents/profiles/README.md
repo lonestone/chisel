@@ -58,7 +58,7 @@ A generated definition carries **no model field**. A profile's frontmatter
 declares a `tier`, which says how much judgement the role's work needs, and
 that tier is **resolved at read time** by the delegating agent, at the moment
 it spawns the role. Which concrete model a tier means is resolved through the
-cascade in "Model tiers (and how they resolve)" of `.agents/methodology.md`;
+cascade in "Model tiers" of `.agents/reference.md`;
 choosing it belongs to each dev's own plumbing, not to chisel.
 
 ## How a role is spawned

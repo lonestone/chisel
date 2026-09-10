@@ -45,7 +45,7 @@ Break the work into **tracer bullet** slices.
 </vertical-slice-rules>
 
 A slice's shape — demoable on its own, sized for a single fresh context
-window — is defined once, in the Glossary of `.agents/methodology.md`.
+window — is defined once, in the Glossary of `.agents/reference.md`.
 
 Give each slice its **blocking edges** — the other slices that must complete
 before it can start. A slice with no blockers can start immediately.

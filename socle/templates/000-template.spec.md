@@ -22,7 +22,7 @@ file.
   mockup over three paragraphs.
 - In the default preset the zone's owner is you, the human. Who owns which
   zone under the other presets is settled in "Zone ownership" of
-  [methodology.md](/.agents/methodology.md).
+  [reference.md](/.agents/reference.md).
 - The 🧑 zones carry their owner's decisions. Surface a conflict; never
   silently contradict one.
 - There is no agent zone here. The coding agent's working space is the work
