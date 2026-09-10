@@ -2,7 +2,13 @@
 // what moved, and clean up after a file that left the managed set.
 
 import { join } from "@std/path";
-import { copyManagedFiles, refuseV1Layout, writeAgentsMd } from "./install.ts";
+import {
+  copyManagedFiles,
+  refuseV1Layout,
+  removeEmptyParents,
+  warnForeignSkills,
+  writeAgentsMd,
+} from "./install.ts";
 import {
   type Manifest,
   orphansOf,
@@ -53,6 +59,7 @@ export async function update(targetDir: string): Promise<number> {
   for (const orphan of await orphansOf(targetDir, previous, current)) {
     if (orphan.verdict === "removed") {
       await Deno.remove(join(targetDir, orphan.name));
+      await removeEmptyParents(targetDir, orphan.name);
       reportLine(`removed: ${orphan.name}`);
       reported = true;
     } else if (orphan.verdict === "orphaned") {
@@ -64,6 +71,11 @@ export async function update(targetDir: string): Promise<number> {
       reported = true;
     }
   }
+  // Last, because the orphan pass has just taken the retired files and their
+  // emptied directories away: whatever is still sitting in `.agents/skills/`
+  // that neither this socle ships nor the last manifest claimed really is
+  // someone else's.
+  await warnForeignSkills(targetDir, Object.keys(previous.managed));
   if (!reported) reportLine("(no managed files changed)");
 
   const stale = await staleGlueSubsection(targetDir);

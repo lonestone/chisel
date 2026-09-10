@@ -12,6 +12,10 @@ import { appendTo, REPO_ROOT, runChisel, withRepo } from "./helpers.ts";
 
 const MANIFEST = join(".agents", ".chisel.json");
 
+async function absent(path: string): Promise<boolean> {
+  return await Deno.lstat(path).then(() => false).catch(() => true);
+}
+
 async function sha256Of(text: string): Promise<string> {
   const digest = await crypto.subtle.digest(
     "SHA-256",
@@ -159,10 +163,23 @@ Deno.test("update: a file that left the managed set unchanged is removed", async
       "# a formula an earlier socle shipped and this one does not\n";
     await Deno.writeTextFile(join(target, retired), asInstalled);
     await recordInManifest(target, retired, await sha256Of(asInstalled));
+    // A retired skill, which lives one directory deeper: what it leaves behind
+    // when its file goes is the second half of the question.
+    const retiredSkill = ".agents/skills/retired/SKILL.md";
+    const skillAsInstalled =
+      "# a skill an earlier socle shipped and this one does not\n";
+    await Deno.mkdir(join(target, ".agents", "skills", "retired"));
+    await Deno.writeTextFile(join(target, retiredSkill), skillAsInstalled);
+    await recordInManifest(
+      target,
+      retiredSkill,
+      await sha256Of(skillAsInstalled),
+    );
 
     const result = await runChisel(["update", target]);
     assertEquals(result.code, 0, result.output);
     assertStringIncludes(result.stdout, `removed: ${retired}`);
+    assertStringIncludes(result.stdout, `removed: ${retiredSkill}`);
     assertEquals(
       await Deno.stat(join(target, retired)).then(() => true).catch(() =>
         false
@@ -175,6 +192,27 @@ Deno.test("update: a file that left the managed set unchanged is removed", async
         "retired.formula.toml",
       ),
       "and it is out of the manifest",
+    );
+    assert(
+      !result.stderr.includes("not installed by chisel"),
+      `a directory the old manifest tracked is not called foreign:\n${result.stderr}`,
+    );
+    assertEquals(
+      await absent(join(target, ".agents", "skills", "retired")),
+      true,
+      "the directory the removal emptied went with it",
+    );
+    assert(
+      (await Deno.stat(join(target, ".agents", "formulas"))).isDirectory,
+      "and a directory chisel owns stays, emptied or not",
+    );
+
+    // The lasting cost of getting this wrong was a warning on every later run.
+    const again = await runChisel(["update", target]);
+    assertEquals(again.code, 0, again.output);
+    assert(
+      !again.stderr.includes("retired"),
+      `nothing is said about it again:\n${again.stderr}`,
     );
   });
 });
@@ -191,6 +229,16 @@ Deno.test("update: a file that left the managed set and was modified is kept and
       await sha256Of("what chisel had installed here\n"),
     );
 
+    const retiredSkill = ".agents/skills/retired/SKILL.md";
+    const modifiedSkill = "# a retired skill the project has since edited\n";
+    await Deno.mkdir(join(target, ".agents", "skills", "retired"));
+    await Deno.writeTextFile(join(target, retiredSkill), modifiedSkill);
+    await recordInManifest(
+      target,
+      retiredSkill,
+      await sha256Of("what chisel had installed there\n"),
+    );
+
     const result = await runChisel(["update", target]);
     assertEquals(result.code, 0, result.output);
     assertStringIncludes(result.stdout, `orphaned: ${retired}`);
@@ -199,6 +247,21 @@ Deno.test("update: a file that left the managed set and was modified is kept and
       await Deno.readTextFile(join(target, retired)),
       modified,
       "the local content is left byte for byte",
+    );
+    assertStringIncludes(result.stdout, `orphaned: ${retiredSkill}`);
+    assertEquals(
+      await Deno.readTextFile(join(target, retiredSkill)),
+      modifiedSkill,
+      "the kept skill file too",
+    );
+    assert(
+      (await Deno.stat(join(target, ".agents", "skills", "retired")))
+        .isDirectory,
+      "a directory that still holds something stays",
+    );
+    assert(
+      !result.stderr.includes("not installed by chisel"),
+      `and it is still not called foreign:\n${result.stderr}`,
     );
   });
 });

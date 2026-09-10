@@ -6,10 +6,11 @@ import {
   copyManagedFiles,
   ensureProjectManagementSkeleton,
   linkClaudeSkills,
+  warnForeignSkills,
   writeAgentsMd,
   writeClaudeMd,
 } from "./install.ts";
-import { writeManifest } from "./manifest.ts";
+import { readManifest, writeManifest } from "./manifest.ts";
 import {
   ensureProjectMd,
   pointNewGlueAtExistingJournal,
@@ -25,7 +26,13 @@ export async function init(targetDir: string): Promise<number> {
   }
   const projectTitle = basename(await Deno.realPath(targetDir));
 
+  // What an earlier run installed here, read before this one writes: a skill
+  // that manifest tracked is chisel's own, whatever the socle ships today, and
+  // the warning below has no other way to know.
+  const previous = await readManifest(targetDir);
+
   await copyManagedFiles(targetDir);
+  await warnForeignSkills(targetDir, Object.keys(previous?.managed ?? {}));
   await renderAgentDefinitions(targetDir);
   // The glue is written before the adapters so the inventory below can report
   // what this run actually put in place — and only on a glue this run created.

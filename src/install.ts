@@ -82,8 +82,9 @@ export async function copyManagedFiles(targetDir: string): Promise<void> {
     join(targetDir, "scripts", "task-id.sh"),
     EXECUTABLE_MODE,
   );
-  await warnForeignSkills(targetDir);
 }
+
+const SKILLS_PREFIX = ".agents/skills/";
 
 // Say out loud that a skill chisel did not install is not chisel's. It is
 // left strictly alone — not copied over, not managed, not reported by
@@ -94,22 +95,71 @@ export async function copyManagedFiles(targetDir: string): Promise<void> {
 // Only `.agents/skills/`: `.agents/profiles/` is a documented extension point
 // (drop a profile in, chisel renders its definitions), and a warning there
 // would be noise about a file the project meant to add.
-export async function warnForeignSkills(targetDir: string): Promise<void> {
+//
+// The shipped socle alone cannot answer the question the warning asks. A skill
+// retired upstream is absent from it and present on disk, and calling that
+// directory a stranger's would be a lie chisel can disprove from its own
+// records — so the previous manifest is consulted too: whatever it tracked,
+// chisel installed.
+export async function warnForeignSkills(
+  targetDir: string,
+  previouslyManaged: Iterable<string>,
+): Promise<void> {
   const skillsDir = join(targetDir, ".agents", "skills");
   if (!(await isDirectory(skillsDir))) return;
-  const shipped = new Set(
+  const chisels = new Set(
     SOCLE_FILES.filter((file) => file.startsWith("agents/skills/")).map((
       file,
     ) => file.slice("agents/skills/".length).split("/")[0]),
   );
+  for (const name of previouslyManaged) {
+    if (!name.startsWith(SKILLS_PREFIX)) continue;
+    chisels.add(name.slice(SKILLS_PREFIX.length).split("/")[0]);
+  }
   const present: string[] = [];
   for await (const entry of Deno.readDir(skillsDir)) present.push(entry.name);
   for (const name of present.sort()) {
-    if (shipped.has(name)) continue;
+    if (chisels.has(name)) continue;
     warn(
       `.agents/skills/${name} was not installed by chisel — leaving it alone ` +
         `(chisel neither updates nor manages it)`,
     );
+  }
+}
+
+// Directories chisel creates in a target and keeps: an update that emptied one
+// has retired a file, not un-installed the socle, and a skeleton with a hole in
+// it would be the next surprise. Everything below them is fair game once empty.
+const MANAGED_ROOTS: ReadonlySet<string> = new Set([
+  ".agents",
+  ".agents/skills",
+  ".agents/formulas",
+  ".agents/profiles",
+  ".claude/agents",
+  ".codex/agents",
+  "project-management",
+  "scripts",
+]);
+
+/**
+ * Take the directories a removed file leaves behind with it, walking up and
+ * stopping at the first one chisel owns. Emptiness is the whole licence: a
+ * directory still holding anything — a file of the project's, a dotfile —
+ * stays, and so does everything above it.
+ */
+export async function removeEmptyParents(
+  targetDir: string,
+  relative: string,
+): Promise<void> {
+  let current = dirname(relative);
+  while (current !== "." && current !== "" && !MANAGED_ROOTS.has(current)) {
+    try {
+      await Deno.remove(join(targetDir, current));
+    } catch {
+      // Not empty, or already gone: nothing above it can be empty either.
+      return;
+    }
+    current = dirname(current);
   }
 }
 
