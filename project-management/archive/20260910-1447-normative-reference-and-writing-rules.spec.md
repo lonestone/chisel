@@ -87,7 +87,7 @@ work document.
       → 0 (today 10 glossary rows)~~ no glossary row left:
       `grep -cE '^\| \*\*(Task|Spec document|Work document|Slice|Seam|Reading gradient|Blocking edge|Frontier|Expand|One-shot)\*\*' socle/agents/methodology.md`
       → 0 (today 10); the roster and the dex-phase tables are not normative
-      definitions and stay (amended 2026-09-09 by the foreman at review: the
+      definitions and stay (amended 2026-09-10 by the foreman at review: the
       first grep matched 23 rows, 10 of them those two tables — the agent's
       Finding 2). `grep -c "^### The cascade" socle/agents/methodology.md`
       → 0 (today 1); the three former sections are each replaced by one
