@@ -27,9 +27,11 @@ export function usage(): string {
     "  1  a refusal, a missing precondition, or a divergence found by check",
     "  2  a usage error: an unknown command, or an argument too many",
     "",
-    "Requires Deno 2.6 or later. Permissions: read and write inside the target",
-    "directory, and read of chisel's own packaged files — `-A` grants them all",
-    "at once, and running without it answers one prompt per kind of access.",
+    "Requires Deno 2.6 or later. `deno x jsr:@lonestone/chisel` runs with every",
+    "permission and no prompt, as npx would. `deno run jsr:@lonestone/chisel`",
+    "asks for three: read and write inside the target directory (-R -W) and net",
+    "access to jsr.io, where the packaged socle is read from (-N=jsr.io) — `-A`",
+    "grants them all at once.",
   ].join("\n");
 }
 

@@ -5,6 +5,20 @@ ships.
 
 ---
 
+## 28. 2026-09-10 — `@lonestone/chisel` 0.1.0 is on JSR
+
+The Owner published the package. The foreman's smoke test from an empty
+repo outside this one — `deno x jsr:@lonestone/chisel init`, then `check` —
+gives the golden tree to the line and `clean — no divergence`. Two facts
+learned only by running the real thing: `deno x` grants every permission
+without a prompt, where `deno run jsr:` asks for read and write in the
+target and net access to `jsr.io` (finding S2 of chantier 4, closed:
+`--help` and the README now say exactly that); and Deno's minimum
+dependency age policy refuses a version for 24 hours after its
+publication unless `--min-dep-age 0` is passed, which the README now
+states. Version bumped to 0.1.1 so the corrected `--help` ships with the
+next publish.
+
 ## 27. 2026-09-10 — The CLI and its suite move to Deno
 
 Chantier 4 closes on the Owner's fast track, extended to it the same day.

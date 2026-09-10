@@ -13,7 +13,14 @@ deno x jsr:@lonestone/chisel init
 
 Requires **Deno 2.6 or later** and nothing else — no `node_modules`, no
 global install. `deno x --install-alias` creates the `dx` alias, after which
-the same command reads `dx jsr:@lonestone/chisel init`.
+the same command reads `dx jsr:@lonestone/chisel init`. `deno x` runs the
+command with every permission, as npx would; `deno run jsr:@lonestone/chisel`
+asks for read and write inside the target directory and net access to
+`jsr.io`, where the packaged socle is read from.
+
+Deno refuses a package version published less than 24 hours ago (its
+minimum dependency age policy). In the day after a release, add
+`--min-dep-age 0` to the command, or wait.
 
 **Why this exists** — the problem, the alternatives we tested, and the
 beliefs behind the design: [PHILOSOPHY.md](./PHILOSOPHY.md).
