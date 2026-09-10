@@ -898,6 +898,6 @@ Addendum 3 (trace des blocages) restent la règle par défaut.
 Foreman avait déconseillé la voie rapide pour le port Deno (du code, un
 Inspector frais sur le diff vaut son prix). L'Owner a tranché l'inverse :
 « go chantier 4 même méthodo ». Même application : spec écrite par le
-Foreman (`project-management/tasks/20260910-1535-deno-port.spec.md`), un
+Foreman (`project-management/archive/20260910-1535-deno-port.spec.md`), un
 seul agent planifie et frappe, le Foreman relit sur les deux axes. La
 réserve du Foreman reste consignée ici ; la revue du diff est la sienne.
