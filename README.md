@@ -8,8 +8,12 @@ a single `.agents/` folder that Claude Code, Cursor and Codex all read, posed
 by one command:
 
 ```bash
-npx @lonestone/chisel init
+deno x jsr:@lonestone/chisel init
 ```
+
+Requires **Deno 2.6 or later** and nothing else — no `node_modules`, no
+global install. `deno x --install-alias` creates the `dx` alias, after which
+the same command reads `dx jsr:@lonestone/chisel init`.
 
 **Why this exists** — the problem, the alternatives we tested, and the
 beliefs behind the design: [PHILOSOPHY.md](./PHILOSOPHY.md).
@@ -66,6 +70,17 @@ human validates the result before anything is re-installed.
 - `sync-upstream` (maintainers of this repo) — pulls Matt Pocock's skill
   improvements into our forks: the agent proposes each merge, a human
   validates skill by skill.
+
+## From a checkout (maintainers)
+
+Run the CLI straight from the repo, on any target directory:
+
+```bash
+deno run -A src/main.ts init ../some-repo
+```
+
+`deno task test` runs the suite ([test/TESTS.md](./test/TESTS.md) says what
+it protects) and `deno task check` type-checks, lints and format-checks.
 
 ## Provenance
 

@@ -27,7 +27,7 @@ letters and titles of `.agents/project.md` (§A · Task workspace,
 ## Step 0 — Precondition
 
 Check `.agents/.chisel.json` exists. If it does not, stop here and tell the
-user to run `npx @lonestone/chisel init` first — this skill configures the
+user to run `deno x jsr:@lonestone/chisel init` first — this skill configures the
 glue, it never installs the socle. Do not attempt to bootstrap `.agents/`
 yourself.
 

@@ -41,7 +41,7 @@ Say this out loud at the start, and hold to it:
 
 1. **Confirm this really is a v1 repo.** It is, if `.agents/rules/task-*.md`
    or `.agents/workflows.md` exists. If neither does, this repo is already on
-   v2: stop, say so, and run `npx @lonestone/chisel update` instead.
+   v2: stop, say so, and run `deno x jsr:@lonestone/chisel update` instead.
 2. **Require a clean working tree.** `git status --porcelain` must be empty.
    The migration's whole safety net is that the human can read one diff and
    revert it in one command; unrelated changes mixed into it destroy that.
@@ -129,7 +129,7 @@ touch them.
 ## Step 4 — Install the v2 layer
 
 ```
-npx @lonestone/chisel init .
+deno x jsr:@lonestone/chisel init .
 ```
 
 `init` is the right command here, and it is not guarded against a v1 layout on
@@ -194,7 +194,7 @@ Two more items from `chisel-setup` belong here, and it describes both:
 
 Run, and show the results:
 
-1. `npx @lonestone/chisel check` — it must be clean. A `DIVERGED` line here
+1. `deno x jsr:@lonestone/chisel check` — it must be clean. A `DIVERGED` line here
    means a managed file was hand-edited; a `MISSING` line means Step 4 did not
    finish.
 2. `git status --porcelain` — the changed paths must be the ones this migration
@@ -202,7 +202,7 @@ Run, and show the results:
 3. `git diff --stat` on the task workspace — the journal's rename, and NOTHING
    else. A single changed line in a task file or in the archive is a failed
    migration, not a detail: revert it.
-4. `npx @lonestone/chisel update` — it must be accepted. This is the real
+4. `deno x jsr:@lonestone/chisel update` — it must be accepted. This is the real
    definition of "migrated": the command that refused this repo at the start
    now runs. If it still refuses, something the guard looks for survived
    Step 2, and the message says what.
