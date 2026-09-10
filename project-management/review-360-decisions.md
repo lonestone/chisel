@@ -877,3 +877,19 @@ sur une échelle. Nom retenu par composition des deux existants :
   S'applique à tout texte produit — doctrine du socle, documents de tâche,
   rapports d'agents, consignes de spawn. Entrée pour les règles de rédaction
   du chantier 5, qui fera le tri dans les textes déjà livrés.
+
+## Addendum 6 (2026-09-10) — chantier 5 en voie rapide
+
+Tranché par l'Owner à l'ouverture du chantier 5, après trois chantiers au
+pipeline complet : « avancer plus rapidement cette fois car le coût en token
+pour finir est trop élevé […] créer un plan à la volée pour le chantier 5 et
+lancer un sous-agent Opus pour l'écriture. Tu te chargeras de la review. »
+
+Application : le Foreman écrit la spec du chantier lui-même (pas d'interview
+ni de `slice-task`), un seul agent exécute l'ensemble et tient son document
+de travail, et le Foreman relit sur les deux axes (Standards, Spec) sans
+Architect ni Inspector sous-agents. Les gates humaines restent : l'Owner a lu
+le plan avant lancement et relit le résultat. C'est le régime `chisel-light`
+appliqué à un chantier qui s'y prête — mécanique, sans arbitrage restant —
+et non une révision de la doctrine : les rulings G16 (reviewers frais) et
+Addendum 3 (trace des blocages) restent la règle par défaut.
