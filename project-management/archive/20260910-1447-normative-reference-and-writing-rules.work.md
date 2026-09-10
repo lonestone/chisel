@@ -1,7 +1,7 @@
 # Normative reference and writing rules — work
 
 Created by the Mason session at `plan`, 2026-09-10. Spec:
-`project-management/tasks/20260910-1447-normative-reference-and-writing-rules.spec.md`.
+`project-management/archive/20260910-1447-normative-reference-and-writing-rules.spec.md`.
 
 This chantier runs on the Owner's fast track (Addendum 6 of the decisions
 record): one session plans and types the whole task, the Foreman reviews the
