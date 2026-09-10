@@ -1,0 +1,27 @@
+{
+  "name": "@lonestone/chisel",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./src/main.ts",
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^1.0.14",
+    "@std/encoding": "jsr:@std/encoding@^1.0.10",
+    "@std/path": "jsr:@std/path@^1.1.2",
+    "@std/toml": "jsr:@std/toml@^1.0.11"
+  },
+  "tasks": {
+    "test": "deno test -A test/",
+    "check": "deno check src/ test/ && deno lint && deno fmt --check"
+  },
+  "publish": {
+    "include": ["src/", "socle/", "deno.json", "README.md"]
+  },
+  "fmt": {
+    "include": ["src/", "test/"],
+    "exclude": ["test/fixtures/", "test/TESTS.md"]
+  },
+  "lint": {
+    "include": ["src/", "test/"],
+    "exclude": ["test/fixtures/", "test/TESTS.md"]
+  }
+}
