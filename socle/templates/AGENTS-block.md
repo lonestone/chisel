@@ -55,6 +55,7 @@ human relaunches it; under supervised, auto and auto-light the Foreman spawns
 the next step itself, fresh.
 
 Paths (task workspace, template, journal, gate commands) resolve through
-`.agents/project.md`. The reasoning behind all of it is
-`.agents/methodology.md`. This block only routes; the socle at `.agents/`
-carries the content.
+`.agents/project.md`. The vocabulary, the rule that says who owns a review
+zone and the model tiers are `.agents/reference.md`; the reasoning behind all
+of it is `.agents/methodology.md`. This block only routes; the socle at
+`.agents/` carries the content.

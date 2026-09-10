@@ -16,6 +16,7 @@
 .agents/profiles/inspector.md
 .agents/profiles/mason.md
 .agents/project.md
+.agents/reference.md
 .agents/skills
 .agents/skills/chisel-beads
 .agents/skills/chisel-beads/CHANGING-CASE.md

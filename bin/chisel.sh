@@ -56,6 +56,7 @@ AGENTS_FORMULAS_SRC="$SOCLE/agents/formulas"
 AGENTS_PROFILES_SRC="$SOCLE/agents/profiles"
 DISCIPLINE_SRC="$SOCLE/agents/discipline.md"
 METHODOLOGY_SRC="$SOCLE/agents/methodology.md"
+REFERENCE_SRC="$SOCLE/agents/reference.md"
 
 BLOCK_BEGIN='<!-- chisel:begin -->'
 BLOCK_END='<!-- chisel:end -->'
@@ -172,6 +173,7 @@ managed_relative_files() {
     done
   printf '.agents/discipline.md\n'
   printf '.agents/methodology.md\n'
+  printf '.agents/reference.md\n'
   printf '.agents/user.md.tpl\n'
   printf 'scripts/task-id.sh\n'
   printf 'project-management/000-template.spec.md\n'
@@ -269,6 +271,7 @@ copy_managed_files() {
   cp -R "$AGENTS_PROFILES_SRC" "$target_dir/.agents/"
   cp "$DISCIPLINE_SRC" "$target_dir/.agents/discipline.md"
   cp "$METHODOLOGY_SRC" "$target_dir/.agents/methodology.md"
+  cp "$REFERENCE_SRC" "$target_dir/.agents/reference.md"
   # The TEMPLATE of the personal file, not the personal file itself: it is
   # socle text, committed like the rest, and it is what lets any dev — the
   # first one or the fifth — pose their own `.agents/user.md` with a copy, no
