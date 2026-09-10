@@ -5,6 +5,38 @@ ships.
 
 ---
 
+## 27. 2026-09-10 — The CLI and its suite move to Deno
+
+Chantier 4 closes on the Owner's fast track, extended to it the same day.
+`bin/chisel.sh` (854 lines of portable bash plus python for the manifest)
+becomes a Deno/TypeScript package: `deno.json` names `@lonestone/chisel`,
+`src/` carries the three commands, a structured parser of the glue (sections
+by letter, items by label — no template sentence matched character by
+character), Web Crypto hashing and a committed list of the socle files the
+package ships. Same commands, same report lines, same exit codes, same
+installed tree (golden tree unchanged at 91 lines); usage errors now exit 2
+naming the offender, and `--help` says what the CLI needs. The four bugs
+of the 360 review are fixed inside the port with their tests: an import
+appended to a `CLAUDE.md` without a trailing newline gets its own line; a
+`.claude/skills` link pointing elsewhere is a missing adapter; a file that
+left the managed set is removed when its content still matches what was
+installed (`removed:`) and named when it does not (`orphaned:`), its emptied
+directory going with it, and the foreign-skill warning stops calling a
+retired skill a stranger's; a retired `§B3 · Autonomous runs` residue in a
+glue is reported on a `stale:` line and never edited. The suite is
+`test/*.test.ts` on `Deno.test`, running the CLI as a real process: every
+one of the 94 bash assertions carried, renamed or dropped with a dated
+reason in the parity table; a committed render oracle (a tricky profile and
+its two expected renders), the profile loop driven by the installed tree,
+the codex render parsed back as TOML, a `journal` group, the user's own
+definition surviving `update`; a failing test keeps its repo and prints the
+path; no conditional skip, no line cap. 25 tests, 0 failed. README and the
+two skills name `deno x jsr:@lonestone/chisel init` and Deno 2.6 or later;
+publication to JSR is the Owner's next act. The foreman's review found one
+blocking defect (the foreign-skill lie on a retired skill), fixed by a
+fresh Mason. Task record archived at
+`project-management/archive/20260910-1535-deno-port.spec.md`.
+
 ## 26. 2026-09-10 — The normative reference, the writing rules, and the section sweep
 
 Chantier 5 closes on the Owner's fast track (one agent writes, the Foreman
