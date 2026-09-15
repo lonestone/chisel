@@ -921,3 +921,175 @@ réserve du Foreman reste consignée ici ; la revue du diff est la sienne.
   Persisté ici et non dans une mémoire d'assistant, par G17 ; la note de
   mémoire privée « foreman-report-shape » du 2026-08-28, antérieure à G17
   et redondante avec le profil du Foreman, est supprimée à cette occasion.
+
+## Addendum 8 (2026-09-10) — chantier 7, le modèle de statuts des tâches
+
+Interview ouverte le 2026-09-10, une question à la fois, sur la décision F1.4
+(statuts : « discussion dédiée à ouvrir »). État de départ : six statuts emoji
+dans le template de spec (Not Started, In Progress, Blocked, Complete,
+Deferred, Cancelled), le champ `**Status:**` désigné comme seul statut de la
+tâche par le glossaire, « awaiting approval » présent seulement dans un
+commentaire de la formule supervisée. L'Owner voulait « un vrai cycle : créée,
+métier OK, design system OK, reviewed/ready, in progress, stalled… ».
+
+- ✅ **S7.1 — Une seule échelle, pas deux axes.** Le Foreman proposait deux
+  axes (une échelle de maturité — créée, validée métier, validée design,
+  prête, en cours, terminée — et une condition de santé superposable :
+  bloquée, stalled), au motif que « stalled » n'est pas un statut de maturité et qu'une
+  échelle unique efface la maturité quand la tâche se bloque. L'Owner a
+  tranché l'inverse : « Une seule échelle. » Le statut est une valeur unique
+  parmi une suite linéaire ; blocage et panne y prennent place comme les
+  autres valeurs. La maturité perdue au passage en bloqué se retrouve dans le
+  fichier lui-même (critères cochés, travail présent), pas dans le statut.
+
+- ✅ **S7.2 — Les statuts : neuf sur le chemin, quatre hors chemin, et
+  chaque attente humaine porte le nom de ce que l'humain doit faire.** Le
+  Foreman avait d'abord proposé une échelle qui ne montrait que le résultat
+  des gates (Business OK, Design OK) ; l'Owner a demandé « Où sont les gates
+  humaines ? » — la formule par défaut en déclare trois (`spec approved`
+  avant plan, `plan approved` avant type, `review arbitration` avant close),
+  et c'est l'attente qui doit se voir, pas le résultat. C'est là que se fond
+  le `awaiting approval` de la formule supervisée (décision F1.4). Échelle
+  retenue (« Partons là dessus ») :
+
+  | Statut | 🧑 | Sens | Étape |
+  |---|---|---|---|
+  | `creating` | | la spec s'écrit, Checker inclus | interview, spec, spec-review |
+  | `waiting-business-approval` | 🧑 | le métier doit valider le besoin | gate spec approved, volet métier |
+  | `waiting-design-approval` | 🧑 | le system design de la spec (coutures, architecture, décisions) doit être validé | gate spec approved, volet design |
+  | `ready` | | approuvée, rien ne la retient, attend un Maçon | frontière |
+  | `planning` | | le Maçon écrit son program design | plan, plan-review |
+  | `waiting-plan-approval` | 🧑 | le plan attend le feu vert — utile en human-in-the-loop ; en mode factory « pas la peine, on laisse le maçon coder » | gate plan approved |
+  | `in-progress` | | le Maçon frappe | type, verify |
+  | `waiting-diff-approval` | 🧑 | les findings attendent l'arbitrage | gate review arbitration |
+  | `done` | | critères cochés, archivée | close |
+
+  Noms fixés par l'Owner le 2026-09-10, en kebab-case, « utilisables par les
+  humains » et transposables tels quels dans un tracker (« dans Plane ça
+  donnerait "Review - Métier" »). L'Owner a aussi demandé de dire « statut »
+  et non « barreau » (« C'est quoi ce wording de l'espace encore... »).
+  Hors chemin, à n'importe quel statut : `blocked` (attend une dépendance
+  nommée), `stalled` (personne n'avance, rien à attendre), `deferred`,
+  `cancelled` — mêmes noms en kebab-case, non relistés par l'Owner mais non
+  contestés.
+  **« Design » s'entend au sens large — le system design de la spec, ses
+  coutures et son architecture — et pas du tout au sens « UI design »**
+  (précision de l'Owner le 2026-09-10, après que le Foreman avait lu
+  « design system OK » comme une validation d'interface ; le Foreman a
+  corrigé cette ligne). Toute tâche a donc un design à valider ; il n'y a pas
+  de statut à sauter pour une tâche sans écran.
+  Business et Design restent deux statuts successifs plutôt qu'un seul
+  « waiting-spec-approval » : c'était la liste d'origine de l'Owner et, dans une
+  équipe, ce sont deux personnes. Dans le preset auto les statuts 🧑 sont
+  sautés (pas de gate) ; dans le preset supervisé, seuls les deux premiers
+  arrêtent le run. Une recherche sur « waiting- » dans le
+  workspace donne la vue « où un humain est attendu », que l'ancien modèle à
+  six emoji ne permettait pas.
+
+- ✅ **S7.3 — Une seule échelle pour tous les workflows ; chaque formule
+  choisit son chemin dedans.** Question de l'Owner : « Est-ce que ces status
+  sont les memes pour tous les workflows ? » Oui : les treize valeurs vivent
+  une fois (template de spec, glossaire du glue) ; chaque étape de chaque
+  formule dit dans son corps sur quel statut elle pose la tâche. Default
+  traverse tout ; supervisé s'arrête à `waiting-business-approval` et
+  `waiting-design-approval` seulement ; auto saute les quatre statuts 🧑
+  (sans gate, pas d'attente). La recherche « waiting- » répond pareil quel
+  que soit le preset, et le mapping vers un tracker se fait une fois.
+  **Business puis design : deux lectures d'une même spec dans le default, et
+  deux passes d'écriture là où deux rôles valident.** L'Owner : « Comme c'est
+  souvent 2 roles effectivement, ça vaut le coup de séparer ça en 2 dans
+  certains workflows. » Le split de l'étape `spec` en deux étapes gatées est
+  une variante de formule à écrire quand une équipe en aura besoin, pas un
+  statut de plus : les deux formules posent les mêmes deux statuts d'attente.
+  Le chantier livre l'échelle, sa pose dans les cinq formules existantes, et
+  note la variante à deux passes comme extension prévue.
+
+- ✅ **S7.4 — Le propriétaire du fil pose le statut aux frontières d'étape ;
+  chaque étape de la formule dit dans son corps où elle laisse la tâche.**
+  Tranché « ok » le 2026-09-11. C'est la règle actuelle (« le propriétaire du
+  fil maintient le statut dans la spec, seul ; le Maçon n'y touche jamais »)
+  rendue explicite : une ligne par étape dans les cinq formules (« cette
+  étape se termine en `waiting-plan-approval` ») donne l'endroit unique où
+  lire la correspondance étapes → statuts. En default c'est la session de
+  l'Owner ; en auto c'est le Foreman qui orchestre. Hors chemin : `blocked`
+  est posé par le propriétaire du fil quand une session lui rapporte un
+  blocage (canal tranché à l'Addendum 3, la trace des blocages) ; `deferred`
+  et `cancelled` par l'humain, à la main. `stalled` fait l'objet de la
+  décision suivante : personne n'est en séance sur une tâche stalled.
+
+- ✅ **S7.5 — `stalled` est posé par un humain, sur un critère écrit dans le
+  template ; plus tard, par un orchestrateur AI.** Tranché le 2026-09-11 :
+  « humain ou orchestrateur AI plus tard ». Aucune étape de formule ne peut
+  l'écrire, puisque personne n'est en séance sur une tâche stalled. Le
+  critère est une décision, pas une mesure : « personne n'avance dessus, rien
+  de nommé à attendre, et personne ne compte s'y remettre à court terme » —
+  un seuil en jours reste une heuristique (une spec qui attend une validation
+  pendant des vacances n'est pas en panne). Ce chantier n'outille rien : la
+  détection (« qu'est-ce qui dort ») revient au chantier 6, le wayfinder
+  local-first, ou à un orchestrateur AI qui passe le workspace en revue, et
+  elle rapporte sans éditer tant que la décision S7.4 (le propriétaire du fil
+  pose le statut) tient — l'orchestrateur qui posera `stalled` sera ce
+  propriétaire.
+
+- ✅ **S7.6 — La ligne de statut porte la valeur seule : `**Status:**
+  waiting-design-approval`, sans emoji devant.** Tranché « valeur seule » le
+  2026-09-11. Le nom fait le repérage que l'emoji faisait et, en plus, la
+  recherche dans le workspace ; un marqueur par famille (🧑 attente, 🔨
+  travail, ⛔ hors chemin) serait une deuxième chose à tenir cohérente et
+  personne ne l'écrirait dans un tracker. Les six emoji 🔴 🟡 🟠 🟢 ⚪ ⚫
+  disparaissent du template de spec (« Status Indicators »), du glue (§B1 ·
+  Where task statuses live), du skill slice-task et de la page de changement
+  de cas vers beads (`CHANGING-CASE.md`), qui les citent.
+
+- ✅ **S7.7 — Sous beads, la valeur fine vit dans le bead, nativement, un
+  seul endroit ; deux traductions de nom, et `bd ready` reste la frontière
+  du Maçon.** L'Owner a douté de l'affirmation du Foreman (« bd n'a que
+  quatre ou cinq statuts natifs ») : « t sur sur qu'on peut pas stocker
+  d'autres status dans beads ? » Sondé le 2026-09-11 sur bd 1.2.2 dans un
+  dépôt jetable :
+  - `bd config set status.custom "nom:catégorie,…"` déclare des statuts
+    supplémentaires, avec une catégorie parmi active / wip / frozen / done ;
+    la config est dans la base, donc committée et partagée. `bd list`
+    respecte les catégories (montre active et wip, cache frozen et done) et
+    `bd list --status <x>` filtre sur n'importe quel statut custom.
+  - `blocked` et `deferred` sont natifs et refusés en custom (« collides
+    with built-in ») : mêmes noms des deux côtés.
+  - `bd ready` (ouvert et aucune dépendance ouverte en amont) ne voit que le
+    natif `open` : un statut custom `ready` en est invisible. Vérifié avec
+    une dépendance : en écrivant notre `ready` comme `open` dans la base,
+    `bd ready` montre l'amont libre, cache l'aval bloqué par l'amont
+    (`bd blocked` le liste) et cache une spec en `waiting-design-approval`.
+    C'est exactement « prête à être chopée par un Maçon » (Owner).
+  - `bd stats` ne compte pas les statuts custom (zéro partout) : accepté.
+  Décision : la règle actuelle « `**Status:** tracked as <id>`, seul endroit
+  du statut » tient sans amendement. Le skill chisel-beads déclare la liste
+  `status.custom` avec ses catégories comme étape du changement de cas, et
+  documente **deux traductions de nom, les seules** : `ready` (fichier) ↔
+  `open` (base), `in-progress` (fichier) ↔ `in_progress` (base) — « ok pour
+  in_progress » (Owner, 2026-09-14). `bd ready` reste la commande de frontière
+  du Maçon ; « pour sûr faudra utiliser le `--status` pour les autres
+  statuts » (Owner) : `bd list --status waiting-plan-approval`, etc. Les
+  neuf autres valeurs s'écrivent à l'identique. Catégories retenues :
+  `creating`, `waiting-business-approval`, `waiting-design-approval` :
+  active ; `planning`, `waiting-plan-approval`, `waiting-diff-approval` :
+  wip ; `stalled` : frozen ; `done`, `cancelled` : done.
+
+- ✅ **S7.8 — Toutes les lignes de statut du dépôt sont réécrites, à la
+  main, dans le chantier ; la table de correspondance est publiée pour les
+  dépôts consommateurs, sans outil.** Tranché « Si tu veux » le 2026-09-14,
+  sur recommandation du Foreman. Inventaire : 23 lignes `**Status:**` dans
+  `project-management/tasks/`, 20 dans l'archive, aucune lecture de statut
+  dans `src/` (rien à changer côté CLI) ; les emoji vivent dans le template
+  de spec (racine et copie empaquetée `socle/templates/`), le glue §B1, le
+  skill slice-task et `CHANGING-CASE.md` du skill chisel-beads. Table :
+  🔴 Not Started → `creating` ou `ready` selon l'état réel de la spec (six
+  fichiers ouverts, jugement au cas par cas) ; 🟡 In Progress →
+  `in-progress` ; 🟠 Blocked → `blocked` ; 🟢 Complete / Done / Delivered →
+  `done` ; ⚪ → `deferred` ; ⚫ → `cancelled` ; le texte libre qui suit (date,
+  raison) est conservé. Raison : le modèle repose sur la recherche dans le
+  workspace, et l'archive fait partie de ce qu'on cherche ; un vocabulaire à
+  moitié migré rend `grep done` faux. Pour les consommateurs, la table va
+  dans le journal du socle et le template ; l'Owner l'applique à la main
+  quand il met un dépôt à jour (règle 10 supprimée à cette fin). Noté en
+  passant : dix-sept fichiers Complete/Done dorment dans `tasks/` au lieu de
+  l'archive — corvée séparée, que le chantier peut embarquer.
