@@ -79,7 +79,7 @@ All spec documents MUST follow this structure:
 ```markdown
 # <Task name>
 
-**Status:** [Status Emoji & Text]
+**Status:** creating
 
 ---
 
@@ -161,20 +161,62 @@ workspace declared in `.agents/project.md`. Its work document has the same
 name with `.spec.md` replaced by `.work.md`. For slices use
 `<NN>-<slice-slug>.spec.md`; each gains a work document at `plan`.
 
-## Status Indicators
+## Statuses
 
-| Status | Emoji | Meaning |
+A task has ONE status: a single value from the list below, written on the
+`**Status:**` line of its spec document. Nine values sit on the path a task
+walks, in this order; four can replace any of them. Every value that waits
+on a human is named by what that human must do, so a search for `waiting-`
+across the task workspace answers "where am I needed".
+
+| Status | Meaning | Left there by |
 |---|---|---|
-| Not Started | 🔴 | Task not yet begun |
-| In Progress | 🟡 | Active development |
-| Blocked | 🟠 | Waiting on dependencies |
-| Complete | 🟢 | All acceptance criteria met |
-| Deferred | ⚪ | Postponed |
-| Cancelled | ⚫ | No longer needed |
+| `creating` | The spec is being written, its review included | `interview`, `spec`, `spec-review` |
+| `waiting-business-approval` | A human must validate the need | the spec-approval gate, business side |
+| `waiting-design-approval` | A human must validate the spec's system design — its seams, architecture and decisions, never an interface mockup: every task has one | the spec-approval gate, design side |
+| `ready` | Approved, nothing retains it, waiting for a Mason — the frontier | the end of the create phase |
+| `planning` | The Mason is writing its program design in the work document | `plan`, `plan-review` |
+| `waiting-plan-approval` | A human must green-light the program design | the plan-approval gate |
+| `in-progress` | The Mason is typing or verifying, or the diff is under review | `type`, `verify`, `diff-review` |
+| `waiting-diff-approval` | A human must arbitrate the review findings | the review-arbitration gate |
+| `done` | Acceptance criteria ticked, spec and work document archived | `close` |
+| `blocked` | Held by a named dependency — the name goes on the line, after the value | a human decision |
+| `stalled` | Nobody is advancing it and nothing named is awaited | a human decision |
+| `deferred` | Postponed on purpose, to be picked up later | a human decision |
+| `cancelled` | No longer wanted | a human decision |
 
-The thread owner maintains status in the spec. The Mason's resume point is
-the work document's implementation checkboxes. Completed spec and work
-documents move together to the archive.
+- **The value is written alone**: `**Status:** waiting-design-approval`, no
+  emoji before it, free text (a date, a dependency, a reason) after it if it
+  helps.
+- **The thread owner alone writes it**, at step boundaries. Each step of
+  each preset under `.agents/formulas/` ends by naming the status it leaves
+  the task in, which is the one place to read the correspondence between
+  steps and statuses. The Mason never touches it.
+- **`stalled` is a human's call**, on a written criterion: nobody is
+  advancing it, nothing named is awaited, and nobody intends to resume soon.
+  No pipeline step can write it, because nobody is in session on a stalled
+  task, and no day count decides it — a spec awaiting a validation over a
+  holiday is not stalled.
+- **The four off-path values replace the on-path one**, they do not sit
+  beside it. The maturity a task had when it left the path is read from the
+  file itself — acceptance criteria ticked, a work document present or
+  absent — never from the status.
+
+The Mason's resume point is the work document's implementation checkboxes.
+Completed spec and work documents move together to the archive.
+
+**Updating a repo written against the six earlier statuses.** The old lines
+carried a coloured circle before one of six words; the words map as follows,
+and the free text after them is kept as it stands.
+
+| Old status | New value |
+|---|---|
+| Not Started | `creating` or `ready`, by the real state of the spec — `in-progress` for a parent whose slices are partly done |
+| In Progress | `in-progress` |
+| Blocked | `blocked` |
+| Complete / Done / Delivered | `done` |
+| Deferred | `deferred` |
+| Cancelled | `cancelled` |
 
 ## When Creating New Tasks
 
