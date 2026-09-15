@@ -5,6 +5,25 @@ ships.
 
 ---
 
+## 33. 2026-09-15 — The task workspace is put in order
+
+The two chores the status model left are done, by decision rather than by
+a new rule. The chisel v1 and chisel v2 parent tasks were finished except
+for one act written twice — migrating the Owner's real pilots — so that act
+becomes one standalone task of the Owner's
+(`tasks/20260915-1636-migrate-the-pilots.spec.md`, carrying the v1 slice's
+three criteria and the v2 slice's two human criteria), slice 07 of v1 is
+closed by the Deno port and the JSR publication (its npm criterion amended
+to `deno x`), and both parents close and move to the archive with their
+whole folders, as the archive rule already says; the two standalone done
+files that slept in `tasks/` move with them. The archive rule needs no new
+case: a parent whose only open slices wait on a human act closes once that
+act has its own task. The dogfooding task ("Chisel equips itself with the
+socle it ships") loses its blocker and is `ready`. The README gains a
+"Releasing" paragraph, which the release slice had asked for. `tasks/` now
+holds two files: the pilot migration, the Owner's, and the dogfooding task,
+the next chantier if the Owner says so.
+
 ## 32. 2026-09-15 — The wayfinder gets the local map it promised
 
 Chantier 6 closes small, on the Owner's framing: the wayfinder is a skill of

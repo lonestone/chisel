@@ -1,8 +1,6 @@
 # 06 — upgrade-v2 skill + LOG.md, pilot migration = parity check
 
-**Status:** blocked (2026-08-26) — the skill, the LOG.md default and their
-proofs are delivered; AC3 and AC4 wait on the Owner's real pilots (handoff in
-Notes)
+**Status:** done (2026-09-15) — the skill, the LOG.md default and their proofs are delivered; AC3 and AC4, the Owner's, are carried to `tasks/20260915-1636-migrate-the-pilots.spec.md` (the handoff in Notes stays readable here)
 **Blocked by:** 04, 08
 
 **What to build:** The v1→v2 migration path — a SKILL, not machinery in
@@ -33,11 +31,11 @@ prototype bench never exercised.
       `project-management/CHANGELOG.md` — group 15, plus the absence asserted in
       the layout of every fixture; and a repo that already HAS one gets no
       second journal beside it
-- [ ] At least one real pilot migrated via the skill (human-validated diff)
-      — **the Owner's, see the handoff in Notes**
-- [ ] Parity session on the migrated pilot logged against the parity
+- [ ] ~~At least one real pilot migrated via the skill (human-validated diff)
+      — **the Owner's, see the handoff in Notes**~~ carried 2026-09-15 to the standalone task named in the status line
+- [ ] ~~Parity session on the migrated pilot logged against the parity
       checklist — no missing step, no missing gate, artifacts conform; the
-      sliced case exercised — **the Owner's, see the handoff in Notes**
+      sliced case exercised — **the Owner's, see the handoff in Notes**~~ carried 2026-09-15 to the same task
 - [x] No LOG generation from audit trail anywhere in the socle (the decision
       is written down where LOG discipline is defined) — §A of the glue, the
       one place every writer resolves the journal through; asserted as an

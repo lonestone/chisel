@@ -1,6 +1,6 @@
 # 06 — Pilot migration + Cursor reliability test
 
-**Status:** ready
+**Status:** cancelled — superseded 2026-09-15 by `tasks/20260915-1636-migrate-the-pilots.spec.md`, the Owner's standalone task carrying its three criteria (rewritten for the Deno invocation)
 **Blocked by:** 04
 
 **What to build:** Migrate music-downloader and evea-ai to the installed

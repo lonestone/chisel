@@ -1,6 +1,6 @@
 # 07 — Release
 
-**Status:** blocked
+**Status:** done (2026-09-15) — delivered by the Deno port and the JSR publication of 0.1.0 (journal entries 27 and 28); criteria amended below, struck and dated
 **Blocked by:** 06
 
 **What to build:** README (what/why/install/update/sync — plain english, the
@@ -10,11 +10,11 @@ pilots run `update`).
 
 ## Acceptance criteria
 
-- [ ] `npx @lonestone/chisel init` works from the PUBLISHED package on a
+- [x] ~~`npx @lonestone/chisel init`~~ `deno x jsr:@lonestone/chisel init` (amended 2026-09-15: npm gave way to JSR) works from the PUBLISHED package on a
       clean machine
-- [ ] README covers init/update/check/sync + the questionnaire in under 5 min
+- [x] README covers init/update/check/sync + the questionnaire in under 5 min
       of reading
-- [ ] Release process documented and CHANGELOG discipline in place
+- [x] Release process documented (README, "Releasing") and CHANGELOG discipline in place (§A of the glue)
 
 ---
 

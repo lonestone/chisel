@@ -89,6 +89,13 @@ deno run -A src/main.ts init ../some-repo
 `deno task test` runs the suite ([test/TESTS.md](./test/TESTS.md) says what
 it protects) and `deno task check` type-checks, lints and format-checks.
 
+**Releasing.** Bump `version` in `deno.json`, add the dated entry to
+`project-management/CHANGELOG.md`, commit, then `deno publish` from a clean
+tree (`--allow-dirty` only when untracked files you mean to keep sit in the
+tree). The published set is what `publish.include` in `deno.json` names.
+Consumers see the new version once Deno's minimum dependency age has passed,
+or sooner with `--min-dep-age 0`.
+
 ## Provenance
 
 Skills forked from [mattpocock/skills](https://github.com/mattpocock/skills)

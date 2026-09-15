@@ -1219,3 +1219,31 @@ n'a plus de chantier ouvert. Restent, hors plan : la republication JSR en
 les deux corvées notées au chantier 7 (dix-sept fichiers `done` dans
 `tasks/`, la règle d'archivage sans cas pour un parent à moitié fait), et le
 skill « carte finie → tâches » noté possible et non urgent en W6.5.
+
+## Addendum 12 (2026-09-15) — « on boucle tout ça » : le workspace rangé
+
+Sur « Ok bon on boucle tout ça » (Owner, 2026-09-15), le Foreman a réglé
+les deux corvées notées au chantier 7 (le modèle de statuts des tâches) par
+une décision plutôt qu'une règle, réversible par git :
+
+- Les parents chisel v1 et chisel v2 étaient finis à un acte près, écrit
+  deux fois (slice 06 de v1, critères humains de la slice 06 de v2) : la
+  migration des pilotes réels de l'Owner. Cet acte devient une tâche
+  autonome de l'Owner, `tasks/20260915-1636-migrate-the-pilots.spec.md`,
+  statut `ready` ; la slice 06 de v1 est `cancelled — superseded`, la slice
+  06 de v2 est `done` avec ses deux critères barrés et reportés ; la slice
+  07 de v1 (release) est `done`, livrée par le port Deno et la publication
+  JSR, son critère npm amendé en `deno x`. Les deux parents passent `done`
+  et partent à l'archive avec leurs dossiers entiers, comme la règle le dit
+  déjà : **pas de nouveau cas dans la règle d'archivage** — un parent dont
+  les seules slices ouvertes attendent un acte humain se ferme quand cet
+  acte a sa propre tâche.
+- Les deux fichiers isolés `done` (`field-test-fixes`, `philosophy-doc`)
+  rejoignent l'archive.
+- La tâche « Chisel equips itself with the socle it ships »
+  (`tasks/20260826-2302-chisel-dogfoods-itself.spec.md`), bloquée sur la
+  clôture de v2, passe `ready` : c'est le chantier suivant que le Foreman
+  recommande, ce dépôt n'ayant toujours pas de `.agents/`.
+- Le README gagne un paragraphe « Releasing », demandé par la slice release.
+- Hors de portée du Foreman, actes de l'Owner : la republication JSR en
+  0.1.1, la fusion de `v2` dans `main` (G20).
