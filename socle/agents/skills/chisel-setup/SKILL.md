@@ -1,14 +1,14 @@
 ---
 name: chisel-setup
-description: Fill in .agents/project.md — the per-repo glue — after `chisel init`. Explores the repo, prefills sections A-H, presents each one at a time for confirmation, and writes accepted sections back surgically. Also poses the current dev's personal .agents/user.md. Re-runnable later to revisit any section.
+description: Fill in .agents/project.md — the per-repo glue — after `chisel init`. Explores the repo, prefills sections A-H, presents each one at a time for confirmation, and writes accepted sections back surgically. Also poses the current dev's personal .agents/user.md, and sorts out a hand-written AGENTS.md against the block chisel installed. Re-runnable later to revisit any section.
 disable-model-invocation: true
 ---
 
 # Chisel setup
 
-Turn `.agents/project.md`'s defaults into this repo's actual glue, and pose
-the current dev's personal file. One pass, sections A through H, each confirmed
-before the next. Re-running later to revisit a single section is normal — treat
+Turn `.agents/project.md`'s defaults into this repo's actual glue, pose the
+current dev's personal file, and leave `AGENTS.md` speaking with one voice.
+One pass, sections A through H, each confirmed before the next. Re-running later to revisit a single section is normal — treat
 the current file as the starting recommendation, not as done-forever.
 
 ## How to talk to the user here
@@ -54,6 +54,9 @@ facts when you reach the section they affect.
   statuses in a database — §B1's recommendation becomes "keep what you have".
 - **`.agents/user.md`**: if it already exists, Step 5 reports it and touches
   nothing.
+- **`AGENTS.md`**: does anything stand outside chisel's own `chisel:begin` /
+  `chisel:end` markers besides the file's title? Note it either way — Step 7
+  needs to know before it starts whether it has anything to sort.
 
 **Fact vs decision** (same discipline as the `grilling` skill): what the scan
 established is *stated* to the user, not asked. Only genuine decisions —
@@ -325,10 +328,126 @@ sections serve is `.agents/skills/chisel-beads/SKILL.md` — read that first.
 > One rule to never break: never `git push --mirror` from a clone — it deletes
 > the database's history on the server.
 
-## Step 7 — Closing summary
+## Step 7 — One voice in `AGENTS.md` (also runnable on its own)
 
-After §H is written, print a one-screen summary of what got written (one
-line per section, A–H), plus one line for the personal file, plus — when §B1
-chose a database — the one thing still to do. Then suggest the natural next
-move: create a first task, or run `chisel check` to confirm the adapters are
-all in place.
+This step stands alone. "Reconcile my `AGENTS.md`" runs THIS step and nothing
+else — no questionnaire, no sections, no network. In the walk it comes after
+§H is written and before the summary.
+
+A repo that had an `AGENTS.md` before chisel now has two voices in one file:
+the text it already carried, often describing its own way of working, and the
+block `chisel init` appended, describing another. This step sorts the earlier
+text with the user, line by line, and leaves one voice.
+
+1. **Read the file, and find the block.** Chisel's own span is everything
+   between the `chisel:begin` and `chisel:end` markers. This step never edits
+   inside it — `init` writes that span and `update` rewrites it, so a hand edit
+   there is lost at the next update. What this step works on is everything
+   outside the markers.
+
+   When nothing stands outside them but the file's title — or nothing at all —
+   say this and end:
+
+> **Your instructions file already speaks with one voice.** Outside the part
+> chisel keeps up to date there is nothing but the title, so there is nothing
+> for me to sort. I changed nothing.
+
+2. **Sort what stands outside into three piles**, paragraph by paragraph and
+   bullet by bullet, the three tests below deciding which. The sort is done
+   when every line sits in exactly one pile and none is left over.
+
+   - **Covered** — the block, or one of the files it routes to
+     (`.agents/discipline.md`, `.agents/project.md`, `.agents/reference.md`,
+     `.agents/methodology.md`), now says this. Quote the sentence that replaces
+     it: a line is covered only when you can point at its replacement, which is
+     what keeps the project's own text from being deleted for looking familiar.
+   - **The project's own** — build and run commands, domain facts, conventions
+     the toolkit does not carry. It stays where it is. When the line points at
+     a document, propose it instead as an entry of §C · Reading list of
+     `.agents/project.md`, so the pointer lives in the file made for pointers
+     and every session reads it at the start.
+   - **Contradicting** — the line says the opposite of what the block or one of
+     its files says. Name it a contradiction, quote both sentences, and let the
+     user decide which one stands.
+
+3. **Put each pile to the user**, one pile per message, waiting for the answer
+   before the next — the same one-question-at-a-time discipline as the walk. A
+   pile whose lines split between verdicts is one message per line instead.
+
+   Covered:
+
+> **Some of what your instructions file says, the toolkit now says for you.**
+> The same instruction, written twice:
+>
+> - your file says: "…" → now said by `.agents/discipline.md`: "…"
+>
+> Deleting them leaves one instruction where there were two, so nobody has to
+> guess which one wins. Keeping them costs nothing today, and one silent
+> disagreement the day chisel's version of the sentence changes.
+>
+> Recommended: **delete them**. One word and they go; name any you would
+> rather keep and I leave it exactly where it is.
+
+   The project's own:
+
+> **The rest is yours, and I am leaving it alone.** These say things only this
+> project knows — how to build it, how to run it, facts about the work itself
+> — and chisel says none of them:
+>
+> - "…" — stays where it is
+>
+> Some of them point a reader at a document. Those work better in this
+> project's reading list, which every session opens at the start: the pointer
+> gets read instead of being hoped for.
+>
+> - "…" → moved to the reading list in `.agents/project.md`
+>
+> Recommended: **keep them all, move the pointers**. One word and I move them;
+> say so and I move nothing instead.
+
+   Contradicting:
+
+> **Here your instructions file and chisel say the opposite of each other.** I
+> am not choosing for you:
+>
+> - your file says: "…"
+> - chisel says, in `.agents/discipline.md`: "…"
+>
+> Only one of the two can stay: two live instructions that disagree means each
+> session picks one, and you never know which.
+>
+> 1. **Yours wins** — I leave your line untouched. What you write outside the
+>    part chisel keeps up to date takes precedence for your agents, which is
+>    exactly how a project bends the toolkit to itself.
+> 2. **Chisel's wins** — I delete your line, and the installed instruction is
+>    the only one left.
+>
+> Recommended: **1 — yours wins**, unless that line was written for a way of
+> working you have just replaced.
+
+4. **Write only what was agreed.** After a yes, delete or move exactly the
+   lines the user named and nothing else, and only outside the markers. A
+   pointer going to the reading list is written with Step 4's span on §C of
+   `.agents/project.md`, so every other section of that file stays
+   byte-identical. `AGENTS.md` is edited line by line, never rewritten whole:
+   a full-file rewrite here would discard the very text the user just asked you
+   to keep, which is the reason Step 4 forbids it on the other file too.
+
+5. **Say what happened**, in one line:
+
+> **Your instructions file now speaks with one voice.** Deleted: … Moved to
+> the reading list: … Kept as yours: … The part chisel keeps up to date was
+> not touched.
+
+Re-run safe: a file that already speaks with one voice yields one pile — the
+project's own — and the step reports that and changes nothing.
+
+## Step 8 — Closing summary
+
+After §H is written, print a one-screen summary of what got written: one
+line per section, A–H; one line for the personal file; one line for
+`AGENTS.md`, saying what was deleted, what moved to the reading list and what
+stayed, or that the file already spoke with one voice; and, when §B1 chose a
+database, the one thing still to do. Then suggest the natural next move:
+create a first task, or run `chisel check` to confirm the adapters are all in
+place.
