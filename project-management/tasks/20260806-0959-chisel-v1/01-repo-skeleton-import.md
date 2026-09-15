@@ -1,6 +1,6 @@
 # 01 — Repo skeleton + socle import
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** None — can start immediately
 
 **What to build:** The chisel repo takes its target shape and becomes the

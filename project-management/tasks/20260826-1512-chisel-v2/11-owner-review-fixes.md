@@ -1,6 +1,6 @@
 # 11 — Owner review of slice 10: five corrections
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 10 (delivered)
 
 **What to build:** The Owner reviewed slice 10's output and ruled five

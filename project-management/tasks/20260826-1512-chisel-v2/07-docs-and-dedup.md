@@ -1,6 +1,6 @@
 # 07 — Docs rewrite + one-source-per-concept dedup
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 05, 06
 
 **What to build:** The documentation catches up with v2 and the normative

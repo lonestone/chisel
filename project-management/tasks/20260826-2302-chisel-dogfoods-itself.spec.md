@@ -1,6 +1,6 @@
 # Chisel equips itself with the socle it ships
 
-**Status:** 🟠 Blocked — starts once chisel v2 is closed
+**Status:** blocked — starts once chisel v2 is closed
 (`20260826-1512-chisel-v2.spec.md`)
 
 ---

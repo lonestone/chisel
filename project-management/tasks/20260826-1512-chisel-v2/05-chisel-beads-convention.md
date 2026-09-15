@@ -1,6 +1,6 @@
 # 05 — chisel-beads: neutralized install + the convention
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 04, 08
 
 **What to build:** The B1 = beads branch, end to end — validated in vivo by

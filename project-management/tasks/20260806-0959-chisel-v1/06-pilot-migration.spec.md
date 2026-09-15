@@ -1,6 +1,6 @@
 # 06 — Pilot migration + Cursor reliability test
 
-**Status:** 🔴 Not Started
+**Status:** ready
 **Blocked by:** 04
 
 **What to build:** Migrate music-downloader and evea-ai to the installed

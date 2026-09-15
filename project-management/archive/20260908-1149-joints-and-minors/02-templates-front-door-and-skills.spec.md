@@ -1,6 +1,6 @@
 # 02 — Templates, front door and skills
 
-**Status:** 🟢 Complete (2026-09-09)
+**Status:** done (2026-09-09)
 **Blocked by:** None — can start immediately. Run before slice 03, which
 deletes two skills this slice would otherwise repoint.
 

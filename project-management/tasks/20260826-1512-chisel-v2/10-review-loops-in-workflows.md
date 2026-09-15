@@ -1,6 +1,6 @@
 # 10 — The review loops live in the workflows, not in anyone's memory
 
-**Status:** 🟢 Done
+**Status:** done
 **Blocked by:** 09 (so formula edits are no longer pinned by prose tests)
 
 **What to build:** The Owner's ruling (audit round, 2026-08-26): the

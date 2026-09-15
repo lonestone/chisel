@@ -1,6 +1,6 @@
 # Remodel the roles and the formulas
 
-**Status:** 🟢 Complete — closed 2026-08-28, four slices.
+**Status:** done — closed 2026-08-28, four slices.
 
 ---
 

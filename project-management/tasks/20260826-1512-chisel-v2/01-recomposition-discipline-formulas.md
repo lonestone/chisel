@@ -1,6 +1,6 @@
 # 01 — Recomposition: discipline core + formulas, rules retired
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** None — can start immediately
 
 **What to build:** The layered replacement of the normative prose. The socle

@@ -1,6 +1,6 @@
 # 06 — upgrade-v2 skill + LOG.md, pilot migration = parity check
 
-**Status:** 🟠 Blocked (2026-08-26) — the skill, the LOG.md default and their
+**Status:** blocked (2026-08-26) — the skill, the LOG.md default and their
 proofs are delivered; AC3 and AC4 wait on the Owner's real pilots (handoff in
 Notes)
 **Blocked by:** 04, 08

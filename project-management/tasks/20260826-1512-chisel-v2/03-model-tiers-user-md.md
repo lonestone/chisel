@@ -1,6 +1,6 @@
 # 03 — Abstract model tiers + user.md cascade
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 01 (delivered)
 
 **What to build:** The vendor coupling leaves the socle. Everywhere the socle

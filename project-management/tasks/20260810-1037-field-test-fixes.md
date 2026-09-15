@@ -1,6 +1,6 @@
 # Field-test fixes — gcs-monorepo dry-run findings
 
-**Status:** 🟢 Complete
+**Status:** done
 **Effort:** S (one-shot)
 
 ---

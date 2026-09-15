@@ -1,6 +1,6 @@
 # 05 — Rename the tasks to do
 
-**Status:** 🟢 Complete (2026-09-02)
+**Status:** done (2026-09-02)
 **Blocked by:** 01 — templates and installer (complete): the convention has
 to be written down before files are renamed to match it. Slices 02–04 are
 complete; this is the last slice of the task.

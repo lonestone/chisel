@@ -1,6 +1,6 @@
 # 01 — Doctrine and glue text
 
-**Status:** 🟢 Complete (2026-09-09)
+**Status:** done (2026-09-09)
 **Blocked by:** None — can start immediately. Run before slice 03, which
 removes carriers this slice would otherwise rename.
 

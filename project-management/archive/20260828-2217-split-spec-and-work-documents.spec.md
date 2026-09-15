@@ -1,6 +1,6 @@
 # Split the task file into a spec document and a work document
 
-**Status:** 🟢 Complete (2026-09-02)
+**Status:** done (2026-09-02)
 
 ---
 

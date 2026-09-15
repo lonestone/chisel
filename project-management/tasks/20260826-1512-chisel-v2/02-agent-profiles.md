@@ -1,6 +1,6 @@
 # 02 — Agent profiles + generated per-tool definitions
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 01 (delivered)
 
 **What to build:** The roster becomes installable. Canonical markdown profiles

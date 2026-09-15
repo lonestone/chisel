@@ -1,6 +1,6 @@
 # 08 — Post-audit hardening: installer guards, test legibility, supervised preset, proposal door
 
-**Status:** 🟢 Done (2026-08-26)
+**Status:** done (2026-08-26)
 **Blocked by:** None (01–04 delivered) — **runs BEFORE 05 and 06** (it
 reorganizes the test suite they will grow)
 

@@ -1,6 +1,6 @@
 # 05 — Upstream sync (Pocock forks)
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 01 (✅ done)
 
 **What to build:** The `sync-upstream` skill + supporting script. `--check`

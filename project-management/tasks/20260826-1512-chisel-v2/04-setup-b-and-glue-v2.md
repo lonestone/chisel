@@ -1,6 +1,6 @@
 # 04 — Setup §B redesigned + glue v2
 
-**Status:** 🟢 Done
+**Status:** done
 **Blocked by:** 02, 03 (both delivered)
 
 **What to build:** The setup chooses the case. `project.md.tpl` §B is split

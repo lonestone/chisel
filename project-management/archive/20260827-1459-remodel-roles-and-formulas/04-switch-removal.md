@@ -1,6 +1,6 @@
 # 04 — Switch removal
 
-**Status:** 🟢 Complete — closed 2026-08-28. Five commits; twelve criteria
+**Status:** done — closed 2026-08-28. Five commits; twelve criteria
 satisfied, the last one closing when slice 03 landed its two carriers.
 **Blocked by:** None — can start immediately. It shares exactly one file with
 slice 03 — `socle/agents/discipline.md` — and never the same passage of it; see

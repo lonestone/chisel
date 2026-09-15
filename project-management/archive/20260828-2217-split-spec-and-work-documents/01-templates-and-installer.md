@@ -1,6 +1,6 @@
 # 01 — Templates and installer
 
-**Status:** 🟢 Complete — verified and cleared by `diff-review`.
+**Status:** done — verified and cleared by `diff-review`.
 **Blocked by:** None — runs first and alone. It decides what the two
 documents look like and how they are named; slices 2–5 all read those
 decisions off this slice rather than off the parent spec's prose.
@@ -195,7 +195,7 @@ passes.
 ````markdown
 # Task Spec Template & Standards
 
-**Status:** 🟢 Complete
+**Status:** done
 **Version:** 3 (spec / work split — the task file becomes two documents, a
 spec document and a work document; see [methodology.md](/.agents/methodology.md))
 
@@ -304,7 +304,7 @@ All spec documents MUST follow this structure:
 ```markdown
 # <Task name>
 
-**Status:** [Status Emoji & Text]
+**Status:** creating
 
 ---
 
@@ -499,7 +499,7 @@ together) are moved to the archive declared in `.agents/project.md` (default
 ````markdown
 # Task Work Document Template & Standards
 
-**Status:** 🟢 Complete
+**Status:** done
 **Version:** 1 (born at the spec / work split; the coding agent's own file —
 see the spec template,
 [000-template.spec.md](/project-management/000-template.spec.md), and

@@ -1,6 +1,6 @@
 # 03 — The shipped set shrinks
 
-**Status:** 🟢 Complete (2026-09-09)
+**Status:** done (2026-09-09)
 **Blocked by:** None — no slice gates this one technically. **Run it last.** It
 removes two carriers slices 01 and 02 would otherwise rename, and it is the
 only slice that may edit anything under `test/`, so keeping it last means the

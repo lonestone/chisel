@@ -1,6 +1,6 @@
 # 01 — Roles remodel
 
-**Status:** 🟢 Complete — closed 2026-08-27.
+**Status:** done — closed 2026-08-27.
 **Blocked by:** None — can start immediately.
 
 **What to build:** the new role topology, live in the shipped profiles. The

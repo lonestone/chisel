@@ -1,6 +1,6 @@
 # 03 — Doctrine alignment
 
-**Status:** 🟢 Complete — closed 2026-08-28. Six content commits plus two for
+**Status:** done — closed 2026-08-28. Six content commits plus two for
 the review findings; nineteen criteria satisfied and verified by the Inspector,
 the suite green in every run.
 **Blocked by:** 02 — formulas rewrite (closed 2026-08-27). This slice names

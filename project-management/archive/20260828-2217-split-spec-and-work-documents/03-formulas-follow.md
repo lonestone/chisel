@@ -1,6 +1,6 @@
 # 03 — Formulas follow
 
-**Status:** 🟢 Complete (2026-09-02)
+**Status:** done (2026-09-02)
 **Blocked by:** 02 — doctrine follows (complete 2026-09-02). The step bodies
 point at the profile contracts and the methodology that slice rewrote.
 

@@ -1,6 +1,6 @@
 # 04 — Setup questionnaire skill
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 02 (✅), 03 (✅)
 
 **What to build:** The prompt-driven setup skill (`chisel-setup`), run once

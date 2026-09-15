@@ -1,6 +1,6 @@
 # Normative reference and writing rules
 
-**Status:** 🟢 Complete (2026-09-10)
+**Status:** done (2026-09-10)
 
 ---
 

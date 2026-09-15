@@ -1,6 +1,6 @@
 # 07 — Release
 
-**Status:** 🔴 Not Started
+**Status:** blocked
 **Blocked by:** 06
 
 **What to build:** README (what/why/install/update/sync — plain english, the

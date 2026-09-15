@@ -1,6 +1,6 @@
 # PHILOSOPHY.md — the "why" document
 
-**Status:** 🟢 Complete
+**Status:** done
 **Effort:** S (one-shot)
 
 ---

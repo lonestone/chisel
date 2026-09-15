@@ -1,6 +1,6 @@
 # 02 — Formulas rewrite
 
-**Status:** 🟢 Complete — closed 2026-08-27.
+**Status:** done — closed 2026-08-27.
 **Blocked by:** 01 — roles remodel (closed 2026-08-27; the step bodies below
 point at the profile contracts that slice froze, and this slice reopens three
 of them where the rulings reach them).

@@ -1,6 +1,6 @@
 # 09 — Test suite rebuild: behavior only, three files, hard cap
 
-**Status:** 🟢 Delivered
+**Status:** done
 **Blocked by:** None (06 merged). Runs before 05-redo and 07.
 
 **What to build:** The test suite shrinks to what tests BEHAVIOR, split at

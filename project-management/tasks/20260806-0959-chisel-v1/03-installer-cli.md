@@ -1,6 +1,6 @@
 # 03 — Installer CLI (npx @lonestone/chisel)
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 01 (✅ done)
 
 **What to build:** `package.json` (`@lonestone/chisel`, bin) + `bin/chisel.sh`

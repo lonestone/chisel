@@ -1,6 +1,6 @@
 # 04 — Skills follow
 
-**Status:** 🟢 Complete (2026-09-02)
+**Status:** done (2026-09-02)
 **Blocked by:** 02 — doctrine follows (complete 2026-09-02). The review skill
 judges "the whole spec document" as the doctrine slice defines it. Shares no
 file with slice 3 (complete) or slice 5.

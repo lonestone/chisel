@@ -1,6 +1,6 @@
 # 02 — Genericize the socle (project.md indirection)
 
-**Status:** 🟢 Complete
+**Status:** done
 **Blocked by:** 01 (✅ done)
 
 **What to build:** No hardcoded project path anywhere in the socle. Rules and

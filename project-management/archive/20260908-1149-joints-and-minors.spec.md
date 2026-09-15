@@ -1,6 +1,6 @@
 # Joints and minors pass
 
-**Status:** 🟢 Complete (2026-09-09)
+**Status:** done (2026-09-09)
 
 ---
 
