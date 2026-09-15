@@ -378,4 +378,25 @@ Suite facts worth holding while typing the new text:
 
 ## Diff-Review Findings
 
-_(the Foreman's two-axis review at close)_
+**Review, 2026-09-15 · `foreman`**, on both axes, fast track: no Inspector.
+Every criterion command re-run; all met. The skill read in full as a cold
+reader: six steps, each ending on a checkable criterion, the lens set inline
+for the reason the Program Design gives, the two siblings pointed at and not
+paraphrased, no code travelling alone.
+
+**Fix — the Side lanes row, written.** Ruled yes on the agent's proposal:
+the "Side lanes" table of `.agents/discipline.md` is the one index a reader
+has for the situations that do not start as a feature idea, and a
+user-invoked skill has no description to be found by. Row added by the
+foreman (`a23a57b`), in the agent's wording with one change: "each piece
+becomes a task by the normal path" for the Then column, matching the
+skill's own closing sentence.
+
+**Rulings on the other findings.** Skill and registration atomic: right, and
+the spec's Verification is amended to say so for the next skill. `grep -c
+"new"` and `grep -ci "beside"` weaker than their criteria: true; both
+criteria checked by reading and met; the lesson for the next spec is to grep
+the bold class name. The line-count formula assuming one directory: true
+for this task, noted. `methodology.md` and `reference.md` owe nothing: agreed.
+
+Verdict: PASS on Standards, PASS on Spec.

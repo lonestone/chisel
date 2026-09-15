@@ -1,6 +1,6 @@
 # The codebase-audit skill: the 360 review's protocol, distilled
 
-**Status:** in-progress
+**Status:** done (2026-09-15)
 
 ---
 
@@ -169,46 +169,46 @@ Out:
 Each is command-verifiable; record the before-value and the after-value in
 the work document. "Before" is HEAD at the start of the chantier.
 
-- [ ] **skill-exists** — `socle/agents/skills/codebase-audit/SKILL.md`
+- [x] **skill-exists** — `socle/agents/skills/codebase-audit/SKILL.md`
       exists; its frontmatter has `name: codebase-audit`, a `description`,
       `disable-model-invocation: true`, and `grep -c "x-upstream"` on it
       → 0.
-- [ ] **protocol-ordered** — `SKILL.md` has six numbered steps in the order
+- [x] **protocol-ordered** — `SKILL.md` has six numbered steps in the order
       Frame, Finders, Verify, Triage, Report, Decisions (headings or list
       items whose text contains those words in that order), and each step's
       text contains "Criterion" or "Done when" (one checkable completion
       criterion per step).
-- [ ] **triage-classes** — the skill text names the three classes: `grep
+- [x] **triage-classes** — the skill text names the three classes: `grep
       -c "new"`, `grep -ci "did not take"`, `grep -ci "already ruled"` on
       the skill folder each ≥ 1.
-- [ ] **lenses-named** — the six default lenses appear in the skill
+- [x] **lenses-named** — the six default lenses appear in the skill
       folder: `grep -rci` for each of `joints`, `contradictions`,
       `over-claims`, `sediment`, `behaviour`, `cold reader` ≥ 1.
-- [ ] **siblings-pointed** — `grep -c "grilling"
+- [x] **siblings-pointed** — `grep -c "grilling"
       socle/agents/skills/codebase-audit/SKILL.md` ≥ 1 and `grep -c
       "code-review"` ≥ 1; `grep -rn "one question at a time"
       socle/agents/skills/codebase-audit/` → 0 (the discipline is pointed
       at, not paraphrased).
-- [ ] **names-not-codes** — the skill text says findings and blocks are
+- [x] **names-not-codes** — the skill text says findings and blocks are
       named by what they say and that a code rides beside the name: `grep
       -ci "beside"` ≥ 1; `grep -rn "S7\.\|G4\|G17\|G19\|review-360\|chantier"
       socle/agents/skills/codebase-audit/` → 0.
-- [ ] **repo-is-memory** — the skill names the report file pattern and the
+- [x] **repo-is-memory** — the skill names the report file pattern and the
       decisions file pattern: `grep -c "audit-" SKILL.md` ≥ 2, and `grep -c
       "project.md" SKILL.md` ≥ 1 (paths resolve through the glue).
-- [ ] **registered** — every file under `socle/agents/skills/codebase-audit/`
+- [x] **registered** — every file under `socle/agents/skills/codebase-audit/`
       is listed in `src/socle-files.ts` and, as `.agents/skills/codebase-audit/…`,
       in `test/fixtures/golden-tree.txt`, which also lists the directory;
       `wc -l test/fixtures/golden-tree.txt` = 91 + 1 + the number of files
       (today 91).
-- [ ] **wgs-pass-recorded** — the work document has a section naming each
+- [x] **wgs-pass-recorded** — the work document has a section naming each
       failure mode of `writing-great-skills` (premature completion,
       duplication, sediment, sprawl, no-op, negation) with what was done
       about it in this skill.
-- [ ] **suite-green** — `deno task test` → every test passes (25 today,
+- [x] **suite-green** — `deno task test` → every test passes (25 today,
       record the count); `deno task check` → clean; `git diff --check`
       clean.
-- [ ] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches
+- [x] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches
       only: files under `socle/agents/skills/codebase-audit/`,
       `src/socle-files.ts`, `test/fixtures/golden-tree.txt`, `test/TESTS.md`
       (only if a description stopped being true), and this task's pair.
@@ -229,8 +229,12 @@ them again at the end and write after beside before. `deno task test`,
 `deno task check` and `git diff --check` before each commit. Read the
 finished skill once as a cold reader would — someone who never saw the 360
 review — and record in the work document the three places that made them
-stop, with what was changed for each. Commit in small steps: the skill, the
-registration, the work document's close.
+stop, with what was changed for each. Commit in small steps: ~~the skill, the
+registration, the work document's close~~ the skill with its registration in
+one commit (the `integrity` group asserts the installer's file list mirrors
+`socle/` in both directions, so a skill-only commit is red — amended
+2026-09-15 by the foreman at review, after the agent's first finding), then
+the work document's close.
 
 ## Notes
 
@@ -243,3 +247,19 @@ question at a time, statuses to decide / decided / deferred). Pointers in
 shipped text use the installed form (`.agents/…`), never `socle/…`. Deno is
 at `~/.deno/bin/deno`, not on the default `PATH`. Every amendment to this
 file: strike the original, date the new version below it.
+
+**Closed, 2026-09-15 · `foreman`.** Fast track per Addendum 6. One agent
+planned (`8da44ec`), typed (`f976179`) and closed its work document
+(`91b4ab6`). The foreman re-ran every criterion command and read the skill
+as a cold reader: PASS on Standards, PASS on Spec. One review fix typed by
+the foreman (`a23a57b`): the "Side lanes" table of
+`socle/agents/discipline.md` gains the row the agent proposed, because a
+user-invoked skill has no other index than that table. One amendment above,
+struck and dated: a new socle file is atomic with its registration. The
+agent's other findings (two criterion commands weaker than their criterion,
+a line-count formula that assumes one directory) are noted in the work
+document and change nothing. Suite: 25 tests, 0 failed; `deno task check`
+clean; golden tree at 93 lines. The close itself landed in two commits: the
+foreman's closing script stopped on a mismatched anchor after the discipline
+row was written, and the pair was archived before this note — recorded here
+rather than rewritten out of history.

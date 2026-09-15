@@ -1102,3 +1102,20 @@ reculait d'un statut après la revue humaine ; la table de migration n'avait
 pas le cas `blocked`). Reste au plan, hors chantier : dix-sept fichiers
 `done` dorment dans `tasks/` au lieu de l'archive, et la règle d'archivage
 n'a pas de cas pour un parent à moitié fait.
+
+## Addendum 9 (2026-09-15) — chantier 8, le skill codebase-audit, exécuté
+
+Sur le « go » de l'Owner après la clôture du chantier 7 (le modèle de
+statuts des tâches), sans interview : la décision G4 (distiller un skill
+codebase-audit) fixait déjà le protocole. Voie rapide (Addendum 6) : spec
+`project-management/archive/20260915-1442-codebase-audit-skill.spec.md`
+écrite par le Foreman, un agent a planifié et frappé (`8da44ec`,
+`f976179`, `91b4ab6`), le Foreman a relu sur les deux axes. Un choix du
+Foreman, réversible : le skill est invoqué à la main
+(`disable-model-invocation: true`), un audit étant toujours une décision
+humaine ; en contrepartie, la table « Side lanes » de la discipline gagne la
+ligne qui le rend trouvable. Le skill n'a pas été exercé sur ce dépôt : sa
+première vraie passe est une décision de l'Owner. Le plan d'action de la
+revue 360 n'a plus qu'un chantier ouvert : le 6, le wayfinder local-first,
+que le Foreman recommande d'ouvrir après la fusion de `review-360` dans
+`main`.

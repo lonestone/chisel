@@ -5,6 +5,28 @@ ships.
 
 ---
 
+## 31. 2026-09-15 — The 360 review becomes a skill
+
+Chantier 8 closes on the fast track: `socle/agents/skills/codebase-audit/`
+distils the protocol the 360 review of this repo ran on 2026-08-27 into a
+skill of chisel's own, user-invoked. Six steps, each on a checkable
+criterion: frame the scope, the lenses and the prior records; spawn one
+blind finder per lens at the frontier tier; reproduce every claim that
+would change a decision, or mark it unverified; triage each finding as new,
+a fix that did not take, or already ruled (never re-argued); write one
+report in the repo, blocks and findings named by what they say, a code
+riding beside the name if kept at all; then the human's decisions block by
+block under the `grilling` discipline, written as they land into a decisions
+record that ends on an action plan. The skill stops at that plan. Six
+default lenses the human trims or extends: joints, contradictions,
+over-claims, sediment, behaviour, cold reader. Registered in the installer's
+file list and the golden tree (93 lines). Written and pruned against
+`writing-great-skills`, with the pass recorded in the work document. One
+review fix by the foreman: the "Side lanes" table of the discipline gains
+the row that makes a user-invoked skill findable. Lesson kept in the spec: a
+new socle file is atomic with its registration, the integrity test mirrors
+the two lists both ways.
+
 ## 30. 2026-09-15 — One ladder of thirteen statuses, the human's wait named
 
 Chantier 7, the task status model, closes on the fast track after an
