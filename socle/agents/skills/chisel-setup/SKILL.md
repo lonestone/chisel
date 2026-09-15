@@ -103,9 +103,11 @@ Skip §E entirely here — see Step 3.
 > inside that file. That works, and most projects should keep it.
 >
 > 1. **In the task files** — nothing to install, everything shows up in a
->    normal diff, and two people can only collide on the same file. The cost:
->    nothing can tell an agent "these three tasks are ready to start" without
->    reading them all.
+>    normal diff, and two people can only collide on the same file. A search
+>    for a status value answers "what is ready to start" and "where is a human
+>    waited for". The cost: what blocks what is not searchable the same way —
+>    the blocking edges are read from the files, one by one, and a search
+>    answers only what a status line says.
 > 2. **In a small database committed next to them** — the files still hold the
 >    content; a tool keeps the statuses and what-blocks-what, so "what is ready
 >    to start?" is one command instead of a reading session. The cost: one tool

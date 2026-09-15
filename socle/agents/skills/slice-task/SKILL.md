@@ -98,7 +98,7 @@ linear chain that means top to bottom.
 
 # <NN> — <Slice title>
 
-**Status:** 🔴 Not Started
+**Status:** creating
 **Blocked by:** <numbers/titles of the slices that gate this one, or "None — can start immediately">
 
 ---
