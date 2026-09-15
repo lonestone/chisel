@@ -25,6 +25,8 @@
 .agents/skills/chisel-setup/SKILL.md
 .agents/skills/code-review
 .agents/skills/code-review/SKILL.md
+.agents/skills/codebase-audit
+.agents/skills/codebase-audit/SKILL.md
 .agents/skills/codebase-design
 .agents/skills/codebase-design/DEEPENING.md
 .agents/skills/codebase-design/DESIGN-IT-TWICE.md

@@ -24,6 +24,7 @@ export const SOCLE_FILES: readonly string[] = [
   "agents/skills/chisel-beads/SKILL.md",
   "agents/skills/chisel-setup/SKILL.md",
   "agents/skills/code-review/SKILL.md",
+  "agents/skills/codebase-audit/SKILL.md",
   "agents/skills/codebase-design/DEEPENING.md",
   "agents/skills/codebase-design/DESIGN-IT-TWICE.md",
   "agents/skills/codebase-design/SKILL.md",
