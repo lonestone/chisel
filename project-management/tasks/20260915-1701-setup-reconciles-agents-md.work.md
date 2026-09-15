@@ -191,61 +191,193 @@ day's decisions. Ran every criterion command at HEAD `fb2ca02` and recorded
 the before-values below. Plan written above and committed alone, before any
 edit to the skill.
 
+**2026-09-15 — typing, one commit on the skill (`8085b75`).** The four planned
+edits landed as planned, plus one the end-to-end reread demanded: the skill's
+own opening sentence, which enumerated what the skill does and stopped at the
+personal file. `deno task test` 25 passed, `deno task check` exit 0,
+`git diff --check` silent. Every criterion re-run; after-values below.
+
+The five blockquotes shipped as planned above with three wording changes made
+while typing, none of them changing what the user is asked: "one silent
+disagreement" replaced "one silent contradiction" in the covered screen, so
+the word "contradiction" names only the third pile; move 2's sentence became a
+completion criterion out loud ("the sort is done when every line sits in
+exactly one pile and none is left over"); and the closing summary's sentence
+was recast as a semicolon list. The skill as committed is the authority, the
+plan above the record of what was decided before typing.
+
 ## Implementation Checkboxes
 
-- [ ] Frontmatter `description` names the reconciliation in a few words
-- [ ] Step 1 — Silent exploration gains the `AGENTS.md` bullet
-- [ ] Step 7 — One voice in `AGENTS.md` written: five moves, three piles, five blockquotes
-- [ ] Closing summary renumbered to Step 8 and given its `AGENTS.md` line
-- [ ] Cross-references checked against the headings that exist
-- [ ] Criterion commands re-run, after-values beside before-values
-- [ ] End-to-end reread, Step 0 to Step 8, as a user would read it
+- [x] Frontmatter `description` names the reconciliation in a few words
+- [x] Step 1 — Silent exploration gains the `AGENTS.md` bullet
+- [x] Step 7 — One voice in `AGENTS.md` written: five moves, three piles, five blockquotes
+- [x] Closing summary renumbered to Step 8 and given its `AGENTS.md` line
+- [x] Cross-references checked against the headings that exist
+- [x] Criterion commands re-run, after-values beside before-values
+- [x] End-to-end reread, Step 0 to Step 8, as a user would read it
 
-## Criteria — before-values, at HEAD `fb2ca02`
+## Criteria — before and after
 
 `S` is `socle/agents/skills/chisel-setup/SKILL.md`. "Within the step" means
 the text from the `## Step 7 — ` heading to the `## Step 8 — ` heading, which
-does not exist yet; every such before-value is therefore 0 by absence.
+did not exist before; every such before-value is therefore 0 by absence.
+"Before" is HEAD `fb2ca02`, "after" is `8085b75`. Every "Met" cell was read
+off the command's own output, not predicted.
 
-| Criterion | Command | Before |
+| Criterion | Command | Before | After | Met |
+|---|---|---|---|---|
+| step-exists | `grep -c "^## Step 7 — " S` | 1 (the closing summary) | 1 (One voice in `AGENTS.md`) | yes |
+| step-exists | `grep -c "^## Step 8 — Closing summary" S` | 0 | 1 | yes |
+| step-exists | `grep -c "^## Step 7 — Closing summary" S` | 1 | 0 | yes |
+| markers-named | `grep -c "chisel:begin" S` | 0 | 2 | yes (≥ 1) |
+| markers-named | `grep -c "chisel:end" S` | 0 | 2 | yes (≥ 1) |
+| markers-named | `grep -ci "never"` within the step | 0 (no step) | 3 | yes (≥ 1) |
+| three-piles | `grep -ci "covered"` within the step | 0 (no step) | 3 | yes |
+| three-piles | `grep -ci "the project's own"` within the step | 0 (no step) | 3 | yes |
+| three-piles | `grep -ci "contradict"` within the step | 0 (no step) | 3 | yes |
+| user-facing-blockquotes | `grep -c "^> "` within the step | 0 (no step) | 37 | yes (≥ 2) |
+| user-facing-blockquotes | those 37 lines through `grep -ci "glue\|socle\|managed block\|§"` | — | 0 | yes |
+| reading-list-route | `grep -c "Reading list" S` | 0 | 1 | yes (≥ 1) |
+| reading-list-route | `grep -c "Step 4" S` | 2 — see findings | 4 | yes (≥ 2) |
+| standalone-and-rerun | `grep -ci "on its own\|alone"` within the step | 0 (no step) | 3 | yes |
+| standalone-and-rerun | `grep -ci "re-run"` within the step | 0 (no step) | 1 | yes |
+| step1-notes-it | `grep -c "AGENTS.md"` between the Step 1 and Step 2 headings | 0 | 1 | yes |
+| no-code-in-shipped-text | `grep -n "G[0-9]\+\b\|review-360\|chantier\|socle/" S` | nothing (exit 1) | nothing (exit 1) | yes |
+| cross-references-intact | `grep -on "Step [0-9]" S` vs `grep -n "^## Step" S` | 15 mentions, Steps 0–7, all resolved | 19 mentions, Steps 0–8, all resolved | yes |
+| suite-green | `deno task test` | 25 passed, 0 failed | 25 passed, 0 failed | yes |
+| suite-green | `deno task check` | exit 0 | exit 0 | yes |
+| suite-green | `git diff --check` | clean | clean | yes |
+| suite-green | `wc -l < test/fixtures/golden-tree.txt` | 93 | 93 | yes |
+| nothing-else-moved | `git diff --stat fb2ca02..HEAD` | — | the skill plus this task's work document, nothing else | yes |
+
+### Cross-references, after the edit
+
+`grep -n "^## Step"` gives nine headings, one per N from 0 to 8.
+`grep -on "Step [0-9]"` gives nineteen mentions, and nothing above 8 — so
+every mention resolves to a heading that exists:
+
+| N | Mentions | Heading it resolves to |
 |---|---|---|
-| step-exists | `grep -c "^## Step 7 — " S` | 1 (the closing summary) |
-| step-exists | `grep -c "^## Step 8 — Closing summary" S` | 0 |
-| step-exists | `grep -c "^## Step 7 — Closing summary" S` | 1 |
-| markers-named | `grep -c "chisel:begin" S` | 0 |
-| markers-named | `grep -c "chisel:end" S` | 0 |
-| markers-named | `grep -ci "never"` within the step | 0 (no step) |
-| three-piles | `grep -ci "covered"` within the step | 0 (no step) |
-| three-piles | `grep -ci "the project's own"` within the step | 0 (no step) |
-| three-piles | `grep -ci "contradict"` within the step | 0 (no step) |
-| user-facing-blockquotes | `grep -c "^> "` within the step | 0 (no step) |
-| reading-list-route | `grep -c "Reading list" S` | 0 |
-| reading-list-route | `grep -c "Step 4" S` | 2 — see findings |
-| standalone-and-rerun | `grep -ci "on its own\|alone"` within the step | 0 (no step) |
-| standalone-and-rerun | `grep -ci "re-run"` within the step | 0 (no step) |
-| step1-notes-it | `grep -c "AGENTS.md"` between the Step 1 and Step 2 headings | 0 |
-| no-code-in-shipped-text | `grep -n "G[0-9]\+\b\|review-360\|chantier\|socle/" S` | nothing |
-| cross-references-intact | `grep -on "Step [0-9]" S` vs `grep -n "^## Step" S` | 15 mentions, Steps 0–7, all resolved |
-| suite-green | `deno task test` | 25 passed, 0 failed |
-| suite-green | `deno task check` | clean |
-| suite-green | `git diff --check` | clean |
-| suite-green | `wc -l < test/fixtures/golden-tree.txt` | 93 |
+| Step 0 | 1 — the heading | `## Step 0 — Precondition` |
+| Step 1 | 3 — the heading, Step 2's walk, Step 6's version check | `## Step 1 — Silent exploration` |
+| Step 2 | 2 — the heading, Step 4's re-run paragraph | `## Step 2 — Walk sections A through H, one at a time` |
+| Step 3 | 2 — the heading, Step 2's "skip §E" | `## Step 3 — §E is read-back only, never asked` |
+| Step 4 | 4 — the heading, Step 6's §B1 write, Step 7's §C write, Step 7's no-whole-rewrite sentence | ``## Step 4 — Surgical writes to `.agents/project.md` `` |
+| Step 5 | 2 — the heading, Step 1's `.agents/user.md` bullet | `## Step 5 — The personal file (also runnable on its own)` |
+| Step 6 | 2 — the heading, §B1's "run Step 6 before §B2" | `## Step 6 — When §B1 is a database` |
+| Step 7 | 2 — the heading, Step 1's new `AGENTS.md` bullet | ``## Step 7 — One voice in `AGENTS.md` (also runnable on its own)`` |
+| Step 8 | 1 — the heading | `## Step 8 — Closing summary` |
+
+Nothing pointed at Step 7 before the edit other than the closing summary's own
+heading, so the renumbering broke no reference. Outside this file, the one
+place that cites a step of this skill by number is "Step 5 — Complete the
+glue" of the v1-to-v2 upgrade skill, which cites "its Step 4 rule for
+writing": Step 4 keeps its number, so that reference stays true and the
+upgrade skill stays out of the diff, as the spec's Scope "Out" requires.
 
 ## Notes & Snippets
 
-_Filled as the work lands._
+### The end-to-end reread, Step 0 to Step 8
+
+Read the whole skill once as its user would, hunting for a sentence the new
+step makes false or redundant.
+
+- **The skill's opening sentence** said the skill turns the glue's defaults
+  into this repo's glue "and pose the current dev's personal file" — an
+  enumeration the new step made incomplete. **Fixed**: it now names leaving
+  `AGENTS.md` speaking with one voice as the third thing. The frontmatter
+  `description` got the same treatment, being the one line a human reads
+  before invoking the skill.
+- **"How to talk to the user here"** bans "glue", "socle", "managed block",
+  section letters and field names on screen. The new step's five blockquotes
+  obey it: they call chisel's span "the part chisel keeps up to date" — one
+  name for one thing, in every blockquote that needs it — and no blockquote
+  line carries a section letter. **Justified, unchanged.**
+- **"Step 0 — Precondition"** says "this skill configures the glue, it never
+  installs the socle. Do not attempt to bootstrap `.agents/` yourself." Both
+  claims stay true: the new step edits a file at the repo root and installs
+  nothing. The sentence's job is to fence off bootstrapping, not to enumerate
+  the skill's outputs — the opening sentence does that, and it was fixed.
+  **Justified, unchanged.**
+- **"Step 1 — Silent exploration"**'s list ended at `.agents/user.md`; the new
+  bullet sits after it in the same form. Its closing "Fact vs decision"
+  paragraph still governs the addition: whether text stands outside the
+  markers is a fact to state, which pile a line belongs to is the decision the
+  user makes. **Unchanged, and now covers one more bullet.**
+- **"Step 2 — Walk sections A through H"** says "Never present two sections in
+  the same message". Still true; the new step is not a section of the glue,
+  and it obeys the same one-question-at-a-time discipline in its own sentence.
+  **Unchanged.**
+- **"Step 4 — Surgical writes to `.agents/project.md`"** ends on "Never
+  rewrite the whole file." That sentence is scoped to `.agents/project.md`, so
+  the new step states the same prohibition for `AGENTS.md` in its own words
+  rather than stretching Step 4's over a second file — and cites Step 4 for
+  the §C write instead of restating the span rule, which is where the
+  duplication would have been. **Neither false nor redundant.**
+- **"Step 5 — The personal file (also runnable on its own)"** is now one of
+  two standalone steps. Both still read correctly because each names its own
+  trigger phrase — "set up my personal file", "reconcile my `AGENTS.md`" — so
+  a user typing one gets one step. **Unchanged.**
+- **"Step 6 — When §B1 is a database"** removes "the instructions the tool
+  installs on its own (managed blocks, session hook, vendored skill)". Those
+  are the coordination tool's managed blocks, not chisel's, and read back to
+  back the two could be confused. The new text therefore says whose markers it
+  means in the sentence that names them ("Chisel's own span"), and Step 1's
+  new bullet says "chisel's own `chisel:begin` / `chisel:end` markers".
+  **Disambiguated in the new text; Step 6 unchanged.**
+- **"Step 8 — Closing summary"** listed sections A–H, the personal file and
+  the database leftover. It now carries the `AGENTS.md` line too; without it
+  the summary would have claimed to be one screen of everything written while
+  omitting a file the run had just edited. Its sentence was also recast from
+  three consecutive dashed clauses into a semicolon list, since the fourth
+  item made it unreadable. **Fixed.**
+
+No other sentence in the file became false, and none had to be deleted.
+
+### What the step deliberately does not do
+
+It never reads, edits or judges anything between the markers, and it never
+runs `init` or `update`. It needs no new installed file — it reads `AGENTS.md`
+at run time — so `SOCLE_FILES` and the golden tree stayed out of the diff, as
+the spec's Scope "Out" requires.
 
 ## Findings
 
 - **`reading-list-route`'s parenthetical "today 1" for `grep -c "Step 4"` is
-  2.** At `fb2ca02` the skill already has two: the heading of "Step 4 —
+  2.** At `fb2ca02` the skill already had two: the heading of "Step 4 —
   Surgical writes to `.agents/project.md`" and the citation in Step 6's §B1
-  write ("Use Step 4's sub-section write span"). The threshold ≥ 2 is
+  write ("Use Step 4's sub-section write span"). The threshold ≥ 2 was
   therefore already met before any edit, which makes that half of the
-  criterion unable to fail. The step will still name Step 4's write span, as
-  the spec's Scope "In" requires; what is wrong is the before-value in the
-  parenthetical, not the requirement. Recorded, not amended — the spec is the
-  Foreman's.
+  criterion unable to fail. The step does name Step 4's write span as the
+  spec's Scope "In" requires — the count is 4 after the edit, two of the four
+  inside the new step — so the intent is satisfied; what is wrong is the
+  before-value in the parenthetical, not the requirement. Recorded, not
+  amended: the spec is the Foreman's.
+- **`markers-named` is satisfied at two sites, on purpose.** The marker pair
+  is named in Step 1's new bullet, so the scan knows what to look for, and in
+  the new step's move 1, where the span is defined and fenced. A reader
+  arriving at move 4 ("only outside the markers") has the definition three
+  paragraphs up in the same step, so the repetition buys the scan its
+  instruction without making move 4 depend on Step 1.
+- **The contradiction screen recommends the project's line, not chisel's.**
+  That is not a coin toss dressed as a default: the block's own preamble
+  states that text outside the markers takes precedence for the project's
+  agents, so keeping the project's line is the arrangement the toolkit was
+  built for. The one exception is spelled out inside the same blockquote — a
+  line written for a way of working the project has just replaced.
+- **"Covered" is gated on quoting the replacement.** The pile's test is not
+  "this sounds like something chisel says" but "here is the sentence that
+  replaces it". Without that gate the step's one destructive power — proposing
+  a deletion — would fire on resemblance, and the lines most at risk are
+  exactly the project's own conventions that read like methodology.
+- **No numeric limit appears anywhere in the new text.** Lines are sorted one
+  by one with no cap on a pile's size, and the blockquotes say "some of them",
+  never a count.
+- **The step needs no branch for a repo without `AGENTS.md`.** Step 0 refuses
+  to run without `.agents/.chisel.json`, and a repo carrying that file has an
+  `AGENTS.md`, because `init` wrote the block into one. The step therefore
+  carries no such branch, and its "nothing to sort" case is about a file that
+  has only a title.
 
 ## Diff-Review Findings
 
