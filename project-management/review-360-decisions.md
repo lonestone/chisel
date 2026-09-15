@@ -1119,3 +1119,36 @@ première vraie passe est une décision de l'Owner. Le plan d'action de la
 revue 360 n'a plus qu'un chantier ouvert : le 6, le wayfinder local-first,
 que le Foreman recommande d'ouvrir après la fusion de `review-360` dans
 `main`.
+
+## Addendum 10 (2026-09-15) — `main` ne bouge que sur un oui explicite ; le travail continue sur `v2`
+
+- ✅ **G20 — Fusionner dans `main` demande l'accord explicite de l'Owner,
+  sur cette action précise.** Le Foreman avait recommandé la fusion de
+  `review-360` dans `main` avant d'ouvrir le chantier 6, puis a lu le « go »
+  suivant de l'Owner (donné pour ouvrir le chantier) comme couvrant aussi la
+  fusion : `main` avancé en fast-forward de c8adc51 à 2a28dd3 et pushé.
+  L'Owner : « Et tu me dis que tu as update main là ? O.o », puis « J'ai
+  rollback main, continous de travailler sur une branche v2 ». Règle : ce
+  qui quitte la branche de travail (fusion dans `main`, publication) attend
+  un oui de l'Owner sur cette action même, jamais inféré d'un « go » donné
+  sur un autre sujet. Inscrite dans `socle/agents/profiles/foreman.md`
+  (« Decides within what it owns »). `main` est revenu à c8adc51 par
+  l'Owner ; le Foreman a créé `v2` depuis le dernier commit de
+  `review-360` (2a28dd3) et y poursuit ; `review-360` reste telle quelle.
+
+## Addendum 11 (2026-09-15) — chantier 6, le wayfinder local-first
+
+Interview ouverte le 2026-09-15 sur la décision F1.1 (wayfinder gardé et
+adapté local-first). Le Foreman a d'abord dressé ce que le tracker externe
+couvrait dans le skill actuel — unités adressables, parent-enfant, labels,
+claim, blocage natif, requête de frontière, résolution, concurrence — et ce
+que le local a déjà : la ligne `**Blocked by:**` des slices, les statuts du
+chantier 7 (le modèle de statuts des tâches) pour la frontière, git pour la
+concurrence, rien pour le reste.
+
+- ✅ **W6.1 — La carte respecte l'idée du skill d'origine ; carte et tâches
+  sont deux entités ; la carte finie se transforme en tâches ou slices une
+  fois l'exploration terminée, pas avant.** L'Owner (2026-09-15) : « le
+  wayfiding doit respecter l'idée de la skill originale, puis on doit
+  pouvoir transformer les maps finales en tasks/slice mais une fois
+  l'exploration terminée. Ce sont 2 entités différentes. »

@@ -60,7 +60,10 @@ What it does:
   Foreman/thread owner alone maintains the spec document's sole status and
   retrospective; work-document material and Inspector findings stay with that
   work document in the archive.
-- Decides within what it owns — and only that.
+- Decides within what it owns — and only that. Merging into the main
+  branch, publishing a package, anything that leaves the working branch is
+  the human's act: it waits for their explicit word on that very action,
+  never inferred from a "go" given on another subject.
 
 The recognized two-conversation variant of the default: human+Architect for
 the plan, then human+Mason for the work — the Inspector then reports to the
