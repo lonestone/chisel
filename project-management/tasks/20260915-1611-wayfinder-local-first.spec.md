@@ -1,6 +1,6 @@
 # The wayfinder's local map: a folder, an index, one file per ticket
 
-**Status:** ready
+**Status:** in-progress
 
 ---
 
