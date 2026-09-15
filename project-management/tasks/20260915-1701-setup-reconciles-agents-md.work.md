@@ -381,4 +381,22 @@ the spec's Scope "Out" requires.
 
 ## Diff-Review Findings
 
-_Written by the Foreman at review._
+**Review, 2026-09-15 · `foreman`**, on both axes, fast track: no Inspector.
+Every criterion command re-run; all met. Step 7 read in full: five moves,
+each ending on a checkable state; the covered pile gated on quoting the
+replacement, which is the right guard on the step's one destructive power;
+the contradiction screen recommends the project's line, and the block's
+template confirms the claim it rests on. The thirty-seven blockquote lines
+carry no toolkit word. Cross-references: nine headings, nineteen mentions,
+all resolving.
+
+**Fix — one line reflowed** in the introduction, left at 128 characters by
+the edit; cosmetic, by the foreman.
+
+**Rulings on the findings.** The `Step 4` before-value: true, amended in the
+spec. The opening sentence and the description extended to the third thing
+the skill does: right, the spec allowed it. Step 8's sentence recast as a
+list: right. No branch for a repo without `AGENTS.md`: right, Step 0 makes
+it unreachable.
+
+Verdict: PASS on Standards, PASS on Spec.

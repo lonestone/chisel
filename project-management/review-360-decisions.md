@@ -1265,3 +1265,21 @@ une décision plutôt qu'une règle, réversible par git :
   remapper. Inscrit dans `socle/agents/profiles/foreman.md` (« Reporting to
   the Owner »). Les deux « coutures » de l'Addendum 8 sont corrigés en
   « seams ».
+
+## Addendum 14 (2026-09-15) — le questionnaire et le `AGENTS.md` écrit à la main
+
+Sur la question de l'Owner « Est-ce qu'il faut clean nos tasks pour que ça
+soit bien fonctionnel d'après toi ? », le Foreman a fait un essai à blanc de
+`chisel init` sur une copie du dépôt : rien à nettoyer, mais le bloc installé
+se pose sous le texte écrit à la main de `AGENTS.md` et rien dans le flux ne
+réconcilie les deux — le questionnaire ne mentionne jamais `AGENTS.md`.
+L'Owner : « OK ben ça c'est un problème, c'est couvert par le questionnaire
+post-install ? », puis « ok » à la recommandation du Foreman. Chantier en
+voie rapide, clos le même jour :
+`project-management/archive/20260915-1701-setup-reconciles-agents-md.spec.md`
+(`453d177`, `8085b75`, `5c489d4`, revue du Foreman sans correction de fond).
+Le skill `chisel-setup` gagne l'étape 7, « One voice in `AGENTS.md` »,
+exécutable seule : tri en trois piles (couvert, propre au projet,
+contradictoire), rien d'effacé sans un oui, le bloc jamais édité à la main.
+La tâche de dogfooding (`tasks/20260826-2302-chisel-dogfoods-itself.spec.md`,
+`ready`) s'appuiera dessus pour son critère « `AGENTS.md` rewritten ».

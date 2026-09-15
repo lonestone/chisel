@@ -1,6 +1,6 @@
 # The setup questionnaire leaves AGENTS.md speaking with one voice
 
-**Status:** in-progress
+**Status:** done (2026-09-15)
 
 ---
 
@@ -108,43 +108,43 @@ Out:
 Each is command-verifiable; record the before-value and the after-value in
 the work document. "Before" is HEAD at the start of the chantier.
 
-- [ ] **step-exists** — `grep -c "^## Step 7 — " socle/agents/skills/chisel-setup/SKILL.md`
+- [x] **step-exists** — `grep -c "^## Step 7 — " socle/agents/skills/chisel-setup/SKILL.md`
       = 1 and that heading contains `AGENTS.md`; `grep -c "^## Step 8 —
       Closing summary"` = 1; `grep -c "^## Step 7 — Closing summary"` = 0
       (today 1).
-- [ ] **markers-named** — the step names both markers: `grep -c
+- [x] **markers-named** — the step names both markers: `grep -c
       "chisel:begin"` ≥ 1 and `grep -c "chisel:end"` ≥ 1 on the skill (today
       0 each), and a sentence says the span between them is never edited by
       this step (`grep -ci "never" ` on the step's text ≥ 1, checked by
       reading).
-- [ ] **three-piles** — the step's text contains "covered", "the project's
+- [x] **three-piles** — the step's text contains "covered", "the project's
       own" and "contradict" (`grep -ci` ≥ 1 each within the step, checked by
       reading the section).
-- [ ] **user-facing-blockquotes** — the step contains at least two lines
+- [x] **user-facing-blockquotes** — the step contains at least two lines
       beginning with `> ` (what the user is shown), and none of them contains
       "glue", "socle", "managed block" or a section letter (`grep "^> "` on
       the step's text piped through `grep -ci "glue\|socle\|managed block\|§"`
       → 0).
-- [ ] **reading-list-route** — the step names `§C · Reading list` and
+- [x] **reading-list-route** — the step names `§C · Reading list` and
       Step 4's write span: `grep -c "Reading list"` on the skill ≥ 1 (today
       0 in the skill body outside §C's own walk — record the exact count),
-      `grep -c "Step 4"` ≥ 2 (today 1).
-- [ ] **standalone-and-rerun** — the step's text says it runs alone and that
+      `grep -c "Step 4"` ≥ 2 (~~today 1~~ today 2, the heading and Step 6's pointer — the threshold was met before the edit; the requirement is the mention inside the new step, 4 after, two of them in Step 7 — amended 2026-09-15 by the foreman at review, after the agent's first finding).
+- [x] **standalone-and-rerun** — the step's text says it runs alone and that
       a re-run on a one-voice file changes nothing (`grep -ci "on its own\|alone"`
       and `grep -ci "re-run"` within the step ≥ 1 each).
-- [ ] **step1-notes-it** — Step 1's list gains a line mentioning `AGENTS.md`
+- [x] **step1-notes-it** — Step 1's list gains a line mentioning `AGENTS.md`
       (`grep -c "AGENTS.md"` between the "Step 1" and "Step 2" headings ≥ 1,
       today 0).
-- [ ] **cross-references-intact** — every "Step N" mentioned in the file
+- [x] **cross-references-intact** — every "Step N" mentioned in the file
       points at a heading that exists: list them (`grep -on "Step [0-9]"`) and
       the headings (`grep -n "^## Step"`), and show in the work document that
       each N has its heading.
-- [ ] **no-code-in-shipped-text** — `grep -n "G[0-9]\+\b\|review-360\|chantier\|socle/"
+- [x] **no-code-in-shipped-text** — `grep -n "G[0-9]\+\b\|review-360\|chantier\|socle/"
       socle/agents/skills/chisel-setup/SKILL.md` → nothing.
-- [ ] **suite-green** — `deno task test` → every test passes (25 today);
+- [x] **suite-green** — `deno task test` → every test passes (25 today);
       `deno task check` → clean; `git diff --check` clean;
       `test/fixtures/golden-tree.txt` unchanged (93 lines).
-- [ ] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches only
+- [x] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches only
       `socle/agents/skills/chisel-setup/SKILL.md` and this task's pair.
 
 ## Files map (indicative; judged after the fact)
@@ -168,3 +168,13 @@ copy of this repo showed the installed block appended under the repo's
 hand-written text, with nothing in the flow to reconcile the two. Deno is at
 `~/.deno/bin/deno`. Every amendment to this file: strike the original, date
 the new version below it.
+
+**Closed, 2026-09-15 · `foreman`.** Fast track per Addendum 6. One agent
+planned (`453d177`), typed the skill (`8085b75`) and closed its work
+document (`5c489d4`). The foreman re-ran every criterion command, read the
+new step in full and checked its one factual claim against the block's
+template (text outside the markers takes precedence for the project's
+agents: true, the template says so): PASS on Standards, PASS on Spec. One
+cosmetic fix by the foreman, a line of the introduction reflowed. One
+before-value amended above, struck and dated. Suite: 25 tests, 0 failed;
+`deno task check` clean; golden tree unchanged at 93 lines.

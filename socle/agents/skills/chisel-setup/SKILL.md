@@ -8,8 +8,9 @@ disable-model-invocation: true
 
 Turn `.agents/project.md`'s defaults into this repo's actual glue, pose the
 current dev's personal file, and leave `AGENTS.md` speaking with one voice.
-One pass, sections A through H, each confirmed before the next. Re-running later to revisit a single section is normal — treat
-the current file as the starting recommendation, not as done-forever.
+One pass, sections A through H, each confirmed before the next. Re-running
+later to revisit a single section is normal — treat the current file as the
+starting recommendation, not as done-forever.
 
 ## How to talk to the user here
 

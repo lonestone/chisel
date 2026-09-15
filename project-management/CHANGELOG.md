@@ -5,6 +5,26 @@ ships.
 
 ---
 
+## 34. 2026-09-15 — The questionnaire leaves AGENTS.md speaking with one voice
+
+A dry run of `chisel init` on a copy of this repo, made to answer the
+Owner's question "do our tasks need cleaning first?", showed the answer was
+no — and showed the one thing nothing handled: the installed block appended
+under a repo's hand-written `AGENTS.md`, two voices in one file, the
+questionnaire never looking at it. `chisel-setup` gains "Step 7 — One voice
+in `AGENTS.md`", also runnable on its own: it reads what stands outside the
+`chisel:begin` / `chisel:end` markers, sorts it into three piles — covered
+(the block or a file it routes to now says it, and the replacement is
+quoted before deletion is proposed), the project's own (kept, or its
+pointers moved to §C · Reading list of the glue), contradicting (both
+sentences quoted, the human decides, the project's line recommended because
+text outside the markers takes precedence) — puts each pile to the user in
+the questionnaire's manner, writes only what was agreed and only outside
+the markers, and says what happened. Step 1 notes whether there is anything
+to sort; the closing summary, now Step 8, reports it. This is how the
+dogfooding task's "`AGENTS.md` rewritten" criterion will be met here, and
+in every consumer repo.
+
 ## 33. 2026-09-15 — The task workspace is put in order
 
 The two chores the status model left are done, by decision rather than by
