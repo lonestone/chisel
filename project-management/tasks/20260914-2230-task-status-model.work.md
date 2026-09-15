@@ -442,4 +442,34 @@ only so the reviewer knows the occurrences predate this work.
 
 ## Diff-Review Findings
 
-_To be written by the reviewer._
+**Review, 2026-09-15 · `foreman`**, on both axes, fast track: no Inspector.
+Every criterion command re-run by the reviewer; all met (the
+`workspace-migrated` count amended in the spec to 44, struck and dated).
+Every shipped change read in full.
+
+**Fix 1 — the light preset stepped backwards.** `verify` left the task at
+`waiting-diff-approval`, the human's `diff-review` left it at `in-progress`,
+`close` at `done`: a ladder does not go down. The default preset keeps the
+value at `waiting-diff-approval` between the arbitration and `close`; light
+now does the same, with one sentence in the step body saying why the value
+does not move there. Typed by the foreman.
+
+**Fix 2 — the migration table lacked the `blocked` case.** The agent's
+judgment on slice 07 of chisel v1 (written, unstarted, held by a named
+blocker → `blocked`) was right and the published table had no row for it;
+the "Not Started" row of both template copies now names it. Typed by the
+foreman.
+
+**Rulings on the other findings.** The quoted template excerpts rewritten in
+the archived templates task: kept as rewritten — the archive is searched, and
+a quotation of the old skeleton would be the one false hit. `ready` (not
+`planning`) at the create/work boundary of the gateless presets: kept — the
+frontier must mean the same thing under every preset. `planning` and
+`waiting-plan-approval` written by no step of the lightest presets: as
+intended, each formula picks its path. `PHILOSOPHY.md`: the reviewer grepped
+it; its one mention of statuses ("a committed status database") stays true.
+The seventeen done files sleeping in `tasks/` and the archive rule's missing
+case for a partly-done parent: a separate chore, carried to the decisions
+record's plan.
+
+Verdict: PASS on Standards, PASS on Spec.

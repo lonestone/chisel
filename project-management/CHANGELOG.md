@@ -5,6 +5,32 @@ ships.
 
 ---
 
+## 30. 2026-09-15 — One ladder of thirteen statuses, the human's wait named
+
+Chantier 7, the task status model, closes on the fast track after an
+Owner interview of eight decisions (Addendum 8 of the decisions record).
+The six emoji statuses give way to one linear ladder of thirteen plain
+values, nine on the path (`creating`, `waiting-business-approval`,
+`waiting-design-approval`, `ready`, `planning`, `waiting-plan-approval`,
+`in-progress`, `waiting-diff-approval`, `done`) and four that replace any of
+them (`blocked`, `stalled`, `deferred`, `cancelled`). Every wait on a human
+is named by what the human must do, so a search for `waiting-` answers
+"where am I needed"; the value is written alone, no emoji; the thread owner
+alone writes it, and every step of the five presets now ends by naming the
+status it leaves the task in. The vocabulary lives once, in the spec
+template's "Statuses" section, with the reasoning in
+`socle/agents/methodology.md` ("The status of a task"). Under beads the
+same values live natively in the database through bd's custom statuses
+(probed on 1.2.2 after the Owner doubted the foreman's claim that bd had
+only five), with two spelling translations, `ready` as `open` and
+`in-progress` as `in_progress`, so `bd ready` stays the Mason's frontier.
+All 44 status lines of the workspace and archive are rewritten by hand; the
+migration table is published for consumer repos. Two review fixes by the
+foreman (the light preset stepped backwards after the human's review; the
+migration table lacked the `blocked` case). Noted for later: seventeen
+done files still sleep in `tasks/`, and the archive rule has no case for a
+partly-done parent.
+
 ## 29. 2026-09-10 — A code never travels alone
 
 Ruling G19 (every reference carries its plain name, at every mention),

@@ -1093,3 +1093,12 @@ métier OK, design system OK, reviewed/ready, in progress, stalled… ».
   quand il met un dépôt à jour (règle 10 supprimée à cette fin). Noté en
   passant : dix-sept fichiers Complete/Done dorment dans `tasks/` au lieu de
   l'archive — corvée séparée, que le chantier peut embarquer.
+
+**Chantier exécuté et clos le 2026-09-15**, en voie rapide (Addendum 6) :
+spec `project-management/archive/20260914-2230-task-status-model.spec.md`,
+un agent a planifié et frappé (huit commits, `f66c761` … `3553388`), le
+Foreman a relu sur les deux axes et typé deux corrections (le preset light
+reculait d'un statut après la revue humaine ; la table de migration n'avait
+pas le cas `blocked`). Reste au plan, hors chantier : dix-sept fichiers
+`done` dorment dans `tasks/` au lieu de l'archive, et la règle d'archivage
+n'a pas de cas pour un parent à moitié fait.

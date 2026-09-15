@@ -181,7 +181,9 @@ system design included, is the requirement. The path to its matching work
 document comes with it, as evidence only — a divergence between the two
 designs is a finding, never a requirement to judge against. The `code-review`
 skill is available to whoever wants its shape; nothing here spawns it.
-Status after this step: `in-progress`.
+The status does not move here: the review's outcome is `close`, and a
+finding that sends the Mason back to typing is the thread owner's to write.
+Status after this step: `waiting-diff-approval`.
 """
 [steps.gate]
 type = "human"

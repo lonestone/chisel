@@ -1,6 +1,6 @@
 # The task status model: one ladder, thirteen values, the human's wait named
 
-**Status:** in-progress
+**Status:** done (2026-09-15)
 
 ---
 
@@ -189,50 +189,52 @@ Out:
 Each is command-verifiable; record the before-value and the after-value in
 the work document. "Before" is HEAD at the start of the chantier.
 
-- [ ] **emoji-gone** — `grep -rn "🔴\|🟡\|🟠\|🟢\|⚪\|⚫" socle/
+- [x] **emoji-gone** — `grep -rn "🔴\|🟡\|🟠\|🟢\|⚪\|⚫" socle/
       project-management/000-template.spec.md
       project-management/000-template.work.md` → nothing (today 18 lines in
       5 files).
-- [ ] **vocabulary-once** — the "Statuses" table of
+- [x] **vocabulary-once** — the "Statuses" table of
       `socle/templates/000-template.spec.md` has exactly thirteen value
       rows, each value in backticks, and `grep -c "waiting-" ` on that file
       ≥ 4; `diff project-management/000-template.spec.md
       socle/templates/000-template.spec.md` shows only the one link-path
       line each way that differs today (record the diff).
-- [ ] **formulas-name-status** — for each of the five files
+- [x] **formulas-name-status** — for each of the five files
       `socle/agents/formulas/*.formula.toml`, `grep -c "^Status after this
       step:" <file>` equals `grep -c "^\[\[steps\]\]" <file>`, and every
       value named is one of the thirteen; `grep -rn "awaiting approval"
       socle/` → nothing (today 1).
-- [ ] **glue-b1** — in `socle/agents/project.md.tpl`, the `**Status:**`
+- [x] **glue-b1** — in `socle/agents/project.md.tpl`, the `**Status:**`
       bullet of §B1 contains no emoji and names the spec template; the
       frontier bullet contains `ready`.
-- [ ] **beads-native** — `grep -c "status.custom" 
+- [x] **beads-native** — `grep -c "status.custom"
       socle/agents/skills/chisel-beads/CHANGING-CASE.md` ≥ 1 and the
       verbatim config string above appears once; `grep -n "in_progress"
       socle/agents/skills/chisel-beads/*.md` shows it only beside
       `in-progress` as a translation; `grep -c "bd ready"
       socle/agents/skills/chisel-beads/SKILL.md` ≥ 1; `grep -c "bd list
       --status" socle/agents/skills/chisel-beads/SKILL.md` ≥ 1.
-- [ ] **slice-template** — `grep -c '^\*\*Status:\*\* creating'
+- [x] **slice-template** — `grep -c '^\*\*Status:\*\* creating'
       socle/agents/skills/slice-task/SKILL.md` = 1.
-- [ ] **questionnaire-true** — `grep -c "without reading them all"
+- [x] **questionnaire-true** — `grep -c "without reading them all"
       socle/agents/skills/chisel-setup/SKILL.md` → 0 (today 1).
-- [ ] **reasoning-placed** — `socle/agents/methodology.md` has a `##` or
+- [x] **reasoning-placed** — `socle/agents/methodology.md` has a `##` or
       `###` heading whose text contains "status"; `grep -c "| \*\*Status\*\*
       |" socle/agents/reference.md` = 1.
-- [ ] **workspace-migrated** — `grep -rhn "^\*\*Status:\*\*"
-      project-management/tasks project-management/archive | wc -l` = 43
-      (today 43), and `grep -rn "^\*\*Status:\*\*" project-management/tasks
+- [x] **workspace-migrated** — `grep -rhn "^\*\*Status:\*\*"
+      project-management/tasks project-management/archive | wc -l` = ~~43
+      (today 43)~~ 44 (today 44: the inventory predates this spec's own
+      status line — amended 2026-09-15 by the foreman at review, after the
+      agent's first finding), and `grep -rn "^\*\*Status:\*\*" project-management/tasks
       project-management/archive | grep -v -E ":\*\*Status:\*\*
       (creating|waiting-business-approval|waiting-design-approval|ready|planning|waiting-plan-approval|in-progress|waiting-diff-approval|done|blocked|stalled|deferred|cancelled)( |$)"`
       → nothing (today 43 lines).
-- [ ] **no-code-in-shipped-text** — `grep -rn "S7\.[0-9]\|review-360"
+- [x] **no-code-in-shipped-text** — `grep -rn "S7\.[0-9]\|review-360"
       socle/ project-management/000-template.*.md` → nothing.
-- [ ] **suite-green** — `deno task test` → every test passes (25 today,
+- [x] **suite-green** — `deno task test` → every test passes (25 today,
       record the count); `deno task check` → clean; `git diff --check`
       clean.
-- [ ] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches
+- [x] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches
       only: `project-management/000-template.spec.md`,
       `socle/templates/000-template.spec.md`, the five formula files,
       `socle/agents/project.md.tpl`, `socle/agents/methodology.md`,
@@ -283,3 +285,17 @@ at `/opt/homebrew/bin/bd` if the agent wants to re-run the probe in a
 throwaway directory under the scratchpad; nothing in this repo gets a
 `.beads/`. Every amendment to this file: strike the original, date the new
 version below it.
+
+**Closed, 2026-09-15 · `foreman`.** Fast track per Addendum 6. One agent
+planned (`f66c761`) and typed (`5b61fb2` … `3553388`); its first run
+stalled during reading with nothing written, and resumed with its context
+intact. The foreman re-ran every criterion command and read every shipped
+change; verdict PASS on Standards, PASS on Spec, with two review fixes typed
+by the foreman: the light preset's `diff-review` step left the task at
+`in-progress`, a step backwards from `waiting-diff-approval`, and now leaves
+it where it was until `close`; the migration table's "Not Started" row
+gains the `blocked` case the agent's judgment on slice 07 of chisel v1
+needed. One before-value amended above, struck and dated. The agent's other
+findings are ruled on in the work document. Suite: 25 tests, 0 failed;
+`deno task check` clean; 44 status lines in the workspace, none outside the
+thirteen values; this spec is the first file that walked the ladder.

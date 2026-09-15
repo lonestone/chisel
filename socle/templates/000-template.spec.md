@@ -211,7 +211,7 @@ and the free text after them is kept as it stands.
 
 | Old status | New value |
 |---|---|
-| Not Started | `creating` or `ready`, by the real state of the spec — `in-progress` for a parent whose slices are partly done |
+| Not Started | `creating` or `ready`, by the real state of the spec — `blocked` when a named dependency holds a written spec, `in-progress` for a parent whose slices are partly done |
 | In Progress | `in-progress` |
 | Blocked | `blocked` |
 | Complete / Done / Delivered | `done` |
