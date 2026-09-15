@@ -1,6 +1,6 @@
 # The setup questionnaire leaves AGENTS.md speaking with one voice
 
-**Status:** ready
+**Status:** in-progress
 
 ---
 
