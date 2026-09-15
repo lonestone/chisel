@@ -1,6 +1,6 @@
 # Migrate the two pilots to the installed socle, and read the parity back
 
-**Status:** ready
+**Status:** deferred (2026-09-15) — the Owner is not yet sure of what chisel v2 delivered and will not migrate a pilot before that is settled; nothing depends on this task
 
 ---
 

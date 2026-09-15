@@ -1247,3 +1247,10 @@ une décision plutôt qu'une règle, réversible par git :
 - Le README gagne un paragraphe « Releasing », demandé par la slice release.
 - Hors de portée du Foreman, actes de l'Owner : la republication JSR en
   0.1.1, la fusion de `v2` dans `main` (G20).
+- **Migration des pilotes : différée le jour même.** L'Owner, après
+  explication de la tâche : « Pour le moment on clot cette tache, je suis
+  pas sur sur de ce qu'on a fait avec chisel v2 ... donc je migrerais pas
+  encore. » Statut `deferred`, motif sur la ligne ; la tâche reste dans
+  `tasks/` comme rappel, rien n'en dépend. L'incertitude de l'Owner sur ce
+  que v2 a livré est notée : la tâche de dogfooding (installer le socle dans
+  ce dépôt) est aussi la façon la plus directe de le voir.
