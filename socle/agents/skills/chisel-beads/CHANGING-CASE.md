@@ -65,7 +65,7 @@ output rather than typing the whole thing blind:
    that by hand rather than working around it. Stage what this fallback
    touched by exact path (`git add -- AGENTS.md CLAUDE.md .claude .codex
    .agents` — only the paths that actually changed, **never `git add -A`**)
-   and fold it into the commit of step 4.
+   and fold it into the commit of step 5.
 
    </details>
 
@@ -81,7 +81,25 @@ output rather than typing the whole thing blind:
    a copy would be a second place `chisel update` cannot see and `chisel check`
    could never watch.
 
-4. **Stage exactly what this procedure touched, never the repo root** —
+4. **Declare the statuses, so the database speaks the same vocabulary as the
+   task files.** The ladder the "Statuses" section of the spec template names
+   is the one vocabulary; the database gets it as custom statuses, each with
+   the category that decides whether a plain `bd list` shows it. Verbatim:
+
+   ```sh
+   bd config set status.custom "creating:active,waiting-business-approval:active,waiting-design-approval:active,planning:wip,waiting-plan-approval:wip,waiting-diff-approval:wip,stalled:frozen,done:done,cancelled:done"
+   ```
+
+   Four of the thirteen are absent from that string on purpose: `blocked` and
+   `deferred` are built-ins of the tool under those exact names and are
+   refused as custom ("collides with built-in"), and the two translated
+   values are written with the built-in spellings the tool already has —
+   `ready` as `open`, `in-progress` as `in_progress`, the only two
+   translations, listed in [SKILL.md](SKILL.md) ("Statuses: the same values,
+   in the database"). Read it back with `bd config get status.custom` rather
+   than assuming it took.
+
+5. **Stage exactly what this procedure touched, never the repo root** —
    normally just the symlink:
 
    ```sh
@@ -97,8 +115,9 @@ output rather than typing the whole thing blind:
 
    Created the committed status database with bd's own instructions
    skipped at init: this repo's one normative discourse on the subject is
-   .agents/skills/chisel-beads/SKILL.md. Linked the formulas into the
-   database directory.
+   .agents/skills/chisel-beads/SKILL.md. Declared the task statuses so the
+   database speaks the same vocabulary as the task files, and linked the
+   formulas into the database directory.
    ```
 
 **Confirm what is now true — read it back, do not assert it:** the repo's own
@@ -128,21 +147,27 @@ For each file, read its `**Status:**` line:
 - No status line, or the status is already `tracked as \`<id>\`` (a bead from
   an earlier run of this pass) → leave it alone. The second case is what makes
   this pass safe to re-run: it neither duplicates a bead nor orphans one.
-- 🟢 Complete or ⚫ Cancelled → leave it alone; closed work keeps its history in
+- `done` or `cancelled` → leave it alone; closed work keeps its history in
   its file.
-- 🔴 🟠 🟡 ⚪ (anything still open) → create its bead:
+- any other value (the task is still open) → create its bead:
 
   ```sh
   bd create "<the file's first # heading, or its filename if it has none>" \
     --type task --spec-id "<the file, from the repo root>" --actor architect --silent
   ```
 
-  If the status was 🟡 (in progress), hand that fact over too — it must not
-  come back as untouched work:
+  Then hand the file's own value over, so the bead says what the file said —
+  a task must not come back as untouched work:
 
   ```sh
-  bd update <the id just created> --status in_progress --actor architect
+  bd update <the id just created> --status <the value> --actor architect
   ```
+
+  The value is the file's value, spelled as the database spells it: as it
+  stands for every value but two, `ready` as `open` and `in-progress` as
+  `in_progress` (the only two translations, in [SKILL.md](SKILL.md),
+  "Statuses: the same values, in the database"). A bead created above is
+  already `open`, so a file at `ready` needs no update at all.
 
   Priority is left at the default: the task files carry none to carry over,
   and inventing one here would be this procedure deciding something no human
@@ -193,10 +218,12 @@ statuses, claims, edges, priorities.
 1. **Export it while you still can.** `bd export` writes every issue, with its
    dependencies and comments, as JSONL. Commit that file.
 2. **Put the statuses back in the files.** Each record carries its `spec_id`
-   and its `status`: for each open bead, restore the `**Status:**` line of the
-   file it names (🔴 not started / 🟡 in progress / 🟠 blocked / 🟢 done). This
-   is the reverse of the Converting section above, and the JSONL is the list to
-   work from.
+   and its `status`: for each open bead, write that status onto the
+   `**Status:**` line of the file it names, with the two translations
+   reversed — `open` becomes `ready`, `in_progress` becomes `in-progress`,
+   every other value is written as it stands. The fine value survives the
+   round trip, which is the point of having declared it. This is the reverse
+   of the Converting section above, and the JSONL is the list to work from.
 3. **Restore the blocking edges** — the files' `**Blocked by:**` lines were
    never removed by Converting, so in most repos there is nothing to do here;
    check the export for an edge that was added in the database and never

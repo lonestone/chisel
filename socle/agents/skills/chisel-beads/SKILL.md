@@ -103,7 +103,56 @@ different things, so both are said plainly:
   ignore lint. The check that matters here is `bd show`: a `Spec:` line and
   `(none)` under DESCRIPTION.
 
-## 3 · The session routine
+## 3 · Statuses: the same values, in the database
+
+The database carries the SAME thirteen values as a task file — the ladder the
+"Statuses" section of the spec template names, which is the one place that
+vocabulary lives. They are declared once as custom statuses when the repo
+enters this case ([CHANGING-CASE.md](CHANGING-CASE.md), the Entering
+sequence), and the declaration is stored in the database itself, so it is
+committed and shared. Nothing here is a second vocabulary: the bead holds the
+same value the file used to hold, and the line `**Status:** tracked as <id>`
+stays the one and only place a tracked task's status lives.
+
+**Two name translations, and only two.** The database spells two of the
+values differently, because two built-ins of the tool already mean exactly
+what they mean:
+
+| In a task file | In the database | Why |
+|---|---|---|
+| `ready` | `open` | `bd ready` — the frontier query — only sees the built-in `open`; a custom `ready` would be invisible to it |
+| `in-progress` | `in_progress` | the built-in that `bd update --claim` sets |
+
+Every other value is spelled identically on both sides. `blocked` and
+`deferred` are built-ins of the tool under those exact names, so they need no
+translation either.
+
+**Reading the frontier.** `bd ready` stays the Mason's command: it answers
+"what can be picked up right now" — open, with nothing open upstream — which
+is what `ready` means in the ladder. A task sitting at any of the waiting
+values is not on the frontier and `bd ready` correctly hides it.
+
+```sh
+bd ready
+```
+
+**Reading anything else.** Every other value is a filter, one command per
+question:
+
+```sh
+bd list --status waiting-plan-approval
+bd list --status waiting-business-approval
+bd list --status blocked
+```
+
+`bd list` with no filter honours the categories the values were declared
+under: it shows the active and in-progress ones, and hides the frozen and
+finished ones. Two limits worth knowing rather than rediscovering: `bd stats`
+does not count custom statuses (it reports zero for them), and a search for
+"where is a human needed" is `bd list --status <each waiting value>`, not one
+query — the file-based case answers that with a single search for `waiting-`.
+
+## 4 · The session routine
 
 **Fresh clone, first session:**
 
@@ -150,7 +199,7 @@ A session that changed nothing has nothing to verify — skip the routine.
 Between the two, work normally. Nothing else is synchronised: the task files are
 git's business, as they always were.
 
-## 4 · The two guards
+## 5 · The two guards
 
 ### Never `git push --mirror`
 
@@ -202,7 +251,7 @@ If the assignee that comes back is not the role you claimed as,
 report the collision one rung up. Do not re-claim, and do not start typing while
 unsure — the failure this prevents is two agents shipping the same change twice.
 
-## 5 · One machine, several agents
+## 6 · One machine, several agents
 
 The database has a served mode. It is worth it in exactly one situation:
 **several agents running at the same time on ONE machine**, which the embedded
