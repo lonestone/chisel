@@ -1,6 +1,6 @@
 # The codebase-audit skill: the 360 review's protocol, distilled
 
-**Status:** ready
+**Status:** in-progress
 
 ---
 
