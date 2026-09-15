@@ -287,8 +287,9 @@ une question à la fois. Statut : 🔲 à trancher · ✅ tranché · ⏭️ dif
      epics/tâches. Chantier : analyser en détail ce que le tracker externe
      couvrait (unités adressables, blocages entre décisions, requête de
      frontière) et écrire la déclinaison markdown locale ; le tracker
-     redevient une option, pas le défaut. Reformuler aussi les « tickets »
-     locaux (mot réservé aux trackers externes).
+     redevient une option, pas le défaut. ~~Reformuler aussi les « tickets »
+     locaux (mot réservé aux trackers externes).~~ Amendé par W6.3
+     (2026-09-15) : le mot « ticket » reste dans le skill wayfinder.
   2. upgrade-v2 « three role profiles » → ne plus compter (« the role
      profiles »).
   3. design-check « Mason (cheap tier) » → aligner sur « cheap or mid ».
@@ -1152,3 +1153,59 @@ concurrence, rien pour le reste.
   wayfiding doit respecter l'idée de la skill originale, puis on doit
   pouvoir transformer les maps finales en tasks/slice mais une fois
   l'exploration terminée. Ce sont 2 entités différentes. »
+
+- ✅ **W6.2 — Une carte est un dossier hors de `tasks/`, avec un index et
+  un fichier par décision.** Tranché « Ok » le 2026-09-15. Un dossier par
+  carte, `project-management/maps/<time-id>-<destination>/`, déclaré par une
+  ligne « Maps » en §A du glue ; `MAP.md` pour l'index tel que le skill
+  d'origine le définit (destination, notes, décisions prises, not yet
+  specified, out of scope) ; un fichier par décision ouverte,
+  `<NN>-<question>.md`, portant la question, son type, son claim, ses
+  bloqueurs, son statut, et recevant la réponse à la résolution. La
+  transformation en tâches ou slices, à la fin de l'exploration, est une
+  étape à part qui lit la carte et écrit dans `tasks/` par le chemin normal ;
+  la carte est ensuite archivée avec ses décisions. Écartés : un dossier
+  dans `tasks/` (décisions et tâches mélangées dans toute recherche de
+  statut) ; un seul fichier par carte (deux sessions éditant le même
+  fichier).
+
+- ✅ **W6.3 — Le mot « ticket » reste dans le skill wayfinder.** Le Foreman
+  proposait « waypoint » (ou « decision », « question ») pour les fichiers
+  de décision, au titre de la règle du glossaire qui réserve « ticket » aux
+  trackers externes et de la dernière phrase de F1.1. L'Owner, après avoir
+  relu les passages du skill qui emploient le mot : « je pense que ne
+  devrait pas y toucher ». Le « decision ticket » du skill d'origine est
+  son vocabulaire propre, il désigne la question à trancher avec son type,
+  son claim, ses bloqueurs et sa fermeture, et il vaut quel que soit le
+  support — fichier local ou issue d'un tracker. Conséquence pour le
+  chantier : la phrase du glossaire (`socle/agents/reference.md`, « We do
+  NOT use the word "ticket" for local work ») dit l'exception — les tickets
+  d'une carte wayfinder gardent leur nom, une carte n'étant pas du travail
+  local au sens des tâches — et la dernière phrase de F1.1 est barrée.
+
+- ✅ **W6.4 — Les tickets d'une carte gardent les états du skill d'origine ;
+  l'échelle de statuts des tâches (chantier 7) ne s'y applique pas.** Le
+  Foreman proposait de réutiliser un sous-ensemble de l'échelle (`ready`,
+  `blocked`, `in-progress`, `done`, `cancelled`). L'Owner (2026-09-15) :
+  « Le wayfinding est pas lié au chantier, en tout cas pas les meme
+  échelles. Tu laisse ça de coté. » Un ticket est donc ouvert ou fermé,
+  réclamé ou non (le claim est une ligne à part, qui dit qui), bloqué ou
+  non par ses lignes de blocage — les mots du skill, transposés en lignes
+  d'en-tête de fichier, sans emprunt au vocabulaire des tâches.
+
+- ✅ **W6.5 — Interview close par l'Owner : le wayfinder est un skill à
+  part, avec un dossier à part, sans lien avec le reste ; l'utilisateur
+  transforme lui-même les conclusions en tâches.** Le Foreman posait une
+  question sur le cas beads ; l'Owner (2026-09-15) : « WAYFINDER N'A RIEN À
+  VOIR AVEC LE RESTE. Je sais meme pas ce qu'on fout ici. Wayfinder c'est
+  un skill spécifique avec un dossier spécifique, c'est à l'utilisateur de
+  transformer les conclusions en tache (on peut proposer un skill pour ça
+  mais pas urgent). » Périmètre du chantier, réduit d'autant : donner une
+  existence au « local-markdown tracker » que le skill nomme sans qu'il
+  existe — un dossier `maps/` sous la racine du workspace, `MAP.md` et un
+  fichier par ticket (question, type, bloqueurs, claim, résolution) —, rendre
+  vraies les phrases du skill qui supposaient un tracker, garder le tracker
+  externe en option comme dans le skill d'origine. Ni beads, ni statuts de
+  tâches, ni étape de transformation en tâches : un skill pour cela est
+  noté comme possible et non urgent. Les questions 3 et 4 du Foreman
+  (statuts, beads) sont retirées.
