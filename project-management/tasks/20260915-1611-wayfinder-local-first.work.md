@@ -284,4 +284,23 @@ next reader does not take the silence for an oversight.
 
 ## Diff-Review Findings
 
-Written by the reviewer.
+**Review, 2026-09-15 · `foreman`**, on both axes, fast track: no Inspector.
+Every criterion command re-run; all met. The diff read in full: the local
+map lands in one subsection where the tracker-specific sentence stood, the
+rest of the skill keeps its sentences and gains the file case only where the
+two supports differ, the word "ticket" stays, the glossary states the
+exception in the same breath. Nothing to fix.
+
+**Rulings on the findings.** The `ready\b` pattern matching "already": true,
+the criterion is amended in the spec to `\bready\b`, met on both sides.
+The before-values off by one (three "Decisions so far", thirty-six
+"ticket"): the spec's counts were estimates, the after-values are what
+matters; noted. The "100K token" limit: upstream text, untouched by design,
+left as it stands. Two `## Question` blocks: the tracker body and the ticket
+file each show theirs; accepted. The map folder without a time id: the
+destination slug is the name a human reads, and two maps with the same
+destination in one repo would be one map; accepted, reversible if it bites.
+No pointer to `maps/` outside the skill: by the spec, the folder derives
+from §A's tasks root and the skill is user-invoked.
+
+Verdict: PASS on Standards, PASS on Spec.

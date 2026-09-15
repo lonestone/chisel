@@ -5,6 +5,22 @@ ships.
 
 ---
 
+## 32. 2026-09-15 — The wayfinder gets the local map it promised
+
+Chantier 6 closes small, on the Owner's framing: the wayfinder is a skill of
+its own with a folder of its own, unrelated to beads, to the task status
+ladder or to the pipeline, and a finished map's conclusions are the human's
+to turn into tasks. The skill said "default to the local-markdown tracker"
+and nothing of the kind existed; now, with no tracker declared in §B2 of the
+glue, a map is `maps/<slug>/` under the tasks root of §A, `MAP.md` carries
+the map body the skill already had, and each ticket is one file with its
+type, its blockers, its claim, its question and, at close, its resolution.
+Every tracker notion the skill uses has its one-line counterpart in that
+folder; the tracker case keeps every sentence it had. The word "ticket"
+stays, and the glossary's sentence that reserves it for external trackers
+now names the exception. Two files touched, nothing installed changes
+shape. The plan of the 360 review has no open chantier left.
+
 ## 31. 2026-09-15 — The 360 review becomes a skill
 
 Chantier 8 closes on the fast track: `socle/agents/skills/codebase-audit/`

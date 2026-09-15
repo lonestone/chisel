@@ -1209,3 +1209,13 @@ concurrence, rien pour le reste.
   tâches, ni étape de transformation en tâches : un skill pour cela est
   noté comme possible et non urgent. Les questions 3 et 4 du Foreman
   (statuts, beads) sont retirées.
+
+**Chantier exécuté et clos le 2026-09-15**, en voie rapide (Addendum 6) :
+spec `project-management/archive/20260915-1611-wayfinder-local-first.spec.md`,
+un agent a planifié et frappé (`302af0f`, `46cb061`, `8d56261`), le Foreman
+a relu sur les deux axes sans correction. Le plan d'action de la revue 360
+n'a plus de chantier ouvert. Restent, hors plan : la republication JSR en
+0.1.1 (acte de l'Owner), la fusion de `v2` dans `main` (acte de l'Owner, G20),
+les deux corvées notées au chantier 7 (dix-sept fichiers `done` dans
+`tasks/`, la règle d'archivage sans cas pour un parent à moitié fait), et le
+skill « carte finie → tâches » noté possible et non urgent en W6.5.

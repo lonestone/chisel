@@ -1,6 +1,6 @@
 # The wayfinder's local map: a folder, an index, one file per ticket
 
-**Status:** in-progress
+**Status:** done (2026-09-15)
 
 ---
 
@@ -143,34 +143,38 @@ Out:
 Each is command-verifiable; record the before-value and the after-value in
 the work document. "Before" is HEAD at the start of the chantier.
 
-- [ ] **local-map-exists** — `socle/agents/skills/wayfinder/SKILL.md`
+- [x] **local-map-exists** — `socle/agents/skills/wayfinder/SKILL.md`
       contains `maps/` and `MAP.md` (`grep -c` ≥ 1 each), and `grep -c
       "local-markdown tracker"` on it → 0 (today 1).
-- [ ] **ticket-file-given** — the skill contains a fenced block whose lines
+- [x] **ticket-file-given** — the skill contains a fenced block whose lines
       include `**Type:**`, `**Blocked by:**`, `**Claimed by:**`, `## Question`
       and `## Resolution` (`grep -c` ≥ 1 each).
-- [ ] **notions-mapped** — the skill names, for the file case, the claim
+- [x] **notions-mapped** — the skill names, for the file case, the claim
       (`Claimed by`), the blocking (`Blocked by`), the frontier, the
       resolution and the close: `grep -ci "frontier"` ≥ 1 and `grep -c
       "Decisions so far"` ≥ 2 (today 2: the body template and the resolve
       step; the local section adds at least one).
-- [ ] **ticket-kept** — `grep -c "ticket" socle/agents/skills/wayfinder/SKILL.md`
+- [x] **ticket-kept** — `grep -c "ticket" socle/agents/skills/wayfinder/SKILL.md`
       ≥ 20 (today ~30; the word is kept, not renamed), and `grep -c
       "waypoint"` → 0.
-- [ ] **no-status-ladder** — `grep -n "Status:\|ready\b\|in-progress\|beads\|bd "
-      socle/agents/skills/wayfinder/SKILL.md` → nothing (today 0).
-- [ ] **tracker-still-optional** — `grep -c "B2" socle/agents/skills/wayfinder/SKILL.md`
+- [x] **no-status-ladder** — `grep -n "Status:\|ready\b\|in-progress\|beads\|bd "
+      socle/agents/skills/wayfinder/SKILL.md` → nothing (~~today 0~~ the
+      pattern `ready\b` has no left boundary and matches "already" four
+      times, before and after; with `\bready\b` the command returns
+      nothing on both sides — amended 2026-09-15 by the foreman at review,
+      after the agent's first finding).
+- [x] **tracker-still-optional** — `grep -c "B2" socle/agents/skills/wayfinder/SKILL.md`
       ≥ 1 and `grep -c "project.md"` ≥ 2.
-- [ ] **glossary-exception** — `grep -c "wayfinder" socle/agents/reference.md`
+- [x] **glossary-exception** — `grep -c "wayfinder" socle/agents/reference.md`
       ≥ 1 (today 0), on the line or lines that reserve "ticket".
-- [ ] **upstream-line** — the skill's `x-upstream.changes` mentions the
+- [x] **upstream-line** — the skill's `x-upstream.changes` mentions the
       local map (`grep -c "map" ` on the frontmatter's `changes:` line ≥ 1).
-- [ ] **no-code-in-shipped-text** — `grep -rn "W6\.\|F1\.1\|review-360\|chantier\|socle/"
+- [x] **no-code-in-shipped-text** — `grep -rn "W6\.\|F1\.1\|review-360\|chantier\|socle/"
       socle/agents/skills/wayfinder/ socle/agents/reference.md` → nothing.
-- [ ] **suite-green** — `deno task test` → every test passes (25 today);
+- [x] **suite-green** — `deno task test` → every test passes (25 today);
       `deno task check` → clean; `git diff --check` clean;
       `test/fixtures/golden-tree.txt` unchanged (93 lines).
-- [ ] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches only
+- [x] **nothing-else-moved** — `git diff --stat <start>..HEAD` touches only
       `socle/agents/skills/wayfinder/SKILL.md`, `socle/agents/reference.md`
       and this task's pair.
 
@@ -197,3 +201,13 @@ specific folder, unrelated to the rest of the socle; the human turns a
 finished map's conclusions into tasks. Deno is at `~/.deno/bin/deno`.
 Every amendment to this file: strike the original, date the new version
 below it.
+
+**Closed, 2026-09-15 · `foreman`.** Fast track per Addendum 6. One agent
+planned (`302af0f`), typed the skill and the glossary in one commit
+(`46cb061`) and closed its work document (`8d56261`). The foreman re-ran
+every criterion command and read the whole diff: PASS on Standards, PASS on
+Spec, no review fix needed. One criterion command amended above, struck and
+dated. The agent's other findings (a count off by one in two before-values,
+the pre-existing "100K token" limit in the upstream text, the map folder
+carrying no time id) are ruled on in the work document. Suite: 25 tests, 0
+failed; `deno task check` clean; golden tree unchanged at 93 lines.
