@@ -26,7 +26,11 @@ and no copy to drift from. The reasoning behind the workflow is
 
 We do NOT use the word "ticket" for local work. It is reserved for items in an
 external tracker (Linear, GitHub Issues), if/when one is wired up — see
-§B2 · Link to an external tracker of `.agents/project.md`.
+§B2 · Link to an external tracker of `.agents/project.md` — and for the
+decision tickets of a wayfinder map, which keep the skill's own name whether
+they live in a tracker or in the map's own folder:
+`.agents/skills/wayfinder/SKILL.md` charts a foggy effort as a map of decision
+tickets and resolves them one at a time.
 
 ## Zone ownership
 
