@@ -286,6 +286,14 @@ the table above. Findings below says it again for the Foreman.
 
 ## Worklog
 
+**2026-09-15, session 2 — typing.** Seven commits in the order the spec's
+Verification section gives: the work document alone, then both template
+copies, the five formulas, the glue with the reasoning and the glossary, the
+two beads skill pages, the slice and setup skills, and the workspace
+migration. `deno task test`, `deno task check` and `git diff --check` after
+each. All twelve acceptance-criterion commands re-run at the end, their
+after-values written beside the before-values above; findings below.
+
 **2026-09-15, session 1 — plan.** Read the repo instructions, the writing
 rules, the spec in full, the work template, the reasoning behind the eight
 decisions of the interview, and every file the spec lists under Modify. Ran
@@ -298,15 +306,15 @@ alone.
 
 ## Implementation Checkboxes
 
-- [ ] Templates: the "Statuses" section and the skeleton line, in both
+- [x] Templates: the "Statuses" section and the skeleton line, in both
       copies, still differing only by their one link-path line
-- [ ] Formulas: the fixed status sentence on all 40 steps of the five
+- [x] Formulas: the fixed status sentence on all 40 steps of the five
       presets, and `awaiting approval` out of the supervised header
-- [ ] Glue §B1, `methodology.md`'s new section, `reference.md`'s glossary row
-- [ ] Beads skill: `SKILL.md` and `CHANGING-CASE.md`
-- [ ] Other skills: slice-task template line, chisel-setup cost sentence
-- [ ] Workspace migration: the 43 status lines
-- [ ] Criterion commands re-run, after-values written beside before-values,
+- [x] Glue §B1, `methodology.md`'s new section, `reference.md`'s glossary row
+- [x] Beads skill: `SKILL.md` and `CHANGING-CASE.md`
+- [x] Other skills: slice-task template line, chisel-setup cost sentence
+- [x] Workspace migration: the 43 status lines
+- [x] Criterion commands re-run, after-values written beside before-values,
       findings written
 
 ## Notes & Snippets
@@ -315,18 +323,18 @@ alone.
 
 | Criterion | Command's answer before | After |
 |---|---|---|
-| `emoji-gone` | 18 lines in 5 files (`project.md.tpl`, beads `CHANGING-CASE.md`, slice-task `SKILL.md`, both template copies) | |
-| `vocabulary-once` | no "Statuses" table; `waiting-` count 0 in the shipped template; the two copies differ by exactly one line, the `reference.md` link path | |
-| `formulas-name-status` | 0 status lines against 9 / 9 / 9 / 7 / 6 steps (default, supervised, auto, light, auto-light); `awaiting approval` 1 | |
-| `glue-b1` | §B1's `**Status:**` bullet carries the six emoji; frontier bullet says "whose blockers are all done", no `ready` | |
-| `beads-native` | `status.custom` 0; `in_progress` 1 in `CHANGING-CASE.md` (a `bd update --status` command), 0 in `SKILL.md`; `bd ready` 0 in `SKILL.md`; `bd list --status` 0 | |
-| `slice-template` | 0 | |
-| `questionnaire-true` | 0 — the sentence is there but wraps across two lines, so the one-line grep never matched it; checked again unwrapped | |
-| `reasoning-placed` | 0 headings containing "status" in `methodology.md`; 0 **Status** glossary rows in `reference.md` | |
-| `workspace-migrated` | 44 status lines, 43 of them non-conforming | |
-| `no-code-in-shipped-text` | 0 | |
-| `suite-green` | 25 passed, 0 failed; `deno task check` clean; `git diff --check` clean | |
-| `nothing-else-moved` | — (judged at the end) | |
+| `emoji-gone` | 18 lines in 5 files (`project.md.tpl`, beads `CHANGING-CASE.md`, slice-task `SKILL.md`, both template copies) | 0 — met |
+| `vocabulary-once` | no "Statuses" table; `waiting-` count 0 in the shipped template; the two copies differ by exactly one line, the `reference.md` link path | 13 value rows, each value in backticks; `waiting-` count 6; the two copies still differ by that one line only — met |
+| `formulas-name-status` | 0 status lines against 9 / 9 / 9 / 7 / 6 steps (default, supervised, auto, light, auto-light); `awaiting approval` 1 | 9 / 9 / 9 / 7 / 6, equal to the step count in each file; all 40 values among the thirteen; `awaiting approval` 0 — met |
+| `glue-b1` | §B1's `**Status:**` bullet carries the six emoji; frontier bullet says "whose blockers are all done", no `ready` | no emoji; the bullet names the spec template's status table; the frontier bullet says the status is `ready` — met |
+| `beads-native` | `status.custom` 0; `in_progress` 1 in `CHANGING-CASE.md` (a `bd update --status` command), 0 in `SKILL.md`; `bd ready` 0 in `SKILL.md`; `bd list --status` 0 | `status.custom` 2 with the verbatim string once; all four `in_progress` mentions sit beside `in-progress` as the translation; `bd ready` 4 and `bd list --status` 4 in `SKILL.md` — met |
+| `slice-template` | 0 | 1 — met |
+| `questionnaire-true` | 0 — the sentence is there but wraps across two lines, so the one-line grep never matched it; checked again unwrapped | 0 one-line and 0 unwrapped: the claim is gone, replaced by the true cost — met |
+| `reasoning-placed` | 0 headings containing "status" in `methodology.md`; 0 **Status** glossary rows in `reference.md` | 1 heading, "The status of a task"; 1 glossary row — met |
+| `workspace-migrated` | 44 status lines, 43 of them non-conforming | 44 status lines, 0 non-conforming — met on the substance; the expected count of 43 in the spec predates this task's own spec file (see findings) |
+| `no-code-in-shipped-text` | 0 | 0 — met |
+| `suite-green` | 25 passed, 0 failed; `deno task check` clean; `git diff --check` clean | 25 passed, 0 failed; check clean; `git diff --check` clean — met |
+| `nothing-else-moved` | — (judged at the end) | 55 files: the 14 the spec lists under Modify, 40 files whose only change is a `**Status:**` line under `tasks/` and `archive/`, and this task's own pair — met |
 
 ### Gate placement read off the five presets
 
@@ -342,6 +350,95 @@ record file name, in anything under `socle/` or in either template copy.
 Pointers use the installed form `.agents/…`. The five formula bodies are
 TOML multi-line strings: the fixed sentence goes before the closing `"""`,
 and the test suite parsing the five presets is the proof they still parse.
+
+## Findings
+
+Written at the end of the typing, for the reviewer. Nothing here changes
+what was built; each point is either something the spec did not foresee or a
+judgement made in the open.
+
+**One status line more than the spec counted, and it is the spec's own.**
+The workspace holds 44 `**Status:**` lines, not 43: the inventory was taken
+before this task's spec file was committed with `**Status:** in-progress`.
+43 were rewritten; that one was left alone, being the Foreman's. The
+`workspace-migrated` criterion's second half — no non-conforming line — is
+met exactly; its first half reads 44 where it expects 43. The substance is
+what it asks for.
+
+**The migration table cannot show the emoji it maps from.** The spec asks
+for the old-six-to-new table inside the template's status section, and
+`emoji-gone` forbids those six characters anywhere under `socle/` or in
+either template copy. Both cannot hold literally, so the table names the old
+statuses by their words — Not Started, In Progress, Blocked, Complete /
+Done / Delivered, Deferred, Cancelled — with one sentence saying the old
+lines carried a coloured circle before those words. A reader holding an old
+file matches on the word, which is what was always after the emoji.
+
+**One migration judgement leaves the letter of the mapping.** Slice 07 of
+the chisel v1 task was Not Started, and the mapping offers `creating`,
+`ready` or `in-progress` for that. None is true: its spec is fully written
+(so not `creating`), nobody is on it (so not `in-progress`), and its
+declared blocker, slice 06, is not done — so `ready` would advertise it on a
+frontier it cannot be taken from, and would be a false positive for the glue
+rule and for `bd ready`. It is written `blocked`. The mapping's Not Started
+row has no case for "written, unstarted, held by a named blocker"; that is
+the gap, and it is worth one line in the published table if the Foreman
+agrees.
+
+**Three of the 43 lines are quoted template excerpts, not a task's own
+status.** All three are in the archived task file about the templates,
+`archive/20260828-2217-split-spec-and-work-documents/01-templates-and-installer.md`,
+which quotes the old template skeleton and two finished status lines. The
+spec puts archived content beyond the status line out of scope, but the
+criterion greps every line beginning `**Status:**` under the two trees and
+these are literally that. They were rewritten: the two finished ones to
+`done`, the skeleton placeholder to `creating`, matching the new skeleton. A
+mechanical criterion over a workspace that contains prose about itself will
+keep catching quotations; worth knowing before the next such criterion is
+written.
+
+**Two values are written by no step of the lightest presets.** The
+derivation leaves `planning` unwritten in auto-light — the same session
+plans and types, so there is no boundary between them — and
+`waiting-plan-approval` unwritten wherever no plan gate exists. Nothing is
+missing; it is what "each formula picks its path through the values" means.
+Recorded because a reader comparing the five tables will notice the holes
+and should find them explained rather than suspicious.
+
+**Two readings of "the next active value" had to be chosen between.** For a
+step that ends where the create phase ends with no gate after it — auto's
+`spec-review`, auto-light's `spec` — the rule could mean the value covering
+the next step (`planning`) or the next value up the ladder (`ready`).
+`ready` was chosen, with the reasoning in the Program Design above: the
+create session stops there in every preset, the task sits approved and
+unclaimed until a Mason is spawned, and `ready` is the value the default
+preset's human writes at that same boundary. It also keeps the frontier — and
+`bd ready` — meaningful under the gateless presets. If the Foreman prefers
+`planning` there, it is two lines to change in two files.
+
+**`PHILOSOPHY.md` was not opened and nothing here contradicts it as far as
+this work could tell.** The spec asks for a report only if a claim is
+falsified; the file was left closed per the Avoid list, so this is a
+non-finding rather than a clearance.
+
+**The chore the spec set aside, stated for the record.** Seventeen files
+whose status is now `done` still sleep in `project-management/tasks/`
+instead of the archive: five slices of the chisel v1 task (01 to 05), ten of
+the chisel v2 task (01 to 05 and 07 to 11), and the two standalone files
+`20260810-1037-field-test-fixes.md` and `20260825-1046-philosophy-doc.md`.
+Their statuses were rewritten like all the others; none was moved. Moving
+them is not mechanical, exactly as the spec says: both parent folders hold
+finished and unfinished slices together, and the archive rule moves a parent
+with its whole folder — so either the rule needs a case for a partly-done
+parent, or the finished slices move without their parent and the folder is
+split across two trees. Now that the statuses are searchable, the chore is
+one `grep done` away from being scoped.
+
+**One observation, no action.** The word "chantier" appears five times under
+`socle/` — in the writing rule of `discipline.md` and in the Foreman's
+profile, both using it as the illustration of naming a thing by its meaning.
+Those files are not this task's to touch and nothing was added to them; noted
+only so the reviewer knows the occurrences predate this work.
 
 ## Diff-Review Findings
 
