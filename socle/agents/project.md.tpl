@@ -66,8 +66,12 @@ each one carries its own status.
   reading-gradient zones 🧑 review carefully / 🧑 review if relevant — and,
   once work starts, the work template at `<Work template>`, which carries no
   zone marker
-- **Status:** the `**Status:**` field in each task file (🔴 🟡 🟠 🟢 ⚪ ⚫)
-- **Work the frontier:** any task/slice whose blockers are all done can start
+- **Status:** the `**Status:**` field in each task file, carrying one value
+  of the ladder the "Statuses" section of the spec template names — the one
+  place that vocabulary lives, with the pipeline moment that leaves a task at
+  each value
+- **Work the frontier:** a task/slice is on the frontier when its status is
+  `ready` — approved, with its blockers all done, waiting for a Mason
 
 <!-- The two other cases, and what this block says instead when one of them is
 chosen (the questionnaire rewrites it; task FILES keep the content in every

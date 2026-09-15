@@ -19,7 +19,8 @@ and no copy to drift from. The reasoning behind the workflow is
 | **Seam** | The public boundary where a feature is tested — agreed with the human BEFORE implementation. Tests live at seams, never against internals. Fewer is better (ideal: one). |
 | **Reading gradient** | The ordering of the spec document by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich system design and intent) → 🧑 REVIEW IF RELEVANT (remaining review surface). Detail is never cut, it is ordered. The work document has no zone and is Mason-owned working space. |
 | **Blocking edge** | A dependency between slices: "slice 3 is blocked by slice 1". A slice with no blockers can start immediately. |
-| **Frontier** | The set of slices whose blockers are all done — what can be worked on right now. |
+| **Status** | The task's single state, one value of the ladder the "Statuses" section of the spec template names — that section is the one place the vocabulary lives, with the pipeline moment that leaves a task at each value. It is written alone on the spec document's `**Status:**` line, by the thread owner only. |
+| **Frontier** | The set of slices whose blockers are all done — what can be worked on right now; a task on it has the status `ready`. |
 | **Expand–contract** | The sequencing for wide mechanical refactors (rename a column, retype a shared symbol): add the new form beside the old → migrate call sites in batches → delete the old form. The exception to vertical slicing. |
 | **One-shot** | Work done without a task artifact. The work rules (context preamble, plan-first, vertical discipline) still apply; only the file bookkeeping is skipped. |
 

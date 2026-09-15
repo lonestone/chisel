@@ -149,6 +149,70 @@ not restate it step by step.
 
 ---
 
+## The status of a task
+
+A task carries ONE status, one value from a single ladder. The vocabulary
+itself lives once, in the "Statuses" section of the spec template, which
+gives the thirteen values with their meaning and the pipeline moment that
+leaves a task at each one; this section says only why the model has that
+shape.
+
+**One ladder, not two axes.** The tempting design is two: a maturity scale
+(being written, approved, in progress, finished) with a health condition
+laid over it (held up, gone quiet). It reads well and it costs a
+cross-product: every query has to ask two questions, every tracker has to be
+taught two fields, and every person writing a line has to decide twice. One
+ladder costs one thing instead — the maturity a task had when it left the
+path is no longer in the status. That is an acceptable loss, because the
+file still says it: acceptance criteria ticked, a work document present or
+absent, a worklog with dates in it. Maturity is recoverable from the
+documents; a second field would have to be maintained by hand forever.
+
+**Each human wait is named by the act the human owes.** The presets declare
+their gates, and a gate is a place where the machine stops and a person is
+needed. If the status recorded the result of a gate — approved, validated —
+the interesting state would be invisible: what a team needs to see is not
+which tasks got approved but which ones are waiting, and for whom. So the
+value is `waiting-business-approval`, not "business approved", and a search
+for `waiting-` across the workspace answers "where am I needed" without
+opening a file. Business and design stay two successive values rather than
+one spec approval, because in a team they are two people, and because the
+two approvals can land days apart.
+
+**The thread owner alone writes it, at step boundaries.** One writer is what
+makes a status trustworthy; the Mason, which is the session most often
+looking at the file, is precisely the one that must not touch it, because
+its own progress belongs to the work document's implementation checkboxes.
+And so that the correspondence between steps and statuses is never a matter
+of interpretation, every step of every preset ends by naming the status it
+leaves the task in. Read the formula, know the status. `blocked` is written
+by the thread owner when a session reports a block; `deferred` and
+`cancelled` are a human's, by hand. `stalled` no step can write at all —
+nobody is in session on a stalled task, which is what the value means — and
+its criterion is a judgement, not a day count: a spec awaiting a validation
+over a holiday is not stalled.
+
+**The value carries no emoji.** A coloured circle in front of the words did
+the spotting work when there were six statuses and a human eye was the only
+reader. The plain name does that work as well, and does two things the emoji
+never did: it survives a copy into a tracker, and it is searchable. A marker
+per family — waiting, working, off-path — would be one more thing to keep
+consistent, and nobody would type it into a tracker anyway.
+
+**What a tracker does with it.** The thirteen values are kebab-case and
+portable as they are; under the committed-database case of §B1 · Where task
+statuses live of `.agents/project.md`, they live in the database natively,
+with two spelling translations named by `.agents/skills/chisel-beads/`.
+An adapter for any other tracker maps the thirteen onto that tracker's own
+states, in one place, once.
+
+**One extension is already foreseen** and deliberately not built: splitting
+the `spec` step into two gated steps, so that the business approval lands
+before the system design is written. That is a formula variant, not two more
+values — it poses the same two waits, in a different order.
+
+---
+
 ## Why a reading gradient (and not shorter files)
 
 Models cannot be trusted to maintain codebase quality over time without human
