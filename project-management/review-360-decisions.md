@@ -957,7 +957,7 @@ métier OK, design system OK, reviewed/ready, in progress, stalled… ».
   |---|---|---|---|
   | `creating` | | la spec s'écrit, Checker inclus | interview, spec, spec-review |
   | `waiting-business-approval` | 🧑 | le métier doit valider le besoin | gate spec approved, volet métier |
-  | `waiting-design-approval` | 🧑 | le system design de la spec (coutures, architecture, décisions) doit être validé | gate spec approved, volet design |
+  | `waiting-design-approval` | 🧑 | le system design de la spec (seams, architecture, décisions) doit être validé | gate spec approved, volet design |
   | `ready` | | approuvée, rien ne la retient, attend un Maçon | frontière |
   | `planning` | | le Maçon écrit son program design | plan, plan-review |
   | `waiting-plan-approval` | 🧑 | le plan attend le feu vert — utile en human-in-the-loop ; en mode factory « pas la peine, on laisse le maçon coder » | gate plan approved |
@@ -974,7 +974,7 @@ métier OK, design system OK, reviewed/ready, in progress, stalled… ».
   `cancelled` — mêmes noms en kebab-case, non relistés par l'Owner mais non
   contestés.
   **« Design » s'entend au sens large — le system design de la spec, ses
-  coutures et son architecture — et pas du tout au sens « UI design »**
+  seams et son architecture — et pas du tout au sens « UI design »**
   (précision de l'Owner le 2026-09-10, après que le Foreman avait lu
   « design system OK » comme une validation d'interface ; le Foreman a
   corrigé cette ligne). Toute tâche a donc un design à valider ; il n'y a pas
@@ -1254,3 +1254,14 @@ une décision plutôt qu'une règle, réversible par git :
   `tasks/` comme rappel, rien n'en dépend. L'incertitude de l'Owner sur ce
   que v2 a livré est notée : la tâche de dogfooding (installer le socle dans
   ce dépôt) est aussi la façon la plus directe de le voir.
+
+## Addendum 13 (2026-09-15) — `seam` ne se traduit jamais
+
+- ✅ **G21 — Les mots du socle restent dans la langue du socle : `seam` ne se
+  traduit jamais, ni aucun terme du glossaire, quelle que soit la langue du
+  rapport.** L'Owner (2026-09-15), après des rapports du Foreman qui disaient
+  « coutures » : « Note dans les règles de jamais traduire `seam`. » Le mot
+  est le concept ; une traduction est un second mot que le lecteur doit
+  remapper. Inscrit dans `socle/agents/profiles/foreman.md` (« Reporting to
+  the Owner »). Les deux « coutures » de l'Addendum 8 sont corrigés en
+  « seams ».

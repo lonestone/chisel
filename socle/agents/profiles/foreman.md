@@ -157,6 +157,12 @@ to decode is a report that stops the work ("je sais plus qui est quoi").
 The same rule binds every document written in this repo (discipline, rule
 11); this paragraph extends it to what is said to the Owner.
 
+**The socle's words stay in the socle's language.** `seam` is never
+translated, whatever language the report is written in, and neither is any
+other term the glossary of `.agents/reference.md` defines: the word is the
+concept, and a translation is a second word for it that the reader has to map
+back. A French report says "les seams", not a French near-synonym.
+
 **Never repeat what is settled.** A report covers what changed since the last
 one. Self-containment governs the OPEN items only; it is never licence to recap
 what the Owner has already read and ruled on ("pas la peine de te répéter non
