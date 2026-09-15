@@ -72,6 +72,7 @@ There is no human to interview here: derive all of it from the Brief and the
 ambient layer, and carry every assumption that would have been a question
 into the Notes of the spec the next step writes — assumptions are reviewable
 artifacts, not silences.
+Status after this step: `creating`.
 """
 
 [[steps]]
@@ -99,6 +100,7 @@ Nobody arbitrates the answer here: write the sizing answer into {{spec}} as
 an assumption, and escalate rather than guess when the work resists slicing.
 The Foreman then COMMITS the spec, as it does at `close`: a task can sit at
 "spec done" for a long time, and what is not saved does not survive that wait.
+Status after this step: `ready`.
 """
 
 # ── WORK (fresh session) ──────────────────────────────────────────────────
@@ -127,6 +129,7 @@ system design ages well — the architecture moves far less than the code.
 Read the ambient layer declared in `.agents/project.md` §C, then {{spec}} in
 full plus what it links to (parent spec, prior art). {{spec}} is read-only to
 the Mason: its sole status belongs to the thread owner.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -142,6 +145,7 @@ and keeping its worklog as the session's written trace. The full suite is the
 next step's job.
 The design typed from is the one persisted at `plan`: this preset runs no
 `plan-review`, so nothing else validated it.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -155,6 +159,7 @@ Mechanical verification, not a decision: run the gate commands declared in
 `.agents/project.md` §F — lint, tests, build, plus a browser check when UI
 behaviour changed. Evidence first: red output is reported as red, never
 narrated as green. Red twice on the same cause → stop.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -186,4 +191,5 @@ belongs to the Owner.
 Run `retro`, sort its proposals by gravity, and PROPOSE them to each touched
 zone's owner; accepted ones are written in.
 Then the Foreman COMMITS and PUSHES.
+Status after this step: `done`.
 """

@@ -71,6 +71,7 @@ There is no human to interview here: derive all of it from the Brief and the
 ambient layer, and carry every assumption that would have been a question
 into the Notes of the spec the next step writes — assumptions are reviewable
 artifacts, not silences.
+Status after this step: `creating`.
 """
 
 [[steps]]
@@ -101,6 +102,7 @@ Then record the work: a dated entry in the changelog declared in
 convention of §B.
 The Foreman then COMMITS the spec, as it does at `close`: a task can sit at
 "spec done" for a long time, and what is not saved does not survive that wait.
+Status after this step: `creating`.
 """
 
 [[steps]]
@@ -112,6 +114,7 @@ description = """
 Role: Checker — contract `.agents/profiles/checker.md`.
 A FRESH session, never the author of {{spec}}. Verdict GO, or blocking
 findings written into the Notes of {{spec}}.
+Status after this step: `ready`.
 """
 
 # ── WORK (fresh session) ──────────────────────────────────────────────────
@@ -140,6 +143,7 @@ system design ages well — the architecture moves far less than the code.
 Read the ambient layer declared in `.agents/project.md` §C, then {{spec}} in
 full plus what it links to (parent spec, prior art). {{spec}} is read-only to
 the Mason: its sole status belongs to the thread owner.
+Status after this step: `planning`.
 """
 
 [[steps]]
@@ -152,6 +156,7 @@ Role: Architect — contract `.agents/profiles/architect.md`.
 Read {{spec}} and the program design the Mason persisted at `plan` in the
 matching work document, and nothing else; then answer VALIDATED or
 corrections. Typing needs VALIDATED.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -165,6 +170,7 @@ Execute the program design persisted at `plan` in the matching work document,
 ticking its implementation checkboxes as you go — they are the resume point —
 and keeping its worklog as the session's written trace. The full suite is the
 next step's job.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -178,6 +184,7 @@ Mechanical verification, not a decision: run the gate commands declared in
 `.agents/project.md` §F — lint, tests, build, plus a browser check when UI
 behaviour changed. Evidence first: red output is reported as red, never
 narrated as green. Red twice on the same cause → stop.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -193,6 +200,7 @@ design included, is the requirement of the Spec axis — and the path to its
 matching work document, which is evidence only: a divergence between the two
 designs is a finding, never a requirement to judge against. Findings are
 written into the work document.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -223,4 +231,5 @@ belongs to the Owner.
 Run `retro`, sort its proposals by gravity, and PROPOSE them to each touched
 zone's owner; accepted ones are written in.
 Then the Foreman COMMITS and PUSHES.
+Status after this step: `done`.
 """

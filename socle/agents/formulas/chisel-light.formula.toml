@@ -65,6 +65,7 @@ through — prefer existing seams, the fewer the better. Domain terms land in
 the glossary and hard-to-reverse decisions in an ADR, both declared in
 `.agents/project.md` §G. A design question that cannot be settled on paper
 takes a detour through the `prototype` skill.
+Status after this step: `creating`.
 """
 
 [[steps]]
@@ -94,6 +95,10 @@ Then STOP: the session that creates does not implement. The build starts
 fresh from the spec/work pair — `work on task <spec-document>`, or `work on
 slice <spec-document>` for a slice whose blockers are all done; the
 implementing session creates the work document itself at `plan`.
+The two spec approvals are two acts by two possible people: as each lands,
+the thread owner writes the next value by hand — `waiting-design-approval`
+once the need is validated, then `ready` once the system design is.
+Status after this step: `waiting-business-approval`.
 """
 
 # ── WORK (fresh session) ──────────────────────────────────────────────────
@@ -124,6 +129,7 @@ full plus what it links to (parent spec, prior art). {{spec}} is read-only to
 the Mason: its sole status belongs to the thread owner.
 This preset runs no `plan-review`: no VALIDATED verdict is coming, and the
 human gate on the next step is where the design is read.
+Status after this step: `in-progress`.
 """
 [steps.gate]
 type = "human"
@@ -144,6 +150,7 @@ and keeping its worklog as the session's written trace. The full suite is the
 next step's job.
 The design typed from is the one persisted at `plan`: this preset runs no
 `plan-review`, so nothing else validated it.
+Status after this step: `in-progress`.
 """
 
 [[steps]]
@@ -157,6 +164,7 @@ Mechanical verification, not a decision: run the gate commands declared in
 `.agents/project.md` §F — lint, tests, build, plus a browser check when UI
 behaviour changed. Evidence first: red output is reported as red, never
 narrated as green. Red twice on the same cause → stop.
+Status after this step: `waiting-diff-approval`.
 """
 
 [[steps]]
@@ -173,6 +181,7 @@ system design included, is the requirement. The path to its matching work
 document comes with it, as evidence only — a divergence between the two
 designs is a finding, never a requirement to judge against. The `code-review`
 skill is available to whoever wants its shape; nothing here spawns it.
+Status after this step: `in-progress`.
 """
 [steps.gate]
 type = "human"
@@ -207,4 +216,5 @@ belongs to the Owner.
 Run `retro`, sort its proposals by gravity, and PROPOSE them to each touched
 zone's owner; accepted ones are written in.
 Then the Foreman COMMITS and PUSHES.
+Status after this step: `done`.
 """
