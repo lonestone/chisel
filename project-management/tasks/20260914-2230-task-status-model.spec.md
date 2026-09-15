@@ -1,6 +1,6 @@
 # The task status model: one ladder, thirteen values, the human's wait named
 
-**Status:** ready
+**Status:** in-progress
 
 ---
 
