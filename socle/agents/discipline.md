@@ -107,6 +107,7 @@ Not everything starts as a feature idea:
 | Reading legwork (docs, API facts) | `research` — background agent, cited markdown file | feeds the interview |
 | So big and foggy it cannot even be sliced | `wayfinder` — map the open DECISIONS first, resolve them one by one | then the spec document and its slices |
 | A spare moment to make the codebase nicer to work in | `improve-codebase-architecture` | produces an idea → normal flow |
+| A whole repo to judge, rather than one change | `codebase-audit` — blind finders one per lens, every claim reproduced, findings triaged against what was already decided | decisions and an action plan; each piece becomes a task by the normal path |
 
 Skills live in `.agents/skills/`. The reasoning behind all of this — why a
 reading gradient, why seams, why the plan is persisted, why the review has two
