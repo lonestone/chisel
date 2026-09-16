@@ -5,6 +5,26 @@ ships.
 
 ---
 
+## 35. 2026-09-16 — `@lonestone/chisel` 0.2.0 is ready to publish
+
+Version bumped from 0.1.1, the number JSR has served since 2026-09-10 and
+will not accept twice. A minor step rather than a patch, because a repo
+installed from 0.1.1 that runs `chisel update` sees its method move, not
+only its tooling: the spec template carries the thirteen-status ladder and
+every formula step names the status it leaves behind (entry 30); the
+`chisel-beads` skill stores those statuses natively through
+`status.custom` (entry 30); two skills appear, `codebase-audit` for judging
+a whole repo (entry 31) and the wayfinder's local map under `maps/`
+(entry 32); `chisel-setup` gains Step 7, which reconciles a hand-written
+`AGENTS.md` with the installed block (entry 34); the Foreman's profile
+records that merging, publishing, and anything leaving the working branch
+waits for the human's explicit word (ruling G20), and that `seam` and the
+glossary's words are never translated (ruling G21). Verified before the
+bump on branch `v2`: 25 tests green, `deno task check` clean,
+`deno publish --dry-run` succeeding with no file from
+`project-management/` in the published set. The publish itself is the
+Owner's act.
+
 ## 34. 2026-09-15 — The questionnaire leaves AGENTS.md speaking with one voice
 
 A dry run of `chisel init` on a copy of this repo, made to answer the
