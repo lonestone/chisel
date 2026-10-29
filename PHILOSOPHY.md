@@ -1,9 +1,9 @@
 # Philosophy
 
 Why chisel exists, what we tried before building it, and the beliefs its
-design rests on. For *how* the methodology works day to day, read
-[socle/agents/methodology.md](./socle/agents/methodology.md) — this document
-is the why.
+design rests on. What chisel is and who does the work is
+[CHARTER.md](./CHARTER.md); how a task runs day to day is
+[socle/agents/workflow.md](./socle/agents/workflow.md).
 
 ## 1. The problem
 
@@ -83,17 +83,22 @@ These are the beliefs chisel is built on:
   and it is **persisted into the work document before any code is typed**. A
   plan that only lives in the conversation is invisible to the completion
   review, to dependent slices, and to re-runs.
-- **Think and type are different jobs.** Planning needs a frontier model
-  and a human gate; typing from a complete persisted brief doesn't. The
-  **system design is the delegation boundary**: the architecture, the scope,
-  and the seams the work is tested through are never delegated; the program
-  design and the typing go together, to a faster and cheaper model, and the
-  diff is read by a fresh reviewer who never wrote it. (Validated in
-  production — this repo's own slices were typed by a cheaper model from
-  persisted designs.)
-- **Humans own the gates — and a 🧑 zone's owner follows who approved it, not
-  simply "the human".** Seams (where we test) are agreed before code. Plans
-  are approved before typing. Slicing is validated before publication. An
+- **The fewest roles that hold the quality.** Current frontier models are
+  good enough that heavy guidance costs more than it returns. The Architect
+  scopes the task and reads the plan; a Crewmate plans, codes and closes;
+  fresh reviewers read the diff. The **system design is the delegation
+  boundary**: the architecture, the scope and the seams are settled in the
+  spec; the program design and the typing belong to the session that
+  implements. A Typist on a cheaper model can type an approved plan, but in
+  the field the Crewmates typed their own work, so it is optional.
+- **No sub-agent without a reason.** Each one costs tokens and a brief. One
+  is launched for a context that must stay clean, for parallel work, or for
+  a cheaper model — and the code review is the one place where fresh eyes
+  are essential, so it is the step a light process never skips.
+- **The human owns the intent; the Architect carries the rest.** The human
+  decides what to build and the decisions that shape it. The Architect
+  approves the plan and settles what it can, so only the key questions reach
+  the human. Merging and publishing wait for the human's explicit word. An
   unanswered proposal is a rejected proposal.
 - **Own your forks.** The Pocock skills are vendored with per-skill
   upstream tracking (`x-upstream` frontmatter + lock file). Upstream
@@ -114,41 +119,29 @@ Three situations, one discipline:
 
 - **The ambient discipline** — every conversation, no artifact. Read the
   project's reading list, plan first, verify before claiming done, suggest a
-  task when the work outgrows the chat. This is not a mode: it is what the
-  default behaves like when there is nothing to file.
-- **One task** — two sessions. CREATE: an interview (grilling) shapes the
-  spec document — context, scope, acceptance criteria, seams — and logs it
-  in the journal. WORK: a fresh session reads the spec document, plans
-  against the real code, gets that plan approved and persisted into the work
-  document beside it, then builds and closes (lint/tests/build, browser
-  check if UI, the journal, living docs).
+  task when the work outgrows the chat. This is what the agent does when
+  there is nothing to file.
+- **One task** — the Architect reads it where it lives (a file, a bead, a
+  Plane issue) and writes the spec document: straight from the task when
+  it is clear, after an interview when it is not. A Crewmate plans against
+  the real code, persists the plan in the work document and stops; the
+  Architect reads and approves it; the Crewmate codes, runs the two-axis
+  review and closes (lint/tests/build, the journal, living docs, the
+  tracker).
 - **A parent task with slices** — big features: a parent spec document plus
   thin vertical slices with dependency edges. Any slice whose blockers are
-  done can start, each in a fresh session that plans into its own work
-  document and follows the one-task WORK shape.
+  done can start, each with its own Crewmate and work document.
 
-On top of that discipline, chisel ships five presets — `chisel-default`,
-`chisel-light`, `chisel-supervised`, `chisel-auto` and `chisel-auto-light`.
-They differ along two independent axes — how much of the run stops at a
-human, and how many fresh reviewers check the work. Which preset governs a
-run is the human's choice at that invocation, never the project's permanent
-setting. **Beads** — a committed status database — is a separate, additive
-axis: a beads-equipped repo stays fully usable under the default.
+**The workflow is prose**, one page, as the first version was. **Chisel
+processes one task and does not orchestrate**: chaining tasks, watching a
+tracker, scheduling work belong to the layer above. **Any tracker works** —
+the glue names the skill or connector that reads and updates a task; beads
+is one tracker among others.
 
-**A factory is a possible destination, not a cell of this product.** We have
-not decided whether it belongs inside chisel at all, so we describe none of
-its machinery here.
-
-An earlier design named these situations with size-based labels instead —
-they read as **work sizes**, where the framing above reads as **piloting
-postures**. The two axes are not the same thing, and keeping the old labels
-kept conflating them, which is why they are retired rather than kept
-alongside the new vocabulary.
-
-The full reference: [methodology.md](./socle/agents/methodology.md) (the
-concepts), [`.agents/discipline.md`](./socle/agents/discipline.md) (the
-ambient core), [`.agents/formulas/`](./socle/agents/formulas/) (the order
-and the gates, per preset), and the two task templates in
+The full reference: [workflow.md](./socle/agents/workflow.md) (the steps
+and the roles), [methodology.md](./socle/agents/methodology.md) (the
+reasons), [`.agents/discipline.md`](./socle/agents/discipline.md) (the
+ambient core), and the two task templates in
 [socle/templates/](./socle/templates/000-template.spec.md) — the spec document
 and, for the work document,
 [000-template.work.md](./socle/templates/000-template.work.md).
@@ -187,4 +180,7 @@ and, for the work document,
 **Field validation:** piloted on two production repos (music-downloader,
 evea-ai), dry-run tested on a third untouched monorepo, and dogfooded by
 this very repo — every chisel feature was built as a slice of its own
-methodology, most of them typed by a cheaper model from a persisted plan.
+methodology. An orchestrator thread has run the first version in production
+since 2026-08-03: over one milestone, eleven Crewmates each wrote a plan,
+stopped for its reading, then typed their own code; every review launched
+two fresh reviewers.

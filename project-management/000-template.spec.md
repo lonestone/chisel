@@ -9,17 +9,15 @@ never a line number, which is wrong by the next edit — and says in one
 sentence what the reader finds there. Each 🧑 zone is understood without
 opening another file: a link that offers depth is welcome, a link the sentence
 cannot be read without is not. The rule is the writing rule of
-`.agents/discipline.md`, and the Checker treats a zone that fails it as a
-blocking finding.
+`.agents/discipline.md`.
 
 The spec document is the human review surface, the requirement against which a
 diff is judged, and the archive record of what was asked. It contains no
 program design, pseudo-code, worklog or implementation checkboxes: these are
-in the work document, created at `plan` by the implementing session.
+in the work document, created at the plan step by the Crewmate.
 
-A spec with no work document beside it has never been typed. The spec document
-keeps the reading gradient but moves the agent working space into that other
-file.
+A spec written from a clear task stays short and links the task rather than
+copying it. A spec with no work document beside it has never been planned.
 
 ## The two zones
 
@@ -30,35 +28,32 @@ file.
 
 - The 🧑 REVIEW CAREFULLY zone must fit in working memory. Prefer a diagram or
   mockup over three paragraphs.
-- In the default preset the zone's owner is you, the human. Who owns which
-  zone under the other presets is settled in "Zone ownership" of
-  [reference.md](../socle/agents/reference.md).
+- Who owns a zone is the rule of "Zone ownership" in
+  [reference.md](../socle/agents/reference.md): whoever approved it.
 - The 🧑 zones carry their owner's decisions. Surface a conflict; never
   silently contradict one.
-- There is no agent zone here. The coding agent's working space is the work
-  document, a different file with a different owner.
+- There is no agent zone here. The Crewmate's working space is the work
+  document, a different file.
 
 ## The two documents
 
 | Spec document | Work document |
 |---|---|
-| Context · Scope · Acceptance Criteria · Seams | Program design and pseudo-code |
+| Context · Scope · Acceptance Criteria · Seams | Program design and its approval line |
 | Architecture / system design | Worklog |
 | Implementation Decisions | Implementation checkboxes |
 | Testing Strategy · Slices & Dependencies | Notes & Snippets |
-| Deliverables · References | Inspector findings from `diff-review` |
-| Notes (pre-`plan` writers) · Retrospective | |
+| Deliverables · References | Review findings from `code-review` |
+| Notes (written before the plan) · Retrospective | |
 
-Before a work document exists, `spec-review`, a gateless preset's doubting
-step and some Architect steps write into this file's **Notes**. Once work
-starts, the Mason's notes go into **Notes & Snippets** in the work document,
-never here.
+Before a work document exists, a blocker or a question goes into this
+file's **Notes**. Once the plan starts, notes go into the work document's
+**Notes & Snippets**, never here.
 
-One work document exists for every spec actually typed. The implementing
-session creates it at `plan` beside this file by replacing `.spec.md` with
-`.work.md`. A parent spec of a sliced task has none; each slice has its own.
-It may be deleted and regenerated while work is live. At `close`, both files
-are archived together.
+One work document exists for every spec actually planned, created beside
+this file by replacing `.spec.md` with `.work.md`. A parent spec of a sliced
+task has none; each slice has its own. At the close, both files are archived
+together.
 
 ## Where each kind of content lives
 
@@ -66,10 +61,10 @@ are archived together.
 |---|---|---|
 | Why / what / success criteria / seams | this spec | parent spec |
 | Architecture | this spec | parent spec |
-| Program design + pseudo-code | work document, created at `plan` | each slice's work document |
+| Program design | work document | each slice's work document |
 | Slice list + blockers | — | parent spec |
 | Worklog, checkboxes, Notes & Snippets | work document | each slice's work document |
-| Status | this spec | each slice's spec |
+| Status | this spec, or the tracker | each slice's spec, or the tracker |
 | Archive | spec + work together | parent + slice folder together |
 
 ## Spec Document Template
@@ -79,7 +74,7 @@ All spec documents MUST follow this structure:
 ```markdown
 # <Task name>
 
-**Status:** creating
+**Status:** draft
 
 ---
 
@@ -144,13 +139,13 @@ belongs wholly to the work document.
 
 ## Notes
 
-Only material written into this file before a work document exists. This is
-not the Mason's working space; its notes, snippets and worklog belong in the
-work document's **Notes & Snippets**.
+Only material written into this file before a work document exists. The
+Crewmate's notes, snippets and worklog belong in the work document's
+**Notes & Snippets**.
 
 ## Retrospective
 
-Added at `close`: lessons and proposals. The Owner rules on its proposals.
+Added at the close: lessons and proposals. The human rules on its proposals.
 ```
 
 ## File Naming Conventions
@@ -159,77 +154,33 @@ Name a spec `<YYYYMMDD-HHmm>-<intention>.spec.md`, using
 `scripts/task-id.sh <intention>` for the prefix. Place it in the task
 workspace declared in `.agents/project.md`. Its work document has the same
 name with `.spec.md` replaced by `.work.md`. For slices use
-`<NN>-<slice-slug>.spec.md`; each gains a work document at `plan`.
+`<NN>-<slice-slug>.spec.md`; each gains a work document at its plan step.
 
 ## Statuses
 
-A task has ONE status: a single value from the list below, written on the
-`**Status:**` line of its spec document. Nine values sit on the path a task
-walks, in this order; four can replace any of them. Every value that waits
-on a human is named by what that human must do, so a search for `waiting-`
-across the task workspace answers "where am I needed".
+A task has ONE status, one of the seven values of "Statuses" in
+[workflow.md](../socle/agents/workflow.md): `draft`, `ready`, `in-progress`,
+`done`, `blocked`, `deferred`, `cancelled`. In a task file it is written on
+the `**Status:**` line:
 
-| Status | Meaning | Left there by |
-|---|---|---|
-| `creating` | The spec is being written, its review included | `interview`, `spec`, `spec-review` |
-| `waiting-business-approval` | A human must validate the need | the spec-approval gate, business side |
-| `waiting-design-approval` | A human must validate the spec's system design — its seams, architecture and decisions, never an interface mockup: every task has one | the spec-approval gate, design side |
-| `ready` | Approved, nothing retains it, waiting for a Mason — the frontier | the end of the create phase |
-| `planning` | The Mason is writing its program design in the work document | `plan`, `plan-review` |
-| `waiting-plan-approval` | A human must green-light the program design | the plan-approval gate |
-| `in-progress` | The Mason is typing or verifying, or the diff is under review | `type`, `verify`, `diff-review` |
-| `waiting-diff-approval` | A human must arbitrate the review findings | the review-arbitration gate |
-| `done` | Acceptance criteria ticked, spec and work document archived | `close` |
-| `blocked` | Held by a named dependency — the name goes on the line, after the value | a human decision |
-| `stalled` | Nobody is advancing it and nothing named is awaited | a human decision |
-| `deferred` | Postponed on purpose, to be picked up later | a human decision |
-| `cancelled` | No longer wanted | a human decision |
-
-- **The value is written alone**: `**Status:** waiting-design-approval`, no
-  emoji before it, free text (a date, a dependency, a reason) after it if it
-  helps.
-- **The thread owner alone writes it**, at step boundaries. Each step of
-  each preset under `.agents/formulas/` ends by naming the status it leaves
-  the task in, which is the one place to read the correspondence between
-  steps and statuses. The Mason never touches it.
-- **`stalled` is a human's call**, on a written criterion: nobody is
-  advancing it, nothing named is awaited, and nobody intends to resume soon.
-  No pipeline step can write it, because nobody is in session on a stalled
-  task, and no day count decides it — a spec awaiting a validation over a
-  holiday is not stalled.
-- **The four off-path values replace the on-path one**, they do not sit
-  beside it. The maturity a task had when it left the path is read from the
-  file itself — acceptance criteria ticked, a work document present or
-  absent — never from the status.
-
-The Mason's resume point is the work document's implementation checkboxes.
-Completed spec and work documents move together to the archive.
-
-**Updating a repo written against the six earlier statuses.** The old lines
-carried a coloured circle before one of six words; the words map as follows,
-and the free text after them is kept as it stands.
-
-| Old status | New value |
-|---|---|
-| Not Started | `creating` or `ready`, by the real state of the spec — `blocked` when a named dependency holds a written spec, `in-progress` for a parent whose slices are partly done |
-| In Progress | `in-progress` |
-| Blocked | `blocked` |
-| Complete / Done / Delivered | `done` |
-| Deferred | `deferred` |
-| Cancelled | `cancelled` |
+- **The value is written alone**: `**Status:** blocked`, no emoji before it,
+  free text (a date, a dependency, a reason) after it if it helps.
+- **The thread doing a step writes the status it leaves.**
+- **When a tracker holds the status**, the line says so —
+  `**Status:** tracked as <id>` — and the status lives in the tracker only.
 
 ## When Creating New Tasks
 
-1. Interview first.
-2. Agree seams before writing.
+1. Interview first when the intent is unclear; write from the task when it is clear.
+2. Name the seams before writing.
 3. Fill both 🧑 zones carefully.
 4. Keep the top short; order detail rather than deleting it.
-5. At `close`, tick acceptance criteria against reality.
-6. The implementing session creates the work document at `plan`, never before.
+5. At the close, tick acceptance criteria against reality.
+6. The Crewmate creates the work document at the plan step, never before.
 
 ## When Reviewing Tasks (human)
 
 - Read REVIEW CAREFULLY before code and REVIEW IF RELEVANT for medium/large work.
 - This document is the whole review surface.
 - Check named, machine-verifiable criteria and seams.
-- A work document is evidence at diff review, never the requirement.
+- A work document is evidence at review, never the requirement.

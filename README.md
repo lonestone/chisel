@@ -2,10 +2,12 @@
 
 **Lonestone's dev-workflow socle, installable in any repo.**
 
-Chisel bundles our agent methodology — reading-gradient task files, seams
-agreed before code, think/type split with model tiers, two-axis review — into
-a single `.agents/` folder that Claude Code, Cursor and Codex all read, posed
-by one command:
+Chisel processes one task: it takes it from its intent to its commit, and
+to its pull request when one is wanted. It bundles our agent methodology —
+reading-gradient spec documents, seams named before code, a plan persisted
+and read before any code, a two-axis review by fresh eyes — into a single
+`.agents/` folder that Claude Code, Cursor and Codex all read, posed by one
+command:
 
 ```bash
 deno x jsr:@lonestone/chisel init
@@ -22,31 +24,43 @@ Deno refuses a package version published less than 24 hours ago (its
 minimum dependency age policy). In the day after a release, add
 `--min-dep-age 0` to the command, or wait.
 
+To pin a version, name it in the specifier:
+
+```bash
+deno x jsr:@lonestone/chisel@0.1.1 init
+```
+
 **Why this exists** — the problem, the alternatives we tested, and the
 beliefs behind the design: [PHILOSOPHY.md](./PHILOSOPHY.md).
 
-## The default
+## How a task runs
 
-By default, every gate stays at the human. A task starts as an interview
-(one question at a time, a recommended answer with each), which shapes a
-**reading-gradient** spec document: the decisions worth reviewing carefully
-sit at the top, the rest ordered after them — detail is never cut, only
-ordered. That document holds the requirement and nothing else; the program
-design and the working notes live in a work document beside it, created by
-the session that implements the task.
+The workflow is one page of prose, `.agents/workflow.md`. Four roles:
 
-**Seams** — the public boundaries a feature is tested through — are agreed
-before any code is typed. A fresh session then plans against the real code
-and **persists the plan into the work document** before writing a line: a
-plan that only lives in the conversation is invisible to the next session, to
-the completion review, and to a crash. Typing runs from that persisted plan,
-and it can run on a cheaper model; whoever reviews a design never types the
-work it approved.
+- **The Architect** is the agent you, or an orchestrator, talk to. It reads
+  the task, writes the spec document — from the task when the task is
+  clear, after an interview when it is not — launches a Crewmate, reads its
+  plan, and brings only the key questions to you.
+- **The Crewmate** is a sub-agent. It writes the plan into a work document
+  beside the spec and stops for the Architect's reading. Then it codes, runs
+  the review, and closes the task.
+- **The Typist** is optional: a sub-agent on a cheaper model that types an
+  approved plan. By default the Crewmate types itself.
+- **The reviewers** are fresh sub-agents launched by the `code-review` skill.
+  They read the diff on two axes — Standards and Spec — with no context from
+  the session that wrote it.
 
-At completion, a **two-axis review** checks Standards (the repo's own
-conventions) and Spec (did the work do what the 🧑 zones asked, and nothing
-more) side by side — never merged into one list, so one axis cannot mask the
-other.
+The spec document is a **reading gradient**: the decisions worth reviewing
+carefully sit at the top, the rest ordered after them. **Seams** — the
+public boundaries a feature is tested through — are named before any code.
+The plan is **persisted in the work document** and approved before any code:
+a plan that only lives in the conversation is invisible to the next session,
+to the review, and to a crash.
+
+**Chisel does not orchestrate.** Watching a tracker to launch agents,
+scheduling tasks, deciding which task runs next belong to the layer above:
+a human, a harness, an orchestrator thread, a script. Merging and publishing
+wait for your explicit word.
 
 ## Setup, after init
 
@@ -56,19 +70,25 @@ session: it reads the repo, proposes each section of `.agents/project.md` one
 at a time, and writes back what you confirm. Re-run it later to revisit a
 single section.
 
-The answer worth knowing about up front is **§B1 · Where task statuses live,
-of `.agents/project.md`.** The default is the task files themselves —
-nothing to install. The other answer is a committed `bd` database when a repo
-wants queries instead of a reading session; adding it later is tooled and
-only touches open tasks.
+The answer worth knowing about up front is **§B · Tracker, of
+`.agents/project.md`**: where your tasks live and what reads and updates
+them. The default is the task files themselves — nothing to install. Beads,
+Plane, GitHub Issues or another tool work too: the glue names the skill or
+the connector that reads and updates a task there. The spec and work
+documents stay in the repo whatever the tracker.
 
 ## The upgrade path
 
-`chisel update` re-renders the managed parts of `.agents/` from a newer
+`chisel update` refreshes the managed parts of `.agents/` from a newer
 socle; it never touches your glue (`.agents/project.md`) or your own files.
-Run against a repo still on the retired v1 layout, it **refuses by name** and
-points at the `upgrade-v2` skill instead — an agent migrates the layout, a
-human validates the result before anything is re-installed.
+On a repo installed from 0.1.x it also removes what that version installed
+and this one retired — its step files, its role pages, the agent
+definitions in `.claude/agents/` and `.codex/agents/` — as long as nobody
+edited them, and names the ones someone did. The rest of the move — the
+glue's tracker section, the task statuses, your own text — is the
+`chisel-upgrade` skill's, run in an agent session with a human validating
+each step. On a repo still on the first version's layout, `update` refuses
+by name and points at the same skill.
 
 ## Other commands
 
