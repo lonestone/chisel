@@ -5,6 +5,19 @@ ships.
 
 ---
 
+## 38. 2026-10-29 — The workflow keeps the glossary and the ADRs
+
+The Owner asked whether the decision and glossary logic had survived the
+alignment. It had, except for one wire: the retired formulas ran the
+interview with `grilling` and `domain-modeling` underneath, so new domain
+terms reached the glossary and hard-to-reverse decisions reached an ADR.
+The workflow page named `grilling` alone. Its spec step now names
+`domain-modeling` with it, and its close names the glossary and the ADRs
+among the living docs to promote into. The skill, the glue's glossary and
+decisions section and the ADR rule in `methodology.md` had stayed.
+
+---
+
 ## 37. 2026-10-29 — The socle follows the charter; what 0.2.0 now contains
 
 The socle on `v2` now says what `CHARTER.md` says. Version 0.2.0, still

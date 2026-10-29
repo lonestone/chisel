@@ -42,8 +42,10 @@ a well-written issue, a clear request — write the spec document from it,
 with no interview: from the spec template declared in `.agents/project.md`,
 named with the task id script, short, linking the issue rather than copying
 it. When the intent is unclear, interview the human first with the
-`grilling` skill, one question at a time, a recommended answer with each.
-Either way the seams are named, and the sizing check is said out loud: the
+`grilling` skill, one question at a time, a recommended answer with each,
+with `domain-modeling` underneath: new domain terms land in the glossary
+and hard-to-reverse decisions in an ADR, where the glossary and decisions
+section of `.agents/project.md` puts them. Either way the seams are named, and the sizing check is said out loud: the
 task fits one pass, or it is cut into slices with the `slice-task` skill.
 The human approves the spec when it carries decisions the task did not
 state; otherwise the Architect moves it to `ready` itself. Commit the spec.
@@ -77,7 +79,7 @@ the findings in the work document; fix each one or answer it there.
 
 **7. Close — Crewmate.** Tick the spec's acceptance criteria against
 reality. Promote evergreen material into the living docs declared in
-`.agents/project.md`. Archive the spec and work documents together. Add the
+`.agents/project.md`, the glossary and the ADRs among them. Archive the spec and work documents together. Add the
 dated journal entry. Run the `retro` skill and put its proposals in the
 report. Commit, update the tracker, and report to the Architect: what
 landed, which criteria are met, what is left. Status: `done`.
