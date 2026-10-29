@@ -35,6 +35,11 @@ section, moves the open tasks' statuses by its thirteen-to-seven table
 is in use, and lists the project's own text that still names a retired
 piece.
 
+Reviewed by `code-review` with two fresh reviewers; their findings — two
+skills pointing at glue sections that were gone, a citation by step
+number, two duplications in the CLI — were fixed, the rest answered in the
+task's work document. Task archived.
+
 ## 36. 2026-10-29 — Chisel processes one task; it does not orchestrate
 
 After six weeks of the first version in the field, the Owner recentres the

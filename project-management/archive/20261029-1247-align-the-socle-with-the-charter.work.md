@@ -1,7 +1,7 @@
 # Align the socle with the charter — work
 
 Created by the Crewmate at plan time, 2026-10-29. Spec:
-`project-management/tasks/20261029-1247-align-the-socle-with-the-charter.spec.md`.
+`project-management/archive/20261029-1247-align-the-socle-with-the-charter.spec.md`.
 Governing page: `CHARTER.md`.
 
 **Plan:** approved by the Architect, 2026-10-29, with two corrections (see
@@ -361,7 +361,8 @@ Each commit: `deno task test` and `deno task check` green before it lands;
 - [x] 3. Formulas, profiles and renders retired; 0.1.1 cleanup test green
 - [x] 4. README, PHILOSOPHY, AGENTS.md, repo templates
 - [x] 5. Changelog entry 37
-- [ ] 6. Review run, findings answered, criteria ticked
+- [x] 6. Review run, findings answered, criteria ticked
+- [x] 7. Closed: spec ticked and `done`, pair archived, journal, retro
 
 ## Notes & Snippets
 
@@ -376,4 +377,49 @@ Each commit: `deno task test` and `deno task check` green before it lands;
 
 ## Diff-Review Findings
 
-_(after the review)_
+`code-review` on `cebb4fb...dd1ccd2`, two fresh sub-agents, 2026-10-29.
+Fixes in `648cee0`.
+
+**Spec axis**
+
+- *slice-task and wayfinder point at glue sections that no longer exist*
+  ("§B · Coordination", "§B2 · Link to an external tracker"). Fixed: they
+  point at §A · Task workspace and §B · Tracker.
+- *"Reviewed" not met, criteria not ticked.* Answered: done at the close,
+  below.
+- *This repo's two templates re-copied, not in the spec's In list.*
+  Answered: approved by the Architect at the plan reading.
+- *The program design's step 2, step 7 and statuses item contradict the
+  approval corrections.* Answered: "Corrections at approval" supersedes
+  them, and the shipped `workflow.md` follows the corrections.
+- *`chisel-beads` keeps the session routine and entering/leaving beyond
+  "read, set status, comment, link".* Answered: kept on purpose — without
+  the push check and the two guards the adapter loses data; 114 lines, in
+  budget.
+- Retired-word hits outside `chisel-upgrade`: the accepted GLOSSARY
+  sentence, the 0.1.1 cleanup test (it must pose that shape), the
+  integrity waivers and `test/TESTS.md`. All deliberate. "a checker nobody
+  checks" in `integrity.test.ts` reworded in `648cee0`.
+
+**Standards axis**
+
+- *Hard: the retired-name test in `integrity.test.ts` pins socle wording,
+  against rule 1 of `test/TESTS.md`.* Answered, not changed: the test
+  existed before this task (in `render.test.ts`) and was moved verbatim
+  when that file went. Removing a guard is a separate decision; noted for
+  the Architect.
+- *Hard: `discipline.md` rule 2 cited "step 3 and step 4".* Fixed: cites
+  the "Plan" and "Read the plan" steps by title.
+- *Rule 10 lost the allowance that later mentions may shorten*, which made
+  bare §-letters in skills breaches. Fixed: the allowance is back; the
+  retired §B1 and §B2 are named by their titles once in `chisel-upgrade`.
+- *`chisel-upgrade`'s description repeats its body.* Fixed: one line.
+- *Duplicated Code: the stale-glue loop in `check.ts` and `update.ts`.*
+  Fixed: one `reportStaleGlue`.
+- *Shotgun Surgery: the single socle pages listed twice.* Fixed: the
+  manifest's list is derived from the installer's copy lists.
+- *Primitive Obsession: residues as pre-formatted strings.* Answered, kept:
+  the only consumer prints them; a type would serve no second reader.
+- *Duplicated Code: `RETIRED_LAYER` repeats `WAIVED` keys.* Answered, kept:
+  the two lists answer two questions (may it dangle; who may cite it), and
+  a derived list would hide which pointers are the retired ones.

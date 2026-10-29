@@ -1,6 +1,6 @@
 # Align the socle with the charter
 
-**Status:** in-progress
+**Status:** done
 **Created:** 2026-10-29 by the Architect, on the Owner's "Je te laisse faire ça"
 **Governing page:** `CHARTER.md` (it wins over anything below that disagrees)
 
@@ -73,35 +73,35 @@ Out:
 
 ## Acceptance Criteria
 
-- [ ] **Retired words are gone.** A case-insensitive search for `foreman`,
+- [x] **Retired words are gone.** A case-insensitive search for `foreman`,
       `mason`, `formula`, `preset`, `inspector` and the role `checker`
       across `socle/`, `src/`, `test/` (fixtures included), `README.md` and
       `PHILOSOPHY.md` finds nothing but deliberate mentions in the
       migration skill and its migration table.
-- [ ] **Retired files are gone.** `socle/agents/formulas/`,
+- [x] **Retired files are gone.** `socle/agents/formulas/`,
       `socle/agents/profiles/` and `src/render.ts` no longer exist. No code
       writes `.claude/agents/` or `.codex/agents/`.
-- [ ] **The workflow page exists and matches the charter**, per decision 1.
-- [ ] **The doctrine fits the budget** of decision 2, counted with `wc -l`.
-- [ ] **Seven statuses**, per decision 3, used consistently in templates,
+- [x] **The workflow page exists and matches the charter**, per decision 1.
+- [x] **The doctrine fits the budget** of decision 2, counted with `wc -l`.
+- [x] **Seven statuses**, per decision 3, used consistently in templates,
       glue, skills and the migration table.
-- [ ] **The glue has one tracker section** and `chisel-beads` is at most
+- [x] **The glue has one tracker section** and `chisel-beads` is at most
       120 lines across its files, per decision 5.
-- [ ] **A 0.1.1 install is cleaned by `chisel update`.** A test poses the
+- [x] **A 0.1.1 install is cleaned by `chisel update`.** A test poses the
       0.1.1 shape (formulas, profiles, generated definitions in
       `.claude/agents/` and `.codex/agents/`, manifest listing them), runs
       update, and sees each unchanged file reported `removed:` and gone.
-- [ ] **`chisel-upgrade`** exists per decision 6; `upgrade-v2` does not.
-- [ ] **`README.md` and `PHILOSOPHY.md` say what the charter says.** The
+- [x] **`chisel-upgrade`** exists per decision 6; `upgrade-v2` does not.
+- [x] **`README.md` and `PHILOSOPHY.md` say what the charter says.** The
       README also shows how to pin a version, for example
       `deno x jsr:@lonestone/chisel@0.1.1 init`.
-- [ ] **Green.** `deno task test` and `deno task check` pass;
+- [x] **Green.** `deno task test` and `deno task check` pass;
       `deno publish --dry-run --allow-dirty` succeeds; the golden tree is
       regenerated and matches.
-- [ ] **Recorded.** Changelog entry 37 says what 0.2.0 now contains and
+- [x] **Recorded.** Changelog entry 37 says what 0.2.0 now contains and
       how a 0.1.1 repo moves to it. This repo's `AGENTS.md` names Crewmate
       and Typist, not Mason.
-- [ ] **Reviewed.** `code-review` has run on the full diff with fresh
+- [x] **Reviewed.** `code-review` has run on the full diff with fresh
       reviewers, and its findings are fixed or answered in the work
       document.
 
@@ -117,3 +117,31 @@ Out:
 - The work document beside this file holds the plan, then the worklog.
 - Commit on `v2` with explicit paths. Never `git add -A`. Do not push: the
   Architect pushes after reading.
+
+## Retrospective
+
+Closed by the Crewmate, 2026-10-29. Criteria checked against `HEAD`:
+23 tests green, `deno task check` clean, `deno publish --dry-run
+--allow-dirty` succeeds, doctrine 533 lines, `chisel-beads` 114 lines.
+The retired-words search finds, outside `chisel-upgrade`, only deliberate
+mentions: the 0.1.1 cleanup test and its `test/TESTS.md` row (they must
+name the 0.1.1 shape), the integrity waivers for the paths
+`chisel-upgrade` cites, and the vendored GLOSSARY sentence the Architect
+accepted. No evergreen material to promote: this repo has no living docs
+outside the socle, which is itself the deliverable.
+
+Proposals for the Architect (from `retro`):
+
+- **The integrity test only checks paths, not glue section names.** Two
+  skills kept pointing at glue sections that were gone, and only the Spec
+  reviewer caught it. Proposal: a test that every `§X · Title` cited in the
+  installed socle exists as a heading in the glue template (a structural
+  check, not a wording check).
+- **The retired-name test breaks rule 1 of `test/TESTS.md`.** It predates
+  this task. Proposal: decide whether to keep it as a named exception in
+  `TESTS.md` or remove it.
+- **The plan step and the approval corrections.** The plan body kept the
+  superseded design next to the corrections, which a reviewer flagged.
+  Proposal: when the Architect corrects a plan, the Crewmate revises the
+  design in place rather than only prepending the corrections.
+
