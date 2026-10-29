@@ -1283,3 +1283,43 @@ exécutable seule : tri en trois piles (couvert, propre au projet,
 contradictoire), rien d'effacé sans un oui, le bloc jamais édité à la main.
 La tâche de dogfooding (`tasks/20260826-2302-chisel-dogfoods-itself.spec.md`,
 `ready`) s'appuiera dessus pour son critère « `AGENTS.md` rewritten ».
+
+## Addendum 15 (2026-10-29) — Chisel traite une tâche, il n'orchestre pas
+
+L'Owner, après six semaines d'usage de la v1 sur le terrain : « la v2 avec
+ses sous-agents était trop compliquée, les modèles Opus actuels sont trop
+bons pour qu'on les guide autant », et « Chisel ne gère pas d'orchestration
+complexe. Son but, c'est de gérer une tâche de l'écriture du plan et des
+specs si elles ne sont pas claires, jusqu'à son commit. »
+
+Les décisions sont gravées dans `CHARTER.md`, à la racine. Cette page prime
+sur tout ce registre là où ils divergent. En résumé :
+
+- ✅ **Chisel traite une tâche**, du plan au commit, en clarifiant la spec
+  d'abord si l'intention n'est pas claire. Il n'est pas une lib
+  d'orchestration : enchaîner les tâches, les planifier, les paralléliser,
+  parler au tracker, ouvrir ou merger une PR, c'est la couche du dessus.
+- ✅ **Le Foreman disparaît.**
+- ✅ **L'Architect est le rôle par défaut** de l'agent à qui l'humain ou un
+  orchestrateur parle, dans un long fil qui se compacte ou un fil par
+  chantier. Il cadre, pose les questions, lance un Crewmate, arbitre, relit
+  et corrige le plan, et fait remonter les questions clés.
+- ✅ **Le Crewmate** écrit le plan selon le template, s'arrête pour la
+  relecture de l'Architect, puis code. Il finit par le skill `code-review`.
+- ✅ **Le Typist est optionnel** et dépend des modèles : utile quand il
+  tourne sur un modèle moins cher que l'Architect et le Crewmate. Par
+  défaut, le Crewmate tape lui-même.
+- ✅ **La revue de code reste en sous-agents neufs**, lancés par
+  `code-review` : c'est un des seuls moments où changer de contexte est
+  essentiel.
+
+Les faits de terrain qui fondent ces décisions viennent du fil
+orchestrateur Apollon, sous v1 depuis le 3 août : onze Crewmates, aucun
+n'a délégué la frappe, chaque passage de `code-review` a lancé deux
+relecteurs neufs, une retouche est partie sans revue.
+
+Pas encore tranché, donc pas gravé : ce que deviennent les formulas et
+leurs cinq presets, le modèle à treize statuts, beads, les profils Checker
+et Inspector, et la branche qui sert de base à la suite. La version 0.2.0
+préparée sur `v2` le 16 septembre n'est pas publiée et ne doit pas l'être
+telle quelle : elle livre le Foreman et les cinq presets.

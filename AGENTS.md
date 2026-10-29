@@ -3,6 +3,10 @@
 This repo builds and ships the Lonestone dev-workflow socle. It dogfoods the
 methodology it ships.
 
+- **Read `CHARTER.md` first.** It says what chisel is, what it is for and
+  who does the work. It wins over any older decision, doctrine file or task
+  in this repo.
+
 - Work is tracked as task files in `project-management/tasks/` (templates:
   `project-management/000-template.spec.md` and
   `project-management/000-template.work.md`; completed →
