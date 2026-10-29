@@ -25,11 +25,7 @@ import {
 import { JOURNAL_NAME, LEGACY_JOURNAL_NAME } from "./project-md.ts";
 
 /** The socle directories copied whole into `.agents/`. */
-const COPIED_TREES = [
-  "agents/skills/",
-  "agents/formulas/",
-  "agents/profiles/",
-] as const;
+const COPIED_TREES = ["agents/skills/"] as const;
 
 /** Socle file → path inside the target, for the files copied one by one. */
 const COPIED_FILES: ReadonlyArray<readonly [string, string]> = [
@@ -93,10 +89,6 @@ const SKILLS_PREFIX = ".agents/skills/";
 // "adopted". The case that motivates it is real: another tool plants its own
 // skill directory in `.agents/skills/`.
 //
-// Only `.agents/skills/`: `.agents/profiles/` is a documented extension point
-// (drop a profile in, chisel renders its definitions), and a warning there
-// would be noise about a file the project meant to add.
-//
 // The shipped socle alone cannot answer the question the warning asks. A skill
 // retired upstream is absent from it and present on disk, and calling that
 // directory a stranger's would be a lie chisel can disprove from its own
@@ -130,14 +122,14 @@ export async function warnForeignSkills(
 
 // Directories chisel creates in a target and keeps: an update that emptied one
 // has retired a file, not un-installed the socle, and a skeleton with a hole in
-// it would be the next surprise. Everything below them is fair game once empty.
+// it would be the next surprise. Everything below them is fair game once empty
+// — including the directories an older socle installed and this one does not
+// (its two retired page directories under `.agents/`, `.claude/agents`,
+// `.codex/agents`), which go with their last file unless something of the
+// project's is in them.
 const MANAGED_ROOTS: ReadonlySet<string> = new Set([
   ".agents",
   ".agents/skills",
-  ".agents/formulas",
-  ".agents/profiles",
-  ".claude/agents",
-  ".codex/agents",
   "project-management",
   "scripts",
 ]);

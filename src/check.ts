@@ -5,7 +5,7 @@ import { join } from "@std/path";
 import { agentsBlockHash, sha256File } from "./hash.ts";
 import { BLOCK_KEY, manifestPath, readManifest } from "./manifest.ts";
 import { packageVersion } from "./paths.ts";
-import { staleGlueReport, staleGlueSubsection } from "./project-md.ts";
+import { staleGlueReport, staleGlueResidues } from "./project-md.ts";
 import { ChiselError, reportLine } from "./report.ts";
 import {
   agentsMdHasBlockMarkers,
@@ -68,7 +68,7 @@ export async function check(targetDir: string): Promise<number> {
 
   // A link is the adapter only while it points where the socle expects: a
   // link retargeted at another directory resolves perfectly and delivers the
-  // wrong skills, which is exactly the failure a checker is for.
+  // wrong skills, which is exactly the failure this command is for.
   const linkValue = await skillsLinkValue(targetDir);
   if (
     linkValue === SKILLS_LINK_VALUE &&
@@ -96,8 +96,9 @@ export async function check(targetDir: string): Promise<number> {
 
   // Reported, never counted as divergence: the glue is the project's file,
   // and a residue in it is not a managed file that moved.
-  const stale = await staleGlueSubsection(targetDir);
-  if (stale !== null) reportLine(staleGlueReport(stale));
+  for (const residue of await staleGlueResidues(targetDir)) {
+    reportLine(staleGlueReport(residue));
+  }
 
   if (exitCode === 0) reportLine("clean — no divergence");
   return exitCode;

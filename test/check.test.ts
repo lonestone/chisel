@@ -38,24 +38,15 @@ Deno.test("check: exit codes on a clean install and on drift", async () => {
     );
     assertStringIncludes(normativeDrift.stdout, ".agents/discipline.md");
 
-    // So are the rendered agent definitions, in both formats.
-    const rendered = await workspace.install("brownfield");
+    // So is the workflow page.
+    const workflow = await workspace.install("brownfield");
     await appendTo(
-      join(rendered, ".claude", "agents", "architect.md"),
+      join(workflow, ".agents", "workflow.md"),
       "\n<!-- diverged -->\n",
     );
-    await appendTo(
-      join(rendered, ".codex", "agents", "mason.toml"),
-      "\n# diverged\n",
-    );
-    const renderDrift = await runChisel(["check", rendered]);
-    assertEquals(
-      renderDrift.code,
-      1,
-      "a hand-edited generated definition is drift",
-    );
-    assertStringIncludes(renderDrift.stdout, ".claude/agents/architect.md");
-    assertStringIncludes(renderDrift.stdout, ".codex/agents/mason.toml");
+    const workflowDrift = await runChisel(["check", workflow]);
+    assertEquals(workflowDrift.code, 1, "a hand-edited workflow.md is drift");
+    assertStringIncludes(workflowDrift.stdout, ".agents/workflow.md");
   });
 });
 
@@ -78,19 +69,24 @@ Deno.test("check: a skills link pointing elsewhere is a missing adapter", async 
   });
 });
 
-Deno.test("check: a retired glue subsection is reported and the glue left byte-identical", async () => {
+Deno.test("check: a retired glue subsection or adapter line is reported and the glue left byte-identical", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.install("brownfield");
     const glue = join(target, ".agents", "project.md");
     const withResidue = (await Deno.readTextFile(glue)).replace(
       "## C · Reading list",
       "### B3 · Autonomous runs\n\nA subsection an older socle read and nothing reads now.\n\n## C · Reading list",
+    ).replace(
+      "## F · Gate commands",
+      "- [x] `.claude/agents` (role definitions)\n- [x] `.codex/agents` (role definitions)\n\n## F · Gate commands",
     );
     await Deno.writeTextFile(glue, withResidue);
 
     const result = await runChisel(["check", target]);
     assertStringIncludes(result.stdout, "stale:");
     assertStringIncludes(result.stdout, "B3 · Autonomous runs");
+    assertStringIncludes(result.stdout, "`.claude/agents`");
+    assertStringIncludes(result.stdout, "`.codex/agents`");
     assertEquals(
       await Deno.readTextFile(glue),
       withResidue,

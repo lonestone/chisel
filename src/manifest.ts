@@ -4,10 +4,9 @@
 
 import { join } from "@std/path";
 import { agentsBlockHash, sha256File } from "./hash.ts";
-import { GEN_MARKER } from "./markers.ts";
 import { packageVersion } from "./paths.ts";
 import { managedSocleFiles } from "./install.ts";
-import { isFile, listFilesRecursive, readTextIfPresent } from "./target.ts";
+import { isFile, readTextIfPresent } from "./target.ts";
 
 /** Not a file: the hash of the managed block inside `AGENTS.md`. */
 export const BLOCK_KEY = "AGENTS.md#block";
@@ -47,28 +46,12 @@ export function serializeManifest(manifest: Manifest): string {
 // Scanning the target instead would adopt whatever a third party dropped in
 // `.agents/skills/` — silently tracked, then reported DIVERGED the day its
 // owner edits their own file. It also means a file retired upstream stops
-// being tracked instead of being tracked forever.
-//
-// The rendered agent definitions live in directories chisel shares with the
-// user (`.claude/agents/`, `.codex/agents/`), so only the files carrying the
-// generated marker are claimed — a definition of the user's own is neither
-// re-rendered nor reported as drift. Same discipline, reached by the road each
-// directory offers: an exact source list here, a marker there.
-export async function managedRelativeFiles(
-  targetDir: string,
-): Promise<string[]> {
+// being tracked instead of being tracked forever — which is how `update`
+// cleans an install from an older socle: the pages it retired and the agent
+// definitions it rendered into `.claude/agents/` and `.codex/agents/` sit in
+// its last manifest and in no list here, so they come out as orphans.
+export function managedRelativeFiles(): string[] {
   const managed = managedSocleFiles();
-  for (const definitionDir of [".claude/agents", ".codex/agents"]) {
-    for (
-      const relative of await listFilesRecursive(join(targetDir, definitionDir))
-    ) {
-      const path = join(targetDir, definitionDir, relative);
-      const text = await readTextIfPresent(path);
-      if (text !== null && text.includes(GEN_MARKER)) {
-        managed.push(`${definitionDir}/${relative}`);
-      }
-    }
-  }
   managed.push(
     ".agents/discipline.md",
     ".agents/methodology.md",
@@ -85,7 +68,7 @@ export async function managedRelativeFiles(
 /** Rewrites the manifest from the current state of the target, and returns it. */
 export async function writeManifest(targetDir: string): Promise<Manifest> {
   const managed: Record<string, string> = {};
-  for (const relative of await managedRelativeFiles(targetDir)) {
+  for (const relative of managedRelativeFiles()) {
     const path = join(targetDir, relative);
     if (await isFile(path)) managed[relative] = await sha256File(path);
   }

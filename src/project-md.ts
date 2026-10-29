@@ -15,7 +15,6 @@ import { readPackageFile, SOCLE } from "./paths.ts";
 import {
   agentsMdHasBlockMarkers,
   claudeMdImportsAgents,
-  hasGeneratedDefinitions,
   isFile,
   readTextIfPresent,
   SKILLS_LINK_VALUE,
@@ -53,15 +52,6 @@ export async function tickAdapterInventory(targetDir: string): Promise<void> {
     "AGENTS.md": await agentsMdHasBlockMarkers(targetDir),
     "CLAUDE.md": await claudeMdImportsAgents(targetDir),
     ".claude/skills": (await skillsLinkValue(targetDir)) === SKILLS_LINK_VALUE,
-    // Ticked when chisel actually RENDERED something there, not merely when
-    // the directory exists: a directory holding only the user's own
-    // definitions is not an adapter chisel installed.
-    ".claude/agents": await hasGeneratedDefinitions(
-      join(targetDir, ".claude", "agents"),
-    ),
-    ".codex/agents": await hasGeneratedDefinitions(
-      join(targetDir, ".codex", "agents"),
-    ),
   };
 
   const document = parseGlue(text);
@@ -102,24 +92,37 @@ export async function pointNewGlueAtExistingJournal(
   await Deno.writeTextFile(path, serializeGlue(document));
 }
 
+// The §E adapter lines an older socle wrote for the agent definitions it
+// rendered. Nothing renders them any more, so a ticked line is a false fact.
+const RETIRED_ADAPTERS = [".claude/agents", ".codex/agents"] as const;
+
 /**
- * The heading of a subsection the socle retired and nothing reads any more,
- * when a glue still carries it. Reported, never edited: the glue belongs to
- * the project, and deleting a paragraph out of someone's document is not an
- * installer's business.
+ * What a glue still carries that the socle retired and nothing reads any
+ * more: a retired subsection, or an adapter line for a retired adapter. Each
+ * entry says what it is, in words. Reported, never edited: the glue belongs
+ * to the project, and deleting a paragraph out of someone's document is not
+ * an installer's business.
  */
-export async function staleGlueSubsection(
-  targetDir: string,
-): Promise<string | null> {
+export async function staleGlueResidues(targetDir: string): Promise<string[]> {
   const text = await readTextIfPresent(gluePath(targetDir));
-  if (text === null) return null;
-  const retired = glueSubsection(parseGlue(text), "B", "B3");
-  if (!retired || retired.title !== "Autonomous runs") return null;
-  return `${retired.id} · ${retired.title}`;
+  if (text === null) return [];
+  const document = parseGlue(text);
+  const residues: string[] = [];
+  const retired = glueSubsection(document, "B", "B3");
+  if (retired && retired.title === "Autonomous runs") {
+    residues.push(`"${retired.id} · ${retired.title}"`);
+  }
+  const adapters = glueSection(document, "E");
+  for (const label of RETIRED_ADAPTERS) {
+    if (glueItem(adapters, label)) {
+      residues.push(`the adapter line \`${label}\` in "E · Adapters"`);
+    }
+  }
+  return residues;
 }
 
 /** The line `update` and `check` print about a residue they will not touch. */
-export function staleGlueReport(heading: string): string {
-  return `stale: .agents/project.md still carries "${heading}", which nothing in the socle ` +
+export function staleGlueReport(residue: string): string {
+  return `stale: .agents/project.md still carries ${residue}, which nothing in the socle ` +
     `reads any more — safe to delete by hand (chisel never edits this file)`;
 }

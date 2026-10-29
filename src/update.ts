@@ -15,8 +15,7 @@ import {
   readManifest,
   writeManifest,
 } from "./manifest.ts";
-import { staleGlueReport, staleGlueSubsection } from "./project-md.ts";
-import { renderAgentDefinitions } from "./render.ts";
+import { staleGlueReport, staleGlueResidues } from "./project-md.ts";
 import { ChiselError, reportLine, warn } from "./report.ts";
 import { isDirectory, isFile } from "./target.ts";
 
@@ -38,7 +37,6 @@ export async function update(targetDir: string): Promise<number> {
   const previous = (await readManifest(targetDir)) ?? EMPTY_MANIFEST;
 
   await copyManagedFiles(targetDir);
-  await renderAgentDefinitions(targetDir);
   if (await isFile(join(targetDir, "AGENTS.md"))) {
     await writeAgentsMd(targetDir, "");
   } else {
@@ -78,7 +76,8 @@ export async function update(targetDir: string): Promise<number> {
   await warnForeignSkills(targetDir, Object.keys(previous.managed));
   if (!reported) reportLine("(no managed files changed)");
 
-  const stale = await staleGlueSubsection(targetDir);
-  if (stale !== null) reportLine(staleGlueReport(stale));
+  for (const residue of await staleGlueResidues(targetDir)) {
+    reportLine(staleGlueReport(residue));
+  }
   return 0;
 }

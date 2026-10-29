@@ -64,28 +64,12 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
     const journalBefore = await Deno.readTextFile(journal);
     const personalBefore = await Deno.readTextFile(personal);
 
-    // A render comes back from its profile, so the pristine copy is what the
-    // comparison needs — not a re-copy of the edited file.
-    const claudeDefinition = join(target, ".claude", "agents", "mason.md");
-    const codexDefinition = join(target, ".codex", "agents", "inspector.toml");
     const skill = join(target, ".agents", "skills", "tdd", "SKILL.md");
-    const formula = join(
-      target,
-      ".agents",
-      "formulas",
-      "chisel-default.formula.toml",
-    );
-    const claudeBefore = await Deno.readTextFile(claudeDefinition);
-    const codexBefore = await Deno.readTextFile(codexDefinition);
+    const workflow = join(target, ".agents", "workflow.md");
 
     const localEdit = "\n<!-- local edit that update must overwrite -->\n";
     await appendTo(skill, localEdit);
-    await appendTo(formula, "\n# local edit that update must overwrite\n");
-    await appendTo(claudeDefinition, localEdit);
-    await appendTo(
-      codexDefinition,
-      "\n# local edit that update must overwrite\n",
-    );
+    await appendTo(workflow, localEdit);
 
     const result = await runChisel(["update", target]);
     assertEquals(result.code, 0, result.output);
@@ -123,27 +107,11 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
       "the skill matches the socle source",
     );
     assertEquals(
-      await Deno.readTextFile(formula),
+      await Deno.readTextFile(workflow),
       await Deno.readTextFile(
-        join(
-          REPO_ROOT,
-          "socle",
-          "agents",
-          "formulas",
-          "chisel-default.formula.toml",
-        ),
+        join(REPO_ROOT, "socle", "agents", "workflow.md"),
       ),
-      "the default formula matches the socle source",
-    );
-    assertEquals(
-      await Deno.readTextFile(claudeDefinition),
-      claudeBefore,
-      "the hand-edited definition is re-rendered from the profile",
-    );
-    assertEquals(
-      await Deno.readTextFile(codexDefinition),
-      codexBefore,
-      "the codex render comes back too",
+      "the workflow page matches the socle source",
     );
 
     assertStringIncludes(result.stdout, "chisel update:", "the summary header");
@@ -158,9 +126,9 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
 Deno.test("update: a file that left the managed set unchanged is removed", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.install("brownfield");
-    const retired = ".agents/formulas/retired.formula.toml";
+    const retired = ".agents/retired-page.md";
     const asInstalled =
-      "# a formula an earlier socle shipped and this one does not\n";
+      "# a page an earlier socle shipped and this one does not\n";
     await Deno.writeTextFile(join(target, retired), asInstalled);
     await recordInManifest(target, retired, await sha256Of(asInstalled));
     // A retired skill, which lives one directory deeper: what it leaves behind
@@ -189,7 +157,7 @@ Deno.test("update: a file that left the managed set unchanged is removed", async
     );
     assert(
       !(await Deno.readTextFile(join(target, MANIFEST))).includes(
-        "retired.formula.toml",
+        "retired-page.md",
       ),
       "and it is out of the manifest",
     );
@@ -203,8 +171,8 @@ Deno.test("update: a file that left the managed set unchanged is removed", async
       "the directory the removal emptied went with it",
     );
     assert(
-      (await Deno.stat(join(target, ".agents", "formulas"))).isDirectory,
-      "and a directory chisel owns stays, emptied or not",
+      (await Deno.stat(join(target, ".agents", "skills"))).isDirectory,
+      "and the walk up stops at a directory chisel owns",
     );
 
     // The lasting cost of getting this wrong was a warning on every later run.
@@ -220,8 +188,8 @@ Deno.test("update: a file that left the managed set unchanged is removed", async
 Deno.test("update: a file that left the managed set and was modified is kept and named", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.install("brownfield");
-    const retired = ".agents/formulas/retired.formula.toml";
-    const modified = "# a retired formula the project has since edited\n";
+    const retired = ".agents/retired-page.md";
+    const modified = "# a retired page the project has since edited\n";
     await Deno.writeTextFile(join(target, retired), modified);
     await recordInManifest(
       target,
@@ -269,6 +237,7 @@ Deno.test("update: a file that left the managed set and was modified is kept and
 Deno.test("update: a definition the user wrote survives and never enters the manifest", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.install("brownfield");
+    await Deno.mkdir(join(target, ".claude", "agents"), { recursive: true });
     const own = join(target, ".claude", "agents", "release-captain.md");
     const content =
       "---\nname: release-captain\n---\n\nMy own sub-agent, not chisel's.\n";
@@ -305,5 +274,113 @@ Deno.test("update: a retired glue subsection is reported and the glue left byte-
       withResidue,
       "the glue is never rewritten",
     );
+  });
+});
+
+// The 0.1.1 socle, the one JSR served from 2026-09-10: what it installed that
+// the current socle no longer ships.
+const FORMULAS_0_1_1 = [
+  "chisel-auto-light",
+  "chisel-auto",
+  "chisel-default",
+  "chisel-light",
+  "chisel-supervised",
+].map((name) => `.agents/formulas/${name}.formula.toml`);
+const ROLES_0_1_1 = ["architect", "checker", "foreman", "inspector", "mason"];
+const PROFILES_0_1_1 = [
+  ".agents/profiles/README.md",
+  ...ROLES_0_1_1.map((role) => `.agents/profiles/${role}.md`),
+];
+const DEFINITIONS_0_1_1 = [
+  ...ROLES_0_1_1.map((role) => `.claude/agents/${role}.md`),
+  ...ROLES_0_1_1.map((role) => `.codex/agents/${role}.toml`),
+];
+
+Deno.test("update: a 0.1.1 install is cleaned", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+
+    // Pose the 0.1.1 shape: every retired file on disk as that version
+    // installed it, and recorded in its manifest at that hash.
+    const retired = [
+      ...FORMULAS_0_1_1,
+      ...PROFILES_0_1_1,
+      ...DEFINITIONS_0_1_1,
+    ];
+    for (const name of retired) {
+      const content = name.startsWith(".agents/")
+        ? `# ${name}, as the 0.1.1 socle shipped it\n`
+        : `<!-- chisel:generated from a 0.1.1 profile -->\n# ${name}\n`;
+      await Deno.mkdir(join(target, name, ".."), { recursive: true });
+      await Deno.writeTextFile(join(target, name), content);
+      await recordInManifest(target, name, await sha256Of(content));
+    }
+    const manifestPath = join(target, MANIFEST);
+    const manifest = JSON.parse(await Deno.readTextFile(manifestPath));
+    manifest.version = "0.1.1";
+    await Deno.writeTextFile(manifestPath, `${JSON.stringify(manifest)}\n`);
+    // A definition of the user's own, in a directory 0.1.1 shared with them.
+    const own = join(target, ".claude", "agents", "release-captain.md");
+    await Deno.writeTextFile(own, "My own sub-agent, not chisel's.\n");
+    // The two adapter lines a 0.1.1 glue carried in §E.
+    const glue = join(target, ".agents", "project.md");
+    const glue011 = (await Deno.readTextFile(glue)).replace(
+      "## F · Gate commands",
+      "- [x] `.claude/agents` (role definitions rendered from `.agents/profiles/`)\n" +
+        "- [x] `.codex/agents` (role definitions rendered from `.agents/profiles/`)\n\n" +
+        "## F · Gate commands",
+    );
+    await Deno.writeTextFile(glue, glue011);
+
+    const result = await runChisel(["update", target]);
+    assertEquals(result.code, 0, result.output);
+
+    for (const name of retired) {
+      assertStringIncludes(result.stdout, `removed: ${name}\n`);
+      assertEquals(await absent(join(target, name)), true, `${name} is gone`);
+    }
+    for (
+      const directory of [".agents/formulas", ".agents/profiles", ".codex"]
+    ) {
+      assertEquals(
+        await absent(join(target, directory)),
+        true,
+        `${directory} went with its last file`,
+      );
+    }
+    assertEquals(
+      await Deno.readTextFile(own),
+      "My own sub-agent, not chisel's.\n",
+      "the user's own definition stays, byte for byte",
+    );
+    assert(
+      (await Deno.lstat(join(target, ".claude", "skills"))).isSymlink,
+      "the skills link stays",
+    );
+
+    const after = JSON.parse(await Deno.readTextFile(manifestPath)) as {
+      version: string;
+      managed: Record<string, string>;
+    };
+    assertEquals(
+      Object.keys(after.managed).filter((name) =>
+        retired.includes(name) || name.includes("release-captain")
+      ),
+      [],
+      "the manifest names none of them",
+    );
+    assert(after.version !== "0.1.1", "the manifest moved to this version");
+
+    assertStringIncludes(result.stdout, "stale:");
+    assertStringIncludes(result.stdout, "`.claude/agents`");
+    assertStringIncludes(result.stdout, "`.codex/agents`");
+    assertEquals(
+      await Deno.readTextFile(glue),
+      glue011,
+      "the glue is reported on, never rewritten",
+    );
+
+    const checked = await runChisel(["check", target]);
+    assertEquals(checked.code, 0, checked.output);
   });
 });

@@ -26,6 +26,14 @@ const WAIVED = new Map<string, string>([
     "BY DESIGN — personal file, deliberately never installed (the template is)",
   ],
   [
+    ".agents/formulas",
+    "BY DESIGN (chisel-upgrade must name the 0.1.x pieces it retires)",
+  ],
+  [
+    ".agents/profiles",
+    "BY DESIGN (chisel-upgrade must name the 0.1.x pieces it retires)",
+  ],
+  [
     ".agents/rules",
     "BY DESIGN (chisel-upgrade must name the layer it retires)",
   ],
@@ -40,6 +48,8 @@ const WAIVED = new Map<string, string>([
 ]);
 
 const RETIRED_LAYER = [
+  ".agents/formulas",
+  ".agents/profiles",
   ".agents/rules",
   ".agents/rules/task-*.md",
   ".agents/workflows.md",
@@ -69,11 +79,7 @@ async function sourceFiles(target: string): Promise<string[]> {
       await walk(`${relative}/${entry.name}`);
     }
   }
-  for (
-    const root of ["AGENTS.md", ".agents", ".claude/agents", ".codex/agents"]
-  ) {
-    await walk(root);
-  }
+  for (const root of ["AGENTS.md", ".agents"]) await walk(root);
   return sources.sort();
 }
 
@@ -134,7 +140,7 @@ Deno.test("integrity: every pointer of the installed socle resolves", async () =
     assertEquals(
       [...new Set(citers)].sort(),
       [".agents/skills/chisel-upgrade/SKILL.md"],
-      "only the migration skill names the layer it retires",
+      "only the migration skill names the pieces it retires",
     );
 
     // Mutation test: plant one broken pointer of each shape, demand both are
@@ -179,3 +185,35 @@ Deno.test("integrity: the shipped socle list matches the socle tree", async () =
     "the list the package ships names exactly the files that are there",
   );
 });
+
+Deno.test("integrity: the installed tree carries no retired name and no invented limit", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    const invented =
+      /40 lines|8 lines|half of the slice|half the spend|target ~/;
+
+    for await (const path of walkFiles(join(target, ".agents"))) {
+      const text = await Deno.readTextFile(path);
+      const relative = path.slice(target.length + 1);
+      assert(
+        !text.includes("to-lessons"),
+        `${relative} still says to-lessons (renamed to retro)`,
+      );
+      assert(
+        !invented.test(text),
+        `${relative} carries an invented numeric limit`,
+      );
+    }
+  });
+});
+
+async function* walkFiles(directory: string): AsyncGenerator<string> {
+  for await (const entry of Deno.readDir(directory)) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory) {
+      yield* walkFiles(path);
+    } else if (entry.isFile) {
+      yield path;
+    }
+  }
+}

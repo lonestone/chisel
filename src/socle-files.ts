@@ -6,18 +6,7 @@
 // silently stop shipping.
 export const SOCLE_FILES: readonly string[] = [
   "agents/discipline.md",
-  "agents/formulas/chisel-auto-light.formula.toml",
-  "agents/formulas/chisel-auto.formula.toml",
-  "agents/formulas/chisel-default.formula.toml",
-  "agents/formulas/chisel-light.formula.toml",
-  "agents/formulas/chisel-supervised.formula.toml",
   "agents/methodology.md",
-  "agents/profiles/README.md",
-  "agents/profiles/architect.md",
-  "agents/profiles/checker.md",
-  "agents/profiles/foreman.md",
-  "agents/profiles/inspector.md",
-  "agents/profiles/mason.md",
   "agents/project.md.tpl",
   "agents/reference.md",
   "agents/skills/chisel-beads/SKILL.md",

@@ -16,7 +16,6 @@ import {
   pointNewGlueAtExistingJournal,
   tickAdapterInventory,
 } from "./project-md.ts";
-import { renderAgentDefinitions } from "./render.ts";
 import { ChiselError } from "./report.ts";
 import { isDirectory } from "./target.ts";
 
@@ -33,7 +32,6 @@ export async function init(targetDir: string): Promise<number> {
 
   await copyManagedFiles(targetDir);
   await warnForeignSkills(targetDir, Object.keys(previous?.managed ?? {}));
-  await renderAgentDefinitions(targetDir);
   // The glue is written before the adapters so the inventory below can report
   // what this run actually put in place — and only on a glue this run created.
   const glueCreated = await ensureProjectMd(targetDir);
@@ -47,7 +45,7 @@ export async function init(targetDir: string): Promise<number> {
 
   console.log(
     `chisel init: ${targetDir} ready (.agents/, AGENTS.md, CLAUDE.md, .claude/skills, ` +
-      `.claude/agents, .codex/agents, project-management/, scripts/task-id.sh)`,
+      `project-management/, scripts/task-id.sh)`,
   );
   return 0;
 }

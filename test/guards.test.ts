@@ -33,8 +33,8 @@ Deno.test("guards: update refuses a repo still carrying the v1 layout", async ()
       "no discipline.md installed",
     );
     assert(
-      await absent(join(legacy, ".agents", "formulas")),
-      "no formulas installed",
+      await absent(join(legacy, ".agents", "workflow.md")),
+      "no workflow.md installed",
     );
     assert(
       await absent(join(legacy, ".agents", ".chisel.json")),

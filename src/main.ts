@@ -17,7 +17,7 @@ export function usage(): string {
     "",
     "Usage:",
     "  chisel init [target-dir]    copy the socle + adapters (default target-dir: .)",
-    "  chisel update [target-dir]  re-render managed files + AGENTS.md block (default: .)",
+    "  chisel update [target-dir]  refresh managed files + AGENTS.md block (default: .)",
     "  chisel check [target-dir]   report version + local divergences, zero writes (default: .)",
     "  chisel --version            print the installed chisel version",
     "  chisel --help               show this message",

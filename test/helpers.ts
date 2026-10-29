@@ -196,49 +196,6 @@ async function hashOf(path: string): Promise<string> {
   );
 }
 
-/**
- * The frontmatter and body of a markdown file with a `---` head, split here
- * rather than borrowed from the CLI: an oracle that reuses the code under
- * test proves only that the code agrees with itself.
- */
-export function splitFrontmatter(
-  text: string,
-): { head: Map<string, string>; body: string } {
-  const lines = text.split("\n");
-  if (lines.at(-1) === "") lines.pop();
-  const head = new Map<string, string>();
-  let index = 0;
-  if (lines[0] === "---") {
-    index = 1;
-    while (index < lines.length && lines[index] !== "---") {
-      const separator = lines[index].indexOf(": ");
-      if (separator > 0) {
-        head.set(
-          lines[index].slice(0, separator),
-          lines[index].slice(separator + 2),
-        );
-      }
-      index += 1;
-    }
-    index += 1;
-  }
-  while (index < lines.length && lines[index] === "") index += 1;
-  const body = lines.slice(index);
-  return { head, body: body.length === 0 ? "" : `${body.join("\n")}\n` };
-}
-
-/** Everything after a generated definition's provenance comment, blanks trimmed. */
-export function bodyAfterProvenance(text: string): string {
-  const lines = text.split("\n");
-  if (lines.at(-1) === "") lines.pop();
-  const start = lines.findIndex((line) => line.includes("chisel:generated"));
-  if (start === -1) return "";
-  let index = start + 1;
-  while (index < lines.length && lines[index] === "") index += 1;
-  const body = lines.slice(index);
-  return body.length === 0 ? "" : `${body.join("\n")}\n`;
-}
-
 export async function appendTo(path: string, text: string): Promise<void> {
   await Deno.writeTextFile(path, text, { append: true });
 }
