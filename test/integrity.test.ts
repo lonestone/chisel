@@ -26,16 +26,24 @@ const WAIVED = new Map<string, string>([
     "BY DESIGN — personal file, deliberately never installed (the template is)",
   ],
   [
+    ".agents/rules",
+    "BY DESIGN (chisel-upgrade must name the layer it retires)",
+  ],
+  [
     ".agents/rules/task-*.md",
-    "BY DESIGN (upgrade-v2 must name the layer it retires)",
+    "BY DESIGN (chisel-upgrade must name the layer it retires)",
   ],
   [
     ".agents/workflows.md",
-    "BY DESIGN (upgrade-v2 must name the layer it retires)",
+    "BY DESIGN (chisel-upgrade must name the layer it retires)",
   ],
 ]);
 
-const RETIRED_LAYER = [".agents/rules/task-*.md", ".agents/workflows.md"];
+const RETIRED_LAYER = [
+  ".agents/rules",
+  ".agents/rules/task-*.md",
+  ".agents/workflows.md",
+];
 
 interface Dangling {
   readonly pointer: string;
@@ -125,7 +133,7 @@ Deno.test("integrity: every pointer of the installed socle resolves", async () =
       .map((entry) => entry.source);
     assertEquals(
       [...new Set(citers)].sort(),
-      [".agents/skills/upgrade-v2/SKILL.md"],
+      [".agents/skills/chisel-upgrade/SKILL.md"],
       "only the migration skill names the layer it retires",
     );
 

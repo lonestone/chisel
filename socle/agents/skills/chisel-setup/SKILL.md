@@ -19,11 +19,11 @@ is not decoration: it is the boundary between what the user reads and what you
 read, and it is what makes the rule below checkable.
 
 **Speak the user's language, not the toolkit's.** On screen: no "glue", no
-"socle", no "ledger", no "formula", no "bead", no section letters, no field
+"socle", no "ledger", no "bead", no section letters, no field
 names. Every option gets one line saying what it buys and what it costs, in
 words someone who has never read this repo would understand. The section
 letters and titles of `.agents/project.md` (§A · Task workspace,
-§B1 · Where task statuses live…) are for the file and for you.
+§B · Tracker…) are for the file and for you.
 
 ## Step 0 — Precondition
 
@@ -49,10 +49,11 @@ facts when you reach the section they affect.
   `doc/project-management/` from an earlier convention): if one exists,
   flag it for §A instead of silently assuming the default root.
 - **`bd --version`**: run it, record what it says (or that the command does not
-  exist), and do nothing else with it. It feeds §B1's prerequisite screen only.
+  exist), and do nothing else with it. It feeds §B's beads answer only.
   Never install anything.
-- **`.beads/`**: if the directory already exists, this repo already keeps its
-  statuses in a database — §B1's recommendation becomes "keep what you have".
+- **Trackers already in use**: a `.beads/` directory, or an MCP server for
+  Plane, GitHub or another tracker in the tool's configuration. If one is
+  there, §B's recommendation becomes "keep what you have".
 - **`.agents/user.md`**: if it already exists, Step 5 reports it and touches
   nothing.
 - **`AGENTS.md`**: does anything stand outside chisel's own `chisel:begin` /
@@ -70,8 +71,8 @@ For each section, in letter order:
 
 1. State any relevant facts from Step 1's scan.
 2. Give your **recommended** value — prefilled from the scan plus the
-   questionnaire defaults (root `/project-management/`; statuses in the task
-   files; no external tracker; boilerplate reading list into
+   questionnaire defaults (root `/project-management/`; the task files as
+   the tracker; boilerplate reading list into
    `apps/documentation`; living docs = `apps/documentation` for
    boilerplate else `doc/**`; gate commands from `package.json`; glossary/ADRs
    into `apps/documentation` for boilerplate else root `CONTEXT.md` +
@@ -82,8 +83,7 @@ For each section, in letter order:
 
 **Never present two sections in the same message.** Each section gets its
 own turn, exactly like the grilling discipline this skill borrows: one
-question, wait, then the next. §B is two questions — B1 and B2 — and they
-are two separate messages, not one screen with both headings.
+question, wait, then the next.
 
 Per-mode prefills:
 
@@ -99,79 +99,37 @@ Per-mode prefills:
 
 Skip §E entirely here — see Step 3.
 
-### §B1 — ask this, verbatim
+### §B — ask this, verbatim
 
-> **Where do your tasks' statuses live?**
+> **Where do your tasks live?**
 >
-> Today every task is a markdown file in this repo, and its status is a line
-> inside that file. That works, and most projects should keep it.
+> Each task has a written spec in this repo whatever you answer. The
+> question is where its status lives, and what the agent uses to read and
+> update it.
 >
-> 1. **In the task files** — nothing to install, everything shows up in a
->    normal diff, and two people can only collide on the same file. A search
->    for a status value answers "what is ready to start" and "where is a human
->    waited for". The cost: what blocks what is not searchable the same way —
->    the blocking edges are read from the files, one by one, and a search
->    answers only what a status line says.
-> 2. **In a small database committed next to them** — the files still hold the
->    content; a tool keeps the statuses and what-blocks-what, so "what is ready
->    to start?" is one command instead of a reading session. The cost: one tool
->    to install, and one habit — pull when you start, push when you stop.
+> 1. **In the task files** — the status is a line in each spec. Nothing to
+>    install, everything shows up in a normal diff.
+> 2. **In a small database committed next to the files** — "what can
+>    start now?" is one command. The cost: one tool to install, and one habit
+>    — pull when you start, push when you stop.
+> 3. **In Plane, GitHub Issues or another tool you already use** — the agent
+>    reads and updates the task there, through that tool's connector, and
+>    the task points at its spec in this repo.
 >
-> _There is a third arrangement — the same database with a background service,
-> for several agents working at once on one machine. It is **not supported yet**;
-> ask when you need it, and it gets built then._
->
-> You can move from 1 to 2 later: that move is tooled and only touches tasks
-> that are still open. Moving back is a `git revert` on the spot; later than
-> that, it is by hand.
->
-> Recommended: **1 — in the task files**.
+> Recommended: **1 — in the task files**, unless the team already tracks its
+> work somewhere.
 
-The background service is shown, never offered: it is a fact about what exists,
-not a case the user can pick today. If they ask for it anyway, say it is not
-supported yet, record option 2 — which is what they would run on each machine
-regardless — and note the ask wherever this repo tracks work.
+Write the answer on §B's three lines — *Tasks live in*, *Read and updated
+with*, *Link back* — as the comment in that section describes:
 
-Nor is a database ever the answer to "we are several developers": if the user
-says they are a team, option 2 is the answer for the same reasons it is the
-answer for one person, and nothing about the choice changes.
-
-If the answer is option 2, run **Step 6** before moving on to §B2.
-
-### §B2 — ask this, verbatim
-
-> **Should tasks here point back to tickets in another tool?**
->
-> Some teams keep their client discussion, or their bug reports, somewhere
-> else. Each task can carry a link back to the ticket it came from, so a reader
-> can jump between the two. Nothing is copied or synchronised: the task file
-> stays the place where the work is described.
->
-> 1. **No link** — tasks live here and nowhere else.
-> 2. **GitHub Issues** — each task records the issue it came from.
-> 3. **Plane** — the same, with a Plane work item.
->
-> Another tool can be added later without changing anything in the toolkit: it
-> takes one page saying how to read a ticket there and where to write the link
-> back. This list is open, not a menu of three.
->
-> Recommended: **1 — no link**.
-
-**Any answer other than "no link" means writing the adapter page** — including
-GitHub and Plane, which the socle ships no page for: the list being open means
-every tracker is wired the same way, not that two of them are built in. Write it
-with the user, now, before moving to §C, the reading list:
-
-- where it lives: with the living docs declared in §D (say the path out loud);
-- what it holds: how to find and read a ticket in that tool, what to copy into
-  the task file when a task comes from one, and what (if anything) goes back;
-- then name it on §B2's **Adapter page** line, together with the tracker and
-  where the link back is written.
-
-If the user names a tool that is not on the list, the answer is the same three
-bullets — do not improvise a wiring, and do not refuse. If they would rather not
-write the page now, record the tracker and leave the Adapter page line as
-`_(to write)_` — never as a path to a page that does not exist.
+- **1**: leave the defaults.
+- **2** (beads): run **Step 6** before moving on to §C.
+- **3**: name the tool and the connector or skill that reads and updates it
+  (for Plane, its MCP server), and where the link back to the spec is
+  written. If the tool has no connector set up yet, record the tracker and
+  write `_(to set up)_` on the *Read and updated with* line — never a
+  connector that does not exist. Do not improvise a wiring, and do not
+  refuse a tool that is not on the list.
 
 ### §H — ask this, verbatim
 
@@ -189,7 +147,7 @@ write the page now, record the tracker and leave the Adapter page line as
 
 Section E (Adapters) is written by `chisel init`, not by this questionnaire.
 When you reach it in the walk, read the current checklist state back to the
-user as a fact (which of the five adapters are present) — do not ask a question
+user as a fact (which of the three adapters are present) — do not ask a question
 about it. If an adapter is missing, do not fix it here: note it as something
 `chisel check` should catch, and move on to §F.
 
@@ -201,10 +159,6 @@ until the end of the walk. Each write is scoped to exactly one section:
 - Find that section's `## <letter> · ...` heading.
 - Replace everything from immediately after that heading line up to (but not
   including) the next `## ` heading, or end of file if there is none.
-- For a sub-section (`### B1 · ...`), the span is the same rule one level down:
-  from just after its heading to the next `### ` **or** `## ` heading,
-  whichever comes first. Answering one sub-section leaves the others
-  byte-identical.
 - Leave every byte outside that span untouched: other sections, any content
   a human added above §A or after §H, custom sections the file doesn't
   define (e.g. a hand-added `## I · ...`).
@@ -243,91 +197,45 @@ questionnaire, no package, no network.
 
 Never commit `.agents/user.md`, and never copy one dev's file for another.
 
-## Step 6 — When §B1 is a database
+## Step 6 — When §B is beads
 
-Only when the user picked option 2. This step CREATES state — it is the one
-place in this skill that does. What it runs is written out in full in
-`.agents/skills/chisel-beads/CHANGING-CASE.md` — its *entering* section (and,
-if this repo already has open task files, its *converting* section too): read
-it before running anything here, and follow it command by command, watching
-each output rather than typing the whole sequence blind. The convention those
-sections serve is `.agents/skills/chisel-beads/SKILL.md` — read that first.
+Only when the user picked beads. This step CREATES state — it is the one
+place in this skill that does. What it runs is written in
+`.agents/skills/chisel-beads/SKILL.md`, section "Entering this case": read
+that page first, then follow it command by command, watching each output.
 
-1. **Check the prerequisite.** The tool is `bd`, and the minimum version is
-   **1.2.2** — everything this workflow relies on was validated there. Compare
-   what `bd --version` printed in Step 1 against it.
-2. **If `bd` is missing or older than 1.2.2, never install it yourself.** Show
-   this, then wait:
+1. **Check the prerequisite.** The tool is `bd`, minimum version **1.2.2**.
+   Compare what `bd --version` printed in Step 1 against it.
+2. **If `bd` is missing or older, never install it yourself.** Show this,
+   then wait:
 
 > **This one needs a tool installed: `bd`, version 1.2.2 or newer.** I will not
 > install it for you — that is your machine's business, not this repo's.
 > To install it: `curl -sSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash`, or your usual package manager.
 >
 > Say the word and I will keep the statuses in the task files for now instead.
-> Moving to the database later is tooled and only touches tasks that are still
-> open — choosing the files today costs you nothing tomorrow.
 
-3. **Require a clean working tree, and say why before you check.** Creating the
-   database commits the whole repository — everything in flight, not just its
-   own files — and no setting turns that off. So:
+3. **Require a clean working tree, and say why before you check.**
 
-> **One condition before I create it: nothing uncommitted.** The tool commits
-> the whole repository as part of setting itself up, and there is no way to ask
-> it not to. Anything you have in progress would land in that commit. Commit or
-> stash it, and tell me when to go — this step is safe to re-run.
+> **One condition before I create it: nothing uncommitted.** The tool makes a
+> commit of its own as it sets itself up, and anything staged would land in
+> it. Commit or stash what you have in progress, and tell me when to go.
 
    If `git status --porcelain` is not empty, stop here and wait. Do not stash
    anything on the user's behalf.
 
-4. **Run the entering sequence.** Follow `CHANGING-CASE.md`'s *entering*
-   section, from the repo root, one command at a time. It creates the
-   database, re-owns the `bd init` auto-commit under a message that says what
-   happened, removes the instructions the tool installs on its own (managed
-   blocks, session hook, vendored skill), links the formulas, then commits on
-   the exact paths it touches. If any command refuses, read what it says and
-   fix that — never work around it.
-
-5. **Confirm what is now true**, out loud, by reading it back rather than
-   asserting it: `chisel check` is clean, and `bd ready` answers. Then tick §B1.
-
-6. **Write §B1.** The verdict line becomes the database case, the State line
-   becomes `- [x] initialised`, and the section names the convention — that
-   pointer is what every later session resolves through, so it is not optional:
-
-   ```
-   **Statuses: in a database committed next to the task files.** The task files
-   still hold all the content; the database holds the statuses, the blocking
-   edges and who is on what.
-
-   - **State:** - [x] initialised
-   - **Convention:** `.agents/skills/chisel-beads/SKILL.md` — how a record
-     points at its task file, how a session syncs, and the two guards
-   - **Habit:** pull at the start of a session, push at the end (the convention
-     names the three-command routine that also checks the push landed)
-   ```
-
-   Use Step 4's sub-section write span: §B's other sub-sections stay
-   byte-identical.
-
-7. **If this repo already holds open task files, move them.** Only then, and
-   only once §B1 is written: follow `CHANGING-CASE.md`'s *converting* section.
-   One bead per OPEN task file, pointing back at it; the blocking edges come
-   from the files' own `**Blocked by:**` lines; the archive is never read; and
-   each open file's status line is rewritten to name its bead, so a status
-   lives in exactly one place. It commits nothing — show the diff, then commit
-   with the user.
-
-8. **Say what happened**, and hand over the one thing they now have to know:
+4. **Run "Entering this case"** of the chisel-beads page, then confirm what is
+   now true by reading it back: `chisel check` is clean, and `bd ready`
+   answers.
+5. **Write §B**: *Tasks live in* beads; *Read and updated with*
+   `.agents/skills/chisel-beads/SKILL.md`; *Link back* the bead's `Spec:`
+   field.
+6. **Say what happened**, and hand over the one thing they now have to know:
 
 > **Done.** The statuses now live in a small database committed next to your
-> task files, and the tool's own instructions have been removed from this repo —
-> the working convention it follows here is written in
-> `.agents/skills/chisel-beads/SKILL.md`, which is the one page to read before
-> creating or claiming anything.
->
-> The habit it costs you: pull when you start a session, push when you stop.
-> One rule to never break: never `git push --mirror` from a clone — it deletes
-> the database's history on the server.
+> task files. The habit it costs you: pull when you start a session, push
+> when you stop. One rule to never break: never `git push --mirror` from a
+> clone — it deletes the database's history on the server.
 
 ## Step 7 — One voice in `AGENTS.md` (also runnable on its own)
 
@@ -358,8 +266,8 @@ text with the user, line by line, and leaves one voice.
    when every line sits in exactly one pile and none is left over.
 
    - **Covered** — the block, or one of the files it routes to
-     (`.agents/discipline.md`, `.agents/project.md`, `.agents/reference.md`,
-     `.agents/methodology.md`), now says this. Quote the sentence that replaces
+     (`.agents/discipline.md`, `.agents/workflow.md`, `.agents/project.md`,
+     `.agents/reference.md`, `.agents/methodology.md`), now says this. Quote the sentence that replaces
      it: a line is covered only when you can point at its replacement, which is
      what keeps the project's own text from being deleted for looking familiar.
    - **The project's own** — build and run commands, domain facts, conventions
@@ -448,7 +356,7 @@ project's own — and the step reports that and changes nothing.
 After §H is written, print a one-screen summary of what got written: one
 line per section, A–H; one line for the personal file; one line for
 `AGENTS.md`, saying what was deleted, what moved to the reading list and what
-stayed, or that the file already spoke with one voice; and, when §B1 chose a
-database, the one thing still to do. Then suggest the natural next move:
+stayed, or that the file already spoke with one voice; and, when §B named a
+tracker still to set up, the one thing still to do. Then suggest the natural next move:
 create a first task, or run `chisel check` to confirm the adapters are all in
 place.

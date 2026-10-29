@@ -19,10 +19,11 @@
 .agents/reference.md
 .agents/skills
 .agents/skills/chisel-beads
-.agents/skills/chisel-beads/CHANGING-CASE.md
 .agents/skills/chisel-beads/SKILL.md
 .agents/skills/chisel-setup
 .agents/skills/chisel-setup/SKILL.md
+.agents/skills/chisel-upgrade
+.agents/skills/chisel-upgrade/SKILL.md
 .agents/skills/code-review
 .agents/skills/code-review/SKILL.md
 .agents/skills/codebase-audit
@@ -60,8 +61,6 @@
 .agents/skills/tdd/SKILL.md
 .agents/skills/tdd/mocking.md
 .agents/skills/tdd/tests.md
-.agents/skills/upgrade-v2
-.agents/skills/upgrade-v2/SKILL.md
 .agents/skills/wayfinder
 .agents/skills/wayfinder/SKILL.md
 .agents/skills/writing-great-skills

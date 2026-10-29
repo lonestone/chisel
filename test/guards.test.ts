@@ -20,7 +20,7 @@ Deno.test("guards: update refuses a repo still carrying the v1 layout", async ()
     assertEquals(refused.code, 1, "the refusal exits 1");
     assertStringIncludes(
       refused.stderr,
-      "upgrade-v2",
+      "chisel-upgrade",
       "it names the migration skill",
     );
     assertStringIncludes(

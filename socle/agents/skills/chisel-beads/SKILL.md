@@ -1,178 +1,80 @@
 ---
 name: chisel-beads
-description: Read this before creating, claiming, closing or syncing anything in a repo whose glue (§B1 · Where task statuses live of `.agents/project.md`) says the task statuses live in a committed `bd` database — and before running `git push` there.
+description: Read and update a task in a repo whose tracker (the tracker section of `.agents/project.md`) is a committed `bd` database — read a task, set its status, comment, link — and before running `git push` there.
 ---
 
-# The chisel-beads convention
+# chisel-beads — beads as the tracker
 
-This page applies when §B1 · Where task statuses live of `.agents/project.md`
-says the task statuses live in a committed database. While §B1 says they live
-in the task files, nothing here applies and there is nothing to install.
+This page applies when the tracker section of `.agents/project.md` names
+beads. It is the adapter `.agents/workflow.md` reads and updates a task
+through; nothing else in this repo talks to `bd`. Checked against `bd`
+1.2.2.
 
-It is the ONE normative discourse for this repo's use of `bd`. The tool ships
-instructions of its own — a managed block in `AGENTS.md`/`CLAUDE.md`, a
-`SessionStart` hook, a vendored skill — and the setup removes all of them,
-deliberately, because two discourses on the same subject is how an agent ends up
-obeying the wrong one. That removal is licit by the tool's own words: its
-managed block states that explicit orchestrator instructions override it. This
-page is those instructions.
+**What lives where.** The bead holds the status, the claim, the blocking
+edges and the comments. The spec and work documents hold everything else
+and stay in the task workspace. Never paste what the work IS into a bead:
+point at the document that says it.
 
-Entering this case, converting existing task files, and leaving it are all
-described in
-[CHANGING-CASE.md](CHANGING-CASE.md) — read this page first, that one only when
-one of those three things is actually happening.
-
-## 1 · What owns what
-
-**The bead owns coordination BETWEEN tasks.** Status, claim and lease, blocking
-edges, priority. Those are the facts another agent needs about work it is not
-doing, and they are the facts a query has to answer without opening files.
-
-**The task's own documents own everything else, including progress INSIDE the
-task.** The spec document owns intent, acceptance criteria, seams and the
-system design; the work document the implementing session creates beside it at
-`plan` owns the program design and the implementation checkboxes, which are the
-resume point when a session dies. None of it moves into the database. A bead is
-a coordination record, not a copy of the spec.
-
-The line matters in one direction in particular: if you find yourself pasting
-what the work IS into a bead, stop — the bead should be pointing at the
-document that already says it.
-
-## 2 · Creating a bead
-
-One shape, always:
+## Read a task
 
 ```sh
-bd create "<the task's title>" \
-  --type task --priority <0-4> \
-  --spec-id "<path to the task's spec document, from the repo root>" \
-  --actor <architect|checker|inspector|mason> \
-  --silent
+bd ready                 # what can start now: open, nothing open upstream
+bd show <id>             # one task: status, assignee, its Spec: line
+bd list --status draft   # any other status is a filter
 ```
 
-- **`--spec-id` is the whole link.** It is a native field, made for exactly
-  this: pointing at the specification document. The work document beside it
-  needs no pointer of its own: its path is the spec document's with `.work.md`
-  in place of `.spec.md`.
-- **`design` and `acceptance_criteria` stay EMPTY**, and so does the
-  description. They live in the spec document `--spec-id` names. Never pass
-  `--design`, `--design-file` or `--acceptance` for a chisel task.
-- **`--actor` is the ROLE, not a person.** The four are
-  `architect`, `checker`, `inspector`, `mason` — the roster's own roles (see
-  `.agents/profiles/`) — which is what makes the audit trail readable as a
-  pipeline rather than as one human's day. It lands in `created_by`.
-- **`external_ref` is RESERVED** for the §B2 external-tracker bridge.
-  Nothing else writes it, ever — not a note to self, not a URL, not a branch.
-
-Read it back to check the shape:
+## Create a bead for a task
 
 ```sh
-bd show <id>
+bd create "<the task's title>" --type task --priority <0-4> \
+  --spec-id "<path to the spec document, from the repo root>" \
+  --actor <architect|crewmate|typist> --silent
 ```
 
-```
-○ probe-i71 · Slice 01 — thing   [● P1 · OPEN]
-Owner: architect · Type: task
-Created: 2026-08-26 · Updated: 2026-08-26
-Spec: project-management/tasks/20260826-1512-x/01-thing.spec.md
+`--spec-id` is the whole link; the work document's path follows from it.
+Leave the description, `design` and `acceptance_criteria` empty. `--actor`
+is the role, not a person. `external_ref` is reserved for a link to another
+tracker. The spec document's status line then reads
+`**Status:** tracked as <id>`.
 
-DESCRIPTION
-  (none)
-```
+## Set its status
 
-`(none)` under DESCRIPTION and a `Spec:` line is what a correct bead looks like.
-`bd show` may also print a `Created:`/`Updated:` line and a closing tip
-suggesting the beads Claude plugin or `bd setup claude` — ignore the tip, this
-convention deliberately runs `bd` CLI-only (see
-[CHANGING-CASE.md](CHANGING-CASE.md)).
+The seven statuses of "Statuses" in `.agents/workflow.md`, in the database:
 
-**Validation stays off, and `bd lint` is not part of this workflow.** Two
-different things, so both are said plainly:
-
-- **Creation-time validation is off**, and that is the default:
-  `bd config get validation.on-create` answers `none`. Leave it there. If
-  someone turns it on, turn it back off (`bd config set validation.on-create
-  none`) rather than start filling the fields.
-- **`bd lint` will warn on every bead here, by design.** It checks each issue
-  for an `## Acceptance Criteria` section, and this convention keeps the
-  acceptance criteria in the spec document on purpose — so a correct bead
-  reports `⚠ Missing: ## Acceptance Criteria` and `bd lint` exits 1. There is
-  no config key to scope it. **Do not run it, and do not wire it into
-  anything**; a lint whose every finding is expected teaches everyone to
-  ignore lint. The check that matters here is `bd show`: a `Spec:` line and
-  `(none)` under DESCRIPTION.
-
-## 3 · Statuses: the same values, in the database
-
-The database carries the SAME thirteen values as a task file — the ladder the
-"Statuses" section of the spec template names, which is the one place that
-vocabulary lives. They are declared once as custom statuses when the repo
-enters this case ([CHANGING-CASE.md](CHANGING-CASE.md), the Entering
-sequence), and the declaration is stored in the database itself, so it is
-committed and shared. Nothing here is a second vocabulary: the bead holds the
-same value the file used to hold, and the line `**Status:** tracked as <id>`
-stays the one and only place a tracked task's status lives.
-
-**Two name translations, and only two.** The database spells two of the
-values differently, because two built-ins of the tool already mean exactly
-what they mean:
-
-| In a task file | In the database | Why |
+| Workflow | `bd` | Note |
 |---|---|---|
-| `ready` | `open` | `bd ready` — the frontier query — only sees the built-in `open`; a custom `ready` would be invisible to it |
-| `in-progress` | `in_progress` | the built-in that `bd update --claim` sets |
-
-Every other value is spelled identically on both sides. `blocked` and
-`deferred` are built-ins of the tool under those exact names, so they need no
-translation either.
-
-**Reading the frontier.** `bd ready` stays the Mason's command: it answers
-"what can be picked up right now" — open, with nothing open upstream — which
-is what `ready` means in the ladder. A task sitting at any of the waiting
-values is not on the frontier and `bd ready` correctly hides it.
+| `draft` | `draft` | declared custom |
+| `ready` | `open` | built in; `bd ready` sees only `open` |
+| `in-progress` | `in_progress` | built in; `--claim` sets it |
+| `done` | `done` | declared custom |
+| `blocked` | `blocked` | built in |
+| `deferred` | `deferred` | built in |
+| `cancelled` | `cancelled` | declared custom |
 
 ```sh
-bd ready
+bd update <id> --status <value> --actor <role>
+bd update <id> --claim --actor <role>       # takes it and sets in_progress
+bd show <id> | grep 'Assignee:'             # always, right after a claim
 ```
 
-**Reading anything else.** Every other value is a filter, one command per
-question:
+A claim is not atomic: if the assignee that comes back is not the role you
+claimed as, you do not have the task — leave it and report the collision.
+
+## Comment and link
 
 ```sh
-bd list --status waiting-plan-approval
-bd list --status waiting-business-approval
-bd list --status blocked
+bd comments add <id> "<text>" --actor <role>
+bd dep add <blocked-id> <blocker-id>        # <blocked-id> waits on <blocker-id>
 ```
 
-`bd list` with no filter honours the categories the values were declared
-under: it shows the active and in-progress ones, and hides the frozen and
-finished ones. Two limits worth knowing rather than rediscovering: `bd stats`
-does not count custom statuses (it reports zero for them), and a search for
-"where is a human needed" is `bd list --status <each waiting value>`, not one
-query — the file-based case answers that with a single search for `waiting-`.
+A blocker's written trace still goes in the task's own documents
+(`.agents/workflow.md`, "Blockers and questions"); a comment points at it.
 
-## 4 · The session routine
+## The session routine
 
-**Fresh clone, first session:**
-
-```sh
-bd bootstrap
-```
-
-`bd init` is only for the repo that does not have a database yet (see
-[CHANGING-CASE.md](CHANGING-CASE.md)). A clone of a repo that already has one
-has nothing local to read from until `bootstrap` pulls it — running `bd dolt
-pull` straight away has no database to pull into.
-
-**Start of every other session:**
-
-```sh
-bd dolt pull
-```
-
-**End of session, when the session touched the database** (created, claimed or
-closed something):
+Fresh clone, first session: `bd bootstrap`. Start of every other session:
+`bd dolt pull`. End of a session that created, claimed, updated or
+commented:
 
 ```sh
 git ls-remote origin refs/dolt/data
@@ -180,85 +82,33 @@ bd dolt push
 git ls-remote origin refs/dolt/data
 ```
 
-Compare the two `ls-remote` lines. If the second differs from the first, the
-push landed. If it is identical to the first, do not assume the push failed
-silently — check `bd dolt status` first: an identical ref can mean nothing was
-pending. But if you know this session created, claimed or closed something and
-the ref did not move, that IS the silent-push failure: the coordination state
-exists on this machine only. Commit any pending working set and push again
-before anyone relies on what the database says.
+If the ref did not move although this session changed something, the push
+failed silently: check `bd dolt status`, commit what is pending, push again.
 
-Do not shorten this to a bare `bd dolt push`: there is an open failure mode
-where the push reports success while the remote ref never advances, and a
-machine can sit on days of invisible work before anyone notices. Three
-commands, typeable, is what makes the verification something people actually
-run.
+**Never `git push --mirror`** from a working clone: it deletes
+`refs/dolt/data` on the remote — the whole issue history — and git reports
+success. Protect the remote once (`git config receive.denyDeletes true`, or
+your host's ref protection).
 
-A session that changed nothing has nothing to verify — skip the routine.
+## Entering this case
 
-Between the two, work normally. Nothing else is synchronised: the task files are
-git's business, as they always were.
-
-## 5 · The two guards
-
-### Never `git push --mirror`
-
-A mirror push from an ordinary clone **deletes `refs/dolt/data` on the remote**
-— that is the entire issue history, gone, and git reports success. There is no
-undo but another clone that still has it.
-
-This is a rule to hold in your head, not a hook enforcing it: the socle ships no
-executable guard here (see the parent task's slice notes if you are wondering
-why — the short version is that nothing in the test suite can exercise a git
-hook against a live `bd` remote, and an unproven guard is worse than a written
-rule everyone actually reads). Know what the danger looks like so you recognise
-it before you type it:
-
-- A repo mirrored once as a backup, then mirrored again later after teammates
-  pushed issues — the second mirror wipes them. That is the likeliest shape in
-  practice, not a deliberate `--mirror` to the working remote.
-- `git push --mirror` computes the refs it prunes at the transport level; it
-  does not need the branches to be out of sync to still delete
-  `refs/dolt/data`.
-
-**The only complete protection is on the remote** — deny ref deletions there
-(`git config receive.denyDeletes true` on a self-hosted remote, or the
-equivalent ref-protection setting on your host). Set that once, on the remote,
-and this guard stops depending on every clone remembering the rule.
-
-If you need a full backup of the repository, back up the remote itself; never
-mirror a working clone over it.
-
-### Verify the assignee after every claim
-
-Claiming is not atomic while the upstream issue is open: two agents can claim
-the same bead and both believe they hold it. So a claim is two commands, never
-one:
+From a clean working tree (`bd init` commits, and swallows anything staged),
+at the repo root, one command at a time:
 
 ```sh
-bd update <id> --claim --actor <role>
-bd show <id> | grep 'Assignee:'
+bd init --prefix <short-id> --skip-agents --skip-hooks
+bd config set status.custom "draft:active,done:done,cancelled:done"
+bd config get status.custom
 ```
 
-The second line must come back naming the role you just claimed as:
+Check that `bd` added no instructions of its own: no `BEGIN BEADS` block in
+`AGENTS.md` or `CLAUDE.md`, no `SessionStart` hook, no `beads` skill under
+`.agents/skills/`. Remove any you find. Then write the tracker section of
+`.agents/project.md`, create one bead per OPEN task (the archive is never
+read), wire the blocking edges with `bd dep add`, and rewrite each open
+spec's status line to `**Status:** tracked as <id>`. Commit on exact paths,
+never `git add -A`.
 
-```
-Owner: architect · Assignee: mason · Type: task
-```
-
-If the assignee that comes back is not the role you claimed as,
-**you do not have the work**: leave it alone, pick the next ready bead, and
-report the collision one rung up. Do not re-claim, and do not start typing while
-unsure — the failure this prevents is two agents shipping the same change twice.
-
-## 6 · One machine, several agents
-
-The database has a served mode. It is worth it in exactly one situation:
-**several agents running at the same time on ONE machine**, which the embedded
-single-writer lock would otherwise serialise.
-It is **not** the answer to "we are several people": several people on several
-machines are served by the committed database plus the routine above.
-Worktrees share one database too — the served mode is what changes that.
-
-That case is not supported by the setup yet; ask for it when a real repo needs
-it.
+**Leaving this case:** write each open task's status back on its spec's
+status line, set the tracker section back to the task files, and remove
+`.beads/` in one commit.

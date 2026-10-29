@@ -100,10 +100,7 @@ Deno.test("init: full layout and content preservation", async () => {
       "the rendered block matches the block template",
     );
     assertStringIncludes(agentsMd, ".agents/discipline.md");
-    assertStringIncludes(
-      agentsMd,
-      ".agents/formulas/chisel-default.formula.toml",
-    );
+    assertStringIncludes(agentsMd, ".agents/workflow.md");
     assert(
       !agentsMd.includes(".agents/rules/"),
       "the block no longer routes to the retired rules",
@@ -237,7 +234,7 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
     const warned = await runChisel(["init", legacy]);
     assertEquals(warned.code, 0, warned.output);
     assertStringIncludes(warned.stderr, "project-management/CHANGELOG.md");
-    assertStringIncludes(warned.stderr, "upgrade-v2");
+    assertStringIncludes(warned.stderr, "chisel-upgrade");
     assertEquals(
       await Deno.stat(join(legacy, "project-management", "LOG.md")).then(() =>
         true

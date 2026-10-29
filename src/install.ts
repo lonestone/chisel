@@ -294,9 +294,9 @@ export async function ensureProjectManagementSkeleton(
   if (await isFile(join(pmRoot, LEGACY_JOURNAL_NAME))) {
     warn(
       `${targetDir}/project-management/${LEGACY_JOURNAL_NAME} is the journal this repo ` +
-        `already has, and v2 names it ${JOURNAL_NAME} — leaving it alone rather than ` +
-        `creating a second journal beside it. The upgrade-v2 skill renames it properly ` +
-        `and updates the project glue.`,
+        `already has, and the current socle names it ${JOURNAL_NAME} — leaving it alone ` +
+        `rather than creating a second journal beside it. The chisel-upgrade skill renames ` +
+        `it properly and updates the project glue.`,
     );
     return;
   }
@@ -337,7 +337,7 @@ export async function refuseV1Layout(targetDir: string): Promise<void> {
       found.join(" ")
     }) — updating it here ` +
       `would leave two normative discourses side by side, and 'chisel check' would report ` +
-      `neither. Run the 'upgrade-v2' skill first: it retires the v1 rules and workflows.md ` +
+      `neither. Run the 'chisel-upgrade' skill first: it retires the v1 rules and workflows.md ` +
       `file by file, with a human validating; 'chisel update' is safe again the moment they ` +
       `are gone.`,
   );
