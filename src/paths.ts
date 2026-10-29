@@ -74,4 +74,5 @@ export const SOCLE = {
   discipline: "socle/agents/discipline.md",
   methodology: "socle/agents/methodology.md",
   reference: "socle/agents/reference.md",
+  workflow: "socle/agents/workflow.md",
 } as const;

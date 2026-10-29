@@ -51,6 +51,7 @@ export const SOCLE_FILES: readonly string[] = [
   "agents/skills/writing-great-skills/GLOSSARY.md",
   "agents/skills/writing-great-skills/SKILL.md",
   "agents/user.md.tpl",
+  "agents/workflow.md",
   "scripts/sync-upstream.sh",
   "scripts/sync-upstream/SKILL.md",
   "scripts/task-id.sh",

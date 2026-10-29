@@ -73,6 +73,7 @@ export async function managedRelativeFiles(
     ".agents/discipline.md",
     ".agents/methodology.md",
     ".agents/reference.md",
+    ".agents/workflow.md",
     ".agents/user.md.tpl",
     "scripts/task-id.sh",
     "project-management/000-template.spec.md",

@@ -68,6 +68,7 @@
 .agents/skills/writing-great-skills/GLOSSARY.md
 .agents/skills/writing-great-skills/SKILL.md
 .agents/user.md.tpl
+.agents/workflow.md
 .claude
 .claude/agents
 .claude/agents/architect.md

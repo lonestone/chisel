@@ -36,6 +36,7 @@ const COPIED_FILES: ReadonlyArray<readonly [string, string]> = [
   [SOCLE.discipline, ".agents/discipline.md"],
   [SOCLE.methodology, ".agents/methodology.md"],
   [SOCLE.reference, ".agents/reference.md"],
+  [SOCLE.workflow, ".agents/workflow.md"],
   // The TEMPLATE of the personal file, not the personal file itself: it is
   // socle text, committed like the rest, and it is what lets any dev — the
   // first one or the fifth — pose their own `.agents/user.md` with a copy, no

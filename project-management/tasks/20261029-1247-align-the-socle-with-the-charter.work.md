@@ -4,9 +4,34 @@ Created by the Crewmate at plan time, 2026-10-29. Spec:
 `project-management/tasks/20261029-1247-align-the-socle-with-the-charter.spec.md`.
 Governing page: `CHARTER.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Architect, 2026-10-29, with two corrections (see
+"Corrections at approval" below). Answers to the five questions recorded
+there too.
 
 ## Program Design
+
+### Corrections at approval (Architect, 2026-10-29)
+
+1. **Step 2 is conditional.** A task that arrives clear (a well-written
+   issue, a clear request) gets its spec document written by the Architect
+   from it, with no interview. `grilling` runs only when the intent is
+   unclear. The human approves the spec when it carries decisions the task
+   did not state; otherwise the Architect moves it to `ready` itself
+   (charter objective 2, less load on the human).
+2. **The Crewmate closes.** Step 7 is the Crewmate's: tick criteria, promote
+   evergreen material, archive the pair, journal entry, `retro`, commit,
+   tracker update. The Architect reads the close report, rules on anything
+   left, and opens the pull request or asks the human for a merge. "Where it
+   stops" and the statuses section follow: the thread doing a step writes
+   the status it leaves. In this task too: the close comes after the review.
+
+Answers: (1) model tiers kept, compact, in `reference.md`, §H and
+`user.md.tpl` unchanged; (2) the spec and work documents always live in the
+task workspace and the tracker item points at the spec; a spec written from
+a clear issue stays short and links it; the plan always goes in the work
+document; (3) the `stale:` report is extended to the two retired §E lines;
+(4) the vendored GLOSSARY sentence stays, recorded as a deliberate mention;
+(5) see correction 2. Re-copying this repo's two templates: approved.
 
 ### What the socle says after this task
 
