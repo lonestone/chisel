@@ -15,7 +15,7 @@ import {
   readManifest,
   writeManifest,
 } from "./manifest.ts";
-import { staleGlueReport, staleGlueResidues } from "./project-md.ts";
+import { reportStaleGlue } from "./project-md.ts";
 import { ChiselError, reportLine, warn } from "./report.ts";
 import { isDirectory, isFile } from "./target.ts";
 
@@ -76,8 +76,6 @@ export async function update(targetDir: string): Promise<number> {
   await warnForeignSkills(targetDir, Object.keys(previous.managed));
   if (!reported) reportLine("(no managed files changed)");
 
-  for (const residue of await staleGlueResidues(targetDir)) {
-    reportLine(staleGlueReport(residue));
-  }
+  await reportStaleGlue(targetDir);
   return 0;
 }

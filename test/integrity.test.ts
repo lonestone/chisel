@@ -144,7 +144,7 @@ Deno.test("integrity: every pointer of the installed socle resolves", async () =
     );
 
     // Mutation test: plant one broken pointer of each shape, demand both are
-    // caught — a checker nobody checks is a decoration.
+    // caught — a test nobody tests is a decoration.
     const mutant = await workspace.install("brownfield");
     await Deno.writeTextFile(
       join(mutant, ".agents", "discipline.md"),

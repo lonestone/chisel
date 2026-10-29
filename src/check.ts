@@ -5,7 +5,7 @@ import { join } from "@std/path";
 import { agentsBlockHash, sha256File } from "./hash.ts";
 import { BLOCK_KEY, manifestPath, readManifest } from "./manifest.ts";
 import { packageVersion } from "./paths.ts";
-import { staleGlueReport, staleGlueResidues } from "./project-md.ts";
+import { reportStaleGlue } from "./project-md.ts";
 import { ChiselError, reportLine } from "./report.ts";
 import {
   agentsMdHasBlockMarkers,
@@ -96,9 +96,7 @@ export async function check(targetDir: string): Promise<number> {
 
   // Reported, never counted as divergence: the glue is the project's file,
   // and a residue in it is not a managed file that moved.
-  for (const residue of await staleGlueResidues(targetDir)) {
-    reportLine(staleGlueReport(residue));
-  }
+  await reportStaleGlue(targetDir);
 
   if (exitCode === 0) reportLine("clean — no divergence");
   return exitCode;

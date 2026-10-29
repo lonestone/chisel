@@ -12,6 +12,7 @@ import {
   serializeGlue,
 } from "./glue.ts";
 import { readPackageFile, SOCLE } from "./paths.ts";
+import { reportLine } from "./report.ts";
 import {
   agentsMdHasBlockMarkers,
   claudeMdImportsAgents,
@@ -125,4 +126,11 @@ export async function staleGlueResidues(targetDir: string): Promise<string[]> {
 export function staleGlueReport(residue: string): string {
   return `stale: .agents/project.md still carries ${residue}, which nothing in the socle ` +
     `reads any more — safe to delete by hand (chisel never edits this file)`;
+}
+
+/** Prints one `stale:` line per residue the glue still carries. */
+export async function reportStaleGlue(targetDir: string): Promise<void> {
+  for (const residue of await staleGlueResidues(targetDir)) {
+    reportLine(staleGlueReport(residue));
+  }
 }

@@ -6,7 +6,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/wayfinder
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "adapted: with no external tracker declared, the map lives as a folder of markdown files under the task workspace; project paths resolve via .agents/project.md"
+  changes: "adapted: when the glue's tracker is the task files, the map lives as a folder of markdown files under the task workspace; project paths resolve via .agents/project.md"
 ---
 
 A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** — a folder in the repo, or the repo's issue tracker — then works its **decision tickets** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
@@ -29,9 +29,9 @@ The map is an **index**, not a store. It lists the decisions made and points at 
 
 ### Where the map lives
 
-§B2 · Link to an external tracker of `.agents/project.md` — the one place that says whether this repo has an issue tracker, and which — decides the support. With a tracker declared, the map is an issue and its tickets are child issues, exactly as the rest of this skill reads.
+§B · Tracker of `.agents/project.md` — the one place that says where this repo's tasks live, and what reads them — decides the support. With an issue tracker declared there, the map is an issue and its tickets are child issues, exactly as the rest of this skill reads.
 
-**With no tracker declared, the map is a folder**: `maps/<slug>/` under the tasks root declared in §A · Task workspace of the same file, which is where that repo keeps its task documents (default `/project-management/maps/<slug>/`), `<slug>` being the destination in a few words. `MAP.md` in it carries the map body below, unchanged. Each ticket is one file `<NN>-<title-slug>.md` beside it, `<NN>` in creation order:
+**When the tracker is the task files, the map is a folder**: `maps/<slug>/` under the tasks root declared in §A · Task workspace of the same file, which is where that repo keeps its task documents (default `/project-management/maps/<slug>/`), `<slug>` being the destination in a few words. `MAP.md` in it carries the map body below, unchanged. Each ticket is one file `<NN>-<title-slug>.md` beside it, `<NN>` in creation order:
 
 ```markdown
 # <NN> — <Ticket title>

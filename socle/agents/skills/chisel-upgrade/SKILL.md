@@ -1,6 +1,6 @@
 ---
 name: chisel-upgrade
-description: Move a repo equipped with an older chisel to the current layout — from the first version's layout (`.agents/rules/`, `workflows.md`) or from a 0.1.x install (formulas, presets, role profiles, rendered agent definitions, thirteen statuses). One step at a time, the human validating each one; the archive is never touched.
+description: Move a repo equipped with an older chisel — the first version's layout or a 0.1.x install — to the current layout.
 disable-model-invocation: true
 ---
 
@@ -19,7 +19,8 @@ it, from either of two starting points:
   (`.agents/formulas/`), the role profiles (`.agents/profiles/`: Foreman,
   Architect, Checker, Mason, Inspector), the agent definitions rendered from
   them in `.claude/agents/` and `.codex/agents/`, the thirteen-status ladder,
-  and a glue with §B1 and §B2. `chisel update` accepts it and removes the
+  and a glue with two coordination subsections, "§B1 · Where task statuses
+  live" and "§B2 · Link to an external tracker". `chisel update` accepts it and removes the
   retired files it installed unchanged; what it cannot touch — the glue, the
   task statuses, the project's own text — is this skill's.
 

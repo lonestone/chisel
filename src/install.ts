@@ -43,6 +43,9 @@ const COPIED_FILES: ReadonlyArray<readonly [string, string]> = [
   [SOCLE.workTemplate, "project-management/000-template.work.md"],
 ];
 
+/** Where the task id script lands in the target. */
+const TASK_ID_SCRIPT = "scripts/task-id.sh";
+
 const EXECUTABLE_MODE = 0o755;
 
 async function writePackaged(
@@ -55,13 +58,18 @@ async function writePackaged(
   if (mode !== undefined) await Deno.chmod(destination, mode);
 }
 
-/** The socle files a target gets, as paths relative to the target. */
+/**
+ * Every file `copyManagedFiles` writes, as paths relative to the target —
+ * read from the same lists it copies from, so the two cannot drift apart.
+ */
 export function managedSocleFiles(): string[] {
   const managed: string[] = [];
   for (const socleFile of SOCLE_FILES) {
     const tree = COPIED_TREES.find((prefix) => socleFile.startsWith(prefix));
     if (tree) managed.push(`.agents/${socleFile.slice("agents/".length)}`);
   }
+  for (const [, relative] of COPIED_FILES) managed.push(relative);
+  managed.push(TASK_ID_SCRIPT);
   return managed.sort();
 }
 
@@ -76,7 +84,7 @@ export async function copyManagedFiles(targetDir: string): Promise<void> {
   }
   await writePackaged(
     SOCLE.taskIdScript,
-    join(targetDir, "scripts", "task-id.sh"),
+    join(targetDir, TASK_ID_SCRIPT),
     EXECUTABLE_MODE,
   );
 }

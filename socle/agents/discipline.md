@@ -12,8 +12,8 @@ feature; the only difference is the paperwork.
 2. **Plan first.** Even for a one-shot fix: say what you are about to do
    before doing it. Nothing half-decided crosses into code. When the work has
    a spec document, the program design is PERSISTED into its matching work
-   document and approved by the Architect before any code — step 3 and step 4
-   of `.agents/workflow.md`.
+   document and approved by the Architect before any code — the "Plan" and
+   "Read the plan" steps of `.agents/workflow.md`.
 
 3. **🧑 zones are law.** Sections marked 🧑 in a spec document carry the
    decisions of whoever approved them — the human, unless the Architect
@@ -62,7 +62,8 @@ feature; the only difference is the paperwork.
     When a code must be cited, its meaning comes with it every time. **A
     reference names the file and the section title** — "§A · Task workspace
     of `.agents/project.md`" — never a bare number and never a line number,
-    which is wrong by the next edit. **Every cross-reference says in one
+    which is wrong by the next edit; later mentions in the same document may
+    shorten to the letter or the title. **Every cross-reference says in one
     sentence what the reader finds there.** **The socle's words stay in the
     socle's language:** `seam`, and every term the glossary of
     `.agents/reference.md` defines, is never translated, whatever language

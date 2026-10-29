@@ -38,8 +38,8 @@ export function serializeManifest(manifest: Manifest): string {
   return `${JSON.stringify({ managed, version: manifest.version }, null, 2)}\n`;
 }
 
-// Relative-to-target paths of every file the manifest tracks (the managed
-// block excepted, which is not a file).
+// The files the manifest tracks (the managed block excepted, which is not a
+// file) are exactly the ones `managedSocleFiles` names.
 //
 // The `.agents/` entries come from the socle that shipped, NOT from a walk of
 // the target: chisel manages exactly the files it copies, and nothing else.
@@ -50,25 +50,11 @@ export function serializeManifest(manifest: Manifest): string {
 // cleans an install from an older socle: the pages it retired and the agent
 // definitions it rendered into `.claude/agents/` and `.codex/agents/` sit in
 // its last manifest and in no list here, so they come out as orphans.
-export function managedRelativeFiles(): string[] {
-  const managed = managedSocleFiles();
-  managed.push(
-    ".agents/discipline.md",
-    ".agents/methodology.md",
-    ".agents/reference.md",
-    ".agents/workflow.md",
-    ".agents/user.md.tpl",
-    "scripts/task-id.sh",
-    "project-management/000-template.spec.md",
-    "project-management/000-template.work.md",
-  );
-  return managed;
-}
 
 /** Rewrites the manifest from the current state of the target, and returns it. */
 export async function writeManifest(targetDir: string): Promise<Manifest> {
   const managed: Record<string, string> = {};
-  for (const relative of managedRelativeFiles()) {
+  for (const relative of managedSocleFiles()) {
     const path = join(targetDir, relative);
     if (await isFile(path)) managed[relative] = await sha256File(path);
   }
