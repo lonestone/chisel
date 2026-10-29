@@ -8,19 +8,29 @@ disagrees with this page, this page wins.
 
 **Chisel processes one task.** It takes a task from its plan to its commit,
 and writes or sharpens the spec first when the intent is not yet clear.
-That is the whole scope.
+Along the way it reads and updates the task where it lives, and it can open
+the pull request. Merging and publishing wait for the human's explicit
+word on that very action.
 
-**Chisel is not an agent orchestration library.** Chaining tasks,
-scheduling them, running threads in parallel, talking to a tracker, opening
-or merging a pull request: all of that belongs to the layer above. That
-layer can be a human, a harness, a long-lived orchestrator thread, or a
-script. Chisel gives it a task it can hand over and a commit it gets back.
+**Chisel works with any tracker.** A task can be an issue in Plane, a line
+in beads, or a file in the repo. The agent needs one skill or tool that
+reads and updates the task in that tracker. Once it has the task, it
+follows chisel's method to ship it.
+
+**Chisel does not orchestrate.** Watching a tracker to launch agents,
+scheduling tasks, deciding which task runs next: that belongs to the layer
+above. That layer can be a human, a harness, a long-lived orchestrator
+thread, or a script.
+
+**The workflow is prose.** One page describes the steps of a task, who does
+each, and where it stops for a reading. No workflow engine and no machine
+format: the first version ran in production on prose alone.
 
 **Why.** Current frontier models are good enough that heavy guidance costs
 more than it returns. The second version of chisel added sub-agents, five
-presets, a Foreman role and a thirteen-status ladder; no repo ever installed
-it. The first version, lighter, runs in production. The field facts are at
-the end of this page.
+presets, a Foreman role and a thirteen-status ladder. It costs more to run
+than the first version, and the extra context engineering did not pay. The
+field facts are at the end of this page.
 
 ## Objectives
 
@@ -28,11 +38,15 @@ the end of this page.
    quality.** No step, role or file exists only to make chisel chain work.
 2. **Less load on the human.** The Architect reads the plan and settles what
    it can. Only the key questions reach the human.
-3. **Fresh eyes where they matter.** The code review runs in sub-agents that
+3. **No sub-agent without a reason.** Each one costs tokens and a brief to
+   engineer. A sub-agent is launched only for a context that must stay
+   clean, for work that runs in parallel, or for a cheaper model. Anthropic
+   makes the same case in "When to fold subagents into your main agent
+   loop":
+   https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop
+4. **Fresh eyes where they matter.** The code review runs in sub-agents that
    never saw the session that wrote the code. It is one of the few moments
    where a change of context is essential.
-4. **Less context engineering.** A role is split off only when it pays: a
-   different model, or a context that must stay clean.
 
 ## The roles
 
@@ -44,8 +58,12 @@ the end of this page.
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the coding session. |
 
 **The Architect's thread** can be one long thread that compacts and serves
-as the entry point to a project, or one thread per piece of work. Chisel
-works the same either way.
+as the entry point to a project, or one thread per piece of work. In a long
+thread the Architect can run several Crewmates, one per task or slice.
+
+**A role is a paragraph of the workflow, not a file.** The Architect writes
+each brief from the workflow page. Chisel ships no role contract files and
+generates no agent definitions.
 
 **The human's part.** The human owns the intent and the decisions that
 shape the task. The Architect approves the plan. A plan that departs from a
@@ -53,8 +71,16 @@ decision the human made goes back to the human, with the question stated.
 
 ## What goes away
 
-**The Foreman.** Owning a thread of work and spawning the next step is the
-orchestration layer's job, not chisel's.
+- **The Foreman.** Spawning the next step is the Architect's job inside a
+  task, and the layer above's job between tasks.
+- **The formulas and their five presets.** The prose workflow replaces
+  them.
+- **The role profiles**, and with them the Checker and the Inspector. The
+  Architect reads the spec and the plan; `code-review` reads the diff.
+- **The thirteen-status ladder.** A task keeps the few statuses it needs
+  for itself. Anything finer belongs to the tracker.
+- **Beads as a coordination layer.** Beads stays, as one tracker among
+  others.
 
 ## Field facts behind this page
 

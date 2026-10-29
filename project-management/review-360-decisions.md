@@ -1323,3 +1323,34 @@ leurs cinq presets, le modèle à treize statuts, beads, les profils Checker
 et Inspector, et la branche qui sert de base à la suite. La version 0.2.0
 préparée sur `v2` le 16 septembre n'est pas publiée et ne doit pas l'être
 telle quelle : elle livre le Foreman et les cinq presets.
+
+## Addendum 16 (2026-10-29) — corrections de l'Owner sur la charte, et les quatre points tranchés
+
+L'Owner, le même jour, sur la première version de `CHARTER.md` :
+
+- **Le tracker et la PR sont dans le périmètre.** « Pousser / modifier une
+  tâche sur le tracker et ouvrir une PR, c'est complètement dans ses
+  cordes, c'est pas de l'orchestration. » L'orchestration, c'est surveiller
+  le tracker pour lancer des agents.
+- **Un Architect dans un fil long peut parler à plusieurs Crewmates.**
+- **Pas de sous-agent sans nécessité** : c'est moins cher et moins de
+  context engineering ; la v2 coûte effectivement plus cher que la v1. Il
+  cite l'article d'Anthropic sur le repli des sous-agents dans la boucle
+  principale.
+
+Les quatre points laissés ouverts par l'Addendum 15 :
+
+1. ✅ **Le workflow s'écrit en prose**, comme en v1. Les formulas et les
+   cinq presets partent. L'Owner : « p-e que la prose suffit pour Chisel ».
+2. ✅ **Chisel s'applique quel que soit le tracker** : une issue Plane, une
+   ligne beads ou un fichier ; l'agent a le skill qui lit et met à jour la
+   tâche, puis suit la méthode. Les treize statuts partent ; la tâche garde
+   ceux dont elle a besoin pour elle-même.
+3. ✅ **Checker et Inspector partent**, et avec eux les fiches de profils,
+   que l'Owner juge inutiles et trop longues. L'Architect les a confirmées
+   inutiles : la v1 tourne en production sans elles, et l'article cité
+   recommande des skills plutôt que des sous-agents spécialisés.
+4. ✅ **La suite part de `v2`.**
+
+`CHARTER.md` est réécrite en conséquence. L'Owner : « Je te laisse faire
+ça » ; l'alignement du socle sur la charte est ouvert comme tâche.

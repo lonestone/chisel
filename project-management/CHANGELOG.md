@@ -9,13 +9,18 @@ ships.
 
 After six weeks of the first version in the field, the Owner recentres the
 product. Chisel takes one task from its plan to its commit, sharpening the
-spec first when the intent is unclear. Orchestration belongs to the layer
-above. The Foreman goes away. The Architect becomes the default role of
-the agent a human or an orchestrator talks to; it launches a Crewmate that
-plans and codes, and reads that plan itself. The Typist becomes optional.
-The code review stays in fresh sub-agents. Written in `CHARTER.md`, which
-now wins over any older decision; recorded as Addendum 15 of the decisions
-record. The 0.2.0 bump of entry 35 is not to be published as it stands.
+spec first when the intent is unclear; it reads and updates the task in
+whatever tracker holds it, and can open the pull request. Watching a
+tracker to launch agents belongs to the layer above. The workflow is prose.
+The Architect becomes the default role of the agent a human or an
+orchestrator talks to; it runs one or several Crewmates that plan and
+code, and reads their plans itself. The Typist becomes optional. The code
+review stays in fresh sub-agents, and no other sub-agent is launched
+without a reason. The Foreman, the formulas and their presets, the role
+profiles, the thirteen-status ladder and beads as a coordination layer go
+away. Written in `CHARTER.md`, which now wins over any older decision;
+recorded as Addenda 15 and 16 of the decisions record. The 0.2.0 bump of
+entry 35 is not to be published as it stands.
 
 ## 35. 2026-09-16 — `@lonestone/chisel` 0.2.0 is ready to publish
 
