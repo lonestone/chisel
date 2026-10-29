@@ -5,6 +5,36 @@ ships.
 
 ---
 
+## 37. 2026-10-29 — The socle follows the charter; what 0.2.0 now contains
+
+The socle on `v2` now says what `CHARTER.md` says. Version 0.2.0, still
+unpublished, ships one prose page for the workflow, `.agents/workflow.md`:
+the roles (Architect by default, Crewmate, an optional Typist, the
+reviewers inside `code-review`), the seven steps of one task from intent to
+commit and pull request, where the work stops, the tracker, and the two
+briefs. The spec is written straight from a clear task, with an interview
+only when the intent is unclear; the Crewmate stops after its plan for the
+Architect's reading, then codes, reviews and closes. Seven statuses replace
+thirteen: `draft`, `ready`, `in-progress`, `done`, `blocked`, `deferred`,
+`cancelled`; plan approval is a line in the work document. The glue's §B
+becomes one tracker section (task files, beads, Plane or any tool, named
+with the skill or connector that reads it). The doctrine is 532 lines
+across `discipline.md`, `workflow.md`, `methodology.md` and `reference.md`,
+down from about 2,600 with the formulas and the profiles, which are gone,
+with the rendered agent definitions. `chisel-beads` shrinks to the beads
+adapter in one page. `upgrade-v2` becomes `chisel-upgrade`.
+
+**How a 0.1.1 repo moves to it.** Run `chisel update`: it removes every
+formula, profile and rendered definition that 0.1.1 installed and nobody
+edited, with a `removed:` line each, takes the emptied directories with
+them, names any edited one on an `orphaned:` line, and reports the glue's
+two retired adapter lines on `stale:` lines without touching the glue. Then
+run the `chisel-upgrade` skill: it rewrites the glue's §B into the tracker
+section, moves the open tasks' statuses by its thirteen-to-seven table
+(the archive is never touched), re-declares the beads statuses where beads
+is in use, and lists the project's own text that still names a retired
+piece.
+
 ## 36. 2026-10-29 — Chisel processes one task; it does not orchestrate
 
 After six weeks of the first version in the field, the Owner recentres the

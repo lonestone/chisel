@@ -334,14 +334,33 @@ Each commit: `deno task test` and `deno task check` green before it lands;
 
 - 2026-10-29 — Read the charter, the spec, the socle, the CLI and the tests;
   wrote this plan. No code yet.
+- 2026-10-29 — Plan approved with two corrections (conditional spec step,
+  the Crewmate closes). Commits, each with `deno task test` and
+  `deno task check` green:
+  - `4ae0df9` adds `workflow.md` (191 lines) and ships it.
+  - `5050b35` points the socle at it: discipline 94,
+    methodology 178, reference 69 lines (doctrine 532 in all); templates,
+    managed block, glue §B · Tracker; `chisel-beads` 114 lines in one file;
+    `chisel-upgrade` replaces `upgrade-v2`.
+  - `9c1769c` retires the formulas, the profiles, `render.ts` and its tests;
+    the 0.1.1 cleanup test; the `stale:` report for the two §E lines;
+    `@std/toml` dropped from `deno.json` (only the render test used it).
+    `deno publish --dry-run --allow-dirty` succeeds.
+  - `7c0b49c` README, PHILOSOPHY, this repo's AGENTS.md and templates.
+- Deviations from the plan: the integrity waiver also names `.agents/rules`
+  (the directory, which `chisel-upgrade` names on its own); the user's own
+  definition test now creates `.claude/agents` itself, since `init` no
+  longer does; `chisel-setup` lost 92 lines rather than the 54 planned.
+- Mutation check: putting `.codex/agents` back among the directories
+  `update` keeps makes the 0.1.1 cleanup test fail.
 
 ## Implementation Checkboxes
 
-- [ ] 1. Workflow page added, shipped, in the golden tree
-- [ ] 2. Doctrine, templates, glue and skills point at it; `chisel-upgrade` replaces `upgrade-v2`
-- [ ] 3. Formulas, profiles and renders retired; 0.1.1 cleanup test green
-- [ ] 4. README, PHILOSOPHY, AGENTS.md, repo templates
-- [ ] 5. Changelog entry 37
+- [x] 1. Workflow page added, shipped, in the golden tree
+- [x] 2. Doctrine, templates, glue and skills point at it; `chisel-upgrade` replaces `upgrade-v2`
+- [x] 3. Formulas, profiles and renders retired; 0.1.1 cleanup test green
+- [x] 4. README, PHILOSOPHY, AGENTS.md, repo templates
+- [x] 5. Changelog entry 37
 - [ ] 6. Review run, findings answered, criteria ticked
 
 ## Notes & Snippets
