@@ -1,7 +1,27 @@
-# Changelog
+# Journal
 
 Project history, newest first. Dated entries, per the methodology this repo
 ships.
+
+---
+
+## 39. 2026-11-01 — The Owner's crit review: merge per project, JOURNAL.md
+
+The Owner reviewed the whole of `v2` since the charter in crit and left
+eight comments. Whether the agent may merge or publish on its own is now
+the project's choice: the glue gains "I · Merge and publish", asked by
+`chisel-setup` and defaulting to the human's explicit word, and the
+charter, `discipline.md`, `workflow.md` and the `AGENTS.md` block follow it.
+The charter calls the Architect the project lead, played by the thread one
+talks to and best kept long, gives the post-review fixes to the Crewmate,
+and drops its "What goes away" and field-facts sections, which live here
+(entry 36) and in the decisions record (Addendum 15). A task can be the
+message in the prompt. The fallback session for a tool without sub-agents
+is gone. The journal is renamed `JOURNAL.md`: the installer seeds that
+name, treats `LOG.md` and `CHANGELOG.md` as a journal the repo already has,
+and `chisel-upgrade` renames either; this repo's own `CHANGELOG.md` becomes
+this file. Recorded as Addendum 17, which also keeps open the question of
+what the Architect adds on a single task.
 
 ---
 

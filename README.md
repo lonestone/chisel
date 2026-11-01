@@ -110,7 +110,7 @@ deno run -A src/main.ts init ../some-repo
 it protects) and `deno task check` type-checks, lints and format-checks.
 
 **Releasing.** Bump `version` in `deno.json`, add the dated entry to
-`project-management/CHANGELOG.md`, commit, then `deno publish` from a clean
+`project-management/JOURNAL.md`, commit, then `deno publish` from a clean
 tree (`--allow-dirty` only when untracked files you mean to keep sit in the
 tree). The published set is what `publish.include` in `deno.json` names.
 Consumers see the new version once Deno's minimum dependency age has passed,

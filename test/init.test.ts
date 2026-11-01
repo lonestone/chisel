@@ -214,7 +214,7 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
     const fresh = await workspace.copy("brownfield");
     assertEquals((await runChisel(["init", fresh])).code, 0);
     const journal = await Deno.readTextFile(
-      join(fresh, "project-management", "LOG.md"),
+      join(fresh, "project-management", "JOURNAL.md"),
     );
     assertStringIncludes(journal, `## ${today()}`);
     assertEquals(
@@ -236,29 +236,52 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
     assertStringIncludes(warned.stderr, "project-management/CHANGELOG.md");
     assertStringIncludes(warned.stderr, "chisel-upgrade");
     assertEquals(
-      await Deno.stat(join(legacy, "project-management", "LOG.md")).then(() =>
-        true
+      await Deno.stat(join(legacy, "project-management", "JOURNAL.md")).then(
+        () => true,
       ).catch(() => false),
       false,
       "no second journal was created",
     );
     assertStringIncludes(
       await Deno.readTextFile(join(legacy, ".agents", "project.md")),
-      "- **Changelog:** `/project-management/CHANGELOG.md`",
+      "- **Journal:** `/project-management/CHANGELOG.md`",
       "§A points at the journal the repo has",
+    );
+
+    // (b') The name a 0.1.x install gave its journal counts as one too.
+    const logged = await workspace.dir("repo-with-log");
+    await Deno.mkdir(join(logged, "project-management"));
+    await Deno.writeTextFile(
+      join(logged, "project-management", "LOG.md"),
+      "# Log\n\n## 2026-09-10\n\n- chisel init: installed the dev-workflow socle.\n",
+    );
+    const loggedRun = await runChisel(["init", logged]);
+    assertEquals(loggedRun.code, 0, loggedRun.output);
+    assertStringIncludes(loggedRun.stderr, "project-management/LOG.md");
+    assertEquals(
+      await Deno.stat(join(logged, "project-management", "JOURNAL.md")).then(
+        () => true,
+      ).catch(() => false),
+      false,
+      "no second journal beside LOG.md",
+    );
+    assertStringIncludes(
+      await Deno.readTextFile(join(logged, ".agents", "project.md")),
+      "- **Journal:** `/project-management/LOG.md`",
+      "§A points at LOG.md",
     );
 
     // (c) A journal that exists is never rewritten.
     const handWritten = `${await Deno.readTextFile(
-      join(fresh, "project-management", "LOG.md"),
+      join(fresh, "project-management", "JOURNAL.md"),
     )}\n## 2099-01-01\n\n- written by hand, must survive\n`;
     await Deno.writeTextFile(
-      join(fresh, "project-management", "LOG.md"),
+      join(fresh, "project-management", "JOURNAL.md"),
       handWritten,
     );
     assertEquals((await runChisel(["init", fresh])).code, 0);
     assertEquals(
-      await Deno.readTextFile(join(fresh, "project-management", "LOG.md")),
+      await Deno.readTextFile(join(fresh, "project-management", "JOURNAL.md")),
       handWritten,
       "a pre-existing journal is left byte for byte",
     );

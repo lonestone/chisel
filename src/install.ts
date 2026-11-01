@@ -22,7 +22,7 @@ import {
   SKILLS_LINK_VALUE,
   skillsLinkValue,
 } from "./target.ts";
-import { JOURNAL_NAME, LEGACY_JOURNAL_NAME } from "./project-md.ts";
+import { JOURNAL_NAME, legacyJournalName } from "./project-md.ts";
 
 /** The socle directories copied whole into `.agents/`. */
 const COPIED_TREES = ["agents/skills/"] as const;
@@ -272,7 +272,7 @@ function today(): string {
 // Project-owned: tasks and archive created if missing; the journal written
 // once, never again.
 //
-// Why the journal is called `LOG.md`, why it is handwritten, and why §A of the
+// Why the journal is called `JOURNAL.md`, why it is handwritten, and why §A of the
 // glue — not this function — is where its path is declared: the glue template,
 // section A. The rule is written there once and not re-argued here.
 //
@@ -291,9 +291,10 @@ export async function ensureProjectManagementSkeleton(
   await Deno.mkdir(join(pmRoot, "archive"), { recursive: true });
   const journal = join(pmRoot, JOURNAL_NAME);
   if (await isFile(journal)) return;
-  if (await isFile(join(pmRoot, LEGACY_JOURNAL_NAME))) {
+  const legacy = await legacyJournalName(pmRoot);
+  if (legacy !== null) {
     warn(
-      `${targetDir}/project-management/${LEGACY_JOURNAL_NAME} is the journal this repo ` +
+      `${targetDir}/project-management/${legacy} is the journal this repo ` +
         `already has, and the current socle names it ${JOURNAL_NAME} — leaving it alone ` +
         `rather than creating a second journal beside it. The chisel-upgrade skill renames ` +
         `it properly and updates the project glue.`,
@@ -303,7 +304,7 @@ export async function ensureProjectManagementSkeleton(
   await Deno.writeTextFile(
     journal,
     [
-      "# Log",
+      "# Journal",
       "",
       "Project history, newest first. Written by hand, one dated entry per",
       "task — never generated.",

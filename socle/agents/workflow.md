@@ -35,7 +35,8 @@ thread the Architect can run several Crewmates, one per task or slice.
 
 **1. Read the task — Architect.** Read it where it lives, through the
 skill or tool the tracker section of `.agents/project.md` names: an issue
-in a tracker, a line in beads, or a spec document in the task workspace.
+in a tracker, a line in beads, a spec document in the task workspace, or
+simply the message in the prompt.
 
 **2. Write or sharpen the spec — Architect.** When the task arrives clear —
 a well-written issue, a clear request — write the spec document from it,
@@ -85,8 +86,9 @@ report. Commit, update the tracker, and report to the Architect: what
 landed, which criteria are met, what is left. Status: `done`.
 
 **After the close — Architect.** Read the close report and rule on anything
-left. Open the pull request, or ask the human for a merge. Merging and
-publishing wait for the human's explicit word on that very action.
+left. Open the pull request. Merge and publish as the merge and publish
+section of `.agents/project.md` says; by default, ask the human, whose
+explicit word on that very action is the only go.
 
 ## Where the work stops
 
@@ -94,7 +96,7 @@ publishing wait for the human's explicit word on that very action.
 |---|---|---|
 | Crewmate | Architect | After the plan; after the close, with its report; on a blocker it cannot rule on |
 | Architect | Human | On an unclear intent; on a spec that carries decisions the task did not state; on a plan that departs from the human's decisions; on a blocker above what it owns |
-| Architect | Human | Before a merge or a publish |
+| Architect | Human | Before a merge or a publish, unless the project lets the agent do it |
 
 Everything else runs without a stop. A question that is not one of these is
 the Architect's to settle.
@@ -141,10 +143,6 @@ A brief is artifacts and paths, never the conversation: whatever the
 sub-agent needs must already be in the repo. Reviewers are always fresh. A
 Crewmate is reused within a live thread — the one that wrote the plan codes
 it — and a resumed task starts fresh from the spec and work documents.
-
-When the tool cannot launch a sub-agent, the human opens a fresh session
-with `work on task <spec-document>` (or `work on slice <spec-document>`),
-and that session plays the Crewmate.
 
 ## The Crewmate brief
 

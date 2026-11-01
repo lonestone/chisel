@@ -60,7 +60,7 @@ Gather it all, then state it as a short table:
 - which retired files are present (rules, `workflows.md`, formulas, profiles,
   definitions in `.claude/agents/` and `.codex/agents/`);
 - what §A of `.agents/project.md` declares, and the journal's path;
-- which glue sections exist (§B1, §B2, §B3, §E's adapter lines, §H);
+- which glue sections exist (§B1, §B2, §B3, §E's adapter lines, §H, §I);
 - the open task files and their status values, and the number of archived
   files (checked again at the end);
 - whether `.beads/` exists, and whether `.beads/formulas` is a symlink;
@@ -75,18 +75,18 @@ Facts are stated; only genuine decisions are asked.
    The rules directory must not survive: a rule someone added locally is the
    project's — name it and ask where it should move (usually a project
    instruction outside the managed block of `AGENTS.md`).
-2. **Rename the journal.** The current default is `LOG.md`; the first
+2. **Rename the journal.** The current default is `JOURNAL.md`; the first
    version called it `CHANGELOG.md`, which collides with a release changelog.
-   `git mv` it, point §A's changelog line at the new name, and leave its
-   content alone. No journal yet: point §A at `LOG.md` and let the installer
-   create it.
+   `git mv` it, rewrite §A's changelog line as `- **Journal:**` with the new
+   path, and leave its content alone. No journal yet: point §A at
+   `JOURNAL.md` and let the installer create it.
 3. **Install the current layer:** `deno x jsr:@lonestone/chisel init .`. It
    poses the socle, rewrites the managed block of `AGENTS.md`, and leaves the
    glue as it is. If the task workspace is not `project-management/`, delete
-   the `project-management/LOG.md` the installer seeded there — two journals
+   the `project-management/JOURNAL.md` the installer seeded there — two journals
    is what this step exists to prevent — and say so.
 4. **Complete the glue** with `.agents/skills/chisel-setup/SKILL.md`: its §B,
-   §H and personal-file steps, one question per message, written back one
+   §H, §I and personal-file steps, one question per message, written back one
    section at a time. Add §E with each adapter ticked from what is in place.
 5. **Move the statuses** of open task files by the first-version table below.
 
@@ -119,6 +119,12 @@ Facts are stated; only genuine decisions are asked.
    Inspector — with its replacement: the Architect, `.agents/workflow.md`,
    the Crewmate or the Typist, the reviewers of `code-review`. Fixing them is
    the human's decision, line by line.
+6. **Rename the journal.** A 0.1.x install calls it `LOG.md` (or kept
+   `CHANGELOG.md`); the current default is `JOURNAL.md`. `git mv` it,
+   rewrite §A's journal line as `- **Journal:**` with the new path, and
+   leave its content alone.
+7. **Add §I · Merge and publish** with chisel-setup's §I screen. Without
+   the section, merging and publishing wait for the human, as before.
 
 ## The migration tables
 

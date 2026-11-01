@@ -1354,3 +1354,33 @@ Les quatre points laissés ouverts par l'Addendum 15 :
 
 `CHARTER.md` est réécrite en conséquence. L'Owner : « Je te laisse faire
 ça » ; l'alignement du socle sur la charte est ouvert comme tâche.
+
+## Addendum 17 (2026-11-01) — la revue crit de l'Owner sur la charte et le workflow
+
+L'Owner a relu en crit tout le travail de `v2` depuis la charte. Ce qu'il
+a tranché :
+
+- ✅ **Merger et publier dépendent du projet.** « Ça varie de repo en repo.
+  Merger et publier peuvent être des actions finales. » Le glue gagne une
+  section « I · Merge and publish » ; sans réglage, l'agent attend la
+  parole explicite de l'humain, comme avant.
+- ✅ **L'Architect est le chef de projet**, joué par le fil auquel on
+  parle, de préférence long. Personne ne lance d'Architect. Les
+  corrections d'après revue reviennent au Crewmate qui a écrit le code.
+- ✅ **La charte dit ce qu'est chisel, pas son histoire.** « Ce qui part »
+  relève du journal (entrée 36) ; les faits terrain restent à
+  l'Addendum 15.
+- ✅ **Une tâche peut être simplement le message du prompt.**
+- ✅ **La session de secours sans sous-agent disparaît** : « Ça ne devrait
+  plus arriver. »
+- ✅ **Le journal s'appelle `JOURNAL.md`**, dans chisel et dans les repos
+  équipés, pour lever la confusion avec un changelog de release.
+  `chisel-upgrade` renomme `CHANGELOG.md` ou `LOG.md`.
+- ✅ **Pas de consigne d'analyse du code pour juger si une tâche est
+  claire** : un modèle frontier le fait de lui-même.
+
+Reste ouvert : **l'Architect apporte-t-il de la valeur sur une tâche
+seule ?** L'Owner l'utilise comme chef de projet qui pilote plusieurs
+Crewmates, et propose de mesurer sur Crucible si un Crewmate en
+sous-agent paie face au fil principal qui code lui-même, avec la revue en
+sous-agents neufs.

@@ -128,7 +128,7 @@ those rules, not around them.
 - [ ] Documentation home + the repo's own reading rules
 - [ ] `project-management/000-task-file-template.md` pointers repaired
 - [ ] Tracker case decided and recorded
-- [ ] Dated `CHANGELOG.md` entry
+- [ ] Dated `JOURNAL.md` entry
 
 ## Notes & Snippets
 

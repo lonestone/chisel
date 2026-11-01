@@ -13,16 +13,17 @@ a fact true of one machine or one account belongs there. -->
 
 ## A · Task workspace
 
-<!-- Questionnaire asks: where do tasks, archive, changelog, roadmap, and the
+<!-- Questionnaire asks: where do tasks, archive, journal, roadmap, and the
 two task templates live? Default is root `/project-management/`; an
 Astro-embedded variant may nest it elsewhere.
 
-The changelog line is the ONE place the journal's path is declared: everything
+The journal line is the ONE place the journal's path is declared: everything
 that writes to it — the workflow, the skills — resolves through this line
-and never hardcodes a name. Its default is `LOG.md` because a repo's
-`CHANGELOG.md` usually belongs to its releases, and this is a different
-document. A repo equipped before that default changed simply keeps its own name
-here; nothing else has to move.
+and never hardcodes a name. Its default is `JOURNAL.md`, a name no other
+document claims: a repo's `CHANGELOG.md` belongs to its releases, and this
+is a different document. A repo equipped under an older name (`CHANGELOG.md`,
+then `LOG.md`) keeps working with that name here; the `chisel-upgrade` skill
+renames it.
 
 That journal is WRITTEN BY HAND — one dated entry per task, added by the agent
 at the end of the work. It is never generated: not from a tracker's audit
@@ -34,7 +35,7 @@ them. -->
 - **Tasks root:** `/project-management/`
 - **Tasks:** `/project-management/tasks/`
 - **Archive:** `/project-management/archive/`
-- **Changelog:** `/project-management/LOG.md`
+- **Journal:** `/project-management/JOURNAL.md`
 - **Roadmap:** `/project-management/ROADMAP.md`
 - **Spec template:** `/project-management/000-template.spec.md`
 - **Work template:** `/project-management/000-template.work.md`
@@ -74,7 +75,7 @@ load context cheaply? Boilerplate projects get this prefilled; brownfield
 repos get scanned and the list built with assistance. -->
 
 - `README.md`
-- `<Changelog>` (see Section A) — most recent entries
+- `<Journal>` (see Section A) — most recent entries
 
 ## D · Documentation reference
 
@@ -136,3 +137,14 @@ expose. A tier left unset simply falls through. -->
 - **mid:** <model id>
 - **cheap:** <model id>
 -->
+
+## I · Merge and publish
+
+<!-- Questionnaire asks: once a task is reviewed and its gates pass, may the
+agent merge it, or publish a release, without asking? Whatever is not
+handed to the agent here waits for the human's explicit word on that very
+action — never inferred from a "go" given on another subject. A glue
+without this section means the default. -->
+
+- **Merge:** ask the human
+- **Publish:** ask the human

@@ -46,7 +46,7 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
     const target = await workspace.install("brownfield");
 
     const glue = join(target, ".agents", "project.md");
-    const journal = join(target, "project-management", "LOG.md");
+    const journal = join(target, "project-management", "JOURNAL.md");
     const personal = join(target, ".agents", "user.md");
     await appendTo(
       glue,

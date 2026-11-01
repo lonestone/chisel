@@ -9,18 +9,21 @@ disagrees with this page, this page wins.
 **Chisel processes one task.** It takes a task from its plan to its commit,
 and writes or sharpens the spec first when the intent is not yet clear.
 Along the way it reads and updates the task where it lives, and it can open
-the pull request. Merging and publishing wait for the human's explicit
-word on that very action.
+the pull request. Whether the agent may also merge or publish on its own is
+the project's choice, declared in `.agents/project.md`. By default, merging
+and publishing wait for the human's explicit word on that very action.
 
 **Chisel works with any tracker.** A task can be an issue in Plane, a line
-in beads, or a file in the repo. The agent needs one skill or tool that
-reads and updates the task in that tracker. Once it has the task, it
-follows chisel's method to ship it.
+in beads, a file in the repo, or a message in the prompt. The agent needs
+one skill or tool that reads and updates the task in that tracker. Once it
+has the task, it follows chisel's method to ship it.
 
 **Chisel does not orchestrate.** Watching a tracker to launch agents,
-scheduling tasks, deciding which task runs next: that belongs to the layer
-above. That layer can be a human, a harness, a long-lived orchestrator
-thread, or a script.
+scheduling tasks, deciding on its own which task runs next: that belongs to
+the layer above. That layer can be a human, a harness, a long-lived
+orchestrator thread, or a script. Inside a conversation, the Architect
+running the Crewmates of the tasks it was given is part of processing
+tasks, not orchestration.
 
 **The workflow is prose.** One page describes the steps of a task, who does
 each, and where it stops for a reading. No workflow engine and no machine
@@ -30,7 +33,8 @@ format: the first version ran in production on prose alone.
 more than it returns. The second version of chisel added sub-agents, five
 presets, a Foreman role and a thirteen-status ladder. It costs more to run
 than the first version, and the extra context engineering did not pay. The
-field facts are at the end of this page.
+field facts behind this page are in the decisions record,
+`project-management/review-360-decisions.md`, Addendum 15.
 
 ## Objectives
 
@@ -52,14 +56,19 @@ field facts are at the end of this page.
 
 | Role | Who plays it | What it does |
 |---|---|---|
-| **Architect** | The agent the user, or an orchestrator, talks to. This is its default role. | Scopes the task, asks the questions, clarifies the spec. Launches a Crewmate, talks with it, arbitrates, reads and corrects the plan. Brings the key questions up to the human. |
-| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan from the template, stops for the Architect's reading, then codes. Ends by running the `code-review` skill. |
+| **Architect** | The agent the user, or an orchestrator, talks to: the project lead. This is its default role; nobody launches an Architect. | Scopes the task, asks the questions, clarifies the spec. Launches a Crewmate, talks with it, arbitrates, reads and corrects the plan. Brings the key questions up to the human. |
+| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan from the template, stops for the Architect's reading, then codes. Runs the `code-review` skill and fixes what it finds. |
 | **Typist** | Optional. A sub-agent launched by the Crewmate. | Types code from the approved plan, decides nothing. Worth it when the Typist runs on a cheaper model than the Architect and the Crewmate. By default the Crewmate types itself. |
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the coding session. |
 
-**The Architect's thread** can be one long thread that compacts and serves
-as the entry point to a project, or one thread per piece of work. In a long
-thread the Architect can run several Crewmates, one per task or slice.
+**The Architect's thread** is best kept long: one thread that compacts and
+serves as the entry point to a project, holding the context of several
+tasks. The article above recommends the same shape for a main agent loop.
+It can also be one thread per piece of work. In a long thread the Architect
+runs several Crewmates, one per task or slice.
+
+**The fixes after a review belong to the Crewmate** that wrote the code,
+not to the Architect.
 
 **A role is a paragraph of the workflow, not a file.** The Architect writes
 each brief from the workflow page. Chisel ships no role contract files and
@@ -68,32 +77,3 @@ generates no agent definitions.
 **The human's part.** The human owns the intent and the decisions that
 shape the task. The Architect approves the plan. A plan that departs from a
 decision the human made goes back to the human, with the question stated.
-
-## What goes away
-
-- **The Foreman.** Spawning the next step is the Architect's job inside a
-  task, and the layer above's job between tasks.
-- **The formulas and their five presets.** The prose workflow replaces
-  them.
-- **The role profiles**, and with them the Checker and the Inspector. The
-  Architect reads the spec and the plan; `code-review` reads the diff.
-- **The thirteen-status ladder.** A task keeps the few statuses it needs
-  for itself. Anything finer belongs to the tracker.
-- **Beads as a coordination layer.** Beads stays, as one tracker among
-  others.
-
-## Field facts behind this page
-
-An orchestrator thread named Apollon has run chisel's first version in its
-harness since 2026-08-03. Over one milestone, worked by eleven Crewmates:
-
-- Apollon wrote each brief. Each Crewmate wrote its plan in the slice and
-  stopped. Apollon read and approved it, a gate the human had handed over.
-  The Crewmate then coded.
-- No Crewmate handed the typing to a Typist, though the brief allowed it.
-  All eleven typed in their own session.
-- Every `code-review` pass launched two fresh sub-agents in parallel, one
-  for the repo's standards and one for the spec. They were the only
-  independent eyes on the code.
-- One retouch shipped without a `code-review` pass. That is the gap to
-  watch: the review is the step a light process must not skip.

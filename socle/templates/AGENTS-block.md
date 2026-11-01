@@ -24,8 +24,9 @@ the roles, the steps, where the work stops, the tracker and the statuses.
   the human.
 - Launched as a **Crewmate** or a **Typist**, follow the brief you were
   given and the matching steps of `.agents/workflow.md`.
-- Merging and publishing wait for the human's explicit word on that very
-  action.
+- Merging and publishing follow the merge and publish section of
+  `.agents/project.md`. By default they wait for the human's explicit word
+  on that very action.
 
 Paths (task workspace, templates, journal, tracker, gate commands) resolve
 through `.agents/project.md`. The vocabulary and the model tiers are

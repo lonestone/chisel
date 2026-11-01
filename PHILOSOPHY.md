@@ -56,7 +56,7 @@ Two outside sources shaped the structure as much as the tools did:
   told us exactly where the delegation boundary must sit.
 
 And one decisive experiment of our own: our pre-existing house methodology
-(rich self-contained task files + a dated CHANGELOG the agents read and
+(rich self-contained task files + a dated journal the agents read and
 write) had quietly outperformed every framework we tested. The conclusion
 wasn't "adopt a framework", it was **fuse what worked**: our lifecycle and
 artifacts, Pocock's skills as the engine.

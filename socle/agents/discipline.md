@@ -50,10 +50,12 @@ feature; the only difference is the paperwork.
    in the repo's files, visible to review and git. Lessons about the way of
    working go through `retro` at close.
 
-9. **Merging and publishing wait for the human.** Merging into the main
-   branch, publishing a package, anything that leaves the working branch
-   waits for the human's explicit word on that very action — never inferred
-   from a "go" given on another subject.
+9. **Merging and publishing wait for the human, unless the project says
+   otherwise.** Merging into the main branch, publishing a package,
+   anything that leaves the working branch waits for the human's explicit
+   word on that very action — never inferred from a "go" given on another
+   subject. The one exception is what the merge and publish section of
+   `.agents/project.md` explicitly hands to the agent.
 
 10. **Writing: name things by their meaning, cite by file and title.** On
     every document written in this repo and every report to a human. **Name

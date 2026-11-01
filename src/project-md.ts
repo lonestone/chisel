@@ -22,10 +22,21 @@ import {
   skillsLinkValue,
 } from "./target.ts";
 
-export const JOURNAL_NAME = "LOG.md";
-export const LEGACY_JOURNAL_NAME = "CHANGELOG.md";
+export const JOURNAL_NAME = "JOURNAL.md";
+/** The names the journal had before, newest first. */
+export const LEGACY_JOURNAL_NAMES = ["LOG.md", "CHANGELOG.md"] as const;
 const TASKS_ROOT = "/project-management/";
-const JOURNAL_LABEL = "Changelog";
+const JOURNAL_LABEL = "Journal";
+
+/** The journal a repo already keeps under an older name, if any. */
+export async function legacyJournalName(
+  pmRoot: string,
+): Promise<string | null> {
+  for (const name of LEGACY_JOURNAL_NAMES) {
+    if (await isFile(join(pmRoot, name))) return name;
+  }
+  return null;
+}
 
 function gluePath(targetDir: string): string {
   return join(targetDir, ".agents", "project.md");
@@ -68,7 +79,7 @@ export async function tickAdapterInventory(targetDir: string): Promise<void> {
 }
 
 /**
- * When the journal guard declined to create `LOG.md` because the repo already
+ * When the journal guard declined to create the journal because the repo already
  * has its own journal, a glue this run created still points §A at a file that
  * does not exist. Point it at the one that does — and only while that line
  * still holds the template's default.
@@ -80,8 +91,9 @@ export async function pointNewGlueAtExistingJournal(
   const text = await readTextIfPresent(path);
   if (text === null) return;
   const pmRoot = join(targetDir, "project-management");
-  if (!(await isFile(join(pmRoot, LEGACY_JOURNAL_NAME)))) return;
   if (await isFile(join(pmRoot, JOURNAL_NAME))) return;
+  const legacy = await legacyJournalName(pmRoot);
+  if (legacy === null) return;
 
   const document = parseGlue(text);
   const item = glueItem(glueSection(document, "A"), JOURNAL_LABEL);
@@ -89,7 +101,7 @@ export async function pointNewGlueAtExistingJournal(
   const templateDefault = `\`${TASKS_ROOT}${JOURNAL_NAME}\``;
   if (item.value !== templateDefault) return;
   document.lines[item.line] =
-    `- **${JOURNAL_LABEL}:** \`${TASKS_ROOT}${LEGACY_JOURNAL_NAME}\``;
+    `- **${JOURNAL_LABEL}:** \`${TASKS_ROOT}${legacy}\``;
   await Deno.writeTextFile(path, serializeGlue(document));
 }
 
