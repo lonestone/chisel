@@ -91,7 +91,7 @@ export async function update(targetDir: string): Promise<number> {
       `chisel update: warning: ${targetDir}/AGENTS.md not found — skipping (run chisel init first)`,
     );
   }
-  const current = await writeManifest(targetDir, writes);
+  const current = await writeManifest(targetDir, writes, previous.intentions);
 
   console.log(`chisel update: ${targetDir}`);
   let reported = false;

@@ -26,6 +26,7 @@ import {
 } from "./target.ts";
 import { JOURNAL_NAME, legacyJournalName } from "./project-md.ts";
 import { MANIFEST_FILE } from "./manifest.ts";
+import { today } from "./intentions.ts";
 
 /** The socle directories copied whole into `.agents/`. */
 const COPIED_TREES = ["agents/skills/"] as const;
@@ -319,13 +320,6 @@ export async function writeClaudeMd(targetDir: string): Promise<void> {
   const existing = await readTextIfPresent(path);
   const next = claudeMdWithImport(existing);
   if (next !== existing) await Deno.writeTextFile(path, next);
-}
-
-function today(): string {
-  const now = new Date();
-  const month = `${now.getMonth() + 1}`.padStart(2, "0");
-  const day = `${now.getDate()}`.padStart(2, "0");
-  return `${now.getFullYear()}-${month}-${day}`;
 }
 
 // Project-owned: tasks and archive created if missing; the journal written

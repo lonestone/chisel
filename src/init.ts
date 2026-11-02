@@ -7,12 +7,14 @@ import {
   ensureProjectManagementSkeleton,
   initWrites,
   linkClaudeSkills,
+  managedSocleFiles,
   refuseLinkedPaths,
   warnForeignSkills,
   writeAgentsMd,
   writeClaudeMd,
 } from "./install.ts";
-import { readManifest, writeManifest } from "./manifest.ts";
+import { fullRecord, today } from "./intentions.ts";
+import { type Manifest, readManifest, writeManifest } from "./manifest.ts";
 import {
   ensureProjectMd,
   pointNewGlueAtExistingJournal,
@@ -30,9 +32,31 @@ export async function init(targetDir: string): Promise<number> {
 
   // What an earlier run installed here, read before this one writes: a skill
   // that manifest tracked is chisel's own, whatever the socle ships today, and
-  // the warning below has no other way to know.
+  // the intentions it recorded are the repo's history, kept as they are.
   const previous = await readManifest(targetDir);
+  await poseSocle(targetDir, projectTitle, previous);
 
+  console.log(
+    `chisel init: ${targetDir} ready (.agents/, AGENTS.md, CLAUDE.md, .claude/skills, ` +
+      `project-management/, scripts/task-id.sh)`,
+  );
+  return 0;
+}
+
+/**
+ * Every write of `init`, once its pre-flight has passed: the socle, the glue,
+ * the adapters, the task workspace and the manifest. Also how a staged update
+ * lays its reference tree, in an empty directory.
+ *
+ * The intentions record: a first install has applied everything it ships —
+ * it starts from this release. A repo that already has a manifest keeps its
+ * record as it is: what was pending stays pending, for `update` to stage.
+ */
+export async function poseSocle(
+  targetDir: string,
+  projectTitle: string,
+  previous: Manifest | null,
+): Promise<void> {
   await copyManagedFiles(targetDir);
   await warnForeignSkills(targetDir, Object.keys(previous?.managed ?? {}));
   // The glue is written before the adapters so the inventory below can report
@@ -44,11 +68,9 @@ export async function init(targetDir: string): Promise<number> {
   if (glueCreated) await tickAdapterInventory(targetDir);
   await ensureProjectManagementSkeleton(targetDir);
   if (glueCreated) await pointNewGlueAtExistingJournal(targetDir);
-  await writeManifest(targetDir);
-
-  console.log(
-    `chisel init: ${targetDir} ready (.agents/, AGENTS.md, CLAUDE.md, .claude/skills, ` +
-      `project-management/, scripts/task-id.sh)`,
+  await writeManifest(
+    targetDir,
+    managedSocleFiles(),
+    previous?.intentions ?? fullRecord(today()),
   );
-  return 0;
 }
