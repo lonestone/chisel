@@ -242,3 +242,90 @@ Deno.test("intentions: a workspace is never overwritten, and git ignores it", as
     );
   });
 });
+
+Deno.test("intentions: record writes each result, ticks the session, and refuses what it does not know", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    const entry = await packageWith(workspace, [
+      { release: "unreleased", file: "a-move.md", classification: "migration" },
+      {
+        release: "unreleased",
+        file: "a-call.md",
+        classification: "breaking-manual",
+      },
+    ]);
+    assertEquals((await runChisel(["update", target], entry)).code, 3);
+    const session = join(target, WORKSPACE, "session.md");
+
+    const applied = await runChisel(
+      ["record", "unreleased/a-move", "--applied", target],
+      entry,
+    );
+    assertEquals(applied.code, 0, applied.output);
+    const skipped = await runChisel(
+      [
+        "record",
+        "unreleased/a-call",
+        "--skipped",
+        "the human keeps it",
+        target,
+      ],
+      entry,
+    );
+    assertEquals(skipped.code, 0, skipped.output);
+
+    const manifest = await manifestOf(target);
+    assertEquals(manifest.intentions?.["unreleased/a-move"], {
+      date: today(),
+      result: "applied",
+    });
+    assertEquals(manifest.intentions?.["unreleased/a-call"], {
+      date: today(),
+      reason: "the human keeps it",
+      result: "skipped",
+    });
+    const ticked = await Deno.readTextFile(session);
+    assertStringIncludes(ticked, "- [x] `unreleased/a-move` (migration)");
+    assertStringIncludes(ticked, "- [x] `unreleased/a-call` (breaking-manual)");
+
+    // What record refuses, and what it leaves alone when it does.
+    const before = await Deno.readTextFile(join(target, MANIFEST));
+    const unknown = await runChisel(
+      ["record", "unreleased/no-such-change", "--applied", target],
+      entry,
+    );
+    assertEquals(unknown.code, 1, "an unknown id is refused");
+    assertStringIncludes(unknown.stderr, "unreleased/no-such-change");
+    for (
+      const args of [
+        ["record", "unreleased/a-move", target, "--skipped"],
+        ["record", "unreleased/a-move", target],
+        ["record", "unreleased/a-move", "--applied", "--skipped", "x", target],
+        ["record", "--applied"],
+      ]
+    ) {
+      const misused = await runChisel(args, entry);
+      assertEquals(misused.code, 2, `a usage error: ${args.join(" ")}`);
+    }
+    assertEquals(
+      await Deno.readTextFile(join(target, MANIFEST)),
+      before,
+      "a refused record writes nothing",
+    );
+
+    // The close of the session, as the update skill does it.
+    await Deno.remove(join(target, WORKSPACE), { recursive: true });
+    const closing = await runChisel(["update", target], entry);
+    assertEquals(closing.code, 0, `the fast path now\n${closing.output}`);
+    const checked = await runChisel(["check", target], entry);
+    assertEquals(checked.code, 0, checked.output);
+
+    // No manifest: nothing to record into.
+    await Deno.remove(join(target, MANIFEST));
+    const orphan = await runChisel(
+      ["record", "unreleased/a-move", "--applied", target],
+      entry,
+    );
+    assertEquals(orphan.code, 1, "no manifest is refused");
+  });
+});

@@ -13,10 +13,12 @@ Deno.test("usage: --help names the commands, the exit codes and the prerequisite
       "init",
       "update",
       "check",
+      "record",
       "--version",
       "--help",
       "Deno",
       "Exit codes",
+      "  3  ",
     ]
   ) {
     assertStringIncludes(result.stdout, expected);
