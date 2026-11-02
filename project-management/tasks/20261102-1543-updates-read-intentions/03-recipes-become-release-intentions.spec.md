@@ -41,3 +41,13 @@ away; its content lives in these intentions and in the update skill.
   `chore/chisel-0.2.4` there): its manifest will need those intentions
   recorded as applied, which the update skill can do from the journal
   entry.
+- Architect, 2026-11-02, from slice 01's close: without a manifest, the
+  session's first step runs `chisel init .`, and `init` records every
+  shipped intention as applied — including those still pending in the
+  session. The baseline intention must create the manifest without
+  marking the pending intentions applied (for instance a baseline that
+  records only up to the version the repo actually reached).
+- Architect, 2026-11-02: there is no command to promote `unreleased/`
+  intentions into a release folder; the ids change at the move. Decide
+  in this slice whether the release step needs one, and say how a repo
+  that recorded an `unreleased/` id is treated.
