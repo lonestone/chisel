@@ -5,6 +5,17 @@ ships.
 
 ---
 
+## 42. 2026-11-02 — 0.2.2: the README says why
+
+A patch release for the README only. A "Why" section now comes before the
+walk through a task: the four ways coding agents go wrong around the code
+(the wrong thing built, the plan lost, a self-review that finds nothing, a
+transcript nobody reads) and the answer chisel gives to each, then why it
+stays light. `main` moves to `v2` by fast-forward and the package is
+published from it, on the Owner's "go".
+
+---
+
 ## 41. 2026-11-02 — 0.2.1: the README reads like someone explaining chisel
 
 A patch release so that JSR's page shows the rewritten README: it opens on
