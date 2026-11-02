@@ -5,6 +5,38 @@ ships.
 
 ---
 
+## 44. 2026-11-02 — `update` refuses what it does not recognise; `chisel-upgrade` as intentions
+
+Apollon ran `chisel update` 0.2.3 on a repo whose method predates the CLI:
+doctrine in `doc/agents/`, a workspace in `doc/project-management/`, the
+skills of `.agents/skills/` linked into `doc/agents/skills/`, and no
+manifest. The update wrote through the links into 15 of the project's own
+skills and planted a second `project-management/`. The Owner's ruling: the
+CLI does the case it recognises and refuses the rest, and what needs
+judgement is a recipe the agent applies.
+
+`update` now refuses a repo with no `.agents/.chisel.json`, and `init` and
+`update` refuse, before any write, a path they would write that is a
+symbolic link or sits under one, naming each. Both refusals name the
+`chisel-upgrade` skill and the command that fetches it, pinned to the
+CLI's version. Outside `.agents/`, `update` writes a template or the task
+id script only when its last manifest listed it and the project still has
+it (the Architect's ruling), so no second workspace grows; a skill of the
+project's own, linked or not, never stops it. `chisel-upgrade` becomes a
+router and two migration intentions in the boilerplate's format, one for a
+repo chisel did not install or installed with the first version, one for a
+0.1.x install; neither assumes where the method lives, and the two-trees
+case ends with the human choosing the tree to keep.
+
+Five tests, one of them on Apollon's layout built with `Deno.symlink`;
+28 green. Reviewed by `code-review` with two fresh reviewers: gaps cited by
+number and a duplicated manifest path were fixed. Left open for the
+Architect: `init` still writes its import line through a linked
+`CLAUDE.md`, which the recipe now warns about. Not published. Task
+archived.
+
+---
+
 ## 43. 2026-11-02 — 0.2.3: the README presents chisel as a protocol
 
 A patch release for the README only, framed by the Owner: chisel is a

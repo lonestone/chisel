@@ -1,6 +1,6 @@
 # Make update refuse what it does not recognise, and migrate by recipe
 
-**Status:** in-progress
+**Status:** done
 
 ---
 
@@ -59,41 +59,41 @@ policy and a "done when", what is out of scope, and how to validate.
 
 ## Acceptance Criteria
 
-- [ ] **refuse-without-manifest** — `update` on a target with `.agents/`
+- [x] **refuse-without-manifest** — `update` on a target with `.agents/`
   but no `.agents/.chisel.json` exits non-zero, prints a message naming
   the `chisel-upgrade` skill, and leaves the target byte-identical (tree
   snapshot equal before and after).
-- [ ] **refuse-through-links** — `update` on an installed target where one
+- [x] **refuse-through-links** — `update` on an installed target where one
   managed path, or a directory above it inside the target, is a symbolic
   link exits non-zero, names that path, and leaves the target and the
   link's destination byte-identical.
-- [ ] **init-refuses-through-links** — `init` on a target whose
+- [x] **init-refuses-through-links** — `init` on a target whose
   `.agents/skills/<name>` is a symbolic link exits non-zero, names it, and
   writes nothing.
-- [ ] **no-new-tree** — `update` on an installed target whose last manifest
+- [x] **no-new-tree** — `update` on an installed target whose last manifest
   lists no `project-management/` template does not create
   `project-management/` or anything in it.
-- [ ] **relocated-layout-fixture** — a test fixture reproduces Apollon's
+- [x] **relocated-layout-fixture** — a test fixture reproduces Apollon's
   shape (doctrine in `doc/agents/`, workspace in `doc/project-management/`,
   `.agents/skills/` entries linked into `doc/agents/skills/`, no manifest),
   and `update` on it refuses with the target unchanged.
-- [ ] **recipe-shape** — `chisel-upgrade` holds one intention per starting
+- [x] **recipe-shape** — `chisel-upgrade` holds one intention per starting
   point (a repo chisel did not install or installed with the first
   version; a 0.1.x install), each with the sections Goal, Why, Applies
   When, Do Not Apply When, Observable Gaps, Out of Scope, Reference Paths,
   Validation and Record Result.
-- [ ] **gaps-are-layout-free** — no observable gap assumes where the
+- [x] **gaps-are-layout-free** — no observable gap assumes where the
   project's method lives: each finds it through the glue, `AGENTS.md`, or
   symbolic links, and the two-trees case ends with the human choosing which
   tree to keep.
-- [ ] **reference-tree** — the recipe obtains the reference socle with
+- [x] **reference-tree** — the recipe obtains the reference socle with
   `chisel init` into a scratch directory outside the repo, and says to
   delete it afterwards.
-- [ ] **socle-list-matches** — `src/socle-files.ts`, the golden tree and the
+- [x] **socle-list-matches** — `src/socle-files.ts`, the golden tree and the
   integrity test agree with the files under `socle/`.
-- [ ] **doctrine-budget** — the four doctrine pages stay at 600 lines or
+- [x] **doctrine-budget** — the four doctrine pages stay at 600 lines or
   fewer in total.
-- [ ] **suite-green** — `deno task test` and `deno task check` pass.
+- [x] **suite-green** — `deno task test` and `deno task check` pass.
 
 ## Seams
 
@@ -153,10 +153,10 @@ beside it.
 
 ## Deliverables
 
-- [ ] The pre-flight and the manifest rule in `src/`.
-- [ ] The tests and the fixture.
-- [ ] `chisel-upgrade` as intentions.
-- [ ] The journal entry.
+- [x] The pre-flight and the manifest rule in `src/`.
+- [x] The tests and the fixture.
+- [x] `chisel-upgrade` as intentions.
+- [x] The journal entry.
 
 ## References
 
@@ -186,4 +186,26 @@ previous manifest listed"; read it with that ruling.
 
 ## Retrospective
 
-Added at the close.
+Closed 2026-11-02 by the Crewmate. Every acceptance criterion is met,
+checked against the suite (28 tests, `deno task check` clean) and, for the
+recipe's shape, by reading at the review; the four doctrine pages total 535
+lines, untouched. Left for the Architect: `init` still adds its import
+line through a linked `CLAUDE.md` (the recipe now warns about it; whether
+the CLI refuses it too departs from the approved plan). 
+
+`retro` proposals, none applied, each for its owner to accept:
+
+1. **Coding standards** (`socle/agents/skills/code-review/SKILL.md`,
+   "Identify the standards sources"; owner: the human). Name rule 10 of
+   `.agents/discipline.md` as a standards source for every prose file in
+   the diff. Gaps cited by number in a shipped skill were caught only
+   because the reviewer's brief happened to list it.
+2. **Spec writing** (`project-management/000-template.spec.md`,
+   "Implementation Decisions"; owner: the human). When a decision
+   enumerates places that narrow a scope line ("any path they would
+   write"), say what the enumeration leaves out on purpose. The linked
+   `CLAUDE.md` case fell between the two and surfaced only at the review.
+3. **Automated checks** (`deno.json` tasks; owner: the human). One
+   `gates` task running `test` then `check`, so a commit chained after the
+   gates cannot pass on a failed format check, as happened once here
+   (amended before anything else landed).

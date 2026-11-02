@@ -1,7 +1,7 @@
 # Make update refuse what it does not recognise, and migrate by recipe — work
 
 Created by the Crewmate at the plan step, 2026-11-02. Spec:
-`project-management/tasks/20261102-1439-make-update-refuse-what-it-does-not-recognise.spec.md`.
+`project-management/archive/20261102-1439-make-update-refuse-what-it-does-not-recognise.spec.md`.
 
 **Plan:** approved by the Architect, 2026-11-02. Rulings: the listed file
 the project deleted takes option (b), written outside `.agents/` only when
@@ -246,6 +246,11 @@ the skill's directory, and asserts that the skill still names what it
 retires. `test/TESTS.md` and the README's "Keeping it up to date" follow.
 28 tests green, `deno task check` clean.
 
+**2026-11-02, review and close (Crewmate).** Two fresh reviewers; their
+findings and answers are below. Gap citations by title, one name for the
+manifest path, the CLAUDE.md warning in the recipe. Criteria ticked, spec
+and work documents archived, journal entry 44, `retro` run.
+
 ## Implementation Checkboxes
 
 - [x] Manifest rule and its `guards` test
@@ -256,8 +261,8 @@ retires. `test/TESTS.md` and the README's "Keeping it up to date" follow.
 - [x] Recipe as intentions; socle list, golden tree, integrity test
 - [x] `test/TESTS.md` and README
 - [x] Gates green
-- [ ] `code-review`, findings answered
-- [ ] Close
+- [x] `code-review`, findings answered
+- [x] Close
 
 ## Notes & Snippets
 
