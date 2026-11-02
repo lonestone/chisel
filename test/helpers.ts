@@ -253,3 +253,17 @@ export async function packageWith(
   );
   return join(root, "src", "main.ts");
 }
+
+/** Where a staged update leaves its workspace, inside the target. */
+export const WORKSPACE = ".chisel-workspace";
+
+/** A snapshot of everything but the workspace: the project's own files. */
+export function outsideWorkspace(
+  entries: Record<string, SnapshotEntry>,
+): Record<string, SnapshotEntry> {
+  return Object.fromEntries(
+    Object.entries(entries).filter(([path]) =>
+      path !== WORKSPACE && !path.startsWith(`${WORKSPACE}/`)
+    ),
+  );
+}

@@ -5,10 +5,8 @@ import { join } from "@std/path";
 import {
   copyManagedFiles,
   managedSocleFiles,
-  refuseLinkedPaths,
-  refuseV1Layout,
   removeEmptyParents,
-  upgradeRecipePointer,
+  v1LayoutFound,
   warnForeignSkills,
   writeAgentsMd,
 } from "./install.ts";
@@ -23,14 +21,24 @@ import {
 import {
   type Intention,
   type IntentionRecord,
+  needsJudgement,
   pendingIntentions,
   readIntention,
   today,
 } from "./intentions.ts";
 import { sha256File } from "./hash.ts";
 import { reportStaleGlue } from "./project-md.ts";
-import { ChiselError, reportLine, warn } from "./report.ts";
-import { isDirectory, isFile } from "./target.ts";
+import { AGENT_WORK_EXIT, ChiselError, reportLine, warn } from "./report.ts";
+import { isDirectory, isFile, linkedPaths, pathExists } from "./target.ts";
+import {
+  REFERENCE_DIR,
+  SESSION_FILE,
+  stageWorkspace,
+  type Staging,
+  UPDATE_SKILL,
+  UPGRADE_SKILL,
+  WORKSPACE_DIR,
+} from "./workspace.ts";
 
 /**
  * The managed files this update writes: everything the socle ships inside
@@ -65,36 +73,127 @@ export async function update(targetDir: string): Promise<number> {
       `${targetDir}/.agents not found — run 'chisel init' first`,
     );
   }
-  await refuseV1Layout(targetDir);
-
-  // Read before writing: the comparison this command reports on is between
-  // what the last run installed and what this one does. Without a manifest
-  // there is no last run to compare with — chisel did not install this repo,
-  // or installed it before it kept one — and a layout it does not recognise
-  // is the recipe's business, not a script's.
-  const previous = await readManifest(targetDir);
-  if (previous === null) {
+  if (await pathExists(join(targetDir, WORKSPACE_DIR))) {
     throw new ChiselError(
-      `${targetDir} has .agents/ but no ${MANIFEST_FILE}: chisel did not ` +
-        `install this repo, or installed it before the manifest existed, and it does not ` +
-        `guess at a layout it does not recognise. ${await upgradeRecipePointer()}`,
+      `${targetDir}/${WORKSPACE_DIR} exists: an update session is in progress. ` +
+        `Finish it with the chisel-update skill (${SESSION_FILE} says how), or delete the ` +
+        `directory to start again. Nothing was written.`,
     );
   }
 
-  const writes = await updateWrites(targetDir, previous);
-  await refuseLinkedPaths(targetDir, [
+  // Read before writing: the comparison this command reports on is between
+  // what the last run installed and what this one does. Without a manifest
+  // there is no last run to compare with, and a layout chisel does not
+  // recognise is an agent's business, not a script's.
+  const previous = await readManifest(targetDir);
+  const writes = await updateWrites(targetDir, previous ?? EMPTY_MANIFEST);
+  const pending: Intention[] = [];
+  for (const shipped of pendingIntentions(previous?.intentions ?? null)) {
+    pending.push(await readIntention(shipped));
+  }
+
+  const reasons = await reasonsToStage(targetDir, previous, writes, pending);
+  if (reasons.length > 0) {
+    return await stage(targetDir, {
+      from: previous?.version ?? null,
+      reasons,
+      pending,
+    });
+  }
+  // No reason to stage means a manifest was read.
+  return await fastPath(targetDir, previous as Manifest, writes, pending);
+}
+
+const EMPTY_MANIFEST: Manifest = { version: "", managed: {}, intentions: {} };
+
+const UPGRADE_INTENTION =
+  `from-first-version.md of the chisel-upgrade skill, ` +
+  `${REFERENCE_DIR}/${UPGRADE_SKILL}`;
+
+/**
+ * Every reason this update cannot be a copy, as a sentence for the session:
+ * what the 0.2.4 refusals caught, and the pending intentions that need
+ * judgement. Reads only.
+ */
+async function reasonsToStage(
+  targetDir: string,
+  previous: Manifest | null,
+  writes: readonly string[],
+  pending: readonly Intention[],
+): Promise<string[]> {
+  const reasons: string[] = [];
+  const firstVersion = await v1LayoutFound(targetDir);
+  if (firstVersion.length > 0) {
+    reasons.push(
+      `The first version's layer is still here (${
+        firstVersion.join(", ")
+      }): copying the ` +
+        `current socle beside it would leave two methods in one repo. Its intention is ` +
+        `${UPGRADE_INTENTION}.`,
+    );
+  }
+  if (previous === null) {
+    reasons.push(
+      `No manifest (${MANIFEST_FILE}): chisel did not install this repo, or installed it ` +
+        `before the manifest existed. Its intention is ${UPGRADE_INTENTION}.`,
+    );
+  }
+  const linked = await linkedPaths(targetDir, [
     ...writes,
     "AGENTS.md",
     MANIFEST_FILE,
     // The orphan pass may remove any of them, and a removal under a linked
     // directory would reach the link's destination too.
-    ...Object.keys(previous.managed).filter((name) => name !== BLOCK_KEY),
+    ...Object.keys(previous?.managed ?? {}).filter((name) =>
+      name !== BLOCK_KEY
+    ),
   ]);
-
-  const pending: Intention[] = [];
-  for (const shipped of pendingIntentions(previous.intentions)) {
-    pending.push(await readIntention(shipped));
+  if (linked.length > 0) {
+    reasons.push(
+      `Symbolic links on paths chisel writes, and writing them would change the files ` +
+        `they point at: ${
+          linked.join(", ")
+        }. The gap "Links where chisel writes" of ` +
+        `${UPGRADE_INTENTION} closes them.`,
+    );
   }
+  const judged = pending.filter((intention) =>
+    needsJudgement(intention.classification)
+  );
+  if (judged.length > 0) {
+    reasons.push(
+      `Pending intentions need judgement: ${
+        judged.map((intention) =>
+          `${intention.id} (${intention.classification})`
+        ).join(", ")
+      }.`,
+    );
+  }
+  return reasons;
+}
+
+/** Stages the workspace, says why and what is in it, and hands over. */
+async function stage(targetDir: string, staging: Staging): Promise<number> {
+  const checklist = await stageWorkspace(targetDir, staging);
+  console.log(
+    `chisel update: ${targetDir} — staged ${WORKSPACE_DIR}/, nothing else written`,
+  );
+  for (const reason of staging.reasons) reportLine(`why: ${reason}`);
+  for (const line of checklist) reportLine(line);
+  reportLine(`checklist: ${SESSION_FILE}`);
+  reportLine(
+    `next: ask your agent to follow ${REFERENCE_DIR}/${UPDATE_SKILL}`,
+  );
+  return AGENT_WORK_EXIT;
+}
+
+/** Today's update: refresh, report, clean up — then record what it closed. */
+async function fastPath(
+  targetDir: string,
+  previous: Manifest,
+  writes: string[],
+  pending: readonly Intention[],
+): Promise<number> {
   const overwritten = await locallyEdited(targetDir, writes, previous);
 
   await copyManagedFiles(targetDir, new Set(writes));

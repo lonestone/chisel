@@ -370,14 +370,12 @@ export async function ensureProjectManagementSkeleton(
   );
 }
 
-// Refuse to update a repo still carrying the v1 layer. `.agents/rules/` and
-// `.agents/workflows.md` were retired: copying the current socle in beside
-// them leaves TWO normative discourses in one repo, with the old one still
-// cited by whatever pointed at it — and `check` stays silent, because chisel
-// never managed those files. Migrating has a tool; this closes the silent
-// bypass around it. Called before anything is written, so a refused update
-// writes nothing at all.
-export async function refuseV1Layout(targetDir: string): Promise<void> {
+// The first version's layer: `.agents/rules/` and `.agents/workflows.md`.
+// Copying the current socle in beside them would leave TWO normative
+// discourses in one repo, with the old one still cited by whatever pointed at
+// it — and `check` stays silent, because chisel never managed those files. So
+// `update` stages instead of copying when it finds them. Reads only.
+export async function v1LayoutFound(targetDir: string): Promise<string[]> {
   const found: string[] = [];
   if (await isDirectory(join(targetDir, ".agents", "rules"))) {
     found.push(".agents/rules/");
@@ -385,22 +383,11 @@ export async function refuseV1Layout(targetDir: string): Promise<void> {
   if (await isFile(join(targetDir, ".agents", "workflows.md"))) {
     found.push(".agents/workflows.md");
   }
-  if (found.length === 0) return;
-  throw new ChiselError(
-    `${targetDir} still carries the v1 layout (${
-      found.join(" ")
-    }) — updating it here ` +
-      `would leave two normative discourses side by side, and 'chisel check' would report ` +
-      `neither. Run the 'chisel-upgrade' skill first: it retires the v1 rules and workflows.md ` +
-      `file by file, with a human validating; 'chisel update' is safe again the moment they ` +
-      `are gone.`,
-  );
+  return found;
 }
 
 /**
- * The sentence the manifest and links refusals end with (the first-version
- * refusal keeps its own, which names what it found):
- * where the recipe is, and how a repo that does not have it gets it. The
+ * The sentence the links refusal of `init` ends with: where the recipe is, and how a repo that does not have it gets it. The
  * version is pinned to the running CLI's, so the recipe read is the one that
  * matches the CLI that refused.
  */

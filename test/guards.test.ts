@@ -1,14 +1,18 @@
-// The two refusals: a repo still carrying the retired layout, and a file
-// chisel did not install.
+// What `update` does not copy over and `init` refuses: a repo still carrying
+// the retired layout, a repo with no manifest, a path chisel writes that is a
+// symbolic link — `update` stages a workspace for an agent instead, writing
+// nothing else — and a file chisel did not install, never adopted.
 
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { join } from "@std/path";
 import {
   appendTo,
   copyTree,
+  outsideWorkspace,
   runChisel,
   snapshot,
   withRepo,
+  WORKSPACE,
   type Workspace,
 } from "./helpers.ts";
 
@@ -16,24 +20,30 @@ async function absent(path: string): Promise<boolean> {
   return await Deno.lstat(path).then(() => false).catch(() => true);
 }
 
-Deno.test("guards: update refuses a repo still carrying the v1 layout", async () => {
+Deno.test("guards: update stages, not copies, a repo still carrying the v1 layout", async () => {
   await withRepo(async (workspace) => {
     const legacy = await workspace.copy("brownfield-v1");
     const workflowsBefore = await Deno.readTextFile(
       join(legacy, ".agents", "workflows.md"),
     );
+    const before = await snapshot(legacy);
 
     const refused = await runChisel(["update", legacy]);
-    assertEquals(refused.code, 1, "the refusal exits 1");
+    assertEquals(refused.code, 3, `an agent has work to do\n${refused.output}`);
     assertStringIncludes(
-      refused.stderr,
+      refused.stdout,
       "chisel-upgrade",
       "it names the migration skill",
     );
     assertStringIncludes(
-      refused.stderr,
+      refused.stdout,
       ".agents/rules/",
       "it names what it found",
+    );
+    assertEquals(
+      outsideWorkspace(await snapshot(legacy)),
+      before,
+      "nothing outside the workspace moved",
     );
     assert(
       await absent(join(legacy, ".agents", "discipline.md")),
@@ -117,24 +127,28 @@ Deno.test("guards: a skill chisel did not install is never adopted or overwritte
   });
 });
 
-Deno.test("guards: update refuses a repo with no manifest and writes nothing", async () => {
+Deno.test("guards: update stages a repo with no manifest and writes nothing else", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.install("brownfield");
     await Deno.remove(join(target, ".agents", ".chisel.json"));
     const before = await snapshot(target);
 
     const refused = await runChisel(["update", target]);
-    assertEquals(refused.code, 1, "the refusal exits 1");
+    assertEquals(refused.code, 3, `an agent has work to do\n${refused.output}`);
     assertStringIncludes(
-      refused.stderr,
+      refused.stdout,
       "chisel-upgrade",
       "it names the migration skill",
     );
-    assertEquals(await snapshot(target), before, "the target is unchanged");
+    assertEquals(
+      outsideWorkspace(await snapshot(target)),
+      before,
+      "the target is unchanged outside the workspace",
+    );
   });
 });
 
-Deno.test("guards: update refuses to write through a symbolic link", async () => {
+Deno.test("guards: update stages instead of writing through a symbolic link", async () => {
   await withRepo(async (workspace) => {
     // (a) A managed file that is itself a link to a file outside the target.
     const fileLinked = await workspace.install("brownfield");
@@ -166,10 +180,18 @@ Deno.test("guards: update refuses to write through a symbolic link", async () =>
       const targetBefore = await snapshot(target);
       const destinationBefore = await snapshot(destination);
       const refused = await runChisel(["update", target]);
-      assertEquals(refused.code, 1, `the refusal exits 1\n${refused.output}`);
-      assertStringIncludes(refused.stderr, linked, "it names the linked path");
-      assertStringIncludes(refused.stderr, "chisel-upgrade");
-      assertEquals(await snapshot(target), targetBefore, "target unchanged");
+      assertEquals(
+        refused.code,
+        3,
+        `an agent has work to do\n${refused.output}`,
+      );
+      assertStringIncludes(refused.stdout, linked, "it names the linked path");
+      assertStringIncludes(refused.stdout, "chisel-upgrade");
+      assertEquals(
+        outsideWorkspace(await snapshot(target)),
+        targetBefore,
+        "target unchanged outside the workspace",
+      );
       assertEquals(
         await snapshot(destination),
         destinationBefore,
@@ -258,15 +280,20 @@ async function relocatedLayout(workspace: Workspace): Promise<string> {
   return target;
 }
 
-Deno.test("guards: a relocated layout with no manifest is refused by update and init", async () => {
+Deno.test("guards: a relocated layout with no manifest is staged by update and refused by init", async () => {
   await withRepo(async (workspace) => {
     const target = await relocatedLayout(workspace);
     const before = await snapshot(target);
 
     const updated = await runChisel(["update", target]);
-    assertEquals(updated.code, 1, `update refuses\n${updated.output}`);
-    assertStringIncludes(updated.stderr, "chisel-upgrade");
-    assertEquals(await snapshot(target), before, "update wrote nothing");
+    assertEquals(updated.code, 3, `update stages\n${updated.output}`);
+    assertStringIncludes(updated.stdout, "chisel-upgrade");
+    assertEquals(
+      outsideWorkspace(await snapshot(target)),
+      before,
+      "update wrote nothing outside the workspace",
+    );
+    await Deno.remove(join(target, WORKSPACE), { recursive: true });
 
     const initialised = await runChisel(["init", target]);
     assertEquals(initialised.code, 1, `init refuses\n${initialised.output}`);

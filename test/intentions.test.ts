@@ -7,10 +7,13 @@ import { join } from "@std/path";
 import { shippedIntentions } from "../src/intentions.ts";
 import {
   appendTo,
+  outsideWorkspace,
   packageWith,
   REPO_ROOT,
   runChisel,
+  snapshot,
   withRepo,
+  WORKSPACE,
 } from "./helpers.ts";
 
 const MANIFEST = join(".agents", ".chisel.json");
@@ -153,5 +156,56 @@ Deno.test("intentions: a manifest from before intentions counts its own releases
       "applied",
       "the implicit baseline is written down",
     );
+  });
+});
+
+Deno.test("intentions: a pending intention that needs judgement stages a workspace and writes nothing else", async () => {
+  await withRepo(async (workspace) => {
+    for (const classification of ["migration", "breaking-manual"]) {
+      const target = await workspace.install("brownfield");
+      const entry = await packageWith(workspace, [
+        { release: "unreleased", file: "a-move.md", classification },
+      ]);
+      const before = await snapshot(target);
+
+      const result = await runChisel(["update", target], entry);
+      assertEquals(result.code, 3, `an agent has work to do\n${result.output}`);
+      assertEquals(
+        outsideWorkspace(await snapshot(target)),
+        before,
+        "nothing outside the workspace moved",
+      );
+      const line = `- [ ] \`unreleased/a-move\` (${classification})`;
+      assertStringIncludes(result.stdout, line, "the checklist is printed");
+      assertStringIncludes(
+        result.stdout,
+        `${WORKSPACE}/reference/.agents/skills/chisel-update/SKILL.md`,
+        "the skill to follow is named",
+      );
+      assertStringIncludes(
+        await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
+        line,
+      );
+      assert(
+        (await Deno.stat(
+          join(target, WORKSPACE, "intentions", "unreleased", "a-move.md"),
+        )).isFile,
+        "the pending intention is staged",
+      );
+      assert(
+        (await Deno.stat(
+          join(
+            target,
+            WORKSPACE,
+            "reference",
+            ".agents",
+            "skills",
+            "chisel-update",
+            "SKILL.md",
+          ),
+        )).isFile,
+        "the reference tree carries the update skill",
+      );
+    }
   });
 });
