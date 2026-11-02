@@ -1,6 +1,6 @@
 # 01 — Update reads intentions
 
-**Status:** ready
+**Status:** in-progress
 **Blocked by:** None — can start immediately
 
 ---
