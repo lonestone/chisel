@@ -5,6 +5,19 @@ ships.
 
 ---
 
+## 40. 2026-11-02 — 0.2.0 published; `v2` becomes `main`
+
+On the Owner's word ("tu commits, tu merges, tu publies"), `v2` is merged
+into `main` by fast-forward and `@lonestone/chisel` 0.2.0 is published on
+JSR. It is the socle of the charter: the prose workflow, seven statuses,
+one tracker section, "I · Merge and publish" in the glue, `JOURNAL.md` as
+the journal, and `chisel-upgrade` to move a first-version or 0.1.x repo
+onto it. Verified before the publish: 23 tests green, `deno task check`
+clean, the dry run succeeding. A 0.1.1 repo moves with
+`chisel update`, then the `chisel-upgrade` skill.
+
+---
+
 ## 39. 2026-11-01 — The Owner's crit review: merge per project, JOURNAL.md
 
 The Owner reviewed the whole of `v2` since the charter in crit and left
