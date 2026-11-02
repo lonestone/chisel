@@ -1,6 +1,6 @@
 ---
 name: chisel-upgrade
-description: Move a repo onto the current chisel layout when `chisel update` refuses it or it carries an older chisel — a repo chisel did not install, a first-version layout, or a 0.1.x install — wherever that repo keeps its method.
+description: Move a repo onto the current chisel layout when `chisel update` stages it for a reason of layout, `chisel init` refuses it, or it carries an older chisel — a repo chisel did not install, a first-version layout, or a 0.1.x install — wherever that repo keeps its method.
 disable-model-invocation: true
 ---
 
@@ -8,8 +8,10 @@ disable-model-invocation: true
 
 The CLI handles the one layout it recognises: a repo it installed, with its
 manifest `.agents/.chisel.json`, and no symbolic link on a path it writes.
-It refuses everything else and writes nothing. This skill takes over from
-there.
+Everything else it does not copy over: `update` stages a workspace,
+`.chisel-workspace/`, whose session names the intention of this skill to
+apply first, and `init` refuses, writing nothing. This skill takes over
+from there.
 
 It is a set of migration intentions, one per starting point. Each one says
 its goal, when it applies and when it does not, the gaps to close — each
@@ -30,8 +32,12 @@ reading the repo, never assumed. Run it from the repo being migrated.
 
 1. **Require a clean working tree** (`git status --porcelain` empty), so
    the human can read one diff and revert it in one command.
-2. **Get the reference tree**, in a scratch directory outside the repo —
-   never by running `init` in the repo itself:
+2. **Get the reference tree.** In an update session it is already there:
+   `REF=.chisel-workspace/reference`. While the workspace exists,
+   `chisel update` refuses to run: where an intention below runs it, leave
+   that run to the close of the session, which the `chisel-update` skill
+   does. Without a session, get the tree in a scratch directory outside the
+   repo — never by running `init` in the repo itself:
 
    ```bash
    REF="$(mktemp -d)"
@@ -51,7 +57,8 @@ reading the repo, never assumed. Run it from the repo being migrated.
    it is made, and the human says yes to it.
 5. **Validate** with the intention's list, then **record the result**
    below.
-6. **Delete the reference tree**: `rm -rf "$REF"`.
+6. **Delete the reference tree** you made: `rm -rf "$REF"`. In a session,
+   the close of the `chisel-update` skill deletes the workspace.
 
 ## What is never touched
 

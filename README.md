@@ -118,7 +118,25 @@ deno x jsr:@lonestone/chisel update
 ```
 
 `update` refreshes what chisel installed and never touches your settings,
-your journal or your own files.
+your journal or your own files. A file of chisel's that someone edited is
+put back and named on an `overwritten:` line.
+
+**Each release ships intentions**: one per change your repo must act on,
+written for an agent, and classified by how much judgement it needs. Your
+manifest, `.agents/.chisel.json`, records which ones you applied or
+skipped. When every pending intention needs no judgement, `update` copies
+and records them, as above.
+
+**When one needs judgement, or your repo is not as chisel installed it** —
+no manifest, the first version's files, a symbolic link where chisel
+writes — `update` writes nothing in your files. It stages a workspace,
+`.chisel-workspace/`, that git ignores: the pending intentions, the
+reference tree of the new version, and a checklist. It prints the
+checklist and exits with code 3. Then ask your agent to follow the
+`chisel-update` skill it names: the agent proposes what to apply, finds
+where your repo keeps its method, shows each move before making it, stops
+for you on anything breaking, and records each result with
+`chisel record`. You validate the diff.
 
 **Coming from 0.1.x**, `update` also removes what that version installed
 and this one retired: the step files, the role pages, the agent definitions
@@ -129,20 +147,13 @@ become false is named on a `stale:` line. Then ask your agent to run the
 statuses to the new ones, and renames the journal, with you validating each
 step.
 
-**Coming from the first version, or from a method chisel did not
-install**, `update` refuses and writes nothing: it only updates a repo
-whose manifest, `.agents/.chisel.json`, it wrote itself. It names the
-`chisel-upgrade` skill, which moves the repo over with you, wherever it
-keeps its method.
+`init` refuses to write a path that is a symbolic link, or sits under one,
+and names each. Outside `.agents/`, `update` only refreshes the files it
+installed and you kept, so it never plants a second task workspace beside
+yours.
 
-`init` and `update` also refuse to write a path that is a symbolic link,
-or sits under one, and name each: writing through it would change a file
-chisel never installed. Outside `.agents/`, `update` only refreshes the
-files it installed and you kept, so it never plants a second task
-workspace beside yours.
-
-`chisel check` tells you which version is installed and whether anything
-drifted from it.
+`chisel check` tells you which version is installed, whether anything
+drifted from it, and which intentions are pending.
 
 ## Working on chisel itself
 

@@ -50,8 +50,9 @@ staged the session; it is written `chisel` below.
 3. **Close the reasons first.** A reason under "Why update stopped" that
    is a refusal — no manifest, the first version's layer, a symbolic link
    on a path chisel writes — names the intention that closes it; apply that
-   one before the others. A reason that lists intentions is the list below
-   it.
+   one before the others. Where it says to run `chisel update`, leave that
+   run to the close below: `update` refuses while the workspace exists. A
+   reason that lists intentions is the list below it.
 
 4. **Propose before any edit.** Read every pending intention: its goal,
    Applies When, Do Not Apply When and Observable Gaps. Inspect the repo.
