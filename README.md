@@ -29,31 +29,39 @@ Chisel needs Deno 2.6 or later, and nothing else: no `node_modules`, no
 global install. `deno x` runs with every permission, as npx would; `deno run
 jsr:@lonestone/chisel` asks only for read and write in the target directory
 and network access to `jsr.io`. To pin a version, name it:
-`jsr:@lonestone/chisel@0.2.0`. In the day after a release Deno refuses a
+`jsr:@lonestone/chisel@0.2.1`. In the day after a release Deno refuses a
 version that fresh; add `--min-dep-age 0` to the command, or wait.
 
-## Why it works this way
+## Why
 
-- **Prose, not an engine.** Today's models follow a well-written page
-  better than a pipeline of steps. Our first version ran in production on
-  prose alone; the heavier second one cost more without paying it back.
-- **One task, not a fleet.** Chisel takes a task from intent to commit and
-  stops there. Deciding what runs next is a different job, and it belongs
-  to you or to the tool above.
-- **Sub-agents only where they pay.** Each one costs tokens and a brief.
-  Chisel uses them to keep the project lead's context clean, to run on a
-  cheaper model, and for review.
-- **Fresh eyes on the code.** An agent reviewing its own session finds what
-  it meant to write. The reviewers start from the diff and the spec, and
-  nothing else.
-- **You read decisions, not transcripts.** The spec puts what needs your
-  judgement at the top, and only the questions that touch your decisions
-  reach you.
-- **Everything lands in the repo.** A plan that lives only in a chat is
-  lost to the next session, to the review and to a crash. Specs, plans and
-  the journal are files, versioned with the code.
+Coding agents write code fast. What goes wrong is everything around it:
 
-The longer version is in [PHILOSOPHY.md](./PHILOSOPHY.md).
+- they build the wrong thing, because nobody pinned down what was wanted;
+- they lose their plan at the next session;
+- they review their own work, and find nothing;
+- they bury you under a transcript you will never read.
+
+Chisel is built against those four failures.
+
+- **The intent is settled before the code.** When a task is vague, the
+  agent asks you, one question at a time, each with the answer it would
+  pick. Then it writes a short spec, with the decisions that need you at
+  the top.
+- **The plan is a file, and someone else reads it.** The agent that will
+  code writes its plan down and stops. The project lead checks it before a
+  single line is written. Next session, or after a crash, the plan is
+  still there.
+- **The reviewer never saw the code being written.** Two fresh agents read
+  the diff, one against your standards and one against the spec. An agent
+  reviewing its own session finds what it meant to write, not what it
+  wrote.
+- **You get questions, not transcripts.** Whatever does not touch your
+  decisions, the project lead settles on its own.
+
+And it stays light on purpose: one page of prose, and sub-agents only where
+they pay. Today's models need direction, not a pipeline. Our heavier second
+version cost more and did not earn it back. The longer story is in
+[PHILOSOPHY.md](./PHILOSOPHY.md).
 
 ## What happens when you give it a task
 
