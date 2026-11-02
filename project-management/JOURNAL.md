@@ -5,6 +5,39 @@ ships.
 
 ---
 
+## 46. 2026-11-02 — `update` reads intentions (slice 01 of "Updates and installs read intentions")
+
+The Owner's direction: an update reads intentions, changelogs written for
+agents, on the model of the Lonestone boilerplate. This first slice ships
+the mechanism. A release carries its intentions under `socle/intentions/`,
+in `<version>/` folders and an `unreleased/` one. Each has an id and a
+classification (`automatic`, `migration`, `breaking-manual`,
+`informational`) in its frontmatter, then the sections of the
+`chisel-upgrade` intentions. The manifest records each one applied or
+skipped. A manifest written before this release counts everything up to
+its version as applied.
+
+`update` takes the fast path when nothing needs judgement: it copies as
+before, names each managed file someone edited on an `overwritten:` line
+(the Architect's ruling), and records what it closed. Otherwise it writes
+nothing in the project's files. A pending `migration` or `breaking-manual`,
+no manifest, the first version's layer or a linked path stages
+`.chisel-workspace/` instead: the pending intentions, the reference tree, a
+checklist, and a `.gitignore` of its own. `update` then exits 3 and names
+the new `chisel-update` skill. `chisel record` writes one result and ticks
+the checklist, and `check` reports what is pending. The one intention
+shipped is real: the manifest records intentions, `automatic`.
+
+Eight tests in a new `intentions` group, the copy of the package built in
+a test standing in for releases not yet written. The four `update`
+refusals of 0.2.4 now stage. Reviewed by `code-review` with two fresh
+reviewers: steps cited by number, a plain error for a refusal and a cast
+resting on a comment were fixed, and the departures from the literal
+criteria were written into the slice's Notes. 37 tests green. Not
+published. Slice archived; slices 02 and 03 remain.
+
+---
+
 ## 45. 2026-11-02 — 0.2.4: update refuses what it does not recognise
 
 Published on the Owner's word ("ok publie"), so that the refusal's pointer

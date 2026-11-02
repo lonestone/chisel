@@ -1,7 +1,7 @@
 # 01 — Update reads intentions — work
 
 Created by the Crewmate at the plan step, 2026-11-02. Spec:
-`project-management/tasks/20261102-1543-updates-read-intentions/01-update-reads-intentions.spec.md`.
+`project-management/archive/20261102-1543-updates-read-intentions/01-update-reads-intentions.spec.md`.
 
 **Plan:** approved by the Architect, 2026-11-02. Rulings: an edited
 managed file keeps the fast path (option a) and is overwritten as today, but
@@ -413,6 +413,13 @@ Reality against the plan, fixed here:
 - The README's "Keeping it up to date" says what the fast path, the
   workspace, exit 3 and `record` are.
 
+**2026-11-02, review and close (Crewmate).** Two fresh reviewers; their
+findings and answers are below. Criteria ticked against the suite (37
+tests, `deno task check` clean) and, for the update skill and the
+intention's sections, by reading at the review. The rulings that read the
+criteria are recorded in the spec document's Notes. Spec and work
+documents archived, journal entry 46, `retro` run.
+
 Known for slice 03: in a session staged for no manifest, the
 `chisel-upgrade` intention runs `chisel init .`, which records every
 shipped intention as applied (a first install) — the pending ones of the
@@ -431,8 +438,8 @@ point.
 - [x] `check` reports pending intentions
 - [x] The update skill, `chisel-upgrade`, README, `test/TESTS.md`
 - [x] Gates green
-- [ ] `code-review`, findings answered
-- [ ] Close
+- [x] `code-review`, findings answered
+- [x] Close
 
 ## Notes & Snippets
 
@@ -447,6 +454,30 @@ stop on `breaking-manual`, the session checklist ticked by `record`, the
 refusal to overwrite a workspace. Left out, per the parent spec: domains,
 git refs, a branch per upgrade, `upgrade finish` (the closing fast-path
 `update` writes the version).
+
+**`retro` proposals, at the close**, none applied, each for its owner:
+
+1. **Spec writing** (`project-management/000-template.spec.md`,
+   "Acceptance Criteria"; owner: the human). A criterion that names some
+   values of an enumeration ("only `automatic` intentions pending") says
+   what happens to the others. `informational` fell between the fast-path
+   and staging criteria, and three literal readings had to be settled at
+   the plan and written into the Notes at the review.
+2. **Coding standards** (`socle/agents/discipline.md`, its writing rule;
+   owner: the human). "One fact in one place" is cited in task documents
+   and review briefs as a rule of `discipline.md`, and the Standards
+   reviewer could not find it there. Either write it into the rule or stop
+   citing it as one.
+3. **Navigation** (slice 03's spec document, Notes; owner: the
+   Architect). Inside a session staged for no manifest, `chisel init .`
+   records every shipped intention as applied. Slice 03's baseline
+   intention has to create the manifest without that. Today the fact is
+   written only in this archived worklog.
+4. **Process** (`socle/agents/skills/tdd/SKILL.md`, as applied; owner: the
+   Crewmate). Twice the code came before the test was run (staging, the
+   kept workspace), and a manual mutation check had to stand in for the
+   red step. Run the new test before writing the step's code, even when the
+   code is already clear.
 
 ## Diff-Review Findings
 
