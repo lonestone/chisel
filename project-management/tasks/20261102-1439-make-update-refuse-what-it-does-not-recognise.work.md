@@ -235,6 +235,17 @@ also checks that a managed page deleted inside `.agents/` still comes back,
 and that `check` is clean after the update that dropped the deleted
 templates.
 
+**2026-11-02, recipe and docs (Crewmate).** `chisel-upgrade` is now a
+router (`SKILL.md`) and two intentions, `from-first-version.md` and
+`from-0.1.x.md`, with the nine sections each; the content of the former
+paths A and B moved into them. Per the Architect's ruling, the links gap of
+`from-first-version.md` names a linked `AGENTS.md` and a linked skill, the
+human choosing which content stays, and comes before the gap that runs
+`chisel init .`. The integrity test's citer rule now accepts any file of
+the skill's directory, and asserts that the skill still names what it
+retires. `test/TESTS.md` and the README's "Keeping it up to date" follow.
+28 tests green, `deno task check` clean.
+
 ## Implementation Checkboxes
 
 - [x] Manifest rule and its `guards` test
@@ -242,9 +253,9 @@ templates.
 - [x] Pre-flight for `init` and its `guards` test
 - [x] Relocated-layout test
 - [x] Write-set rule and its `update` test
-- [ ] Recipe as intentions; socle list, golden tree, integrity test
-- [ ] `test/TESTS.md` and README
-- [ ] Gates green
+- [x] Recipe as intentions; socle list, golden tree, integrity test
+- [x] `test/TESTS.md` and README
+- [x] Gates green
 - [ ] `code-review`, findings answered
 - [ ] Close
 

@@ -129,8 +129,17 @@ become false is named on a `stale:` line. Then ask your agent to run the
 statuses to the new ones, and renames the journal, with you validating each
 step.
 
-**Coming from the first version**, `update` refuses and points at the same
-skill, which retires the old layer first.
+**Coming from the first version, or from a method chisel did not
+install**, `update` refuses and writes nothing: it only updates a repo
+whose manifest, `.agents/.chisel.json`, it wrote itself. It names the
+`chisel-upgrade` skill, which moves the repo over with you, wherever it
+keeps its method.
+
+`init` and `update` also refuse to write a path that is a symbolic link,
+or sits under one, and name each: writing through it would change a file
+chisel never installed. Outside `.agents/`, `update` only refreshes the
+files it installed and you kept, so it never plants a second task
+workspace beside yours.
 
 `chisel check` tells you which version is installed and whether anything
 drifted from it.
