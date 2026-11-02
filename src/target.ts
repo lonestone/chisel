@@ -73,3 +73,39 @@ export async function skillsLinkValue(
     return null;
   }
 }
+
+/**
+ * Each path among `relatives`, or directory above one inside the target, that
+ * is a symbolic link: relative to the target, sorted, once each. Each path is
+ * walked from the top and the walk stops at the first link on it, so a linked
+ * directory is named once, not once per file below it. The target directory
+ * itself is not asked about: only what lies inside it.
+ */
+export async function linkedPaths(
+  targetDir: string,
+  relatives: Iterable<string>,
+): Promise<string[]> {
+  const linked = new Set<string>();
+  const asked = new Map<string, boolean>();
+  for (const relative of relatives) {
+    const segments = relative.split("/");
+    for (let depth = 1; depth <= segments.length; depth++) {
+      const prefix = segments.slice(0, depth).join("/");
+      let isLink = asked.get(prefix);
+      if (isLink === undefined) {
+        try {
+          isLink = (await Deno.lstat(join(targetDir, prefix))).isSymlink;
+        } catch (error) {
+          if (!(error instanceof Deno.errors.NotFound)) throw error;
+          isLink = false;
+        }
+        asked.set(prefix, isLink);
+      }
+      if (isLink) {
+        linked.add(prefix);
+        break;
+      }
+    }
+  }
+  return [...linked].sort();
+}

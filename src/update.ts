@@ -4,6 +4,8 @@
 import { join } from "@std/path";
 import {
   copyManagedFiles,
+  managedSocleFiles,
+  refuseLinkedPaths,
   refuseV1Layout,
   removeEmptyParents,
   upgradeRecipePointer,
@@ -11,6 +13,8 @@ import {
   writeAgentsMd,
 } from "./install.ts";
 import {
+  BLOCK_KEY,
+  type Manifest,
   manifestPath,
   orphansOf,
   readManifest,
@@ -19,6 +23,18 @@ import {
 import { reportStaleGlue } from "./project-md.ts";
 import { ChiselError, reportLine, warn } from "./report.ts";
 import { isDirectory, isFile } from "./target.ts";
+
+/**
+ * The managed files this update writes: everything the socle ships inside
+ * `.agents/`, and outside it only what the last run installed. A repo whose
+ * manifest never listed a template or the task id script keeps its workspace
+ * where it chose, and gets no second tree beside it.
+ */
+function updateWrites(previous: Manifest): string[] {
+  return managedSocleFiles().filter((relative) =>
+    relative.startsWith(".agents/") || relative in previous.managed
+  );
+}
 
 export async function update(targetDir: string): Promise<number> {
   if (!(await isDirectory(targetDir))) {
@@ -47,7 +63,17 @@ export async function update(targetDir: string): Promise<number> {
     );
   }
 
-  await copyManagedFiles(targetDir);
+  const writes = updateWrites(previous);
+  await refuseLinkedPaths(targetDir, [
+    ...writes,
+    "AGENTS.md",
+    ".agents/.chisel.json",
+    // The orphan pass may remove any of them, and a removal under a linked
+    // directory would reach the link's destination too.
+    ...Object.keys(previous.managed).filter((name) => name !== BLOCK_KEY),
+  ]);
+
+  await copyManagedFiles(targetDir, new Set(writes));
   if (await isFile(join(targetDir, "AGENTS.md"))) {
     await writeAgentsMd(targetDir, "");
   } else {
@@ -55,7 +81,7 @@ export async function update(targetDir: string): Promise<number> {
       `chisel update: warning: ${targetDir}/AGENTS.md not found — skipping (run chisel init first)`,
     );
   }
-  const current = await writeManifest(targetDir);
+  const current = await writeManifest(targetDir, writes);
 
   console.log(`chisel update: ${targetDir}`);
   let reported = false;

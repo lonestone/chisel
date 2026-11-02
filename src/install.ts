@@ -18,6 +18,7 @@ import {
   hasManagedBlockMarkers,
   isDirectory,
   isFile,
+  linkedPaths,
   pathExists,
   readTextIfPresent,
   SKILLS_LINK_VALUE,
@@ -49,44 +50,98 @@ const TASK_ID_SCRIPT = "scripts/task-id.sh";
 
 const EXECUTABLE_MODE = 0o755;
 
-async function writePackaged(
-  socleRelative: string,
-  destination: string,
-  mode?: number,
-): Promise<void> {
-  await Deno.mkdir(dirname(destination), { recursive: true });
-  await Deno.writeFile(destination, await readPackageFile(socleRelative));
-  if (mode !== undefined) await Deno.chmod(destination, mode);
+/** One file the installer copies from the package into the target. */
+interface ManagedCopy {
+  /** Relative to the package root. */
+  readonly source: string;
+  /** Relative to the target. */
+  readonly relative: string;
+  readonly mode?: number;
 }
 
 /**
- * Every file `copyManagedFiles` writes, as paths relative to the target —
- * read from the same lists it copies from, so the two cannot drift apart.
+ * The one list of what the installer copies. `managedSocleFiles`, the copy
+ * itself and the pre-flight all read it, so they cannot drift apart.
  */
-export function managedSocleFiles(): string[] {
-  const managed: string[] = [];
-  for (const socleFile of SOCLE_FILES) {
-    const tree = COPIED_TREES.find((prefix) => socleFile.startsWith(prefix));
-    if (tree) managed.push(`.agents/${socleFile.slice("agents/".length)}`);
-  }
-  for (const [, relative] of COPIED_FILES) managed.push(relative);
-  managed.push(TASK_ID_SCRIPT);
-  return managed.sort();
-}
-
-export async function copyManagedFiles(targetDir: string): Promise<void> {
+function managedCopies(): ManagedCopy[] {
+  const copies: ManagedCopy[] = [];
   for (const socleFile of SOCLE_FILES) {
     if (!COPIED_TREES.some((prefix) => socleFile.startsWith(prefix))) continue;
-    const relative = `.agents/${socleFile.slice("agents/".length)}`;
-    await writePackaged(`${SOCLE_ROOT}${socleFile}`, join(targetDir, relative));
+    copies.push({
+      source: `${SOCLE_ROOT}${socleFile}`,
+      relative: `.agents/${socleFile.slice("agents/".length)}`,
+    });
   }
-  for (const [socleFile, relative] of COPIED_FILES) {
-    await writePackaged(socleFile, join(targetDir, relative));
+  for (const [source, relative] of COPIED_FILES) {
+    copies.push({ source, relative });
   }
-  await writePackaged(
-    SOCLE.taskIdScript,
-    join(targetDir, TASK_ID_SCRIPT),
-    EXECUTABLE_MODE,
+  copies.push({
+    source: SOCLE.taskIdScript,
+    relative: TASK_ID_SCRIPT,
+    mode: EXECUTABLE_MODE,
+  });
+  return copies;
+}
+
+async function writePackaged(
+  copy: ManagedCopy,
+  targetDir: string,
+): Promise<void> {
+  const destination = join(targetDir, copy.relative);
+  await Deno.mkdir(dirname(destination), { recursive: true });
+  await Deno.writeFile(destination, await readPackageFile(copy.source));
+  if (copy.mode !== undefined) await Deno.chmod(destination, copy.mode);
+}
+
+/** Every file `copyManagedFiles` can write, as paths relative to the target. */
+export function managedSocleFiles(): string[] {
+  return managedCopies().map((copy) => copy.relative).sort();
+}
+
+/** Copies the managed files named in `only`, or every one of them. */
+export async function copyManagedFiles(
+  targetDir: string,
+  only?: ReadonlySet<string>,
+): Promise<void> {
+  for (const copy of managedCopies()) {
+    if (only && !only.has(copy.relative)) continue;
+    await writePackaged(copy, targetDir);
+  }
+}
+
+/**
+ * Every path `init` may write, before it writes any. The adapter link
+ * `.claude/skills` is chisel's own and points into `.agents/skills/`, so it is
+ * left out; so is `CLAUDE.md`, which only ever gains one import line.
+ */
+export function initWrites(): string[] {
+  return [
+    ...managedSocleFiles(),
+    ".agents/project.md",
+    ".agents/.chisel.json",
+    "AGENTS.md",
+    "project-management/tasks",
+    "project-management/archive",
+    "project-management/JOURNAL.md",
+  ];
+}
+
+// Refuse to write through a symbolic link. A plain file write follows one, so
+// a managed path that is a link — or sits under a linked directory — sends the
+// write into a file chisel never installed: the project's own skill, kept
+// somewhere else and linked in. Called before anything is written, with every
+// path the command may write, so a refusal writes nothing at all.
+export async function refuseLinkedPaths(
+  targetDir: string,
+  relatives: Iterable<string>,
+): Promise<void> {
+  const linked = await linkedPaths(targetDir, relatives);
+  if (linked.length === 0) return;
+  throw new ChiselError(
+    `${targetDir}: these paths chisel writes are symbolic links, or sit under one, and ` +
+      `writing them would change the files they point at:\n` +
+      linked.map((path) => `  ${path}\n`).join("") +
+      (await upgradeRecipePointer()),
   );
 }
 

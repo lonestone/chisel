@@ -51,10 +51,17 @@ export function serializeManifest(manifest: Manifest): string {
 // definitions it rendered into `.claude/agents/` and `.codex/agents/` sit in
 // its last manifest and in no list here, so they come out as orphans.
 
-/** Rewrites the manifest from the current state of the target, and returns it. */
-export async function writeManifest(targetDir: string): Promise<Manifest> {
+/**
+ * Rewrites the manifest from the current state of the target, and returns it.
+ * It records the files of `tracked` that exist — every managed file when
+ * omitted — so a command that did not write a path never adopts it.
+ */
+export async function writeManifest(
+  targetDir: string,
+  tracked: readonly string[] = managedSocleFiles(),
+): Promise<Manifest> {
   const managed: Record<string, string> = {};
-  for (const relative of managedSocleFiles()) {
+  for (const relative of tracked) {
     const path = join(targetDir, relative);
     if (await isFile(path)) managed[relative] = await sha256File(path);
   }

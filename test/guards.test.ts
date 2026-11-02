@@ -3,7 +3,13 @@
 
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { join } from "@std/path";
-import { appendTo, runChisel, snapshot, withRepo } from "./helpers.ts";
+import {
+  appendTo,
+  copyTree,
+  runChisel,
+  snapshot,
+  withRepo,
+} from "./helpers.ts";
 
 async function absent(path: string): Promise<boolean> {
   return await Deno.lstat(path).then(() => false).catch(() => true);
@@ -124,5 +130,66 @@ Deno.test("guards: update refuses a repo with no manifest and writes nothing", a
       "it names the migration skill",
     );
     assertEquals(await snapshot(target), before, "the target is unchanged");
+  });
+});
+
+Deno.test("guards: update refuses to write through a symbolic link", async () => {
+  await withRepo(async (workspace) => {
+    // (a) A managed file that is itself a link to a file outside the target.
+    const fileLinked = await workspace.install("brownfield");
+    const elsewhere = await workspace.dir("elsewhere");
+    const page = join(fileLinked, ".agents", "workflow.md");
+    await Deno.copyFile(page, join(elsewhere, "workflow.md"));
+    await appendTo(join(elsewhere, "workflow.md"), "\n<!-- not chisel's -->\n");
+    await Deno.remove(page);
+    await Deno.symlink(join(elsewhere, "workflow.md"), page);
+
+    // (b) A directory above managed files, linked to a directory outside it.
+    const dirLinked = await workspace.install("brownfield");
+    const skillsElsewhere = await workspace.dir("skills-elsewhere");
+    const skill = join(dirLinked, ".agents", "skills", "tdd");
+    await copyTree(skill, join(skillsElsewhere, "tdd"));
+    await appendTo(
+      join(skillsElsewhere, "tdd", "SKILL.md"),
+      "\n<!-- the project's own edit -->\n",
+    );
+    await Deno.remove(skill, { recursive: true });
+    await Deno.symlink(join(skillsElsewhere, "tdd"), skill);
+
+    for (
+      const [target, destination, linked] of [
+        [fileLinked, elsewhere, ".agents/workflow.md"],
+        [dirLinked, skillsElsewhere, ".agents/skills/tdd"],
+      ]
+    ) {
+      const targetBefore = await snapshot(target);
+      const destinationBefore = await snapshot(destination);
+      const refused = await runChisel(["update", target]);
+      assertEquals(refused.code, 1, `the refusal exits 1\n${refused.output}`);
+      assertStringIncludes(refused.stderr, linked, "it names the linked path");
+      assertStringIncludes(refused.stderr, "chisel-upgrade");
+      assertEquals(await snapshot(target), targetBefore, "target unchanged");
+      assertEquals(
+        await snapshot(destination),
+        destinationBefore,
+        "the link's destination is unchanged",
+      );
+    }
+
+    // Only the paths chisel writes count: a skill of the project's own,
+    // linked elsewhere, does not stop an update.
+    const foreignLinked = await workspace.install("brownfield");
+    const ownSkills = await workspace.dir("own-skills");
+    await Deno.mkdir(join(ownSkills, "review-videos"));
+    await Deno.writeTextFile(
+      join(ownSkills, "review-videos", "SKILL.md"),
+      "# A skill of the project's own\n",
+    );
+    await Deno.symlink(
+      join(ownSkills, "review-videos"),
+      join(foreignLinked, ".agents", "skills", "review-videos"),
+    );
+    const updated = await runChisel(["update", foreignLinked]);
+    assertEquals(updated.code, 0, updated.output);
   });
 });
