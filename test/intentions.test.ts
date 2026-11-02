@@ -329,3 +329,23 @@ Deno.test("intentions: record writes each result, ticks the session, and refuses
     assertEquals(orphan.code, 1, "no manifest is refused");
   });
 });
+
+Deno.test("intentions: check reports what is pending", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    const entry = await packageWith(workspace, [
+      { release: "unreleased", file: "a-move.md", classification: "migration" },
+    ]);
+    const checked = await runChisel(["check", target], entry);
+    assertEquals(checked.code, 1, "a pending intention is a divergence");
+    assertStringIncludes(
+      checked.stdout,
+      "pending: unreleased/a-move (migration)",
+    );
+    assertEquals(
+      (await runChisel(["check", target])).code,
+      0,
+      "with nothing pending, check is clean",
+    );
+  });
+});
