@@ -9,6 +9,7 @@ import {
   runChisel,
   snapshot,
   withRepo,
+  type Workspace,
 } from "./helpers.ts";
 
 async function absent(path: string): Promise<boolean> {
@@ -220,5 +221,56 @@ Deno.test("guards: init refuses a linked skill and writes nothing", async () => 
       destinationBefore,
       "the linked skill is unchanged",
     );
+  });
+});
+
+/**
+ * A repo whose method predates the CLI and lives where it chose: doctrine and
+ * skills in `doc/agents/`, the task workspace in `doc/project-management/`,
+ * the entries of `.agents/skills/` linked into `doc/agents/skills/`, and no
+ * manifest. Built from plain files and links, never committed as a fixture.
+ */
+async function relocatedLayout(workspace: Workspace): Promise<string> {
+  const target = await workspace.dir("relocated");
+  const files: Record<string, string> = {
+    "AGENTS.md":
+      "# Relocated — agent instructions\n\nThe method lives in `doc/agents/`.\n",
+    "doc/agents/rules/task-planning.md": "# Planning a task\n",
+    "doc/agents/workflows.md": "# Workflows\n",
+    "doc/agents/skills/tdd/SKILL.md": "# The project's own tdd skill\n",
+    "doc/agents/skills/review-videos/SKILL.md": "# Review videos\n",
+    "doc/project-management/CHANGELOG.md": "# Changelog\n\n## 2026-01-01\n",
+    "doc/project-management/tasks/20260101-0900-a-task.md":
+      "# A task\n\n**Status:** In Progress\n",
+    "scripts/task-id.sh": "#!/usr/bin/env bash\necho the project's own\n",
+  };
+  for (const [relative, content] of Object.entries(files)) {
+    await Deno.mkdir(join(target, relative, ".."), { recursive: true });
+    await Deno.writeTextFile(join(target, relative), content);
+  }
+  await Deno.mkdir(join(target, ".agents", "skills"), { recursive: true });
+  for (const skill of ["tdd", "review-videos"]) {
+    await Deno.symlink(
+      `../../doc/agents/skills/${skill}`,
+      join(target, ".agents", "skills", skill),
+    );
+  }
+  return target;
+}
+
+Deno.test("guards: a relocated layout with no manifest is refused by update and init", async () => {
+  await withRepo(async (workspace) => {
+    const target = await relocatedLayout(workspace);
+    const before = await snapshot(target);
+
+    const updated = await runChisel(["update", target]);
+    assertEquals(updated.code, 1, `update refuses\n${updated.output}`);
+    assertStringIncludes(updated.stderr, "chisel-upgrade");
+    assertEquals(await snapshot(target), before, "update wrote nothing");
+
+    const initialised = await runChisel(["init", target]);
+    assertEquals(initialised.code, 1, `init refuses\n${initialised.output}`);
+    assertStringIncludes(initialised.stderr, ".agents/skills/tdd");
+    assertEquals(await snapshot(target), before, "init wrote nothing");
   });
 });
