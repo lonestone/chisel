@@ -5,6 +5,15 @@ ships.
 
 ---
 
+## 41. 2026-11-02 — 0.2.1: the README reads like someone explaining chisel
+
+A patch release so that JSR's page shows the rewritten README: it opens on
+what chisel does for you, tells a task as it runs, and keeps the reference
+for the end. Nothing else changed since 0.2.0. Published from `v2` on the
+Owner's word ("publie").
+
+---
+
 ## 40. 2026-11-02 — 0.2.0 published; `v2` becomes `main`
 
 On the Owner's word ("tu commits, tu merges, tu publies"), `v2` is merged
