@@ -449,3 +449,72 @@ git refs, a branch per upgrade, `upgrade finish` (the closing fast-path
 `update` writes the version).
 
 ## Diff-Review Findings
+
+`code-review` on `git diff e659935...HEAD`, two fresh reviewers,
+2026-11-02. Suite 37 tests green, `deno task check` clean, before and after
+the fixes.
+
+### Standards
+
+- **A plain `Error` for a refusal** in `recordIntention`
+  (`src/report.ts`, header: refusals are `ChiselError`). **Fixed.**
+- **Steps cited by number in the update skill** ("found at step 2", "start
+  again from step 2"; rule 10 of `discipline.md`, name things by their
+  meaning). **Fixed:** "when you read the session", and the step's title.
+- **"The 0.2.4 refusals" in a comment** (rule 10). **Fixed:** the comment
+  names what is caught.
+- **Slice numbers in this document** (rule 10). **Answered:** "slice 02"
+  and "slice 03" are the slices' names in the parent's "Slices &
+  Dependencies", where each number goes with its title; they are not codes
+  standing for something said elsewhere.
+- **The classifications defined in four places** (the update skill,
+  `socle/intentions/TEMPLATE.md`, the README, the type's comment).
+  **Answered:** each is read by a different reader who has no access to the
+  others. The skill is installed and read by the agent applying an
+  intention. The template is not installed; it is read by whoever writes
+  one. The README is the human's page. The comment is the code's.
+- **Header lines printed with `console.log`, outside `src/report.ts`.**
+  **Answered:** every command already prints its header that way;
+  `report.ts` holds the indented report lines.
+- **`today()` in `src/intentions.ts`** (possible Feature Envy).
+  **Answered:** it dates the records and the journal alike; no module in
+  `src/` is a better home without creating one for a single function.
+- **The workspace layout repeating `intentions/` and `session.md`**
+  (Duplicated Code). **Fixed:** a staged intention's path is its path in
+  the socle, and the session is written through `SESSION_FILE`.
+- **The classification branched on in three places** (Repeated Switches).
+  **Answered:** each place asks a different question (does it need
+  judgement, does it stop for the human, is it read out). A table would
+  hold three columns for three single uses.
+- **The intention id as a string** (Primitive Obsession). **Answered:** it
+  is the string the manifest records and `record` receives; the shipped
+  intention already carries its parts.
+- **`previous as Manifest` resting on a comment.** **Fixed:** the test on a
+  missing manifest is written into the condition, so the type checker
+  proves it.
+- **A doc comment past 80 columns** on `upgradeRecipePointer`. **Fixed.**
+
+### Spec
+
+- **A session staged for no manifest cannot record honestly.** The
+  `chisel-upgrade` intention runs `chisel init .`, which records every
+  shipped intention as applied, the pending ones included. **Answered,
+  reported:** this is the baseline intention's ground in slice 03 ("one
+  baseline intention covers a repo without a manifest"). Written in the
+  worklog and in the close report. With the one `automatic` intention
+  shipped today, nothing goes wrong.
+- **`init` records `unreleased/` while the implicit baseline does not**
+  (finding: "up to its own version" read two ways). **Answered:** a first
+  install has the intentions its own package ships, unreleased ones
+  included. A manifest without a record was written before any intention
+  shipped, so nothing unreleased was part of it. The comment on
+  `baselineRecord` now says why.
+- **Departures from the literal criteria** (the edited managed file, `init`
+  on an existing manifest, `informational` on the fast path, no
+  placeholder, `update` refused while a workspace exists). **Fixed:** each
+  is recorded in the spec document's Notes, signed, with the decision zones
+  untouched. The rulings are on the `**Plan:**` line.
+- **Not asked for:** the `overwritten:` line (the Architect's ruling), the
+  ticking of `session.md` by `record`, and the `read:` line of an
+  `informational` intention (approved in the program design).
+  **Answered:** kept.

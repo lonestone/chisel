@@ -55,3 +55,21 @@ result with `chisel record`. The human validates the diff.
   a bare refusal, where the agent can take over.
 - One placeholder intention in `unreleased/` is enough to prove the
   mechanism; the real intentions of past releases are slice 03.
+
+Crewmate, 2026-11-02, at the review: the criteria are read with the
+Architect's rulings recorded on the work document's `**Plan:**` line, and
+with the decisions of its program design the Architect approved.
+
+- **fast-path**: an untouched install includes one where someone edited a
+  managed file. The fast path overwrites it, as before, and names it on an
+  `overwritten:` line first. An `informational` intention takes the fast
+  path too, printed and recorded applied: it needs no judgement, which is
+  the parent's test.
+- **baseline-recorded**: a first `init` records everything its package
+  ships, `unreleased/` included. An `init` on a repo that already has a
+  manifest keeps that manifest's record and adds nothing, so a pending
+  intention stays pending for `update`.
+- **workspace-kept**: any `update` refuses while a workspace exists, the
+  fast path included.
+- The note above: no placeholder ships. The one intention is real,
+  `unreleased/manifest-records-intentions`, classified `automatic`.

@@ -75,7 +75,8 @@ staged the session; it is written `chisel` below.
    - **Close each gap where the project keeps its method.** An intention
      names chisel's default paths; when the repo keeps its tasks, its
      journal or its doctrine elsewhere, the glue, `AGENTS.md` and the links
-     found at step 2 say where, and that is where the gap is closed. Never
+     found when you read the session say where, and that is where the gap
+     is closed. Never
      move the project's files to match the reference.
    - **Show each move before making it**, and make it on the human's yes.
    - Follow each reference path's policy against `reference/`: **copy**
@@ -114,7 +115,7 @@ update:
 2. Run `chisel update`. It takes the fast path now: it refreshes the
    managed files, records the `automatic` and `informational` intentions,
    and exits 0. An exit 3 means something is still pending: read the new
-   `session.md` and start again from step 2.
+   `session.md` and start again from "Read `session.md`".
 3. Run `chisel check`: it must be clean.
 4. Show the human the full diff; their reading of it validates the update.
 5. Once accepted, add one dated entry to the journal the task workspace

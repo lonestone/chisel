@@ -4,11 +4,11 @@
 // one of the cases that stages — and it ignores itself, so staging writes
 // nothing in the project's own files.
 
-import { basename, join } from "@std/path";
+import { join } from "@std/path";
 import { poseSocle } from "./init.ts";
 import type { Intention } from "./intentions.ts";
 import { today } from "./intentions.ts";
-import { packageVersion, readPackageFile } from "./paths.ts";
+import { packageVersion, readPackageFile, SOCLE_ROOT } from "./paths.ts";
 import { readTextIfPresent } from "./target.ts";
 
 export const WORKSPACE_DIR = ".chisel-workspace";
@@ -26,8 +26,9 @@ export interface Staging {
   readonly pending: readonly Intention[];
 }
 
+/** Where an intention is staged, inside the workspace: its path in the socle. */
 function relativeSource(intention: Intention): string {
-  return `intentions/${intention.release}/${basename(intention.source)}`;
+  return intention.source.slice(SOCLE_ROOT.length);
 }
 
 /** One checklist line: what `record` ticks, matched by the id in backticks. */
@@ -68,7 +69,7 @@ export async function stageWorkspace(
     const version = await packageVersion();
     const lines = staging.pending.map(checklistLine);
     await Deno.writeTextFile(
-      join(root, "session.md"),
+      join(targetDir, SESSION_FILE),
       [
         "# Chisel update session",
         "",

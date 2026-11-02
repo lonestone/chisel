@@ -93,15 +93,16 @@ export async function update(targetDir: string): Promise<number> {
   }
 
   const reasons = await reasonsToStage(targetDir, previous, writes, pending);
-  if (reasons.length > 0) {
+  // A missing manifest is always among the reasons; the test on it is what
+  // tells the type checker the fast path has one.
+  if (reasons.length > 0 || previous === null) {
     return await stage(targetDir, {
       from: previous?.version ?? null,
       reasons,
       pending,
     });
   }
-  // No reason to stage means a manifest was read.
-  return await fastPath(targetDir, previous as Manifest, writes, pending);
+  return await fastPath(targetDir, previous, writes, pending);
 }
 
 const EMPTY_MANIFEST: Manifest = { version: "", managed: {}, intentions: {} };
@@ -112,8 +113,8 @@ const UPGRADE_INTENTION =
 
 /**
  * Every reason this update cannot be a copy, as a sentence for the session:
- * what the 0.2.4 refusals caught, and the pending intentions that need
- * judgement. Reads only.
+ * the first version's layer, no manifest, a symbolic link on a path it would
+ * write, and the pending intentions that need judgement. Reads only.
  */
 async function reasonsToStage(
   targetDir: string,

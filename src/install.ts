@@ -387,9 +387,10 @@ export async function v1LayoutFound(targetDir: string): Promise<string[]> {
 }
 
 /**
- * The sentence the links refusal of `init` ends with: where the recipe is, and how a repo that does not have it gets it. The
- * version is pinned to the running CLI's, so the recipe read is the one that
- * matches the CLI that refused.
+ * The sentence the links refusal of `init` ends with: where the recipe is,
+ * and how a repo that does not have it gets it. The version is pinned to the
+ * running CLI's, so the recipe read is the one that matches the CLI that
+ * refused.
  */
 export async function upgradeRecipePointer(): Promise<string> {
   const version = await packageVersion();

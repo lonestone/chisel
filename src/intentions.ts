@@ -161,7 +161,10 @@ export async function readIntention(
 /**
  * The record of a manifest written before intentions were recorded: every
  * intention of a release up to the manifest's version counts as applied, so
- * only what came later is pending. An unreleased one never counts.
+ * only what came later is pending. An unreleased one never counts: a
+ * manifest without a record was written before any intention shipped, so
+ * nothing unreleased can have been part of its install. A first install, by
+ * contrast, records everything its own package ships (`fullRecord`).
  */
 export function baselineRecord(version: string, date: string): IntentionRecord {
   const record: IntentionRecord = {};

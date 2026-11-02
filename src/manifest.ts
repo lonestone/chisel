@@ -11,6 +11,7 @@ import {
   type IntentionResult,
   today,
 } from "./intentions.ts";
+import { ChiselError } from "./report.ts";
 import { isFile, readTextIfPresent } from "./target.ts";
 
 /** Not a file: the hash of the managed block inside `AGENTS.md`. */
@@ -126,7 +127,7 @@ export async function recordIntention(
 ): Promise<void> {
   const manifest = await readManifest(targetDir);
   if (manifest === null) {
-    throw new Error(`no manifest at ${manifestPath(targetDir)}`);
+    throw new ChiselError(`no manifest at ${manifestPath(targetDir)}`);
   }
   await Deno.writeTextFile(
     manifestPath(targetDir),
