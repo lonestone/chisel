@@ -3,7 +3,11 @@
 Created by the Crewmate at the plan step, 2026-11-02. Spec:
 `project-management/tasks/20261102-1543-updates-read-intentions/01-update-reads-intentions.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Architect, 2026-11-02. Rulings: an edited
+managed file keeps the fast path (option a) and is overwritten as today, but
+`update` names it on an `overwritten:` line when its hash on disk differs
+from the last manifest's, so a local edit never vanishes silently; `init` on
+an existing manifest keeps its record and adds nothing (option a).
 
 ## Program Design
 
