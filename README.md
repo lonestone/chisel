@@ -32,6 +32,29 @@ and network access to `jsr.io`. To pin a version, name it:
 `jsr:@lonestone/chisel@0.2.0`. In the day after a release Deno refuses a
 version that fresh; add `--min-dep-age 0` to the command, or wait.
 
+## Why it works this way
+
+- **Prose, not an engine.** Today's models follow a well-written page
+  better than a pipeline of steps. Our first version ran in production on
+  prose alone; the heavier second one cost more without paying it back.
+- **One task, not a fleet.** Chisel takes a task from intent to commit and
+  stops there. Deciding what runs next is a different job, and it belongs
+  to you or to the tool above.
+- **Sub-agents only where they pay.** Each one costs tokens and a brief.
+  Chisel uses them to keep the project lead's context clean, to run on a
+  cheaper model, and for review.
+- **Fresh eyes on the code.** An agent reviewing its own session finds what
+  it meant to write. The reviewers start from the diff and the spec, and
+  nothing else.
+- **You read decisions, not transcripts.** The spec puts what needs your
+  judgement at the top, and only the questions that touch your decisions
+  reach you.
+- **Everything lands in the repo.** A plan that lives only in a chat is
+  lost to the next session, to the review and to a crash. Specs, plans and
+  the journal are files, versioned with the code.
+
+The longer version is in [PHILOSOPHY.md](./PHILOSOPHY.md).
+
 ## What happens when you give it a task
 
 The agent you talk to plays the **Architect**: think of it as the project
