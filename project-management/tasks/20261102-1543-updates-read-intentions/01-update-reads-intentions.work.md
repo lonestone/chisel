@@ -386,17 +386,51 @@ reading, every run of `init` records everything.
 
 ## Worklog
 
+**2026-11-02, code (Crewmate).** Eight green steps, one commit each, in the
+planned order. Red first for the integrity test (no module), the baseline,
+the fast path (with the Architect's `overwritten:` line, which also widened
+the summary assertion of the "managed refresh" test), `record` and `check`.
+The staging test went green on its first run: the staging code was written
+in the same step, before the test was run; the test asserts exit 3, which
+no earlier code returned. The workspace-kept test passed at once too (the
+refusal and the `.gitignore` came with staging), so it was mutation-checked
+by hand: with the `.gitignore` line emptied, it fails.
+
+Reality against the plan, fixed here:
+
+- `IntentionResult` and `IntentionRecord` live in `src/intentions.ts`, not
+  `src/manifest.ts`, which imports them: `baselineRecord` needs the type,
+  and the other direction would be a cycle. `today()` moved there too, out
+  of `src/install.ts`, so one function dates the journal and the records.
+- Two misuses of `record` cannot be told from a right use and are not
+  usage errors: `--skipped <target>` takes the target as the reason, and
+  `record --applied <target>` takes the target as the id (an unknown id,
+  exit 1). The test uses the unambiguous forms.
+- In a session whose reason is a refusal, the `chisel-upgrade` intention
+  runs `chisel update`, which now refuses while the workspace exists. Both
+  skills say to leave that run to the session's close; `chisel-upgrade`'s
+  reference tree is the workspace's when there is one.
+- The README's "Keeping it up to date" says what the fast path, the
+  workspace, exit 3 and `record` are.
+
+Known for slice 03: in a session staged for no manifest, the
+`chisel-upgrade` intention runs `chisel init .`, which records every
+shipped intention as applied (a first install) — the pending ones of the
+session included. The baseline intention of slice 03 has to create the
+manifest without that, or record only up to the repo's real starting
+point.
+
 ## Implementation Checkboxes
 
-- [ ] Intentions shipped and parsed; integrity test
-- [ ] `init` records the baseline
-- [ ] The fast path records; the implicit baseline
-- [ ] Staging: the workspace, the reasons, the 0.2.4 refusals moved to it
-- [ ] The workspace refused when present, and ignored by git
-- [ ] `chisel record`
-- [ ] `check` reports pending intentions
-- [ ] The update skill, `chisel-upgrade`, README, `test/TESTS.md`
-- [ ] Gates green
+- [x] Intentions shipped and parsed; integrity test
+- [x] `init` records the baseline
+- [x] The fast path records; the implicit baseline
+- [x] Staging: the workspace, the reasons, the 0.2.4 refusals moved to it
+- [x] The workspace refused when present, and ignored by git
+- [x] `chisel record`
+- [x] `check` reports pending intentions
+- [x] The update skill, `chisel-upgrade`, README, `test/TESTS.md`
+- [x] Gates green
 - [ ] `code-review`, findings answered
 - [ ] Close
 
