@@ -384,3 +384,73 @@ Deno.test("update: a 0.1.1 install is cleaned", async () => {
     assertEquals(checked.code, 0, checked.output);
   });
 });
+
+const OUTSIDE_AGENTS = [
+  "project-management/000-template.spec.md",
+  "project-management/000-template.work.md",
+  "scripts/task-id.sh",
+];
+
+Deno.test("update: creates no file outside .agents/ that the last run did not leave", async () => {
+  await withRepo(async (workspace) => {
+    // (a) A manifest that never listed them: a workspace kept elsewhere.
+    const unlisted = await workspace.install("brownfield");
+    const path = join(unlisted, MANIFEST);
+    const manifest = JSON.parse(await Deno.readTextFile(path)) as {
+      version: string;
+      managed: Record<string, string>;
+    };
+    for (const name of OUTSIDE_AGENTS) delete manifest.managed[name];
+    await Deno.writeTextFile(path, `${JSON.stringify(manifest, null, 2)}\n`);
+    await Deno.remove(join(unlisted, "project-management"), {
+      recursive: true,
+    });
+    await Deno.remove(join(unlisted, "scripts"), { recursive: true });
+
+    const result = await runChisel(["update", unlisted]);
+    assertEquals(result.code, 0, result.output);
+    assertEquals(
+      await absent(join(unlisted, "project-management")),
+      true,
+      "no project-management/ created",
+    );
+    assertEquals(
+      await absent(join(unlisted, "scripts")),
+      true,
+      "no scripts/ created",
+    );
+
+    // (b) Listed by the last run, then deleted by the project: it stays
+    // deleted, and the manifest stops listing it.
+    const deleted = await workspace.install("brownfield");
+    for (const name of OUTSIDE_AGENTS) await Deno.remove(join(deleted, name));
+
+    const again = await runChisel(["update", deleted]);
+    assertEquals(again.code, 0, again.output);
+    for (const name of OUTSIDE_AGENTS) {
+      assertEquals(
+        await absent(join(deleted, name)),
+        true,
+        `${name} not recreated`,
+      );
+    }
+    const after = JSON.parse(
+      await Deno.readTextFile(join(deleted, MANIFEST)),
+    ) as { managed: Record<string, string> };
+    assertEquals(
+      OUTSIDE_AGENTS.filter((name) => name in after.managed),
+      [],
+      "the manifest no longer lists them",
+    );
+    const checked = await runChisel(["check", deleted]);
+    assertEquals(checked.code, 0, `check is clean after\n${checked.output}`);
+
+    // Inside `.agents/`, a deleted managed file still comes back.
+    await Deno.remove(join(deleted, ".agents", "workflow.md"));
+    assertEquals((await runChisel(["update", deleted])).code, 0);
+    assert(
+      (await Deno.stat(join(deleted, ".agents", "workflow.md"))).isFile,
+      "a managed page inside .agents/ is restored",
+    );
+  });
+});

@@ -224,13 +224,24 @@ Each test red first, then the code that turns it green, then a commit.
 
 ## Worklog
 
+**2026-11-02, code (Crewmate).** Five green steps, each test red first
+except the relocated layout, which the two earlier rules already refused
+(expected in the plan). The manifest rule; the pre-flight for `update`,
+with `linkedPaths` in `src/target.ts`, `managedCopies` as the one list in
+`src/install.ts`, and `writeManifest` taking the paths it tracks; the
+pre-flight for `init`; the relocated-layout test; the write-set rule with
+the Architect's ruling (b), listed and still on disk. The no-new-tree test
+also checks that a managed page deleted inside `.agents/` still comes back,
+and that `check` is clean after the update that dropped the deleted
+templates.
+
 ## Implementation Checkboxes
 
-- [ ] Manifest rule and its `guards` test
-- [ ] Pre-flight for `update` and its `guards` test
-- [ ] Pre-flight for `init` and its `guards` test
-- [ ] Relocated-layout test
-- [ ] Write-set rule and its `update` test
+- [x] Manifest rule and its `guards` test
+- [x] Pre-flight for `update` and its `guards` test
+- [x] Pre-flight for `init` and its `guards` test
+- [x] Relocated-layout test
+- [x] Write-set rule and its `update` test
 - [ ] Recipe as intentions; socle list, golden tree, integrity test
 - [ ] `test/TESTS.md` and README
 - [ ] Gates green

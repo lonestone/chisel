@@ -26,14 +26,26 @@ import { isDirectory, isFile } from "./target.ts";
 
 /**
  * The managed files this update writes: everything the socle ships inside
- * `.agents/`, and outside it only what the last run installed. A repo whose
- * manifest never listed a template or the task id script keeps its workspace
- * where it chose, and gets no second tree beside it.
+ * `.agents/`, and outside it only what the last run installed and the project
+ * still has. A repo whose manifest never listed a template or the task id
+ * script keeps its workspace where it chose, and one that deleted them has
+ * them deleted for good: no second tree grows beside the one it kept.
  */
-function updateWrites(previous: Manifest): string[] {
-  return managedSocleFiles().filter((relative) =>
-    relative.startsWith(".agents/") || relative in previous.managed
-  );
+async function updateWrites(
+  targetDir: string,
+  previous: Manifest,
+): Promise<string[]> {
+  const writes: string[] = [];
+  for (const relative of managedSocleFiles()) {
+    if (
+      relative.startsWith(".agents/") ||
+      (relative in previous.managed &&
+        await isFile(join(targetDir, relative)))
+    ) {
+      writes.push(relative);
+    }
+  }
+  return writes;
 }
 
 export async function update(targetDir: string): Promise<number> {
@@ -63,7 +75,7 @@ export async function update(targetDir: string): Promise<number> {
     );
   }
 
-  const writes = updateWrites(previous);
+  const writes = await updateWrites(targetDir, previous);
   await refuseLinkedPaths(targetDir, [
     ...writes,
     "AGENTS.md",
