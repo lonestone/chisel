@@ -5,6 +5,19 @@ ships.
 
 ---
 
+## 45. 2026-11-02 — 0.2.4: update refuses what it does not recognise
+
+Published on the Owner's word ("ok publie"), so that the refusal's pointer
+and the recipe it names are the corrected ones (entry 44). `init` and
+`update` refuse, writing nothing, a repo without a manifest or a path they
+would write through a symbolic link; `update` creates no second tree; and
+`chisel-upgrade` is a recipe of migration intentions that works wherever a
+repo keeps its method. `main` moves to `v2` by fast-forward and the package
+is published from it. Verified before the publish: 29 tests green,
+`deno task check` clean, the dry run succeeding.
+
+---
+
 ## 44. 2026-11-02 — `update` refuses what it does not recognise; `chisel-upgrade` as intentions
 
 Apollon ran `chisel update` 0.2.3 on a repo whose method predates the CLI:
