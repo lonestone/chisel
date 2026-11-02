@@ -6,6 +6,7 @@
 import { dirname, join } from "@std/path";
 import { BLOCK_BEGIN, BLOCK_END, CLAUDE_IMPORT_LINE } from "./markers.ts";
 import {
+  packageVersion,
   readPackageFile,
   readPackageText,
   SOCLE,
@@ -342,4 +343,17 @@ export async function refuseV1Layout(targetDir: string): Promise<void> {
       `file by file, with a human validating; 'chisel update' is safe again the moment they ` +
       `are gone.`,
   );
+}
+
+/**
+ * The sentence every refusal of a layout chisel does not recognise ends with:
+ * where the recipe is, and how a repo that does not have it gets it. The
+ * version is pinned to the running CLI's, so the recipe read is the one that
+ * matches the CLI that refused.
+ */
+export async function upgradeRecipePointer(): Promise<string> {
+  const version = await packageVersion();
+  return `Nothing was written. Follow the chisel-upgrade skill, ` +
+    `.agents/skills/chisel-upgrade/SKILL.md; a repo that does not have it gets it with ` +
+    `'deno x jsr:@lonestone/chisel@${version} init <a scratch directory outside this repo>'.`;
 }

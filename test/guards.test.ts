@@ -3,7 +3,7 @@
 
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { join } from "@std/path";
-import { appendTo, runChisel, withRepo } from "./helpers.ts";
+import { appendTo, runChisel, snapshot, withRepo } from "./helpers.ts";
 
 async function absent(path: string): Promise<boolean> {
   return await Deno.lstat(path).then(() => false).catch(() => true);
@@ -107,5 +107,22 @@ Deno.test("guards: a skill chisel did not install is never adopted or overwritte
       1,
       "a socle skill next to it is still checked",
     );
+  });
+});
+
+Deno.test("guards: update refuses a repo with no manifest and writes nothing", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    await Deno.remove(join(target, ".agents", ".chisel.json"));
+    const before = await snapshot(target);
+
+    const refused = await runChisel(["update", target]);
+    assertEquals(refused.code, 1, "the refusal exits 1");
+    assertStringIncludes(
+      refused.stderr,
+      "chisel-upgrade",
+      "it names the migration skill",
+    );
+    assertEquals(await snapshot(target), before, "the target is unchanged");
   });
 });

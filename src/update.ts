@@ -6,11 +6,12 @@ import {
   copyManagedFiles,
   refuseV1Layout,
   removeEmptyParents,
+  upgradeRecipePointer,
   warnForeignSkills,
   writeAgentsMd,
 } from "./install.ts";
 import {
-  type Manifest,
+  manifestPath,
   orphansOf,
   readManifest,
   writeManifest,
@@ -18,8 +19,6 @@ import {
 import { reportStaleGlue } from "./project-md.ts";
 import { ChiselError, reportLine, warn } from "./report.ts";
 import { isDirectory, isFile } from "./target.ts";
-
-const EMPTY_MANIFEST: Manifest = { version: "", managed: {} };
 
 export async function update(targetDir: string): Promise<number> {
   if (!(await isDirectory(targetDir))) {
@@ -33,8 +32,20 @@ export async function update(targetDir: string): Promise<number> {
   await refuseV1Layout(targetDir);
 
   // Read before writing: the comparison this command reports on is between
-  // what the last run installed and what this one does.
-  const previous = (await readManifest(targetDir)) ?? EMPTY_MANIFEST;
+  // what the last run installed and what this one does. Without a manifest
+  // there is no last run to compare with — chisel did not install this repo,
+  // or installed it before it kept one — and a layout it does not recognise
+  // is the recipe's business, not a script's.
+  const previous = await readManifest(targetDir);
+  if (previous === null) {
+    throw new ChiselError(
+      `${targetDir} has .agents/ but no ${
+        manifestPath(targetDir)
+      }: chisel did not ` +
+        `install this repo, or installed it before the manifest existed, and it does not ` +
+        `guess at a layout it does not recognise. ${await upgradeRecipePointer()}`,
+    );
+  }
 
   await copyManagedFiles(targetDir);
   if (await isFile(join(targetDir, "AGENTS.md"))) {
