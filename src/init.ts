@@ -5,7 +5,9 @@ import { basename } from "@std/path";
 import {
   copyManagedFiles,
   ensureProjectManagementSkeleton,
+  initWrites,
   linkClaudeSkills,
+  refuseLinkedPaths,
   warnForeignSkills,
   writeAgentsMd,
   writeClaudeMd,
@@ -24,6 +26,7 @@ export async function init(targetDir: string): Promise<number> {
     throw new ChiselError(`target dir does not exist: ${targetDir}`);
   }
   const projectTitle = basename(await Deno.realPath(targetDir));
+  await refuseLinkedPaths(targetDir, initWrites());
 
   // What an earlier run installed here, read before this one writes: a skill
   // that manifest tracked is chisel's own, whatever the socle ships today, and

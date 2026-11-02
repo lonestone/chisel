@@ -193,3 +193,32 @@ Deno.test("guards: update refuses to write through a symbolic link", async () =>
     assertEquals(updated.code, 0, updated.output);
   });
 });
+
+Deno.test("guards: init refuses a linked skill and writes nothing", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.copy("brownfield");
+    const ownSkills = await workspace.dir("own-skills");
+    await Deno.mkdir(join(ownSkills, "tdd"));
+    await Deno.writeTextFile(
+      join(ownSkills, "tdd", "SKILL.md"),
+      "# The project's own tdd skill\n",
+    );
+    await Deno.mkdir(join(target, ".agents", "skills"), { recursive: true });
+    await Deno.symlink(
+      join(ownSkills, "tdd"),
+      join(target, ".agents", "skills", "tdd"),
+    );
+    const targetBefore = await snapshot(target);
+    const destinationBefore = await snapshot(ownSkills);
+
+    const refused = await runChisel(["init", target]);
+    assertEquals(refused.code, 1, `the refusal exits 1\n${refused.output}`);
+    assertStringIncludes(refused.stderr, ".agents/skills/tdd");
+    assertEquals(await snapshot(target), targetBefore, "nothing written");
+    assertEquals(
+      await snapshot(ownSkills),
+      destinationBefore,
+      "the linked skill is unchanged",
+    );
+  });
+});
