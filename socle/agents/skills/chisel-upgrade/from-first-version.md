@@ -56,21 +56,18 @@ it.
    went.
 
 2. **Links where chisel writes.** Signal: a symbolic link on a path the
-   reference tree has — `AGENTS.md`, a file or directory under `.agents/`
-   (`.agents` itself and `.agents/skills` included), `scripts/task-id.sh`,
-   the two templates under `project-management/` — or on a directory above
-   one. List them with `ls -l AGENTS.md` and
+   reference tree has — `AGENTS.md`, `CLAUDE.md`, a file or directory
+   under `.agents/` (`.agents` itself and `.agents/skills` included),
+   `scripts/task-id.sh`, the two templates under `project-management/` —
+   or on a directory above one. List them with `ls -l AGENTS.md CLAUDE.md` and
    `find .agents scripts project-management -type l`, keeping the names the
    reference tree has. Two cases are common:
-   - **A linked `AGENTS.md`**, often pointing at `CLAUDE.md` or the
-     reverse. Show both contents; the human chooses what `AGENTS.md`
-     holds. Replace the link by a real file holding that content
+   - **A linked `AGENTS.md` or `CLAUDE.md`**, often one pointing at the
+     other. Show both contents; the human chooses what each file holds.
+     Replace each link by a real file holding that content
      (`cp "$(readlink AGENTS.md)" AGENTS.md.new && mv AGENTS.md.new
-     AGENTS.md`, then edit it as the human chose). The file it pointed at keeps its own content.
-   - **A linked `CLAUDE.md`.** The pre-flight does not stop on it, but
-     `init` adds its import line through the link, into whatever file it
-     points at. Replace it by a real file the same way first, unless the
-     human accepts that line in the destination.
+     AGENTS.md`, the same for `CLAUDE.md`, then edit it as the human
+     chose). The file a link pointed at keeps its own content.
    - **A linked skill of a name chisel ships**, such as `.agents/skills/tdd`
      pointing into `doc/agents/skills/tdd`. Show the diff between the
      link's destination and `$REF/.agents/skills/<name>/`; the human

@@ -113,7 +113,8 @@ export async function copyManagedFiles(
 /**
  * Every path `init` may write, before it writes any. The adapter link
  * `.claude/skills` is chisel's own and points into `.agents/skills/`, so it is
- * left out; so is `CLAUDE.md`, which only ever gains one import line.
+ * left out. `CLAUDE.md` is in: one import line written through a link still
+ * lands in a file chisel does not know.
  */
 export function initWrites(): string[] {
   return [
@@ -121,6 +122,7 @@ export function initWrites(): string[] {
     ".agents/project.md",
     MANIFEST_FILE,
     "AGENTS.md",
+    "CLAUDE.md",
     "project-management/tasks",
     "project-management/archive",
     `project-management/${JOURNAL_NAME}`,

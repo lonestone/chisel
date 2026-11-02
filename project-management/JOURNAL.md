@@ -28,12 +28,11 @@ repo chisel did not install or installed with the first version, one for a
 0.1.x install; neither assumes where the method lives, and the two-trees
 case ends with the human choosing the tree to keep.
 
-Five tests, one of them on Apollon's layout built with `Deno.symlink`;
-28 green. Reviewed by `code-review` with two fresh reviewers: gaps cited by
-number and a duplicated manifest path were fixed. Left open for the
-Architect: `init` still writes its import line through a linked
-`CLAUDE.md`, which the recipe now warns about. Not published. Task
-archived.
+Five tests, one of them on Apollon's layout built with `Deno.symlink`.
+Reviewed by `code-review` with two fresh reviewers: gaps cited by number
+and a duplicated manifest path were fixed. On the Architect's ruling,
+`init` also refuses a linked `CLAUDE.md`, found at the review; 29 tests
+green. Not published. Task archived.
 
 ---
 

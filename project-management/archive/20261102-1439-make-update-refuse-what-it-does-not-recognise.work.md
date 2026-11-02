@@ -251,6 +251,15 @@ findings and answers are below. Gap citations by title, one name for the
 manifest path, the CLAUDE.md warning in the recipe. Criteria ticked, spec
 and work documents archived, journal entry 44, `retro` run.
 
+**2026-11-02, Architect ruling, signed Architect.** The open point of the
+close report: `init` refuses a linked `CLAUDE.md` as it refuses a linked
+`AGENTS.md`; the spec's scope line ("any path they would write") wins over
+the narrower adapter-link list. Done by the Crewmate the same day:
+`CLAUDE.md` joins `initWrites`, a `guards` test covers it (exit 1, the
+path named, the target and the link's destination unchanged), and the
+links gap of `from-first-version.md` treats a linked `CLAUDE.md` as the
+same refusal as a linked `AGENTS.md`.
+
 ## Implementation Checkboxes
 
 - [x] Manifest rule and its `guards` test
@@ -314,5 +323,5 @@ and work documents archived, journal entry 44, `retro` run.
   `CLAUDE.md`; the approved plan left `CLAUDE.md` out. **Partly fixed,
   partly reported:** the recipe's links gap now names a linked `CLAUDE.md`
   and says to replace it before `init`. Whether the CLI should refuse it
-  too departs from the approved plan, so it goes to the Architect (close
-  report), recommended: refuse, like a linked `AGENTS.md`.
+  too departed from the approved plan, so it went to the Architect, who
+  ruled: refuse it, like a linked `AGENTS.md` (worklog, Architect ruling).

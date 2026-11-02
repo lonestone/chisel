@@ -274,3 +274,28 @@ Deno.test("guards: a relocated layout with no manifest is refused by update and 
     assertEquals(await snapshot(target), before, "init wrote nothing");
   });
 });
+
+Deno.test("guards: init refuses a linked CLAUDE.md and writes nothing", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.copy("brownfield");
+    const elsewhere = await workspace.dir("claude-elsewhere");
+    await Deno.copyFile(
+      join(target, "CLAUDE.md"),
+      join(elsewhere, "claude.md"),
+    );
+    await Deno.remove(join(target, "CLAUDE.md"));
+    await Deno.symlink(join(elsewhere, "claude.md"), join(target, "CLAUDE.md"));
+    const targetBefore = await snapshot(target);
+    const destinationBefore = await snapshot(elsewhere);
+
+    const refused = await runChisel(["init", target]);
+    assertEquals(refused.code, 1, `the refusal exits 1\n${refused.output}`);
+    assertStringIncludes(refused.stderr, "CLAUDE.md");
+    assertEquals(await snapshot(target), targetBefore, "nothing written");
+    assertEquals(
+      await snapshot(elsewhere),
+      destinationBefore,
+      "the linked file is unchanged",
+    );
+  });
+});

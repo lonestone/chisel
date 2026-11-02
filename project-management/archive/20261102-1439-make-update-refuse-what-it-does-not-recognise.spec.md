@@ -189,9 +189,9 @@ previous manifest listed"; read it with that ruling.
 Closed 2026-11-02 by the Crewmate. Every acceptance criterion is met,
 checked against the suite (28 tests, `deno task check` clean) and, for the
 recipe's shape, by reading at the review; the four doctrine pages total 535
-lines, untouched. Left for the Architect: `init` still adds its import
-line through a linked `CLAUDE.md` (the recipe now warns about it; whether
-the CLI refuses it too departs from the approved plan). 
+lines, untouched. A linked `CLAUDE.md`, found at the review, is
+refused by `init` too, on the Architect's ruling recorded in the work
+document's worklog. 
 
 `retro` proposals, none applied, each for its owner to accept:
 
