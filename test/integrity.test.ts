@@ -137,9 +137,12 @@ Deno.test("integrity: every pointer of the installed socle resolves", async () =
     const citers = dangling
       .filter((entry) => RETIRED_LAYER.includes(entry.pointer))
       .map((entry) => entry.source);
+    assert(citers.length > 0, "the migration skill names what it retires");
     assertEquals(
-      [...new Set(citers)].sort(),
-      [".agents/skills/chisel-upgrade/SKILL.md"],
+      [...new Set(citers)].filter((source) =>
+        !source.startsWith(".agents/skills/chisel-upgrade/")
+      ),
+      [],
       "only the migration skill names the pieces it retires",
     );
 

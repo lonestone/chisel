@@ -11,6 +11,8 @@
 .agents/skills/chisel-setup/SKILL.md
 .agents/skills/chisel-upgrade
 .agents/skills/chisel-upgrade/SKILL.md
+.agents/skills/chisel-upgrade/from-0.1.x.md
+.agents/skills/chisel-upgrade/from-first-version.md
 .agents/skills/code-review
 .agents/skills/code-review/SKILL.md
 .agents/skills/codebase-audit
