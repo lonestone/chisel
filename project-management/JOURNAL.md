@@ -5,6 +5,19 @@ ships.
 
 ---
 
+## 43. 2026-11-02 — 0.2.3: the README presents chisel as a protocol
+
+A patch release for the README only, framed by the Owner: chisel is a
+protocol, a task workflow. The "Why" section gives way to what chisel is
+(skills that scope the task, skills that keep the codebase understood,
+files on disk any agent can resume from, sub-agents only where they pay,
+firm rules for the end of a task) and what it is not (an orchestrator, a
+tool for a swarm of Crewmates, tied to a tracker, an engine, benchmarked
+yet). `main` moves to `v2` by fast-forward and the package is published
+from it.
+
+---
+
 ## 42. 2026-11-02 — 0.2.2: the README says why
 
 A patch release for the README only. A "Why" section now comes before the
