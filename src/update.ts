@@ -20,6 +20,14 @@ import {
   readManifest,
   writeManifest,
 } from "./manifest.ts";
+import {
+  type Intention,
+  type IntentionRecord,
+  pendingIntentions,
+  readIntention,
+  today,
+} from "./intentions.ts";
+import { sha256File } from "./hash.ts";
 import { reportStaleGlue } from "./project-md.ts";
 import { ChiselError, reportLine, warn } from "./report.ts";
 import { isDirectory, isFile } from "./target.ts";
@@ -83,6 +91,12 @@ export async function update(targetDir: string): Promise<number> {
     ...Object.keys(previous.managed).filter((name) => name !== BLOCK_KEY),
   ]);
 
+  const pending: Intention[] = [];
+  for (const shipped of pendingIntentions(previous.intentions)) {
+    pending.push(await readIntention(shipped));
+  }
+  const overwritten = await locallyEdited(targetDir, writes, previous);
+
   await copyManagedFiles(targetDir, new Set(writes));
   if (await isFile(join(targetDir, "AGENTS.md"))) {
     await writeAgentsMd(targetDir, "");
@@ -91,10 +105,18 @@ export async function update(targetDir: string): Promise<number> {
       `chisel update: warning: ${targetDir}/AGENTS.md not found — skipping (run chisel init first)`,
     );
   }
-  const current = await writeManifest(targetDir, writes, previous.intentions);
+  const intentions: IntentionRecord = { ...previous.intentions };
+  for (const intention of pending) {
+    intentions[intention.id] = { result: "applied", date: today() };
+  }
+  const current = await writeManifest(targetDir, writes, intentions);
 
   console.log(`chisel update: ${targetDir}`);
   let reported = false;
+  for (const name of overwritten) {
+    reportLine(`overwritten: ${name}`);
+    reported = true;
+  }
   for (const name of Object.keys(current.managed).sort()) {
     if (previous.managed[name] !== current.managed[name]) {
       reportLine(`changed: ${name}`);
@@ -124,5 +146,32 @@ export async function update(targetDir: string): Promise<number> {
   if (!reported) reportLine("(no managed files changed)");
 
   await reportStaleGlue(targetDir);
+  for (const intention of pending) {
+    reportLine(`recorded: ${intention.id} (${intention.classification})`);
+    if (intention.classification === "informational") {
+      reportLine(`  read: ${intention.title}`);
+    }
+  }
   return 0;
+}
+
+/**
+ * The managed files about to be written whose content is no longer what the
+ * last run installed: someone edited them. The fast path still replaces
+ * them — they are chisel's — but says so first, so an edit never vanishes
+ * without a line naming it.
+ */
+async function locallyEdited(
+  targetDir: string,
+  writes: readonly string[],
+  previous: Manifest,
+): Promise<string[]> {
+  const edited: string[] = [];
+  for (const name of writes) {
+    const installed = previous.managed[name];
+    const path = join(targetDir, name);
+    if (installed === undefined || !(await isFile(path))) continue;
+    if ((await sha256File(path)) !== installed) edited.push(name);
+  }
+  return edited.sort();
 }

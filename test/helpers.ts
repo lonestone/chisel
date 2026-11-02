@@ -6,6 +6,7 @@
 // every use goes through a copy under a temp root.
 
 import { fromFileUrl, join } from "@std/path";
+import { SOCLE_FILES } from "../src/socle-files.ts";
 
 export const REPO_ROOT: string = fromFileUrl(new URL("../", import.meta.url));
 export const ENTRY: string = join(REPO_ROOT, "src", "main.ts");
@@ -198,4 +199,57 @@ async function hashOf(path: string): Promise<string> {
 
 export async function appendTo(path: string, text: string): Promise<void> {
   await Deno.writeTextFile(path, text, { append: true });
+}
+
+/** An intention a test package ships beside the real ones. */
+export interface ExtraIntention {
+  /** A version, or `unreleased`. */
+  readonly release: string;
+  /** The file name, `NN-<slug>.md` in a release, `<slug>.md` unreleased. */
+  readonly file: string;
+  readonly classification: string;
+}
+
+/**
+ * A copy of this package that ships extra intentions, for the cases no real
+ * release ships yet: a pending `migration`, an `automatic` beside the real
+ * ones. Its socle list is the real one plus the extras. Returns the copy's
+ * entry module, for `runChisel`.
+ */
+export async function packageWith(
+  workspace: Workspace,
+  extras: readonly ExtraIntention[],
+): Promise<string> {
+  const root = await workspace.dir("package");
+  await copyTree(join(REPO_ROOT, "src"), join(root, "src"));
+  await copyTree(SOCLE, join(root, "socle"));
+  await Deno.copyFile(join(REPO_ROOT, "deno.json"), join(root, "deno.json"));
+  const added: string[] = [];
+  for (const extra of extras) {
+    const slug = extra.file.replace(/^\d+-/, "").replace(/\.md$/, "");
+    const relative = `intentions/${extra.release}/${extra.file}`;
+    await Deno.mkdir(join(root, "socle", "intentions", extra.release), {
+      recursive: true,
+    });
+    await Deno.writeTextFile(
+      join(root, "socle", relative),
+      [
+        "---",
+        `id: ${extra.release}/${slug}`,
+        `classification: ${extra.classification}`,
+        "---",
+        "",
+        `# A test intention, ${slug}`,
+        "",
+      ].join("\n"),
+    );
+    added.push(relative);
+  }
+  await Deno.writeTextFile(
+    join(root, "src", "socle-files.ts"),
+    `export const SOCLE_FILES: readonly string[] = ${
+      JSON.stringify([...SOCLE_FILES, ...added], null, 2)
+    };\n`,
+  );
+  return join(root, "src", "main.ts");
 }

@@ -73,6 +73,15 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
 
     const result = await runChisel(["update", target]);
     assertEquals(result.code, 0, result.output);
+    for (
+      const edited of [".agents/skills/tdd/SKILL.md", ".agents/workflow.md"]
+    ) {
+      assertStringIncludes(
+        result.stdout,
+        `overwritten: ${edited}\n`,
+        "a local edit is named before it is replaced",
+      );
+    }
 
     assertEquals(
       await Deno.readTextFile(glue),
@@ -117,8 +126,8 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
     assertStringIncludes(result.stdout, "chisel update:", "the summary header");
     assertMatch(
       result.stdout,
-      /^ {2}(changed: |\(no managed files changed\))/m,
-      "the summary reports changed-or-unchanged per the manifest",
+      /^ {2}(overwritten: |changed: |\(no managed files changed\))/m,
+      "the summary reports what it overwrote or changed, or that nothing did",
     );
   });
 });
