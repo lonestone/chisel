@@ -3,7 +3,10 @@
 Created by the Crewmate at the plan step, 2026-11-02. Spec:
 `project-management/tasks/20261102-1439-make-update-refuse-what-it-does-not-recognise.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Architect, 2026-11-02. Rulings: the listed file
+the project deleted takes option (b), written outside `.agents/` only when
+listed and still on disk; a linked `AGENTS.md` is refused by both commands,
+and the links gap of the recipe covers it.
 
 ## Program Design
 
