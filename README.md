@@ -1,13 +1,72 @@
 # Chisel
 
-Chisel gives your coding agent a way of working. Hand it a task — an issue
-in your tracker, a line in beads, a sentence in the prompt — and it takes it
-all the way to a reviewed commit, and to a pull request if you want one.
+**Chisel is a protocol for coding agents: a task workflow.** Hand your
+agent a task — an issue in your tracker, a line in beads, a sentence in the
+prompt — and chisel is the way it takes that task to a reviewed commit, and
+to a pull request if you want one.
 
-It is Lonestone's dev-workflow socle: a few pages and skills in an
-`.agents/` folder that Claude Code, Cursor and Codex all read. There is no
-server and no workflow engine. The method is written in plain prose, and
-current models follow it well.
+It ships as a few pages of prose and a set of skills in an `.agents/`
+folder that Claude Code, Cursor and Codex all read. No server, no engine:
+the protocol is written down, and the agent follows it.
+
+## What chisel is
+
+**Skills that scope the task before any code.** When the intent is fuzzy,
+the agent grills you with Matt Pocock's `grilling` skill: one question at a
+time, each with the answer it would pick. Then it writes a short spec, with
+the decisions that need you at the top and the **seams**, the boundaries the
+code will be tested through, named before any code.
+
+**Skills that keep the codebase understood.** The `domain-modeling` skill,
+also Pocock's, keeps a glossary of the domain and records the decisions
+that are hard to reverse as ADRs. Every task also adds an entry to
+`JOURNAL.md`, so the next agent knows what happened and why.
+
+**A way of organising files.** Every task is a spec and a work document in
+the repo, the work document holding the plan, the worklog and the review
+findings. With the journal, they are artefacts on disk: any agent can pick
+up where another stopped, even after a session dies.
+
+**Sub-agents where they bring something, and nowhere else.**
+
+- **The Architect** is the agent you talk to: the project lead. It scopes
+  the task, reads the plans, and brings only the key questions to you.
+  Because the coding happens elsewhere, it can run several Crewmates in
+  parallel, each in its own worktree, without drowning its context.
+- **The Crewmate** is a frontier model that analyses and codes. It writes
+  the plan, stops for the Architect's reading, codes test first, and closes
+  the task.
+- **The reviewers** know nothing of the session that wrote the code, and
+  that is the point. They read the diff against your standards and against
+  the spec, with Pocock's `code-review` skill.
+- **The Typist** exists only if you want a much cheaper model to type an
+  approved plan. By default, the Crewmate types itself.
+
+**Firm rules for the end of a task.** No task closes without the review and
+your gate commands: lint, tests, build. What an agent may do on its own is
+written down: the Crewmate commits but does not push, and merging and
+publishing wait for you unless your project hands them over. The close has
+its loops too: the Crewmate ticks the acceptance criteria against reality,
+updates the living docs, the glossary and the ADRs, writes the journal
+entry, and proposes what the process should learn.
+
+## What chisel is not
+
+- **Not an orchestrator.** It does not watch your tracker, schedule tasks
+  or decide which one runs next. That is you, or whatever you put above it:
+  a harness, a script, a long-lived thread.
+- **Not built for a swarm.** An Architect runs a handful of Crewmates.
+  Ninety in parallel is another world, with other tools.
+- **Not tied to a tracker.** Task files (the default), beads, Plane, GitHub
+  Issues: the agent only needs the skill or connector that reads and
+  updates a task there. The spec and the plan stay in the repo whatever you
+  choose.
+- **Not an engine.** There is no pipeline to configure. Today's models need
+  direction, not machinery: our heavier second version cost more and did
+  not earn it back.
+- **Not benchmarked yet.** These choices come from production use on
+  Lonestone projects, not from a measured comparison. That comparison is
+  still to do.
 
 ## Try it
 
@@ -29,84 +88,28 @@ Chisel needs Deno 2.6 or later, and nothing else: no `node_modules`, no
 global install. `deno x` runs with every permission, as npx would; `deno run
 jsr:@lonestone/chisel` asks only for read and write in the target directory
 and network access to `jsr.io`. To pin a version, name it:
-`jsr:@lonestone/chisel@0.2.1`. In the day after a release Deno refuses a
+`jsr:@lonestone/chisel@0.2.2`. In the day after a release Deno refuses a
 version that fresh; add `--min-dep-age 0` to the command, or wait.
-
-## Why
-
-Coding agents write code fast. What goes wrong is everything around it:
-
-- they build the wrong thing, because nobody pinned down what was wanted;
-- they lose their plan at the next session;
-- they review their own work, and find nothing;
-- they bury you under a transcript you will never read.
-
-Chisel is built against those four failures.
-
-- **The intent is settled before the code.** When a task is vague, the
-  agent asks you, one question at a time, each with the answer it would
-  pick. Then it writes a short spec, with the decisions that need you at
-  the top.
-- **The plan is a file, and someone else reads it.** The agent that will
-  code writes its plan down and stops. The project lead checks it before a
-  single line is written. Next session, or after a crash, the plan is
-  still there.
-- **The reviewer never saw the code being written.** Two fresh agents read
-  the diff, one against your standards and one against the spec. An agent
-  reviewing its own session finds what it meant to write, not what it
-  wrote.
-- **You get questions, not transcripts.** Whatever does not touch your
-  decisions, the project lead settles on its own.
-
-And it stays light on purpose: one page of prose, and sub-agents only where
-they pay. Today's models need direction, not a pipeline. Our heavier second
-version cost more and did not earn it back. The longer story is in
-[PHILOSOPHY.md](./PHILOSOPHY.md).
 
 ## What happens when you give it a task
 
-The agent you talk to plays the **Architect**: think of it as the project
-lead. It does not write the code itself.
+In practice, a task goes like this.
 
-1. **It reads the task and the code it touches.** When the task is clear,
-   it writes a short spec straight away. When it is not, it asks you
-   questions, one at a time, each with the answer it recommends.
-2. **It launches a Crewmate**, a sub-agent that writes the plan and stops.
+1. **The Architect reads the task and the code it touches.** When the task
+   is clear, it writes a short spec straight away. When it is not, it asks
+   you questions first.
+2. **It launches a Crewmate**, which writes the plan and stops.
 3. **The Architect reads the plan**, corrects it and approves it. Only the
    questions that touch your decisions come back to you.
-4. **The Crewmate codes**, test first, then runs the `code-review` skill.
-   Two fresh sub-agents read the diff, one against your repo's standards and
-   one against the spec. They never saw the coding session, and that is the
-   point.
+4. **The Crewmate codes**, test first, then runs the `code-review` skill on
+   the whole diff, with two fresh reviewers.
 5. **The Crewmate fixes what they found and closes the task**: criteria
    ticked, docs updated, an entry in the project journal, a commit, the
    tracker updated.
 6. **The Architect opens the pull request.** Merging and publishing wait for
    your word, unless your project told chisel otherwise.
 
-In a long conversation, the same Architect runs several Crewmates, one per
-task. A Typist, a sub-agent on a cheaper model that only types an approved
-plan, is there if your models make it worth it; most of the time the
-Crewmate types itself.
-
-Everything worth keeping lands in the repo, not in a chat history. The spec
-puts the decisions you should read carefully at the top. The **seams** — the
-boundaries the feature is tested through — are named before any code. The
-plan lives in a work document beside the spec, so the next session, the
-review and you can all read it. The journal, `project-management/JOURNAL.md`,
-tells the story one task at a time.
-
 The whole workflow is one page: `.agents/workflow.md`.
-
-## It works with your tracker
-
-Your tasks can live in the task files themselves (the default, nothing to
-install), in beads, in Plane, in GitHub Issues or anywhere else. The agent
-only needs the skill or connector that reads and updates a task there; the
-spec and the plan stay in the repo whatever you choose.
-
-Chisel does not watch your tracker or decide which task runs next. That is
-you, or whatever you put above it: a harness, an orchestrator, a script.
 
 ## Keeping it up to date
 
