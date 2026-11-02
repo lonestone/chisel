@@ -209,3 +209,36 @@ Deno.test("intentions: a pending intention that needs judgement stages a workspa
     }
   });
 });
+
+Deno.test("intentions: a workspace is never overwritten, and git ignores it", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    const entry = await packageWith(workspace, [
+      { release: "unreleased", file: "a-move.md", classification: "migration" },
+    ]);
+    assertEquals((await runChisel(["update", target], entry)).code, 3);
+    const staged = await snapshot(join(target, WORKSPACE));
+
+    const again = await runChisel(["update", target], entry);
+    assertEquals(again.code, 1, `a second update refuses\n${again.output}`);
+    assertStringIncludes(again.stderr, WORKSPACE);
+    assertEquals(
+      await snapshot(join(target, WORKSPACE)),
+      staged,
+      "the workspace is left as it was",
+    );
+
+    const git = async (...args: string[]) =>
+      new TextDecoder().decode(
+        (await new Deno.Command("git", { args, cwd: target, stdout: "piped" })
+          .output()).stdout,
+      );
+    await git("init", "--quiet");
+    const status = await git("status", "--porcelain", "--untracked-files=all");
+    assert(status.length > 0, "git sees the repo's own files");
+    assert(
+      !status.includes(WORKSPACE),
+      `git lists nothing of the workspace:\n${status}`,
+    );
+  });
+});
