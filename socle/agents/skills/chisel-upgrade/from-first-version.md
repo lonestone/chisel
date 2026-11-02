@@ -36,8 +36,9 @@ collides with a release changelog.
 
 ## Observable Gaps
 
-Close them in this order. `chisel init .` refuses links, so gap 2 is closed
-before gap 4 runs it.
+Close them in this order. `chisel init .` refuses links, so "Links where
+chisel writes" is closed before "The current layer and its manifest" runs
+it.
 
 1. **Where the method lives, and two trees.** Signal: the task workspace —
    tasks, archive, journal, task templates — exists in more than one place,
@@ -65,13 +66,16 @@ before gap 4 runs it.
      reverse. Show both contents; the human chooses what `AGENTS.md`
      holds. Replace the link by a real file holding that content
      (`cp "$(readlink AGENTS.md)" AGENTS.md.new && mv AGENTS.md.new
-     AGENTS.md`, then edit it as the human chose). The file it pointed at keeps its own content; `init`
-     only adds an import line to `CLAUDE.md`.
+     AGENTS.md`, then edit it as the human chose). The file it pointed at keeps its own content.
+   - **A linked `CLAUDE.md`.** The pre-flight does not stop on it, but
+     `init` adds its import line through the link, into whatever file it
+     points at. Replace it by a real file the same way first, unless the
+     human accepts that line in the destination.
    - **A linked skill of a name chisel ships**, such as `.agents/skills/tdd`
      pointing into `doc/agents/skills/tdd`. Show the diff between the
      link's destination and `$REF/.agents/skills/<name>/`; the human
      chooses which content stays. Remove the link (`git rm`): `init` poses
-     chisel's version at gap 4. An edit of the project's that the human
+     chisel's version in "The current layer and its manifest". An edit of the project's that the human
      keeps moves to a skill of its own, under a name chisel does not ship,
      or to the project's instructions outside the chisel markers of
      `AGENTS.md`. The destination copy left in the other tree goes or
@@ -83,7 +87,8 @@ before gap 4 runs it.
 
 3. **The retired layer.** Signal: rule files `task-*.md` in a `rules/`
    directory and a `workflows.md` beside them, at `.agents/rules/` and
-   `.agents/workflows.md` or wherever gap 1 found the method. List the
+   `.agents/workflows.md` or wherever "Where the method lives, and two
+   trees" found the method. List the
    exact files, wait for the yes, then `git rm` only what exists. A rule
    someone added locally is the project's: name it, and ask where it moves
    (usually a project instruction outside the chisel markers of
@@ -95,13 +100,14 @@ before gap 4 runs it.
    `.agents/.chisel.json`. First, if the repo has its own
    `scripts/task-id.sh`, compare it with `$REF/scripts/task-id.sh`: `init`
    overwrites it, so a project script that does more is renamed first, with
-   the human's yes. Then, with gap 2 closed, run
+   the human's yes. Then, with the links gone, run
    `deno x jsr:@lonestone/chisel@<version> init .`. It poses the socle in
    `.agents/`, adds or rewrites the managed block of `AGENTS.md`, adds the
    import line to `CLAUDE.md` and the `.claude/skills` link, writes the
    glue when there is none, and seeds `project-management/` with the two
    templates, `tasks/`, `archive/` and a journal unless one is there. When
-   the workspace the human kept at gap 1 is elsewhere: move the two
+   the workspace the human kept in "Where the method lives, and two trees"
+   is elsewhere: move the two
    templates into it, remove what `init` seeded in `project-management/`
    (only what it seeded, never a file of the project's), then run
    `deno x jsr:@lonestone/chisel@<version> update`, which stops tracking

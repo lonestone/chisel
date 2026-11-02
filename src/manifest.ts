@@ -16,8 +16,11 @@ export interface Manifest {
   readonly managed: Record<string, string>;
 }
 
+/** Where the manifest sits, relative to the target. */
+export const MANIFEST_FILE = ".agents/.chisel.json";
+
 export function manifestPath(targetDir: string): string {
-  return join(targetDir, ".agents", ".chisel.json");
+  return join(targetDir, MANIFEST_FILE);
 }
 
 export async function readManifest(

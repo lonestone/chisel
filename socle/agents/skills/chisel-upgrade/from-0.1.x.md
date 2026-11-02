@@ -41,7 +41,7 @@ text — is this intention's.
    a retired file that was still as installed, now gone. An `orphaned:`
    line is a retired file someone edited: show it, and ask whether its
    content moves into a project instruction or goes. A `stale:` line names
-   a glue residue that gap 2 closes. When `update` refuses and names linked
+   a glue residue that "The glue" below closes. When `update` refuses and names linked
    paths, close the links gap of [from-first-version.md](from-first-version.md)
    first, then run it again. A profile the project wrote itself was never
    installed, so `update` leaves it: propose moving its content into

@@ -15,7 +15,7 @@ import {
 import {
   BLOCK_KEY,
   type Manifest,
-  manifestPath,
+  MANIFEST_FILE,
   orphansOf,
   readManifest,
   writeManifest,
@@ -67,9 +67,7 @@ export async function update(targetDir: string): Promise<number> {
   const previous = await readManifest(targetDir);
   if (previous === null) {
     throw new ChiselError(
-      `${targetDir} has .agents/ but no ${
-        manifestPath(targetDir)
-      }: chisel did not ` +
+      `${targetDir} has .agents/ but no ${MANIFEST_FILE}: chisel did not ` +
         `install this repo, or installed it before the manifest existed, and it does not ` +
         `guess at a layout it does not recognise. ${await upgradeRecipePointer()}`,
     );
@@ -79,7 +77,7 @@ export async function update(targetDir: string): Promise<number> {
   await refuseLinkedPaths(targetDir, [
     ...writes,
     "AGENTS.md",
-    ".agents/.chisel.json",
+    MANIFEST_FILE,
     // The orphan pass may remove any of them, and a removal under a linked
     // directory would reach the link's destination too.
     ...Object.keys(previous.managed).filter((name) => name !== BLOCK_KEY),

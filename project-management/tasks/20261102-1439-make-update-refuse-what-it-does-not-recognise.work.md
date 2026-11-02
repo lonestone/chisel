@@ -129,7 +129,7 @@ it is (spec, "The first-version guard stays").
   with the first version. Gaps, each found through `AGENTS.md`, the glue,
   or `find … -type l`, never through an assumed path: the method's
   location and the two trees (ends with the human choosing which tree to
-  keep, and §A naming it); links where chisel writes; the retired layer
+  keep, and the task workspace section of `.agents/project.md` naming it); links where chisel writes; the retired layer
   (rule files and the visual guide, wherever they live); the current layer
   and its manifest (`chisel init .` once the links are gone, then what it
   seeded in a tree the human did not keep is removed, then `chisel update`);
@@ -262,3 +262,52 @@ retires. `test/TESTS.md` and the README's "Keeping it up to date" follow.
 ## Notes & Snippets
 
 ## Diff-Review Findings
+
+`code-review` on `git diff ff222af...HEAD`, two fresh reviewers, 2026-11-02.
+
+### Standards
+
+- **Gaps cited by number in the recipe** (rule 10 of `.agents/discipline.md`,
+  "name things by their meaning"): "gap 2", "gap 4" and the like in both
+  intentions. **Fixed:** each gap is cited by its title.
+- **A bare "§A" in this document.** **Fixed:** named as the task workspace
+  section of `.agents/project.md`.
+- **Hand-kept names in the write sets** (duplicated code, judgement call):
+  the manifest path and the journal name were repeated as strings.
+  **Fixed:** `MANIFEST_FILE` is exported by `src/manifest.ts` and used by
+  `manifestPath`, `initWrites` and the pre-flight of `update`; the journal
+  path uses `JOURNAL_NAME`. `updateWrites` stays in `src/update.ts`: it
+  depends on the previous manifest, which only `update` reads.
+- **`upgradeRecipePointer`'s comment claimed every refusal**, and the
+  first-version refusal keeps its own wording (the spec keeps that guard as
+  it is). **Fixed:** the comment names the two refusals that use it.
+- **The no-manifest message printed the target twice.** **Fixed:** it names
+  `.agents/.chisel.json`.
+- **Refusal text lives in `src/install.ts`, not `src/report.ts`.**
+  **Answered:** it follows `refuseV1Layout`, the precedent;
+  `src/report.ts` holds the printing primitives, not every message.
+- **A manifest type cast repeated in `test/update.test.ts`.** **Answered:**
+  the same inline shape is already used by the file's other tests; left as
+  the file's style.
+
+### Spec
+
+- **The journal entry is missing.** **Answered:** written at the close,
+  entry 44.
+- **Ruling (b) changes a recognised install** (a listed template the project
+  deleted is no longer restored) and the spec's system design still says
+  "what the previous manifest listed". **Answered:** the Architect's ruling,
+  on the `**Plan:**` line; recorded in the spec's Notes, signed, without
+  touching the spec's decision zones.
+- **The pre-flight of `update` also checks the previous manifest's paths.**
+  **Answered:** approved in the program design; the orphan pass removes
+  them, and a removal under a linked directory reaches its destination.
+- **`init` writes through a linked `CLAUDE.md`.** Reproduced by the
+  reviewer: with `CLAUDE.md` linked into `doc/`, `init` appends its import
+  line to the destination. The spec's scope says "any path they would
+  write"; its "adapter link" decision lists four places without
+  `CLAUDE.md`; the approved plan left `CLAUDE.md` out. **Partly fixed,
+  partly reported:** the recipe's links gap now names a linked `CLAUDE.md`
+  and says to replace it before `init`. Whether the CLI should refuse it
+  too departs from the approved plan, so it goes to the Architect (close
+  report), recommended: refuse, like a linked `AGENTS.md`.

@@ -25,6 +25,7 @@ import {
   skillsLinkValue,
 } from "./target.ts";
 import { JOURNAL_NAME, legacyJournalName } from "./project-md.ts";
+import { MANIFEST_FILE } from "./manifest.ts";
 
 /** The socle directories copied whole into `.agents/`. */
 const COPIED_TREES = ["agents/skills/"] as const;
@@ -118,11 +119,11 @@ export function initWrites(): string[] {
   return [
     ...managedSocleFiles(),
     ".agents/project.md",
-    ".agents/.chisel.json",
+    MANIFEST_FILE,
     "AGENTS.md",
     "project-management/tasks",
     "project-management/archive",
-    "project-management/JOURNAL.md",
+    `project-management/${JOURNAL_NAME}`,
   ];
 }
 
@@ -401,7 +402,8 @@ export async function refuseV1Layout(targetDir: string): Promise<void> {
 }
 
 /**
- * The sentence every refusal of a layout chisel does not recognise ends with:
+ * The sentence the manifest and links refusals end with (the first-version
+ * refusal keeps its own, which names what it found):
  * where the recipe is, and how a repo that does not have it gets it. The
  * version is pinned to the running CLI's, so the recipe read is the one that
  * matches the CLI that refused.

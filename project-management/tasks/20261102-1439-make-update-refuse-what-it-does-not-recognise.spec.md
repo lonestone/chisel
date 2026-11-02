@@ -178,6 +178,12 @@ Apollon's report, 2026-11-02 (Architect's summary): the update created
 `scripts/task-id.sh`; left 8 skills it never installed alone
 (`review-videos`, `project-release`, `finalize-pr`, `triage` among them).
 
+Crewmate, 2026-11-02, at the review: the write set outside `.agents/` is
+"listed by the previous manifest **and** still on disk", the Architect's
+ruling recorded on the work document's `**Plan:**` line, so that a tree the
+project removed is never recreated. The system design above says "what the
+previous manifest listed"; read it with that ruling.
+
 ## Retrospective
 
 Added at the close.
