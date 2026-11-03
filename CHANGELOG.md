@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/lonestone/chisel/compare/v0.3.0...v0.4.0) (2026-11-03)
+
+
+### Added
+
+* **socle:** the crewmate becomes the mason, and the typist ticks only what really ran ([#5](https://github.com/lonestone/chisel/issues/5)) ([b576985](https://github.com/lonestone/chisel/commit/b576985379cef9cd6c29444f47eb2a43177bf2b8))
+
 ## [0.3.0](https://github.com/lonestone/chisel/compare/v0.2.4...v0.3.0) (2026-11-03)
 
 
