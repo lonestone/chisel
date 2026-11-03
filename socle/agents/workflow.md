@@ -19,8 +19,8 @@ or a script.
 | Role | Who plays it | What it does |
 |---|---|---|
 | **Architect** | The agent a human, or an orchestrator, talks to. This is its default role. | Reads the task, writes or sharpens the spec, launches a Crewmate and talks with it, reads and corrects the plan, rules on what the Crewmate reports, brings the key questions to the human. |
-| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then codes, runs `code-review`, and closes the task. |
-| **Typist** | Optional. A sub-agent launched by the Crewmate. | Types code from the approved plan and decides nothing. Worth it only when it runs on a cheaper model than the Crewmate. By default the Crewmate types itself. |
+| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then launches a Typist to code it, runs `code-review`, and closes the task. |
+| **Typist** | A sub-agent launched by the Crewmate once the plan is approved. | Types code from the approved plan and decides nothing, at a cheaper tier than the Crewmate's (`.agents/reference.md`, "Model tiers"). |
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the session that wrote it. |
 
 **The human** owns the intent and the decisions that shape the task. The
@@ -66,8 +66,12 @@ approval is written on the work document's `**Plan:**` line, with who and
 when. A plan that departs from a decision the human made goes to the human
 first.
 
-**5. Code — Crewmate, or a Typist it launches.** Execute the approved plan
-in vertical steps, test-first at the agreed seams (the `tdd` skill). Tick
+**5. Code — a Typist the Crewmate launches.** Once the plan is approved,
+the Crewmate launches a Typist with the brief below. The Crewmate types
+itself only a retouch of a few lines, or while the plan is not settled, and
+writes which exception applies and why in the work document's worklog. The
+Typist executes the approved plan in vertical steps, test-first at the
+agreed seams (the `tdd` skill). Tick
 the work document's checkboxes as work lands — they are the resume point —
 and commit at each green step. Run the gate commands declared in
 `.agents/project.md`. Reality that contradicts the plan is fixed in the
@@ -99,6 +103,7 @@ explicit word on that very action is the only go.
 | Who stops | For whom | When |
 |---|---|---|
 | Crewmate | Architect | After the plan; after the close, with its report; on a blocker it cannot rule on |
+| Typist | Crewmate | After its part of the plan; on anything the plan does not answer |
 | Architect | Human | On an unclear intent; on a spec that carries decisions the task did not state; on a plan that departs from the human's decisions; on a blocker above what it owns |
 | Architect | Human | Before a merge or a publish, unless the project lets the agent do it |
 
@@ -140,13 +145,15 @@ write. Three earn it:
 
 - **The Crewmate** keeps the Architect's context clean for reading the plan
   and ruling on reports.
-- **The Typist** runs on a cheaper model, when there is one.
+- **The Typist** types the approved plan on a cheaper tier than the
+  Crewmate's.
 - **The reviewers** bring fresh eyes to the diff.
 
 A brief is artifacts and paths, never the conversation: whatever the
 sub-agent needs must already be in the repo. Reviewers are always fresh. A
-Crewmate is reused within a live thread — the one that wrote the plan codes
-it — and a resumed task starts fresh from the spec and work documents.
+Crewmate is reused within a live thread — the one that wrote the plan
+launches its Typist and runs the review — and a resumed task starts fresh
+from the spec and work documents.
 
 ## The Crewmate brief
 
@@ -155,8 +162,8 @@ What the Architect writes when it launches a Crewmate:
 - the spec document's path, and the work template's;
 - the branch to work on, and how to commit (explicit paths, no push);
 - the gate commands;
-- the steps it owns: plan, then stop for the reading; code; `code-review`;
-  close;
+- the steps it owns: plan, then stop for the reading; code, through a
+  Typist; `code-review`; close;
 - what it reports at each stop: the plan in a few lines and its questions;
   at the close, the commits, the criteria met or not, and what is left.
 
@@ -165,6 +172,8 @@ What the Architect writes when it launches a Crewmate:
 What the Crewmate writes when it launches a Typist:
 
 - the approved work document's path, and the part of the plan to type;
+- its tier: *cheap* when the plan is mechanical, *mid* otherwise
+  (`.agents/reference.md`, "Model tiers", which also resolves the model);
 - the branch, the gate commands, the commit rule;
 - type the plan and decide nothing: anything the plan does not answer is
   reported, not guessed.

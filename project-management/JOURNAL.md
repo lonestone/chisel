@@ -5,6 +5,27 @@ ships.
 
 ---
 
+## 50. 2026-11-03 — The Crewmate hands the typing to a Typist
+
+Chisel's own task on intentions ran 383 calls, all at the frontier tier,
+none of them a Typist's: the workflow said the Crewmate types itself by
+default. On the Owner's "ok", the default is inverted. Once the plan is
+approved, the Crewmate launches a Typist at the *mid* tier, or *cheap* when
+the plan is mechanical, and the cascade of `.agents/reference.md` resolves
+the model; it types itself only a retouch of a few lines, or while the plan
+is not settled, and says so in the worklog. The reviewers stay frontier.
+`workflow.md` carries the rule, `reference.md` the tier per role,
+`methodology.md` the reason; the charter, the README and the philosophy
+follow, and the informational intention `unreleased/typist-by-default`
+tells updated repos.
+
+The task followed its own rule: the Crewmate wrote every edit as exact text
+and a Haiku Typist typed them, gates green. Two fresh reviewers found
+passages that still had the Crewmate code (the Crewmate brief, the charter,
+the README, the philosophy), the tier rule stated three times in
+`workflow.md`, and a bare section number in the intention; all fixed, by
+the Crewmate, as retouches.
+
 ## 49. 2026-11-03 — Chisel releases through a Release PR, after the boilerplate
 
 Chisel no longer releases from a laptop. On every push to `main`,

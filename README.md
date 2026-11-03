@@ -33,14 +33,15 @@ up where another stopped, even after a session dies.
   the task, reads the plans, and brings only the key questions to you.
   Because the coding happens elsewhere, it can run several Crewmates in
   parallel, each in its own worktree, without drowning its context.
-- **The Crewmate** is a frontier model that analyses and codes. It writes
-  the plan, stops for the Architect's reading, codes test first, and closes
-  the task.
+- **The Crewmate** is a frontier model that analyses and plans. It
+  writes the plan, stops for the Architect's reading, has a Typist code it
+  test first, and closes the task.
 - **The reviewers** know nothing of the session that wrote the code, and
   that is the point. They read the diff against your standards and against
   the spec, with Pocock's `code-review` skill.
-- **The Typist** exists only if you want a much cheaper model to type an
-  approved plan. By default, the Crewmate types itself.
+- **The Typist** types the approved plan on a cheaper model. The Crewmate
+  types itself only a retouch of a few lines, or while the plan is not
+  settled.
 
 **Firm rules for the end of a task.** No task closes without the review and
 your gate commands: lint, tests, build. What an agent may do on its own is
@@ -111,8 +112,9 @@ In practice, a task goes like this.
 2. **It launches a Crewmate**, which writes the plan and stops.
 3. **The Architect reads the plan**, corrects it and approves it. Only the
    questions that touch your decisions come back to you.
-4. **The Crewmate codes**, test first, then runs the `code-review` skill on
-   the whole diff, with two fresh reviewers.
+4. **A Typist codes the plan**, test first, on a cheaper model; the
+   Crewmate then runs the `code-review` skill on the whole diff, with two
+   fresh reviewers.
 5. **The Crewmate fixes what they found and closes the task**: criteria
    ticked, docs updated, an entry in the project journal, a commit, the
    tracker updated.
