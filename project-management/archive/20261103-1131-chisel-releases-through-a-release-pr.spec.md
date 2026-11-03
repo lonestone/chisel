@@ -1,6 +1,6 @@
 # Chisel releases through a Release PR, after the boilerplate
 
-**Status:** draft
+**Status:** done
 
 ---
 
@@ -41,7 +41,8 @@ commits rather than conventional commits.
   `no-intention` label. The Release PR is exempt.
 - **Release PR**: release-please on `main`. It bumps `deno.json`'s
   `version`, writes `CHANGELOG.md`, and opens or updates the PR titled
-  `chore: release X.Y.Z`.
+  `chore(release): release X.Y.Z` (amendment (a): every header names a
+  scope).
 - **Intention promote**: on the Release PR, `unreleased/` must be empty and
   every intention that was there on `main` must sit in `<version>/` under
   its rewritten id. The error message is the command to run.
@@ -57,13 +58,16 @@ commits rather than conventional commits.
   run the gates. It never tags, merges or publishes.
 - Docs: the README's "To release" paragraph, CONTRIBUTING.md ("At a
   release", "No intention"), and section I of `.agents/project.md`.
+- Added by the approval (work doc, "Amendments"): (a) conventional commits
+  on every commit, checked by a commit-msg hook and by CI; (b) a script
+  for the GitHub settings I3 to I6, dry run by default.
 
 **Not Included:**
 - Shipping any of this to the repos chisel equips: it is chisel's own
   release machinery, not socle.
-- Any setting on GitHub or JSR. Each one is listed under "Infra, the
-  Owner's" below and stays his to do; the code assumes them but does not
-  make them.
+- Any setting on JSR (I1 stays the Owner's, in JSR's interface). The
+  GitHub settings were made a script by amendment (b), applied with the
+  Owner's go.
 - Publishing a release, or creating the first tag, inside this task.
 
 ## Infra, the Owner's (nothing is set without his go)
@@ -80,36 +84,36 @@ commits rather than conventional commits.
 
 ## Acceptance Criteria
 
-- [ ] **checks-on-every-pr** — a workflow runs `deno task check` and
+- [x] **checks-on-every-pr** — a workflow runs `deno task check` and
   `deno task test` on each pull request and each push to `main`.
-- [ ] **gate-asks-an-intention** — `deno task release-check gate <base>`
+- [x] **gate-asks-an-intention** — `deno task release-check gate <base>`
   exits 1 when the diff from `<base>` changes `socle/` (outside
   `socle/intentions/`) and adds no `socle/intentions/unreleased/*.md`. It
   exits 0 otherwise. The workflow skips the check under `no-intention` or
   on the Release PR. Covered by tests on a temporary git repo.
-- [ ] **promote-checked** — `deno task release-check promoted <base>` exits
+- [x] **promote-checked** — `deno task release-check promoted <base>` exits
   1, naming `deno task promote-intentions <version>`, while `unreleased/`
   holds a file, or while an intention present on `<base>` is missing from
   `<version>/` under `<version>/<slug>`. It exits 0 once promoted. Tested.
-- [ ] **publish-refuses** — `deno task release-check publish <tag>` exits 1
+- [x] **publish-refuses** — `deno task release-check publish <tag>` exits 1
   when the tag is not `v` + `deno.json`'s version or when `unreleased/` is
   not empty. The publish job runs it before `deno publish`. Tested.
-- [ ] **release-note-lists-intentions** — `deno task release-check notes
+- [x] **release-note-lists-intentions** — `deno task release-check notes
   <version>` prints the version's intentions (id, classification, title),
   and the release job appends that list to the GitHub Release body. Tested.
-- [ ] **release-please-wired** — `release-please-config.json` and
+- [x] **release-please-wired** — `release-please-config.json` and
   `.release-please-manifest.json` exist. The manifest is at the current
   version, and the config bumps `deno.json`'s `$.version` and sets a
   bootstrap commit, so the first run does not read the whole history.
-- [ ] **publish-by-oidc** — the publish job has `id-token: write`, no
+- [x] **publish-by-oidc** — the publish job has `id-token: write`, no
   secret, and runs `deno publish` on the tagged commit only.
-- [ ] **release-skill** — `.agents/skills/chisel-release/SKILL.md` exists
+- [x] **release-skill** — `.agents/skills/chisel-release/SKILL.md` exists
   in chisel's own tree, is not in `src/socle-files.ts`, and says it never
   tags, merges or publishes.
-- [ ] **docs-say-it** — the README, CONTRIBUTING.md and section I of
+- [x] **docs-say-it** — the README, CONTRIBUTING.md and section I of
   `.agents/project.md` describe the Release PR, and none of them still
   says to run `deno publish` by hand.
-- [ ] **suite-green** — `deno task test` and `deno task check` pass.
+- [x] **suite-green** — `deno task test` and `deno task check` pass.
 
 ## Seams
 
@@ -127,7 +131,7 @@ PR ──► ci.yml (check + test)
    └─► intention-gate.yml ── release-check gate origin/main   (skip: no-intention, autorelease: pending)
 
 push main ──► release.yml
-   ├─ release-please: opens/updates "chore: release X.Y.Z" (deno.json, CHANGELOG.md)
+   ├─ release-please: opens/updates "chore(release): release X.Y.Z" (deno.json, CHANGELOG.md)
    │      maintainer + chisel-release skill: promote-intentions X.Y.Z, push
    │      └─► intention-promote.yml ── release-check promoted origin/main
    └─ human merges the Release PR ──► same workflow: tag vX.Y.Z created
@@ -142,14 +146,17 @@ push main ──► release.yml
 
 ## Implementation Decisions
 
-- **Conventional titles, not conventional commits.** Branch commits keep
-  chisel's plain-sentence style. Only the PR title, which becomes the
-  squash commit on `main` (I6), follows `type: summary`. release-please
+- **Conventional commits, and conventional titles.** Amended at approval
+  (a): every commit follows `type(scope): description`, checked by a
+  commit-msg hook (`deno task hooks`) and by the "Commits" job; the history
+  before `b7f121c` is exempt. The PR title, which becomes the squash commit
+  on `main` (I6), follows the same form. release-please
   reads those: `feat` bumps the minor version and `fix` the patch, and
   while chisel is in 0.x a breaking change bumps the minor version
   (`bump-minor-pre-major`).
-  This needs a check on PR titles. A small step in `ci.yml` checks the
-  title's form, with no dependency.
+  `scripts/commit-lint.ts` holds the types and scopes and checks them,
+  with no dependency; `pr-lint.yml` runs it on the title and on the
+  commits.
 - **Which changes need an intention.** A change under `socle/`, outside
   `socle/intentions/` itself, needs one. A change to `src/` alone does
   not, as it is the CLI's behaviour, not what a repo must act on. The
@@ -188,11 +195,15 @@ the docs. No slice files: each step is small and reviewed together.
 
 ## Deliverables
 
-- [ ] `scripts/release-check.ts`, `test/release-check.test.ts`, deno task.
-- [ ] `.github/workflows/{ci,intention-gate,intention-promote,release}.yml`.
-- [ ] `release-please-config.json`, `.release-please-manifest.json`.
-- [ ] `.agents/skills/chisel-release/SKILL.md`.
-- [ ] README, CONTRIBUTING.md, `.agents/project.md` §I, `test/TESTS.md`.
+- [x] `scripts/release-check.ts`, `test/release-check.test.ts`, deno task.
+- [x] `scripts/commit-lint.ts`, `test/commit-lint.test.ts`, the tasks
+  `commit-lint` and `hooks` (amendment (a)).
+- [x] `.github/workflows/{ci,pr-lint,intention-gate,intention-promote,release}.yml`.
+- [x] `release-please-config.json`, `.release-please-manifest.json`.
+- [x] `scripts/configure-github-repo.sh`, `scripts/github-repo-settings.md`
+  (amendment (b)).
+- [x] `.agents/skills/chisel-release/SKILL.md`.
+- [x] README, CONTRIBUTING.md, `.agents/project.md` §I, `test/TESTS.md`.
 
 ## References
 
@@ -214,4 +225,30 @@ the docs. No slice files: each step is small and reviewed together.
 
 ## Retrospective
 
-Added at the close.
+Closed 2026-11-03 by the Crewmate. Every acceptance criterion is met,
+checked against the suite (75 tests, `deno task check` clean) and, for the
+workflows, by reading at the review: they are proved only on GitHub, on the
+v2 → main pull request and on the first Release PR. Not done inside the
+task, as the approval said: no merge, no tag, no publish. The GitHub
+settings are applied once that pull request's checks are green; I1 (the
+JSR link) is the Owner's, before the first Release PR is merged.
+
+`retro` proposals, none applied, each for its owner to accept:
+
+1. **Automated checks / workflow** (`.agents/workflow.md`, the Architect).
+   The approval amended the plan in three ways, recorded in the work
+   document only; the spec still said "conventional titles, not
+   conventional commits" until the spec reviewer of `code-review` caught
+   it. Proposal: when an approval amends the plan, the Crewmate updates the
+   spec's 🧑 decisions in the same commit as the plan, before code.
+2. **Coding standards** (`test/TESTS.md`, the Architect). Its first rule
+   and `test/helpers.ts` say "no in-process shortcut", yet the maintainer
+   scripts (`promote-intentions`, `release-check`, `commit-lint`) are
+   tested by their exported functions, and the standards reviewer flagged
+   it. Proposal: one line saying that `scripts/` is tested by function,
+   the CLI seam rule being for `src/`.
+3. **Navigation** (the spec template's Infra table, the Architect). The
+   spec's I2 already said a Release PR pushed by `GITHUB_TOKEN` runs no
+   checks, but the plan did not carry it into the skill: the review found
+   the gap. Proposal: the plan names, for each Infra row, what the code or
+   the skill does about it.

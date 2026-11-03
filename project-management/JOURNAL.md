@@ -5,6 +5,39 @@ ships.
 
 ---
 
+## 49. 2026-11-03 — Chisel releases through a Release PR, after the boilerplate
+
+Chisel no longer releases from a laptop. On every push to `main`,
+release-please keeps a Release PR open with the next version and a
+generated `CHANGELOG.md`. A maintainer prepares it with the
+`chisel-release` skill: promote the intentions last, check each against
+the diff, push. A human merges it, and the same CI run tags it, adds the
+release's intentions to the GitHub Release and publishes to JSR through
+OIDC, with no stored token. `deno task release-check` holds every decision
+the workflows make:
+- a pull request that changes `socle/` adds an intention, or carries the
+  label `no-intention`;
+- the Release PR carries the promotion;
+- the tag matches `deno.json`, and nothing is left unreleased.
+
+On the Owner's word at the approval, every commit is now conventional,
+`type(scope): description`, as in the boilerplate but in Deno:
+`scripts/commit-lint.ts` holds the types and scopes, `deno task hooks`
+installs the commit-msg hook, and CI lints each pull request's commits and
+its title. The history of v2 before the rule is exempt rather than
+rewritten, and v2 lands on `main` as one squashed `feat` commit. The GitHub
+settings (squash only, the label, Actions that open pull requests, the
+protection of `main`) are a script, `scripts/configure-github-repo.sh`, dry
+run by default.
+
+Reviewed by `code-review` with two fresh reviewers. They found a WIP rule
+too wide, a breaking-change spelling missed, a settings script that needed
+`python3`, and a Release PR with nothing to promote that would never run
+its checks; all fixed. The spec, which still said "conventional titles,
+not conventional commits", was brought in step with the approval. 75 tests
+green, `deno task check` clean, nothing merged, tagged or published. Left
+to the Owner: the JSR link (I1), before the first Release PR is merged.
+
 ## 48. 2026-11-03 — The recipes become release intentions (slice 03, closing "Updates and installs read intentions")
 
 `chisel-upgrade` is gone. Its two hand-written recipes are now intentions

@@ -1,6 +1,6 @@
 # Work — Chisel releases through a Release PR, after the boilerplate
 
-Spec: `project-management/tasks/20261103-1131-chisel-releases-through-a-release-pr.spec.md`.
+Spec: `project-management/archive/20261103-1131-chisel-releases-through-a-release-pr.spec.md`.
 
 ## Program Design
 
@@ -152,10 +152,49 @@ I1 to I7, and the v2 → main squash merge with a conventional title.
 - [x] `commit-lint` red, then green, hook task (commit)
 - [x] Workflows and release-please files (commit)
 - [x] GitHub settings script, dry run shown (commit); applied after the PR: pending
-- [ ] Skill and docs (commit)
-- [ ] code-review, findings recorded
+- [x] Skill and docs (commit)
+- [x] code-review, findings recorded
 - [ ] Close: retro, journal, archive
 
 ## Notes & Snippets
 
 ## Diff-Review Findings
+
+Two-axis review of `b7f121c...1ab92bf`, 2026-11-03. Fixed in `9847bbd`:
+
+- The WIP rule refused any description opening with one of its words
+  ("lint markdown", "temp files leak"). Only `wip`, `fixup`, `squash`,
+  `oops` and `wtf` are refused as a first word now; the others only alone.
+- `BREAKING CHANGE:` (with a space) passed, though release-please reads it
+  as breaking. Both spellings are refused in a PR description.
+- `promoted` built a regex from the version, unescaped: the id is compared
+  literally now. Its message pointed at a CONTRIBUTING heading that does
+  not exist ("Intentions"): now "Intention authoring".
+- The settings script needed `python3` to build the checks' JSON, and its
+  read-back failed under `set -e` when `main` had rulesets but no
+  protection. Both fixed.
+- A Release PR pushed by `GITHUB_TOKEN` starts no workflow (spec, I2): a
+  release with no intention to promote would wait on its required checks
+  forever. The skill now always pushes, an empty commit when there is
+  nothing to promote; `scripts/github-repo-settings.md` says why.
+
+Kept, with the reason:
+
+- The tests call the scripts' functions in process, as
+  `promote-intentions.test.ts` already does: they are a maintainer's
+  scripts, not the CLI seam. Their entry points (usage, exit codes) are
+  thin and are proved on GitHub by the workflows.
+- `git(root, args)` is repeated in the three maintainer scripts; a shared
+  module for three short functions would couple scripts that are each read
+  alone.
+- The required checks are named in the workflows and in the settings
+  script; the script's comment says to keep them in step.
+- The release note is appended in the `release-please` job, before the
+  publish, not after it as the spec's diagram drew: a publish retried by
+  `workflow_dispatch` must not append it twice.
+- A collaborator who can label a PR `autorelease: pending` skips its gate:
+  the label skip is the spec's, and labelling needs write access.
+- The settings script also sets `default_workflow_permissions=read`, the
+  same call as I3; every workflow declares its own permissions.
+- `simple` writes `version.txt` only when it exists (`createIfMissing:
+  false`); chisel has none, so none appears.
