@@ -1,6 +1,6 @@
-// The maintainer's promotion at a release, run on a temporary copy of
-// chisel's own intentions and shipped list: what moves, how it is numbered,
-// and what it refuses.
+// The maintainer's promotion at a release, run on a throwaway repo of test
+// intentions, never chisel's own (they move at every release): what moves,
+// how it is numbered, and what it refuses.
 
 import { assert, assertEquals, assertRejects } from "@std/assert";
 import { join } from "@std/path";
@@ -8,23 +8,27 @@ import {
   promoteIntentions,
   PromotionRefused,
 } from "../scripts/promote-intentions.ts";
-import { copyOfRepo, gitIn, snapshot, withRepo } from "./helpers.ts";
+import { gitIn, intentionsRepo, snapshot, withRepo } from "./helpers.ts";
 
 async function unreleasedSlugs(root: string): Promise<string[]> {
   const slugs: string[] = [];
-  for await (
-    const entry of Deno.readDir(join(root, "socle/intentions/unreleased"))
-  ) {
-    slugs.push(entry.name.slice(0, -".md".length));
+  try {
+    for await (
+      const entry of Deno.readDir(join(root, "socle/intentions/unreleased"))
+    ) {
+      slugs.push(entry.name.slice(0, -".md".length));
+    }
+  } catch (error) {
+    if (!(error instanceof Deno.errors.NotFound)) throw error;
   }
   return slugs.sort();
 }
 
 Deno.test("promote-intentions: unreleased moves to the release, numbered after what is there", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.2.4");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.2.4");
     const slugs = await unreleasedSlugs(root);
-    assert(slugs.length > 0, "the copy has something to promote");
+    assertEquals(slugs, ["a-move", "b-notice"]);
 
     const promotions = await promoteIntentions(root, "0.2.4");
 
@@ -62,7 +66,7 @@ Deno.test("promote-intentions: unreleased moves to the release, numbered after w
 
 Deno.test("promote-intentions: a version deno.json does not declare moves nothing", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.2.4");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.2.4");
     const before = await snapshot(root);
     await assertRejects(
       () => promoteIntentions(root, "0.3.0"),
@@ -75,7 +79,7 @@ Deno.test("promote-intentions: a version deno.json does not declare moves nothin
 
 Deno.test("promote-intentions: an empty unreleased folder moves nothing", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.3.0");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.3.0");
     for (const slug of await unreleasedSlugs(root)) {
       await Deno.remove(
         join(root, "socle/intentions/unreleased", `${slug}.md`),

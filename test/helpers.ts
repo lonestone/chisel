@@ -217,7 +217,7 @@ export async function appendTo(path: string, text: string): Promise<void> {
   await Deno.writeTextFile(path, text, { append: true });
 }
 
-/** An intention a test package ships beside the real ones. */
+/** A test intention: a fixture, never one of the intentions chisel ships. */
 export interface ExtraIntention {
   /** A version, or `unreleased`. */
   readonly release: string;
@@ -226,47 +226,82 @@ export interface ExtraIntention {
   readonly classification: string;
 }
 
+/** Writes `intention` under `socleDir`; returns its path relative to it. */
+async function writeIntention(
+  socleDir: string,
+  intention: ExtraIntention,
+): Promise<string> {
+  const slug = intention.file.replace(/^\d+-/, "").replace(/\.md$/, "");
+  const relative = `intentions/${intention.release}/${intention.file}`;
+  await Deno.mkdir(join(socleDir, "intentions", intention.release), {
+    recursive: true,
+  });
+  await Deno.writeTextFile(
+    join(socleDir, relative),
+    [
+      "---",
+      `id: ${intention.release}/${slug}`,
+      `classification: ${intention.classification}`,
+      "---",
+      "",
+      `# A test intention, ${slug}`,
+      "",
+    ].join("\n"),
+  );
+  return relative;
+}
+
+/** Writes a shipped list of `files` the way `deno fmt` leaves chisel's. */
+async function writeSocleFiles(
+  root: string,
+  files: readonly string[],
+): Promise<void> {
+  await Deno.mkdir(join(root, "src"), { recursive: true });
+  await Deno.writeTextFile(
+    join(root, "src", "socle-files.ts"),
+    [
+      "export const SOCLE_FILES: readonly string[] = [",
+      ...[...files].sort().map((file) => `  "${file}",`),
+      "];",
+      "",
+    ].join("\n"),
+  );
+}
+
+/** A release's intention in the shipped list: `intentions/<release>/<file>`. */
+function isReleasedIntention(file: string): boolean {
+  return /^intentions\/[^/]+\/[^/]+\.md$/.test(file);
+}
+
 /**
- * A copy of this package that ships extra intentions, for the cases no real
- * release ships yet: a pending `migration`, an `automatic` beside the real
- * ones. Its socle list is the real one plus the extras. Returns the copy's
- * entry module, for `runChisel`.
+ * A copy of this package that ships the given test intentions. By default
+ * they sit beside the real ones, for the cases no real release ships: a
+ * pending `migration`, an `automatic` beside the real ones. With `only`, they
+ * replace them, so that a test reads no intention chisel ships: what chisel
+ * ships moves at every release. Returns the copy's entry module, for
+ * `runChisel`.
  */
 export async function packageWith(
   workspace: Workspace,
   extras: readonly ExtraIntention[],
+  options: { only?: boolean } = {},
 ): Promise<string> {
   const root = await workspace.dir("package");
   await copyTree(join(REPO_ROOT, "src"), join(root, "src"));
   await copyTree(SOCLE, join(root, "socle"));
   await Deno.copyFile(join(REPO_ROOT, "deno.json"), join(root, "deno.json"));
+  let kept: readonly string[] = SOCLE_FILES;
+  if (options.only) {
+    kept = SOCLE_FILES.filter((file) => !isReleasedIntention(file));
+    for (const file of SOCLE_FILES.filter(isReleasedIntention)) {
+      await Deno.remove(join(root, "socle", file));
+    }
+  }
   const added: string[] = [];
   for (const extra of extras) {
-    const slug = extra.file.replace(/^\d+-/, "").replace(/\.md$/, "");
-    const relative = `intentions/${extra.release}/${extra.file}`;
-    await Deno.mkdir(join(root, "socle", "intentions", extra.release), {
-      recursive: true,
-    });
-    await Deno.writeTextFile(
-      join(root, "socle", relative),
-      [
-        "---",
-        `id: ${extra.release}/${slug}`,
-        `classification: ${extra.classification}`,
-        "---",
-        "",
-        `# A test intention, ${slug}`,
-        "",
-      ].join("\n"),
-    );
-    added.push(relative);
+    added.push(await writeIntention(join(root, "socle"), extra));
   }
-  await Deno.writeTextFile(
-    join(root, "src", "socle-files.ts"),
-    `export const SOCLE_FILES: readonly string[] = ${
-      JSON.stringify([...SOCLE_FILES, ...added], null, 2)
-    };\n`,
-  );
+  await writeSocleFiles(root, [...kept, ...added]);
   return join(root, "src", "main.ts");
 }
 
@@ -319,24 +354,38 @@ export async function commitAll(
   return (await gitIn(root, "rev-parse", "HEAD")).trim();
 }
 
+/** The intentions of `intentionsRepo` when a test names none. */
+export const FIXTURE_INTENTIONS: readonly ExtraIntention[] = [
+  { release: "0.2.4", file: "01-first-move.md", classification: "automatic" },
+  {
+    release: "0.2.4",
+    file: "02-second-move.md",
+    classification: "informational",
+  },
+  { release: "unreleased", file: "a-move.md", classification: "migration" },
+  {
+    release: "unreleased",
+    file: "b-notice.md",
+    classification: "informational",
+  },
+];
+
 /**
- * A git repo holding a copy of chisel's intentions, its shipped list and a
- * `deno.json` at `version`, committed once: what the maintainer's release
- * scripts run on.
+ * A git repo shaped like chisel's for the maintainer's release scripts: the
+ * given test intentions under `socle/intentions/`, a shipped list naming
+ * them, and a `deno.json` at `version`, committed once. It holds none of the
+ * intentions chisel ships, which move at every release.
  */
-export async function copyOfRepo(
+export async function intentionsRepo(
   root: string,
   version: string,
+  intentions: readonly ExtraIntention[] = FIXTURE_INTENTIONS,
 ): Promise<string> {
-  await copyTree(
-    join(REPO_ROOT, "socle", "intentions"),
-    join(root, "socle", "intentions"),
-  );
-  await Deno.mkdir(join(root, "src"));
-  await Deno.copyFile(
-    join(REPO_ROOT, "src", "socle-files.ts"),
-    join(root, "src", "socle-files.ts"),
-  );
+  const files: string[] = [];
+  for (const intention of intentions) {
+    files.push(await writeIntention(join(root, "socle"), intention));
+  }
+  await writeSocleFiles(root, files);
   await Deno.writeTextFile(
     join(root, "deno.json"),
     JSON.stringify({ version }),

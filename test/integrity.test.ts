@@ -215,6 +215,26 @@ const INTENTION_SECTIONS = [
   "Record Result",
 ];
 
+// A released intention never moves and never leaves: repos record it by this
+// id. Written out once, so that one gone missing fails. What is unreleased
+// moves at every release, so it is not named here.
+Deno.test("integrity: the released intentions still ship, in their order", () => {
+  const released = [
+    "0.2.0/workflow-replaces-formulas",
+    "0.2.0/one-tracker-section",
+    "0.2.0/seven-statuses",
+    "0.2.0/merge-and-publish-section",
+    "0.2.0/journal-is-journal-md",
+    "0.2.4/update-writes-only-what-it-installed",
+    "0.2.4/no-write-through-links",
+  ];
+  const shipped = shippedIntentions().map((intention) => intention.id);
+  assertEquals(
+    shipped.filter((id) => released.includes(id)),
+    released,
+  );
+});
+
 Deno.test("integrity: every shipped intention parses, under the id its path gives it", async () => {
   const shipped = shippedIntentions();
   assert(shipped.length > 0, "the package ships at least one intention");
