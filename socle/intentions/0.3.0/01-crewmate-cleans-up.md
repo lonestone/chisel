@@ -1,5 +1,5 @@
 ---
-id: unreleased/crewmate-cleans-up
+id: 0.3.0/crewmate-cleans-up
 classification: informational
 ---
 

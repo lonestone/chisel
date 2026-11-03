@@ -1,5 +1,5 @@
 ---
-id: unreleased/typist-by-default
+id: 0.3.0/typist-by-default
 classification: informational
 ---
 
