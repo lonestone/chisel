@@ -17,6 +17,8 @@ ships, records which ones a repo applied or skipped in its manifest
   zero-padded order inside the release (`01`, `02`, ...). Rewrite the id to
   `<version>/<slug>`. A repo that recorded the unreleased id is not asked
   again: a record under `unreleased/<slug>` counts for the promoted one.
+  `deno task promote-intentions <version>` does both, and keeps
+  `src/socle-files.ts` in step ([CONTRIBUTING.md](/CONTRIBUTING.md)).
 - **The slug** names the change in a few words, lowercase with dashes, and
   is unique across every release.
 - **A new file under `socle/`** is added to `src/socle-files.ts`, or it

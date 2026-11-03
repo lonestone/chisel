@@ -151,3 +151,5 @@ without this section means the default. -->
 
 - **Merge:** ask the human
 - **Publish:** ask the human
+- **Before publishing:** `deno task promote-intentions <version>` once
+  `deno.json` carries the version, then the gates of Section F.

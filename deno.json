@@ -10,17 +10,18 @@
   },
   "tasks": {
     "test": "deno test -A test/",
-    "check": "deno check src/ test/ && deno lint && deno fmt --check"
+    "check": "deno check src/ test/ scripts/ && deno lint && deno fmt --check",
+    "promote-intentions": "deno run --allow-read --allow-write --allow-run=git scripts/promote-intentions.ts"
   },
   "publish": {
     "include": ["src/", "socle/", "deno.json", "README.md"]
   },
   "fmt": {
-    "include": ["src/", "test/"],
+    "include": ["src/", "test/", "scripts/"],
     "exclude": ["test/fixtures/", "test/TESTS.md"]
   },
   "lint": {
-    "include": ["src/", "test/"],
+    "include": ["src/", "test/", "scripts/"],
     "exclude": ["test/fixtures/", "test/TESTS.md"]
   }
 }
