@@ -29,8 +29,8 @@ Deno.test("guards: update stages, not copies, a repo still carrying the v1 layou
     assertEquals(refused.code, 3, `an agent has work to do\n${refused.output}`);
     assertStringIncludes(
       refused.stdout,
-      "chisel-upgrade",
-      "it names the migration skill",
+      "Its intention is baseline",
+      "it names the baseline intention",
     );
     assertStringIncludes(
       refused.stdout,
@@ -134,8 +134,8 @@ Deno.test("guards: update stages a repo with no manifest and writes nothing else
     assertEquals(refused.code, 3, `an agent has work to do\n${refused.output}`);
     assertStringIncludes(
       refused.stdout,
-      "chisel-upgrade",
-      "it names the migration skill",
+      "Its intention is baseline",
+      "it names the baseline intention",
     );
     assertEquals(
       outsideWorkspace(await snapshot(target)),
@@ -183,7 +183,7 @@ Deno.test("guards: update stages instead of writing through a symbolic link", as
         `an agent has work to do\n${refused.output}`,
       );
       assertStringIncludes(refused.stdout, linked, "it names the linked path");
-      assertStringIncludes(refused.stdout, "chisel-upgrade");
+      assertStringIncludes(refused.stdout, "Step 3 of the update skill");
       assertEquals(
         outsideWorkspace(await snapshot(target)),
         targetBefore,
@@ -284,7 +284,7 @@ Deno.test("guards: a relocated layout with no manifest is staged by update and b
 
     const updated = await runChisel(["update", target]);
     assertEquals(updated.code, 3, `update stages\n${updated.output}`);
-    assertStringIncludes(updated.stdout, "chisel-upgrade");
+    assertStringIncludes(updated.stdout, "Its intention is baseline");
     assertEquals(
       outsideWorkspace(await snapshot(target)),
       before,

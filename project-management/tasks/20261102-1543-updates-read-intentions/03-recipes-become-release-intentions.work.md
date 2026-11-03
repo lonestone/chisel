@@ -3,7 +3,7 @@
 Created by the Crewmate at the plan step, 2026-11-03. Spec:
 `project-management/tasks/20261102-1543-updates-read-intentions/03-recipes-become-release-intentions.spec.md`.
 
-**Plan:** waiting for the Architect's reading. Points 1, 2 and 4: no objection from Pierrick (2026-11-03); point 3 revised after the boilerplate, Crewmate clean-up added.
+**Plan:** approved by Pierrick through promethee, 2026-11-03 (revised plan, commit 0824d3e). The release circuit becomes its own task, done right after this one.
 
 ## Program Design
 
@@ -238,11 +238,25 @@ Added 2026-11-03 at Pierrick's request.
 
 ## Worklog
 
+**2026-11-03.**
+
+- Wrote the red tests: the replay of a 0.1.1 install, the baseline's
+  staging, and parsing with the nine sections.
+- Wrote the five 0.2.0 intentions, the two 0.2.4 ones and `baseline.md`.
+- `update` lists `[baseline]` without a manifest, and the baseline first
+  when the first version's layer sits beside a manifest. The reasons name
+  `baseline`, and step 3 of the update skill for links.
+- Two older tests assumed every shipped intention was unreleased: the test
+  of a manifest written before intentions now expects only the releases
+  after its version, and the guards expect the new reasons.
+- The journal intention's Validation no longer cites a warning that
+  `check` does not print.
+
 ## Implementation Checkboxes
 
-- [ ] Red tests: replay-0.1.1, baseline staging, intentions parse
-- [ ] Seven 0.2.x intentions + baseline.md + socle-files
-- [ ] update/intentions/workspace stage the baseline — green, commit
+- [x] Red tests: replay-0.1.1, baseline staging, intentions parse
+- [x] Seven 0.2.x intentions + baseline.md + socle-files
+- [x] update/intentions/workspace stage the baseline — green, commit
 - [ ] chisel-upgrade removed with every pointer — green, commit
 - [ ] chisel-update skill takes over the router; dogfood refreshed — commit
 - [ ] CONTRIBUTING.md (authoring), promote-intentions script + test, §I line — commit

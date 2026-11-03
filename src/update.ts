@@ -19,11 +19,13 @@ import {
   writeManifest,
 } from "./manifest.ts";
 import {
+  BASELINE,
   type Intention,
   type IntentionRecord,
   needsJudgement,
   pendingIntentions,
   readIntention,
+  type ShippedIntention,
   today,
 } from "./intentions.ts";
 import { sha256File } from "./hash.ts";
@@ -36,7 +38,6 @@ import {
   stageWorkspace,
   type Staging,
   UPDATE_SKILL,
-  UPGRADE_SKILL,
   WORKSPACE_DIR,
 } from "./workspace.ts";
 
@@ -87,12 +88,19 @@ export async function update(targetDir: string): Promise<number> {
   // recognise is an agent's business, not a script's.
   const previous = await readManifest(targetDir);
   const writes = await updateWrites(targetDir, previous ?? EMPTY_MANIFEST);
+  const firstVersion = await v1LayoutFound(targetDir);
   const pending: Intention[] = [];
-  for (const shipped of pendingIntentions(previous?.intentions ?? null)) {
+  for (const shipped of intentionsToRead(previous, firstVersion)) {
     pending.push(await readIntention(shipped));
   }
 
-  const reasons = await reasonsToStage(targetDir, previous, writes, pending);
+  const reasons = await reasonsToStage(
+    targetDir,
+    previous,
+    firstVersion,
+    writes,
+    pending,
+  );
   // A missing manifest is always among the reasons; the test on it is what
   // tells the type checker the fast path has one.
   if (reasons.length > 0 || previous === null) {
@@ -107,9 +115,20 @@ export async function update(targetDir: string): Promise<number> {
 
 const EMPTY_MANIFEST: Manifest = { version: "", managed: {}, intentions: {} };
 
-const UPGRADE_INTENTION =
-  `from-first-version.md of the chisel-upgrade skill, ` +
-  `${REFERENCE_DIR}/${UPGRADE_SKILL}`;
+/**
+ * What the session lists. A repo without a manifest has no release history
+ * to replay: the baseline alone takes it to the current layout. The first
+ * version's layer beside a manifest is closed by the baseline first, then by
+ * whatever its record still has pending.
+ */
+function intentionsToRead(
+  previous: Manifest | null,
+  firstVersion: readonly string[],
+): ShippedIntention[] {
+  if (previous === null) return [BASELINE];
+  const pending = pendingIntentions(previous.intentions);
+  return firstVersion.length > 0 ? [BASELINE, ...pending] : pending;
+}
 
 /**
  * Every reason this update cannot be a copy, as a sentence for the session:
@@ -119,24 +138,24 @@ const UPGRADE_INTENTION =
 async function reasonsToStage(
   targetDir: string,
   previous: Manifest | null,
+  firstVersion: readonly string[],
   writes: readonly string[],
   pending: readonly Intention[],
 ): Promise<string[]> {
   const reasons: string[] = [];
-  const firstVersion = await v1LayoutFound(targetDir);
   if (firstVersion.length > 0) {
     reasons.push(
       `The first version's layer is still here (${
         firstVersion.join(", ")
       }): copying the ` +
         `current socle beside it would leave two methods in one repo. Its intention is ` +
-        `${UPGRADE_INTENTION}.`,
+        `${BASELINE.id}.`,
     );
   }
   if (previous === null) {
     reasons.push(
       `No manifest (${MANIFEST_FILE}): chisel did not install this repo, or installed it ` +
-        `before the manifest existed. Its intention is ${UPGRADE_INTENTION}.`,
+        `before the manifest existed. Its intention is ${BASELINE.id}.`,
     );
   }
   const linked = await linkedPaths(targetDir, [
@@ -154,8 +173,8 @@ async function reasonsToStage(
       `Symbolic links on paths chisel writes, and writing them would change the files ` +
         `they point at: ${
           linked.join(", ")
-        }. The gap "Links where chisel writes" of ` +
-        `${UPGRADE_INTENTION} closes them.`,
+        }. Step 3 of the update skill (${REFERENCE_DIR}/${UPDATE_SKILL}) ` +
+        `closes them with the human.`,
     );
   }
   const judged = pending.filter((intention) =>

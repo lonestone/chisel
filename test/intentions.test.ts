@@ -4,7 +4,7 @@
 
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { join } from "@std/path";
-import { shippedIntentions } from "../src/intentions.ts";
+import { compareReleases, shippedIntentions } from "../src/intentions.ts";
 import {
   appendTo,
   outsideWorkspace,
@@ -143,9 +143,17 @@ Deno.test("intentions: a manifest from before intentions counts its own releases
     const result = await runChisel(["update", target], entry);
     assertEquals(result.code, 0, result.output);
     assertStringIncludes(result.stdout, "recorded: 0.2.1/newer (automatic)");
-    for (const id of shippedIntentions().map((intention) => intention.id)) {
-      assertStringIncludes(result.stdout, `recorded: ${id} `);
+    for (
+      const intention of shippedIntentions().filter((intention) =>
+        compareReleases(intention.release, "0.2.0") > 0
+      )
+    ) {
+      assertStringIncludes(result.stdout, `recorded: ${intention.id} `);
     }
+    assert(
+      !result.stdout.includes("0.2.0/"),
+      "the manifest's own release is not pending",
+    );
     assert(
       !result.stdout.includes("0.1.9/older"),
       "a release up to the manifest's version is not pending",
@@ -347,5 +355,131 @@ Deno.test("intentions: check reports what is pending", async () => {
       0,
       "with nothing pending, check is clean",
     );
+  });
+});
+
+/** The ids of the checklist of a staged session, in its order. */
+function checklistIds(session: string): string[] {
+  return [...session.matchAll(/^- \[ \] `([^`]+)`/gm)].map((match) => match[1]);
+}
+
+Deno.test("intentions: a 0.1.1 install is replayed through every intention since 0.2.0", async () => {
+  await withRepo(async (workspace) => {
+    // Shaped like a 0.1.1 install: its manifest's version, no record, the
+    // formulas and profiles, and the glue's three tracker sections.
+    const target = await workspace.install("brownfield");
+    const manifest = await manifestOf(target);
+    delete manifest.intentions;
+    manifest.version = "0.1.1";
+    await writeManifestOf(target, manifest);
+    for (const retired of ["formulas", "profiles"]) {
+      await Deno.mkdir(join(target, ".agents", retired));
+      await Deno.writeTextFile(
+        join(target, ".agents", retired, "default.toml"),
+        "# 0.1.x\n",
+      );
+    }
+    await appendTo(
+      join(target, ".agents", "project.md"),
+      "\n## B1 · Where task statuses live\n",
+    );
+
+    const result = await runChisel(["update", target]);
+    assertEquals(result.code, 3, `an agent has work to do\n${result.output}`);
+    const ids = checklistIds(
+      await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
+    );
+    assertEquals(
+      ids,
+      shippedIntentions()
+        .filter((intention) => intention.release !== "0.1.1")
+        .map((intention) => intention.id),
+      "every intention after 0.1.1, in order",
+    );
+    // Written out once, so that a release's intention gone missing fails.
+    for (
+      const id of [
+        "0.2.0/workflow-replaces-formulas",
+        "0.2.0/one-tracker-section",
+        "0.2.0/seven-statuses",
+        "0.2.0/merge-and-publish-section",
+        "0.2.0/journal-is-journal-md",
+        "0.2.4/update-writes-only-what-it-installed",
+        "0.2.4/no-write-through-links",
+        "unreleased/manifest-records-intentions",
+      ]
+    ) {
+      assert(ids.includes(id), `${id} is in the session`);
+    }
+    assert(!ids.includes("baseline"), "a repo chisel installed has history");
+  });
+});
+
+Deno.test("intentions: a repo without a manifest is staged with the baseline alone", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    await Deno.remove(join(target, MANIFEST));
+
+    const result = await runChisel(["update", target]);
+    assertEquals(result.code, 3, `an agent has work to do\n${result.output}`);
+    assertEquals(
+      checklistIds(
+        await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
+      ),
+      ["baseline"],
+      "no release history to replay: the baseline brings the repo current",
+    );
+    assert(
+      (await Deno.stat(join(target, WORKSPACE, "intentions", "baseline.md")))
+        .isFile,
+      "the baseline is staged",
+    );
+  });
+});
+
+Deno.test("intentions: the first version's layer beside a manifest stages the baseline first", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    const manifest = await manifestOf(target);
+    delete manifest.intentions;
+    manifest.version = "0.2.4";
+    await writeManifestOf(target, manifest);
+    await Deno.mkdir(join(target, ".agents", "rules"));
+    await Deno.writeTextFile(
+      join(target, ".agents", "rules", "task-planning.md"),
+      "# Planning a task\n",
+    );
+
+    const result = await runChisel(["update", target]);
+    assertEquals(result.code, 3, `an agent has work to do\n${result.output}`);
+    const ids = checklistIds(
+      await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
+    );
+    assertEquals(ids[0], "baseline");
+    assertEquals(
+      ids.slice(1),
+      shippedIntentions()
+        .filter((intention) => intention.release === "unreleased")
+        .map((intention) => intention.id),
+      "then what the manifest has not applied",
+    );
+  });
+});
+
+Deno.test("intentions: a record under the unreleased id counts for the promoted intention", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    const manifest = await manifestOf(target);
+    manifest.intentions = {
+      ...manifest.intentions,
+      "unreleased/a-move": { result: "applied", date: "2026-11-01" },
+    };
+    await writeManifestOf(target, manifest);
+    const entry = await packageWith(workspace, [
+      { release: "9.0.0", file: "01-a-move.md", classification: "migration" },
+    ]);
+
+    const result = await runChisel(["update", target], entry);
+    assertEquals(result.code, 0, `nothing pending\n${result.output}`);
   });
 });

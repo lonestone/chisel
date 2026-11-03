@@ -97,6 +97,19 @@ export function shippedIntentions(): ShippedIntention[] {
   );
 }
 
+/**
+ * The intention of a repo chisel did not install, or installed in its first
+ * version: it takes the repo to the current layout whole, so it sits outside
+ * every release folder and is never pending for a repo with a manifest of
+ * the current layout. The command that closes its session records it.
+ */
+export const BASELINE: ShippedIntention = {
+  id: "baseline",
+  release: "",
+  slug: "baseline",
+  source: `${SOCLE_ROOT}${INTENTIONS_DIR}baseline.md`,
+};
+
 /** The shipped intention of that id, or null. */
 export function shippedIntention(id: string): ShippedIntention | null {
   return shippedIntentions().find((intention) => intention.id === id) ?? null;

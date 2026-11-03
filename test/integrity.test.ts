@@ -10,7 +10,11 @@ import { assert, assertEquals, assertThrows } from "@std/assert";
 import { join } from "@std/path";
 import { REPO_ROOT, withRepo } from "./helpers.ts";
 import { SOCLE_FILES } from "../src/socle-files.ts";
-import { parseIntention, shippedIntentions } from "../src/intentions.ts";
+import {
+  BASELINE,
+  parseIntention,
+  shippedIntentions,
+} from "../src/intentions.ts";
 
 const AGENTS_PATH = /\.agents\/[A-Za-z0-9._*\/-]+/g;
 const SIBLING_LINK = /\]\((?:\.\/)?([A-Za-z0-9._-]+\.(?:md|toml|sh|tpl))\)/g;
@@ -222,6 +226,18 @@ async function* walkFiles(directory: string): AsyncGenerator<string> {
   }
 }
 
+const INTENTION_SECTIONS = [
+  "Goal",
+  "Why",
+  "Applies When",
+  "Do Not Apply When",
+  "Observable Gaps",
+  "Out of Scope",
+  "Reference Paths",
+  "Validation",
+  "Record Result",
+];
+
 Deno.test("integrity: every shipped intention parses, under the id its path gives it", async () => {
   const shipped = shippedIntentions();
   assert(shipped.length > 0, "the package ships at least one intention");
@@ -238,6 +254,15 @@ Deno.test("integrity: every shipped intention parses, under the id its path give
     const parsed = parseIntention(intention, text);
     assertEquals(parsed.id, intention.id);
     assert(parsed.title.length > 0, `${intention.source} has a title`);
+  }
+  // Every intention, the baseline among them, answers the template's nine
+  // sections: an agent reads them in that order.
+  for (const intention of [...shipped, BASELINE]) {
+    const text = await Deno.readTextFile(join(REPO_ROOT, intention.source));
+    parseIntention(intention, text);
+    const headings = text.split("\n").filter((line) => line.startsWith("## "))
+      .map((line) => line.slice(3).trim());
+    assertEquals(headings, INTENTION_SECTIONS, `${intention.source} sections`);
   }
 
   // The parser refuses what must not ship: no frontmatter, an id its path
