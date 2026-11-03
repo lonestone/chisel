@@ -75,6 +75,27 @@ Deno.test("commit-lint pr: a WIP title, an image, a task list and BREAKING-CHANG
     lintPullRequest({ ...ok, body: "BREAKING-CHANGE: gone" }).length,
     1,
   );
+  assertEquals(
+    lintPullRequest({ ...ok, body: "BREAKING CHANGE: gone" }).length,
+    1,
+  );
+});
+
+Deno.test("commit-lint pr: a description that opens with lint or temp is not WIP", () => {
+  const body = BODY;
+  const draft = false;
+  assertEquals(
+    lintPullRequest({ title: "feat(tooling): lint markdown", body, draft }),
+    [],
+  );
+  assertEquals(
+    lintPullRequest({ title: "fix(cli): temp files leak", body, draft }),
+    [],
+  );
+  assertEquals(
+    lintPullRequest({ title: "fix(cli): typo", body, draft }).length,
+    1,
+  );
 });
 
 Deno.test("commit-lint pr: a conventional paragraph in the description is linted as a header", () => {

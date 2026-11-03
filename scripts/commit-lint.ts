@@ -51,7 +51,9 @@ export const HISTORY_BEFORE_THE_RULE =
 /**
  * Words that mean a pull request was not finalized, checked on its title and
  * on the conventional paragraphs of its description: they would land in the
- * changelog.
+ * changelog. A description that is only one of them is refused; so is one
+ * that opens with a word of `WIP_OPENERS` ("wip gate"). "lint markdown" or
+ * "temp files leak" describe a change and pass.
  */
 export const WIP_WORDS = [
   "wip",
@@ -66,6 +68,7 @@ export const WIP_WORDS = [
   "do not merge",
   "wtf",
 ] as const;
+const WIP_OPENERS = ["wip", "fixup", "squash", "oops", "wtf"];
 
 const WIP_TRAILING = [/\s+2$/, /\s+again$/i];
 const MAX_LINE = 100;
@@ -83,7 +86,8 @@ const IGNORED = [
   /^Revert "/,
   /^(?:fixup|squash|amend)! /,
 ];
-const BREAKING_TOKEN = "BREAKING-CHANGE:";
+/** Both spellings release-please reads as a breaking change. */
+const BREAKING_TOKENS = ["BREAKING-CHANGE:", "BREAKING CHANGE:"];
 const IMAGE = /!\[[^\]]*\]\([^)]+\)|<img[\s>]/i;
 const TASK_LIST = /^\s*[-*+]\s+\[[ xX]\]/m;
 const HOOK_MARK = "Written by `deno task hooks`";
@@ -209,7 +213,7 @@ function wipHits(header: string): string[] {
   const hits: string[] = WIP_WORDS.filter((word) =>
     word.includes(" ")
       ? new RegExp(`\\b${word}\\b`).test(description)
-      : description === word || first === word
+      : description === word || (WIP_OPENERS.includes(word) && first === word)
   );
   if (WIP_TRAILING.some((pattern) => pattern.test(description))) {
     hits.push(description.split(/\s+/).pop()!);
@@ -225,11 +229,13 @@ export function lintPullRequest(pull: PullRequest): string[] {
   const title = pull.title ?? "";
   const body = pull.body ?? "";
   const problems = lintHeader(title).map((problem) => `title: ${problem}`);
-  if (title.includes(BREAKING_TOKEN) || body.includes(BREAKING_TOKEN)) {
-    problems.push(
-      `found ${BREAKING_TOKEN}: mark a breaking change with ` +
-        "`type(scope)!: description` in the title instead",
-    );
+  for (const token of BREAKING_TOKENS) {
+    if (title.includes(token) || body.includes(token)) {
+      problems.push(
+        `found ${token}: mark a breaking change with ` +
+          "`type(scope)!: description` in the title instead",
+      );
+    }
   }
   if (body.trim() === "") {
     if (!pull.draft) {

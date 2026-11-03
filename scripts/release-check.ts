@@ -94,7 +94,7 @@ export async function gate(root: string, base: string): Promise<CheckResult> {
       `This change touches the socle without adding an intention:`,
       ...[...new Set(needing)].map((path) => `  ${path}`),
       `Either add one under ${UNRELEASED_DIR}/ (CONTRIBUTING.md, ` +
-      `"Intentions"), or, when a repo truly has nothing to act on, apply ` +
+      `"Intention authoring"), or, when a repo truly has nothing to act on, apply ` +
       `the label no-intention and say why in the description ` +
       `("No intention: <why>").`,
     ].join("\n"),
@@ -128,7 +128,7 @@ export async function promoted(
     const text = name === undefined
       ? ""
       : await Deno.readTextFile(join(root, INTENTIONS, version, name));
-    if (!new RegExp(`^id: ${version}/${slug}$`, "m").test(text)) {
+    if (!text.split("\n").includes(`id: ${version}/${slug}`)) {
       missing.push(`${INTENTIONS}/${version}/NN-${slug}.md`);
     }
   }

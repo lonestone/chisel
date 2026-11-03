@@ -39,6 +39,11 @@ Run it from the repo root, with `gh` authenticated as an admin of the repo.
    protection when `main` already has one or the repo has rulesets: compare
    with this list in the UI (Settings → Branches) instead of overwriting.
 
+   release-please pushes the Release PR with `GITHUB_TOKEN`, which starts no
+   workflow: these checks run on it only once a maintainer pushes to its
+   branch, which the `chisel-release` skill always does, with the promotion
+   or an empty commit.
+
    Apply it once a pull request has run every check above, so that GitHub
    knows their names, and never in a way that blocks the pull request bringing
    the workflows themselves.

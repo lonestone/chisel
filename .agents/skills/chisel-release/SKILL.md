@@ -73,8 +73,12 @@ publishes to JSR.
 
 4. **Push and stop.** Commit the promotion as
    `chore(release): promote the intentions of <version>` and push the
-   branch. The "Intention promote" check turns green. Tell the human that
-   the Release PR is ready to merge, with the list of intentions it ships
+   branch. With nothing to promote, push an empty commit instead
+   (`git commit --allow-empty -m "chore(release): run the checks of
+   <version>"`): release-please pushes with `GITHUB_TOKEN`, which starts no
+   workflow, so the required checks run on the Release PR only after a push
+   of yours. When they are green, tell the human that the Release PR is
+   ready to merge, with the list of intentions it ships
    (`deno task release-check notes <version>`), and stop.
 
 ## After the merge

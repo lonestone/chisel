@@ -92,8 +92,8 @@ if gh api "repos/${repo}/branches/main/protection" >/dev/null 2>&1 \
   echo "main already has a protection or the repo has rulesets: refusing to"
   echo "overwrite them. Compare with scripts/github-repo-settings.md in the UI."
 else
-  checks_json="$(printf '%s\n' "${required_checks[@]}" \
-    | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')"
+  checks_json="[$(printf '"%s",' "${required_checks[@]}")"
+  checks_json="${checks_json%,}]"
   protection="$(cat <<JSON
 {
   "required_status_checks": { "strict": false, "contexts": ${checks_json} },
@@ -121,7 +121,8 @@ if [[ "${apply}" == true ]]; then
   gh api "repos/${repo}" --jq '{allow_merge_commit, allow_squash_merge, allow_rebase_merge, squash_merge_commit_title, squash_merge_commit_message}'
   gh api "repos/${repo}/actions/permissions/workflow"
   gh api "repos/${repo}/branches/main/protection" \
-    --jq '{checks: .required_status_checks.contexts, reviews: .required_pull_request_reviews.required_approving_review_count, force_push: .allow_force_pushes.enabled, deletion: .allow_deletions.enabled}'
+    --jq '{checks: .required_status_checks.contexts, reviews: .required_pull_request_reviews.required_approving_review_count, force_push: .allow_force_pushes.enabled, deletion: .allow_deletions.enabled}' \
+    || echo "main has no branch protection (its rulesets, if any, are not read here)."
 else
   echo "No changes made. Re-run with --apply to make them."
 fi
