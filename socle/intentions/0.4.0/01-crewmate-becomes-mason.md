@@ -1,5 +1,5 @@
 ---
-id: unreleased/crewmate-becomes-mason
+id: 0.4.0/crewmate-becomes-mason
 classification: migration
 ---
 
@@ -67,5 +67,5 @@ says "Mason" hands its agents a role the workflow no longer defines.
 
 ## Record Result
 
-`chisel record unreleased/crewmate-becomes-mason --applied`, or
+`chisel record 0.4.0/crewmate-becomes-mason --applied`, or
 `--skipped "<reason>"` after the human's word.
