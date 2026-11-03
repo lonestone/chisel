@@ -1384,3 +1384,20 @@ seule ?** L'Owner l'utilise comme chef de projet qui pilote plusieurs
 Crewmates, et propose de mesurer sur Crucible si un Crewmate en
 sous-agent paie face au fil principal qui code lui-même, avec la revue en
 sous-agents neufs.
+
+## Addendum 18 (2026-11-03) — le Typist par défaut
+
+Rapporté par Dédale, sur le coût de chisel-intentions (24 $, 383 appels,
+tout en Opus, aucun Typist) : « logiquement Chisel a un rôle typist :
+secondmate opus → crewmate opus → typist sonnet voire haiku. Ça devrait
+être contrôlé par Chisel […], donc c'est bizarre que ça ne se fasse pas
+automatiquement. » L'Owner a dit « ok » au nouveau défaut, dans une PR à
+part. Ce qui remplace « Le Typist est optionnel » de l'Addendum 15 :
+
+- ✅ **Le plan approuvé, le Crewmate lance un Typist** au tier *mid*, ou
+  *cheap* si le plan est mécanique ; la cascade de `reference.md`, « Model
+  tiers », résout le modèle.
+- ✅ **Le Crewmate ne tape lui-même** qu'une retouche de quelques lignes, ou
+  tant que le plan n'est pas arrêté, et il le dit dans le worklog du
+  document de travail.
+- ✅ **Les reviewers restent *frontier*.**

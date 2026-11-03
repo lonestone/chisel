@@ -34,13 +34,11 @@ reviewers.
 
 ## Observable Gaps
 
-1. **What the human knows.** Signal: none in the repo. Say it in two
-   sentences: once the plan is approved, the Crewmate launches a Typist at
-   the *mid* tier, or *cheap* when the plan is mechanical; the cascade of
-   `.agents/reference.md`, "Model tiers", resolves the model, so a team
-   that wants other models names them in `.agents/project.md`, section H,
-   or a dev in `.agents/user.md`. A team whose own instructions say the
-   Crewmate types itself reconciles them.
+1. **What the human knows.** Signal: none in the repo. Say it to the
+   human: once the plan is approved, the Crewmate launches a Typist at the
+   *mid* tier, or *cheap* when the plan is mechanical, the model resolved
+   as `.agents/reference.md`, "Model tiers", says. A team whose own
+   instructions say the Crewmate types itself reconciles them.
    Done when: the human has read it.
 
 ## Out of Scope

@@ -1,6 +1,6 @@
 # The Typist by default
 
-**Status:** in-progress
+**Status:** done
 
 ---
 
@@ -34,20 +34,20 @@ its own.
 
 ## Acceptance Criteria
 
-- [ ] **typist-by-default** — `workflow.md` says the Crewmate launches a
+- [x] **typist-by-default** — `workflow.md` says the Crewmate launches a
   Typist once the plan is approved, at the *mid* tier, or *cheap* when the
   plan is mechanical, the model resolved by the cascade of `reference.md`.
-- [ ] **self-typing-is-the-exception** — the Crewmate types itself only for
+- [x] **self-typing-is-the-exception** — the Crewmate types itself only for
   a retouch of a few lines, or while the plan is not settled, and says so in
   the work document.
-- [ ] **reviewers-frontier** — the reviewers stay at the *frontier* tier.
-- [ ] **no-old-default** — `grep -rn "types itself\|types its own plan\|when there is one" socle .agents CHARTER.md README.md PHILOSOPHY.md`
+- [x] **reviewers-frontier** — the reviewers stay at the *frontier* tier.
+- [x] **no-old-default** — `grep -rn "types itself\|types its own plan\|when there is one" socle .agents CHARTER.md README.md PHILOSOPHY.md`
   finds no statement of the old default.
-- [ ] **copies-identical** — `socle/agents/{workflow,methodology,reference}.md`
+- [x] **copies-identical** — `socle/agents/{workflow,methodology,reference}.md`
   and `.agents/` match byte for byte.
-- [ ] **intention-ships** — the intention is in `src/socle-files.ts` and
+- [x] **intention-ships** — the intention is in `src/socle-files.ts` and
   `deno task release-check gate origin/main` passes.
-- [ ] **suite-green** — `deno task check` and `deno task test` pass.
+- [x] **suite-green** — `deno task check` and `deno task test` pass.
 
 ## Seams
 

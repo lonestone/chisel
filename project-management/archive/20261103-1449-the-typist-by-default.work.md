@@ -1,7 +1,7 @@
 # The Typist by default — work
 
 Created by the Crewmate at the plan step, 2026-11-03. Spec:
-`project-management/tasks/20261103-1449-the-typist-by-default.spec.md`.
+`project-management/archive/20261103-1449-the-typist-by-default.spec.md`.
 
 **Plan:** approved by the brief of promethee (Architect), 2026-11-03: the
 brief fixes the new default and asks the Crewmate to carry it to the pull
@@ -178,6 +178,12 @@ after `"intentions/unreleased/manifest-records-intentions.md",`.
 - 2026-11-03 — Crewmate: plan and wording written; the edits go to a Typist
   at the *cheap* tier (Haiku), the plan being mechanical. The spec, this
   file, the decisions record and the journal are the Crewmate's own.
+- 2026-11-03 — Typist (Haiku): edits 1–12 typed in b1d8bcd, every Old
+  passage found; `deno task check`, `deno task test` (75 passed) and the
+  intention gate green.
+- 2026-11-03 — Crewmate: the review's fixes typed by the Crewmate itself,
+  as the retouch exception allows: a few lines in each file, and wording
+  that is judgement, not a settled plan.
 
 ## Implementation Checkboxes
 
@@ -260,4 +266,31 @@ intentions.
 
 ## Diff-Review Findings
 
-To come.
+Standards and Spec, two fresh reviewers, on `origin/main...HEAD` at b1d8bcd.
+
+- **Passages that still had the Crewmate code** (Spec): the Crewmate brief
+  ("code"), the reuse sentence of "Sub-agents", the Crewmate rows of
+  `CHARTER.md` and `README.md`, `README.md` step 4, `PHILOSOPHY.md` twice.
+  Fixed: each now says a Typist codes.
+- **The tier rule stated three times in `workflow.md`** (Standards, one
+  source of truth): the Typist row, step 5 and its definition of
+  "mechanical". Fixed: `reference.md` owns the tiers and "mechanical"; the
+  Typist row and the Typist brief point to it; the brief names the tier,
+  as the Spec reviewer asked; step 5 keeps only the exception.
+  `CHARTER.md` and `README.md` drop the tier names.
+- **Bare section number in the intention** ("section H", discipline's
+  reference rule). Fixed: the gap now points at "Model tiers" of
+  `reference.md` only, without restating the cascade, and drops its
+  sentence count.
+- **"writes which and why"** (Standards). Fixed: "which exception applies
+  and why".
+- **README left out "while the plan is not settled"** (Spec). Fixed.
+- **Decisions record and journal missing** (Spec). Written at the close:
+  Addendum 18, journal entry 50.
+- **"After its part of the plan"** (Standards, unclear). Kept: the Typist
+  brief defines "the part of the plan to type".
+- **The Typist stop row, not asked** (Spec, scope). Kept: the Typist brief
+  already says it reports; the row makes the stop visible where stops are
+  listed.
+- **The 383-call fact in methodology and intention** (both). Kept: an
+  intention's Why stands alone.

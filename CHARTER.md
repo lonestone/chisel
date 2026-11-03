@@ -57,8 +57,8 @@ field facts behind this page are in the decisions record,
 | Role | Who plays it | What it does |
 |---|---|---|
 | **Architect** | The agent the user, or an orchestrator, talks to: the project lead. This is its default role; nobody launches an Architect. | Scopes the task, asks the questions, clarifies the spec. Launches a Crewmate, talks with it, arbitrates, reads and corrects the plan. Brings the key questions up to the human. |
-| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan from the template, stops for the Architect's reading, then codes. Runs the `code-review` skill and fixes what it finds. |
-| **Typist** | A sub-agent launched by the Crewmate once the plan is approved. | Types code from the approved plan, decides nothing, on a cheaper model than the Architect and the Crewmate: the *mid* tier, or *cheap* when the plan is mechanical. The Crewmate types itself only a retouch of a few lines, or while the plan is not settled. |
+| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan from the template, stops for the Architect's reading, then has a Typist code it. Runs the `code-review` skill and fixes what it finds. |
+| **Typist** | A sub-agent launched by the Crewmate once the plan is approved. | Types code from the approved plan, decides nothing, on a cheaper model than the Architect and the Crewmate. The Crewmate types itself only a retouch of a few lines, or while the plan is not settled. |
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the coding session. |
 
 **The Architect's thread** is best kept long: one thread that compacts and
