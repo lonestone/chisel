@@ -5,6 +5,30 @@ ships.
 
 ---
 
+## 51. 2026-11-03 — The Crewmate becomes the Mason, and the Typist ticks only what really ran
+
+In the Harness that runs chisel's projects, "crewmate" names the per-task
+session that plays chisel's Architect, and chisel used the same word for
+the sub-agent that Architect launches: one word for two roles made a plan
+reading get skipped on chisel-intentions. On the Owner's word, "Architect →
+Mason → Typist": the role is renamed everywhere outside history, in the
+socle and its copy, the templates, the charter, the README and the
+philosophy, and the `chisel-beads` actor becomes `mason`. The migration
+intention `unreleased/crewmate-becomes-mason` has an update session rename
+the word in a project's own files, each rename in its own instructions and
+skills on the human's word. History keeps its words.
+
+A project equipped with chisel saw a Typist tick "run it for real" after a
+run on a throw-away test base. "The Typist brief" now says a box is ticked
+only for what really ran, on the real target; a dry run or a run on a copy
+goes in the worklog and leaves its box open. The informational intention
+`unreleased/typist-ticks-what-ran` tells updated repos.
+
+The Mason wrote every edit and both intentions as exact text, a Haiku
+Typist typed them, gates green. Two fresh reviewers found the archive
+listed twice in the intention's Out of Scope, the manifest missing from its
+check, and an undefined "Harness"; all fixed by the Mason as retouches.
+
 ## 50. 2026-11-03 — The Crewmate hands the typing to a Typist
 
 Chisel's own task on intentions ran 383 calls, all at the frontier tier,

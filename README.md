@@ -31,23 +31,23 @@ up where another stopped, even after a session dies.
 
 - **The Architect** is the agent you talk to: the project lead. It scopes
   the task, reads the plans, and brings only the key questions to you.
-  Because the coding happens elsewhere, it can run several Crewmates in
+  Because the coding happens elsewhere, it can run several Masons in
   parallel, each in its own worktree, without drowning its context.
-- **The Crewmate** is a frontier model that analyses and plans. It
+- **The Mason** is a frontier model that analyses and plans. It
   writes the plan, stops for the Architect's reading, has a Typist code it
   test first, and closes the task.
 - **The reviewers** know nothing of the session that wrote the code, and
   that is the point. They read the diff against your standards and against
   the spec, with Pocock's `code-review` skill.
-- **The Typist** types the approved plan on a cheaper model. The Crewmate
+- **The Typist** types the approved plan on a cheaper model. The Mason
   types itself only a retouch of a few lines, or while the plan is not
   settled.
 
 **Firm rules for the end of a task.** No task closes without the review and
 your gate commands: lint, tests, build. What an agent may do on its own is
-written down: the Crewmate commits but does not push, and merging and
+written down: the Mason commits but does not push, and merging and
 publishing wait for you unless your project hands them over. The close has
-its loops too: the Crewmate ticks the acceptance criteria against reality,
+its loops too: the Mason ticks the acceptance criteria against reality,
 updates the living docs, the glossary and the ADRs, writes the journal
 entry, and proposes what the process should learn.
 
@@ -56,7 +56,7 @@ entry, and proposes what the process should learn.
 - **Not an orchestrator.** It does not watch your tracker, schedule tasks
   or decide which one runs next. That is you, or whatever you put above it:
   a harness, a script, a long-lived thread.
-- **Not built for a swarm.** An Architect runs a handful of Crewmates.
+- **Not built for a swarm.** An Architect runs a handful of Masons.
   Ninety in parallel is another world, with other tools.
 - **Not tied to a tracker.** Task files (the default), beads, Plane, GitHub
   Issues: the agent only needs the skill or connector that reads and
@@ -109,13 +109,13 @@ In practice, a task goes like this.
 1. **The Architect reads the task and the code it touches.** When the task
    is clear, it writes a short spec straight away. When it is not, it asks
    you questions first.
-2. **It launches a Crewmate**, which writes the plan and stops.
+2. **It launches a Mason**, which writes the plan and stops.
 3. **The Architect reads the plan**, corrects it and approves it. Only the
    questions that touch your decisions come back to you.
 4. **A Typist codes the plan**, test first, on a cheaper model; the
-   Crewmate then runs the `code-review` skill on the whole diff, with two
+   Mason then runs the `code-review` skill on the whole diff, with two
    fresh reviewers.
-5. **The Crewmate fixes what they found and closes the task**: criteria
+5. **The Mason fixes what they found and closes the task**: criteria
    ticked, docs updated, an entry in the project journal, a commit, the
    tracker updated.
 6. **The Architect opens the pull request.** Merging and publishing wait for

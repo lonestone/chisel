@@ -90,7 +90,7 @@ is that the expensive-to-reverse decisions are made, not that it is small.
 **Program design** — the target shape inside the agreed architecture: files,
 seam signatures, test order — is deliberately NOT written with the spec.
 Designing slice 6's files before slices 1–3 have taught anything produces
-stale guesses. The Crewmate writes it at the plan step, with the real code
+stale guesses. The Mason writes it at the plan step, with the real code
 in view, and **persists it in the work document** before any code; the
 Architect reads and approves it there. Three reasons to persist it:
 
@@ -105,7 +105,7 @@ Architect reads and approves it there. Three reasons to persist it:
 
 The delegation boundary is the **system design**: above it the *what* —
 architecture, scope, seams — settled in the spec; below it the *how*,
-designed and typed by the session that implements. A Crewmate asked to
+designed and typed by the session that implements. A Mason asked to
 "figure out" something the *what* left open is a specification failure, and
 it goes back to the spec. An open *how* is not a hole: it is what the plan
 step is for.
@@ -113,7 +113,7 @@ step is for.
 Once the plan is approved it is a complete brief, which is what makes a
 Typist possible: a cheaper model types a settled plan, and the frontier
 tier is kept for judgement — the spec, the plan, the review. So the
-Crewmate hands the typing to a Typist by default. A Crewmate that types its
+Mason hands the typing to a Typist by default. A Mason that types its
 own plan pays the frontier price for typing: on 2026-11-03 one of chisel's
 own tasks ran 383 calls, all at the frontier tier, none of them a Typist's.
 The brief is **artifacts

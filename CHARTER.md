@@ -22,7 +22,7 @@ has the task, it follows chisel's method to ship it.
 scheduling tasks, deciding on its own which task runs next: that belongs to
 the layer above. That layer can be a human, a harness, a long-lived
 orchestrator thread, or a script. Inside a conversation, the Architect
-running the Crewmates of the tasks it was given is part of processing
+running the Masons of the tasks it was given is part of processing
 tasks, not orchestration.
 
 **The workflow is prose.** One page describes the steps of a task, who does
@@ -56,18 +56,18 @@ field facts behind this page are in the decisions record,
 
 | Role | Who plays it | What it does |
 |---|---|---|
-| **Architect** | The agent the user, or an orchestrator, talks to: the project lead. This is its default role; nobody launches an Architect. | Scopes the task, asks the questions, clarifies the spec. Launches a Crewmate, talks with it, arbitrates, reads and corrects the plan. Brings the key questions up to the human. |
-| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan from the template, stops for the Architect's reading, then has a Typist code it. Runs the `code-review` skill and fixes what it finds. |
-| **Typist** | A sub-agent launched by the Crewmate once the plan is approved. | Types code from the approved plan, decides nothing, on a cheaper model than the Architect and the Crewmate. The Crewmate types itself only a retouch of a few lines, or while the plan is not settled. |
+| **Architect** | The agent the user, or an orchestrator, talks to: the project lead. This is its default role; nobody launches an Architect. | Scopes the task, asks the questions, clarifies the spec. Launches a Mason, talks with it, arbitrates, reads and corrects the plan. Brings the key questions up to the human. |
+| **Mason** | A sub-agent launched by the Architect. | Writes the plan from the template, stops for the Architect's reading, then has a Typist code it. Runs the `code-review` skill and fixes what it finds. |
+| **Typist** | A sub-agent launched by the Mason once the plan is approved. | Types code from the approved plan, decides nothing, on a cheaper model than the Architect and the Mason. The Mason types itself only a retouch of a few lines, or while the plan is not settled. |
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the coding session. |
 
 **The Architect's thread** is best kept long: one thread that compacts and
 serves as the entry point to a project, holding the context of several
 tasks. The article above recommends the same shape for a main agent loop.
 It can also be one thread per piece of work. In a long thread the Architect
-runs several Crewmates, one per task or slice.
+runs several Masons, one per task or slice.
 
-**The fixes after a review belong to the Crewmate** that wrote the code,
+**The fixes after a review belong to the Mason** that wrote the code,
 not to the Architect.
 
 **A role is a paragraph of the workflow, not a file.** The Architect writes
