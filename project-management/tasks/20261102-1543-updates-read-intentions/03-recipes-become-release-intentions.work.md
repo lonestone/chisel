@@ -276,7 +276,7 @@ Added 2026-11-03 at Pierrick's request.
 - [x] chisel-upgrade removed with every pointer — green, commit
 - [x] chisel-update skill takes over the router; dogfood refreshed — commit
 - [x] CONTRIBUTING.md (authoring), promote-intentions script + test, §I line — commit
-- [ ] workflow.md close: the Crewmate cleans up, with unreleased/crewmate-cleans-up — commit
+- [x] workflow.md close: the Crewmate cleans up, with unreleased/crewmate-cleans-up — commit
 - [ ] code-review, findings recorded
 - [ ] Close: retro, journal, archive
 

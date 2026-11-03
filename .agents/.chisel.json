@@ -28,6 +28,10 @@
       "date": "2026-11-03",
       "result": "applied"
     },
+    "unreleased/crewmate-cleans-up": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
     "unreleased/manifest-records-intentions": {
       "date": "2026-11-03",
       "result": "applied"
@@ -67,7 +71,7 @@
     ".agents/skills/writing-great-skills/GLOSSARY.md": "cccd684c73fb7a06f523497b0121765f92d2b33d6ef9c51602294849233451d6",
     ".agents/skills/writing-great-skills/SKILL.md": "575073bf7832b45b4a303fa910fce96e3f1aacc133b331db1429b4c63c7660e7",
     ".agents/user.md.tpl": "f9bab4c0d63fc950045d54456d4fdfa9c421e201a61c36e4924e3b9be1aa9c7d",
-    ".agents/workflow.md": "e7d504ab164353df613cc995637e439fc8ad2b063c213a22a8e8b2079924d110",
+    ".agents/workflow.md": "2dff90d71b003cae3056f7ba578319dc9e3708faf3809a454d98c284cbd114e0",
     "AGENTS.md#block": "06783b515363561a39bf15aca0ceef690663eb3cbc54bd96d9b7b126104d6790",
     "project-management/000-template.spec.md": "eb3dc90969299b75a115d54726235c88dd779f1018de82272d6aa9cc57c5ff96",
     "project-management/000-template.work.md": "b00aec4ae1f34f60e74678f7f5c713ea2ab7a2775e9b881d5d7f35ccf7065580",
