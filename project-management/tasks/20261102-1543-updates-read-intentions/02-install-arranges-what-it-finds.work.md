@@ -179,6 +179,18 @@ usage text in `src/main.ts`.
   project's fmt config leaves alone (the plan commit had reflowed both
   slice specs). Both specs are back to their wrapping, and markdown is no
   longer passed to `deno fmt`.
+- 2026-11-03 — Dogfood. `chisel init .` on this repo staged (exit 3) and
+  named `task folder — project-management/` and `instructions file —
+  AGENTS.md`. The Owner placed both, through the Architect:
+  `project-management/` stays where it is, its templates replaced by the
+  socle's (only their links changed); `AGENTS.md` keeps its own text, gets
+  the chisel block, and loses the three bullets the block and the glue now
+  cover (the task workspace, the lifecycle, the task id script); `CLAUDE.md`
+  unchanged. Then `init --arranged .`, and the questionnaire answered as a
+  block: tracker default, gates `deno task test` and `deno task check`,
+  merge and publish ask the human, model tiers unset, reading list
+  `CHARTER.md`, `PHILOSOPHY.md`, `review-360-decisions.md`. `chisel check .`
+  clean. The old dogfood task is cancelled and archived, pointing here.
 
 ## Implementation Checkboxes
 
@@ -188,7 +200,7 @@ usage text in `src/main.ts`.
 - [x] signals-detected table and counter-cases, red then green
 - [x] re-run, workspace kept, arranged, moved guard tests
 - [x] Setup skill placement step, README, usage, TESTS.md
-- [ ] Dogfood on the chisel repo, old dogfood task cancelled
+- [x] Dogfood on the chisel repo, old dogfood task cancelled
 - [ ] code-review, findings answered
 - [ ] Close: criteria, archive, journal, retro
 

@@ -14,7 +14,7 @@ line that records its approval, its worklog, its implementation checkboxes,
 its Notes & Snippets, and the findings of the review. No zone marker: the
 reading gradient does not apply to working material. The reasoning behind
 the split is "The two designs — and why they do not happen at the same
-moment" of [methodology.md](../socle/agents/methodology.md).
+moment" of [methodology.md](/.agents/methodology.md).
 
 **Who creates it, when, where, under what name.** The Crewmate creates it at
 the plan step, never earlier. It lives beside its spec, named by replacing
