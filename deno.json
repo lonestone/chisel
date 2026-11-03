@@ -21,10 +21,10 @@
   },
   "fmt": {
     "include": ["src/", "test/", "scripts/"],
-    "exclude": ["test/fixtures/", "test/TESTS.md"]
+    "exclude": ["test/fixtures/", "test/TESTS.md", "scripts/*.md"]
   },
   "lint": {
     "include": ["src/", "test/", "scripts/"],
-    "exclude": ["test/fixtures/", "test/TESTS.md"]
+    "exclude": ["test/fixtures/", "test/TESTS.md", "scripts/*.md"]
   }
 }

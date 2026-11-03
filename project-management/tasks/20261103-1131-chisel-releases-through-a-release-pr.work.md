@@ -151,7 +151,7 @@ I1 to I7, and the v2 → main squash merge with a conventional title.
 - [x] `release-check` red, then green (commit)
 - [x] `commit-lint` red, then green, hook task (commit)
 - [x] Workflows and release-please files (commit)
-- [ ] GitHub settings script, dry run shown (commit); applied after the PR
+- [x] GitHub settings script, dry run shown (commit); applied after the PR: pending
 - [ ] Skill and docs (commit)
 - [ ] code-review, findings recorded
 - [ ] Close: retro, journal, archive
