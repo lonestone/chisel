@@ -54,10 +54,23 @@ staged the session; it is written `chisel` below.
    - **A symbolic link on a path chisel writes:** a plain write follows the
      link and rewrites the file it points at. Show each link with its
      target, and the diff between the target and the same path under
-     `reference/`. On the human's yes, replace the link by a real file
-     holding the content the human keeps, or remove it so the close poses
-     chisel's own. The link's target is never edited. A skill chisel does
-     not ship may stay linked: chisel never writes it.
+     `reference/`. The human chooses which content stays; the link's target
+     keeps its own content, untouched. Two cases are common:
+     - **A linked `AGENTS.md` or `CLAUDE.md`**, often one pointing at the
+       other. Replace each link by a real file holding the content the
+       human chose
+       (`cp "$(readlink AGENTS.md)" AGENTS.md.new && mv AGENTS.md.new
+       AGENTS.md`).
+     - **A linked skill of a name chisel ships**, such as
+       `.agents/skills/tdd` pointing into `doc/agents/skills/tdd`. Remove
+       the link (`git rm`): the close poses chisel's version. An edit the
+       human keeps moves to a skill of the project's own, under a name
+       chisel does not ship, or to the project's instructions outside the
+       chisel markers of `AGENTS.md`.
+
+     A skill chisel does not ship stays linked: chisel never writes it.
+     Done when no path `reference/` has, and no directory above one, is a
+     symbolic link.
 
    Where an intention says to run `chisel update`, leave that run to the
    close below: `update` refuses while the workspace exists. A reason that
@@ -90,8 +103,8 @@ staged the session; it is written `chisel` below.
      names chisel's default paths; when the repo keeps its tasks, its
      journal or its doctrine elsewhere, the glue, `AGENTS.md` and the links
      found when you read the session say where, and that is where the gap
-     is closed. Never
-     move the project's files to match the reference.
+     is closed. Move a project file only where a gap says to, and only to
+     where the project keeps its method.
    - **Show each move before making it**, and make it on the human's yes.
    - Follow each reference path's policy against `reference/`: **copy**
      takes the reference file as it is; **adapt** keeps the project's own
@@ -102,8 +115,6 @@ staged the session; it is written `chisel` below.
      of `session.md`.
    - `automatic` intentions need nothing from you: the closing update
      records them. Read each `informational` one to the human.
-   - `baseline` is never recorded: the manifest the close leaves, with no
-     first-version layer beside it, is its record.
 
 6. **Stop** when validation keeps failing, when a move would lose
    something of the project's, or when you are unsure: say what blocks,
@@ -124,19 +135,15 @@ Say it at the start and hold to it:
 
 ## The close
 
-Once every intention of the session is recorded, or left to the closing
-update:
+Run these once every intention of the session is recorded, or left to
+the closing update. When the session lists `baseline`, its Record Result
+replaces steps 1 and 2.
 
 1. Delete the workspace: `rm -rf .chisel-workspace`.
 2. Run `chisel update`. It takes the fast path now: it refreshes the
    managed files, records the `automatic` and `informational` intentions,
    and exits 0. An exit 3 means something is still pending: read the new
    `session.md` and start again from "Read `session.md`".
-   **When the session was the baseline with no manifest**, run
-   `chisel init --arranged .` instead: it poses the socle and writes the
-   manifest, every intention recorded applied. Then follow the baseline's
-   Record Result for a task workspace kept outside
-   `project-management/`.
 3. Run `chisel check`: it must be clean.
 4. Show the human the full diff; their reading of it validates the update.
 5. Once accepted, add one dated entry to the journal the task workspace

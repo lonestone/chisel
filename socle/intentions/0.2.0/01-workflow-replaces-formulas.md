@@ -33,8 +33,7 @@ methods, and its agents follow whichever they read first.
 
 ## Do Not Apply When
 
-- The human has decided, after reading this intention, to keep the 0.1.x
-  method.
+- None beyond the human's decision.
 
 ## Observable Gaps
 
@@ -70,8 +69,9 @@ methods, and its agents follow whichever they read first.
 
 ## Validation
 
-- The closing `chisel update` prints no `orphaned:` line under the four
-  directories.
+- Every file in the four directories either matches its hash in the
+  manifest's `managed` map (the closing update removes it) or carries the
+  human's ruling.
 - A search of the repo's own text, archive excluded, for the retired names
   finds only what the human chose to keep.
 

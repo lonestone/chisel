@@ -49,7 +49,8 @@ place.
 
 ## Validation
 
-- The closing `chisel update` prints no `stale:` line.
+- `.agents/project.md` has an `## I · Merge and publish` section that
+  names who merges and who publishes.
 
 ## Record Result
 

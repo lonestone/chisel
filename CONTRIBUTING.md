@@ -18,16 +18,8 @@ requests' worth of "why".
    names the change in a few words, lowercase with dashes, unique across
    every release.
 2. Add the file to `src/socle-files.ts`, or it does not ship.
-3. Choose its classification: `automatic` when the copy `update` makes is
-   the whole change; `informational` when the repo has nothing to do but
-   should know; `migration` when an agent must act on the project's own
-   files; `breaking-manual` when a human decides before anything moves.
-4. Fill every section: **Goal**, **Why**, **Applies When**, **Do Not Apply
-   When**, **Observable Gaps** (each with a signal to observe and a binary
-   "Done when"), **Out of Scope**, **Reference Paths** (`copy` or `adapt`
-   on each), **Validation**, **Record Result**. **Why is required**: it is
-   the decision nobody can invent later.
-5. Keep it narrow: one bounded change, never "update the method".
+3. Choose its classification and fill every section as the template
+   says. **Why** is required: it is the decision nobody can invent later.
 
 Not every pull request needs one. A refactor, a test, or a change to
 chisel's own docs or tasks that leaves `socle/` as installed repos see it
@@ -59,6 +51,12 @@ release-please keeps a Release PR open on `main`; a maintainer prepares it
 with the `chisel-release` skill, and a human merges it. CI then tags and
 publishes. [RELEASING.md](RELEASING.md) explains the whole system: the
 pieces, how the version is chosen, and what to do when a step fails.
+
+## Content written for agents
+
+A skill, an intention, `AGENTS.md` or any page an agent reads goes through
+the `writing-for-agents` skill before its pull request: pointers, steps and
+their completion criteria, one source of truth per meaning, no no-ops.
 
 ## Gates
 

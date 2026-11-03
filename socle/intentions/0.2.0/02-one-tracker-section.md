@@ -56,7 +56,8 @@ and `chisel update` reports it as `stale:`.
 
 ## Validation
 
-- The closing `chisel update` prints no `stale:` line.
+- `.agents/project.md` has one `## B · Tracker` heading, no B1, B2 or B3
+  heading, and no line naming `.claude/agents` or `.codex/agents`.
 
 ## Record Result
 

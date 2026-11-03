@@ -27,8 +27,7 @@ the workflow does not know how to pick up.
 
 ## Do Not Apply When
 
-- The human has decided, after reading this intention, to keep the old
-  statuses.
+- None beyond the human's decision.
 
 ## Observable Gaps
 

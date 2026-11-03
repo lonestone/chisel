@@ -41,8 +41,7 @@ judgement it closes itself, the others it stages for an agent.
 
 ## Reference Paths
 
-- `.agents/.chisel.json` — **adapt**: written by `chisel update`, never by
-  hand.
+- None: `chisel update` writes the manifest.
 
 ## Validation
 

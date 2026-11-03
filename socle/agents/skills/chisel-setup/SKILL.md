@@ -1,6 +1,6 @@
 ---
 name: chisel-setup
-description: Arrange what a first `chisel init` found — another method's specs, tasks, decisions, instructions — with the user before anything is installed, then fill in .agents/project.md, the per-repo glue. Explores the repo, prefills sections A-I, presents each one at a time for confirmation, and writes accepted sections back surgically. Also poses the current dev's personal .agents/user.md, and sorts out a hand-written AGENTS.md against the block chisel installed. Re-runnable later to revisit any section.
+description: Fill in .agents/project.md, the per-repo glue, section by section with the user. Also places what a first `chisel init` found from another method before anything is installed, poses the dev's personal .agents/user.md, and reconciles a hand-written AGENTS.md with chisel's block. Re-runnable to revisit a section.
 disable-model-invocation: true
 ---
 
@@ -33,77 +33,11 @@ Check `.agents/.chisel.json` exists. If it does, go to Step 1.
 
 If it does not, look for `.chisel-workspace/session.md`. When it is titled
 `# Chisel install session`, `chisel init` found a method this repo already
-has and installed nothing: run **Placement** below, then come back to Step 1.
-When there is neither a manifest nor an install session, stop here and tell
+has and installed nothing: run the placement in [PLACEMENT.md](PLACEMENT.md),
+then come back to Step 1. When there is neither a manifest nor an install session, stop here and tell
 the user to run `deno x jsr:@lonestone/chisel init` first — this skill
 configures the glue, it never installs the socle. Do not attempt to bootstrap
 `.agents/` yourself.
-
-### Placement — before the first install
-
-`init` names what it found; it does not judge. Deciding where each thing goes
-is this step's job, with the user, one thing at a time. Nothing is written
-until the user has answered for every item.
-
-1. **Read the session's list, then each item.** Open enough of each one to
-   say what it holds and whether it is alive: the last dated entry of a task
-   folder, the number of specs, whether an instructions file describes a way
-   of working or only build commands. The reference install the session
-   staged, under `.chisel-workspace/reference/`, shows what chisel would put
-   beside it.
-
-2. **Put each item to the user**, one message per item, waiting for the
-   answer before the next. Say what you found in a sentence, then the three
-   choices, each with what it buys and what it costs:
-
-> **I found <what, in plain words> in `<path>`.** <One sentence on what it
-> holds.>
->
-> 1. **Keep it where it is** — chisel points at it, so every session reads
->    it, and nothing moves.
-> 2. **Bring it into chisel's format** — <where it would go>. One way of
->    working instead of two; the cost is the move and a review of the diff.
-> 3. **Leave it beside chisel** — untouched, and chisel never mentions it.
->
-> Recommended: **<n> — <label>**, because <the reason, from what you read>.
-
-   Where to start the recommendation, before what you read changes it:
-
-   | Found | Recommended | Kept in place means |
-   |---|---|---|
-   | OpenSpec, Spec Kit | keep | a line in §C · Reading list pointing at the specs; tasks still go through chisel's specs |
-   | task folder | keep | §A · Task workspace names that folder |
-   | decision records, glossary | keep | §G · Glossary & decisions points at them |
-   | other agent's rules | keep | a line in §C; a rule chisel now covers is sorted as Step 7 (one voice in `AGENTS.md`) sorts a line |
-   | instructions file | keep | Step 7 sorts its lines against chisel's block, later in this walk |
-   | beads | keep | §B is beads, through Step 6 |
-   | first chisel version | migrate | — its rules and visual guide are retired; the current files replace them |
-   | linked path | ask where the link points before anything else | the link gives way to the file it points at, or the path moves out of chisel's way |
-
-   A linked path is settled first, and it must end with no link on a path
-   chisel writes: `init --arranged` still refuses one.
-
-   Before installing, name what `init --arranged` will overwrite: it always
-   writes `project-management/000-template.spec.md`,
-   `project-management/000-template.work.md` and `scripts/task-id.sh`. When
-   the repo already has its own file at one of those paths, put that to the
-   user as one more item: let chisel's file replace it, or `git mv` theirs
-   to another name first. Never let the install overwrite one unasked.
-
-3. **Install.** Once every item has an answer, delete `.chisel-workspace/`
-   and run `deno x jsr:@lonestone/chisel init --arranged .` (the version the
-   session names). It installs as if nothing had been found.
-
-4. **Write only what was accepted.** A *keep* becomes its pointer, written
-   with the surgical span of Step 4 (one section rewritten, the rest left
-   byte for byte) on the section the table names, as the walk reaches it
-   — state it then as a fact already decided, not a question. A *migrate*
-   moves the files with `git mv` and rewrites only the links the move broke.
-   A *leave* writes nothing. Show the user the diff of every move before the
-   walk goes on.
-
-5. **Continue with Step 1.** The answers stand as facts for the sections
-   they touch; do not ask them again.
 
 ## Step 1 — Silent exploration
 
@@ -119,8 +53,9 @@ facts when you reach the section they affect.
 - **Existing docs**: `README.md`, `doc/`, `docs/`, `CONTEXT.md`, `docs/adr/`
   → candidates for §C (reading list) and §G (glossary/ADRs).
 - **Existing task workspace from a previous methodology** (e.g. a
-  `doc/project-management/` from an earlier convention): if one exists,
-  flag it for §A instead of silently assuming the default root.
+  `doc/project-management/` from an earlier convention; already settled by
+  the placement when it ran): if one exists, flag it for §A instead of
+  silently assuming the default root.
 - **`bd --version`**: run it, record what it says (or that the command does not
   exist), and do nothing else with it. It feeds §B's beads answer only.
   Never install anything.

@@ -49,8 +49,7 @@ container name or id, or its PID.
 
 ## Validation
 
-- The close step of `.agents/workflow.md` says to stop what the Crewmate
-  started, by identifier.
+- Nothing to check in the repo: the closing update carries the change.
 
 ## Record Result
 

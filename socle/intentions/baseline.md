@@ -33,8 +33,7 @@ collides with a release changelog.
 - `.agents/.chisel.json` does not exist, whatever else the repo has; or
 - the manifest exists and the first version's rule files
   (`.agents/rules/task-*.md`) or its visual guide (`.agents/workflows.md`)
-  are still beside it. Without a manifest, the inventory finds the method
-  wherever `AGENTS.md`, `CLAUDE.md` or `.agents/` lead.
+  are still beside it.
 
 ## Do Not Apply When
 
@@ -46,12 +45,9 @@ collides with a release changelog.
 Close them in this order. `chisel init` refuses links, so the links are
 gone before the close runs it.
 
-1. **The inventory.** Signal: none yet; this gap is facts. Find every piece
-   of the method through the pointers in `AGENTS.md` and `CLAUDE.md`, the
-   task workspace section of `.agents/project.md` when a glue exists, and
-   the symbolic links under `.agents/`; never by assuming a path. State to
-   the human, as facts: where the doctrine and skills are, where the task
-   workspace is (tasks, archive, journal, task templates), whether it
+1. **The inventory.** Signal: none yet; this gap is facts. Step 2 of the
+   chisel-update skill states where the method lives. Add to it where the
+   task workspace is (tasks, archive, journal, task templates), whether it
    exists in more than one place, and which pieces are first-version ones.
    Done when: the human has read the inventory, and every later gap works
    from it.
@@ -61,24 +57,8 @@ gone before the close runs it.
    `.agents/`, `.agents` and `.agents/skills` included,
    `scripts/task-id.sh`, the two templates under `project-management/`),
    or on a directory above one. List them with `ls -l AGENTS.md CLAUDE.md`
-   and `find .agents scripts project-management -type l`. Two cases are
-   common:
-   - **A linked `AGENTS.md` or `CLAUDE.md`**, often one pointing at the
-     other. Show both contents; the human chooses what each file holds.
-     Replace each link by a real file holding that content
-     (`cp "$(readlink AGENTS.md)" AGENTS.md.new && mv AGENTS.md.new
-     AGENTS.md`). The file a link pointed at keeps its own content.
-   - **A linked skill of a name chisel ships**, such as
-     `.agents/skills/tdd` pointing into `doc/agents/skills/tdd`. Show the
-     diff between the link's destination and
-     `reference/.agents/skills/<name>/`; the human chooses which content
-     stays. Remove the link (`git rm`): the close poses chisel's version.
-     An edit the human keeps moves to a skill of the project's own, under
-     a name chisel does not ship, or to the project's instructions outside
-     the chisel markers of `AGENTS.md`. The destination copy goes or stays
-     by the human's word; it is never edited.
-
-   A skill chisel does not ship stays linked: chisel never writes it.
+   and `find .agents scripts project-management -type l`. Close each as
+   step 3 of the chisel-update skill says.
    Done when: no path `reference/` has, and no directory above one, is a
    symbolic link.
 
@@ -91,26 +71,30 @@ gone before the close runs it.
    Done when: no rule file and no visual guide remains, and a search for
    their names finds no pointer at them outside the archive.
 
-4. **The glue and the journal.** Signal: no `.agents/project.md`, a path in
-   its task workspace section that does not exist, or a journal still
-   called `CHANGELOG.md` or `LOG.md`. Write the glue from
-   `reference/.agents/project.md`, the project's answers kept. Rename the
-   journal to `JOURNAL.md` in its directory with `git mv`, its content
-   untouched, and rewrite the Journal line. Then complete the glue with
+4. **The journal.** Signal: a journal still called `CHANGELOG.md` or
+   `LOG.md`. Rename it to `JOURNAL.md` in its directory with `git mv`, its
+   content untouched.
+   Done when: there is one journal, named `JOURNAL.md`.
+
+5. **The glue.** Signal: no `.agents/project.md`, or a path in its task
+   workspace section that does not exist. Write the glue from
+   `reference/.agents/project.md`, the project's answers kept, its Journal
+   line naming `JOURNAL.md`. Then complete it with
    `.agents/skills/chisel-setup/SKILL.md` (under `reference/` until the
    close poses it): its tracker, model tiers and merge and publish
    questions, one per message, and its "One voice in `AGENTS.md`" step for
-   the project's text that still describes the old method. If the repo has
-   its own `scripts/task-id.sh`, compare it with
-   `reference/scripts/task-id.sh`: the close overwrites it, so a script
-   that does more is renamed first, with the human's yes. Tick the
-   adapters section of the glue from what is in place, and pose the
-   personal file from `reference/.agents/user.md.tpl` when the human wants
-   one: `init --arranged` does neither on a glue it did not write.
+   the project's text that still describes the old method. The close
+   overwrites `scripts/task-id.sh` and the two templates under
+   `project-management/`: a file of the project's at one of those paths
+   is renamed with `git mv` first, on the human's yes. Tick the adapters
+   section of the glue from what is in place, and pose the personal file
+   from `reference/.agents/user.md.tpl` when the human wants one:
+   `init --arranged` does neither on a glue it did not write.
    Done when: the glue exists, its questions are answered, its adapters
-   section matches what is on disk, and there is one journal.
+   section matches what is on disk, and no file of the project's sits on a
+   path the close overwrites.
 
-5. **The statuses.** Signal: an open task file whose status line holds one
+6. **The statuses.** Signal: an open task file whose status line holds one
    of the first version's six words, often after a coloured circle. Show
    the human the list old → new first, then edit by the table below, the
    free text after the word kept.
@@ -126,7 +110,7 @@ gone before the close runs it.
    | Deferred | `deferred` |
    | Cancelled | `cancelled` |
 
-6. **Which tree to keep.** Signal: the inventory found the task workspace
+7. **Which tree to keep.** Signal: the inventory found the task workspace
    in more than one place, or somewhere other than `project-management/`.
    **The human chooses which tree to keep:** the project's own (such as
    `doc/project-management/`) or `project-management/` as `reference/`

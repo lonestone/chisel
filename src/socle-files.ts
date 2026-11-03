@@ -10,6 +10,7 @@ export const SOCLE_FILES: readonly string[] = [
   "agents/project.md.tpl",
   "agents/reference.md",
   "agents/skills/chisel-beads/SKILL.md",
+  "agents/skills/chisel-setup/PLACEMENT.md",
   "agents/skills/chisel-setup/SKILL.md",
   "agents/skills/chisel-update/SKILL.md",
   "agents/skills/code-review/SKILL.md",

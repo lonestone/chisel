@@ -29,7 +29,6 @@ alone rather than create a second journal beside it.
 
 - The `CHANGELOG.md` is a generated changelog for users, not the journal:
   leave it, and say so.
-- The human has decided, after reading this intention, to keep the name.
 
 ## Observable Gaps
 
@@ -52,8 +51,9 @@ alone rather than create a second journal beside it.
 
 ## Validation
 
-- The file the Journal line names exists, and no `LOG.md` or
-  `CHANGELOG.md` beside it is still written to as the journal.
+- The file the Journal line names exists, and beside it no `LOG.md` or
+  `CHANGELOG.md` remains, except a generated changelog for users the
+  human named.
 
 ## Record Result
 

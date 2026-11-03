@@ -12,13 +12,10 @@ ships, records which ones a repo applied or skipped in its manifest
 
 - **While the change is written**: `unreleased/<slug>.md`, in the same
   commit as the change. The id is `unreleased/<slug>`.
-- **At the release**: `git mv unreleased/<slug>.md <version>/NN-<slug>.md`,
-  where `<version>` is the release's, bare (`0.3.0`), and `NN` the
-  zero-padded order inside the release (`01`, `02`, ...). Rewrite the id to
-  `<version>/<slug>`. A repo that recorded the unreleased id is not asked
-  again: a record under `unreleased/<slug>` counts for the promoted one.
-  `deno task promote-intentions <version>` does both, and keeps
-  `src/socle-files.ts` in step ([CONTRIBUTING.md](/CONTRIBUTING.md)).
+- **At the release**: `deno task promote-intentions <version>` moves it to
+  `<version>/NN-<slug>.md` with the id `<version>/<slug>`
+  ([RELEASING.md](/RELEASING.md)). A record under the unreleased id counts
+  for the promoted one.
 - **`baseline.md`**, beside this page and in no release folder, is the one
   exception: the intention of a repo chisel did not install, or installed in
   its first version. It is never pending for a repo already at the current
@@ -41,12 +38,12 @@ classification: migration
 
 The classification says how much judgement the intention needs:
 
-| Classification | Who closes it |
-|---|---|
-| `automatic` | The copy of `chisel update` closes it: nothing to judge. |
-| `migration` | An agent applies it with judgement, the human validating each move. |
-| `breaking-manual` | A human decides before anything moves. |
-| `informational` | Read, nothing to do. |
+| Classification | Choose it when | Who closes it |
+|---|---|---|
+| `automatic` | The copy `chisel update` makes is the whole change. | The closing `chisel update`: nothing to judge. |
+| `informational` | The repo has nothing to do but its human should know. | The agent reads it to the human. |
+| `migration` | An agent must act on the project's own files. | An agent, the human validating each move. |
+| `breaking-manual` | A human must decide before anything moves. | The human, then an agent. |
 
 An update whose pending intentions are all `automatic` or `informational`
 takes the fast path and records them itself. One `migration` or
@@ -54,21 +51,29 @@ takes the fast path and records them itself. One `migration` or
 
 ## Its sections
 
-In this order, each one a heading of its own:
+In this order, each one a heading of its own, every one filled. One
+intention is one bounded change, never "update the method".
 
 - **Goal** — the end state, in one or two sentences.
 - **Why** — what changed in chisel and what it costs a repo not to follow.
+  Required: it is the decision nobody can invent later.
 - **Applies When** — observable signals that the repo concerns this
-  intention. Finding the old state is a reason to apply, never to skip.
-- **Do Not Apply When** — hard stops only, such as the human having
-  decided, after reading it, to stay as they are.
+  intention. Finding the old state is a reason to apply.
+- **Do Not Apply When** — hard stops beyond the human's decision, which
+  the `chisel-update` skill already honours. Without one, write
+  `None beyond the human's decision.`; for `automatic` and
+  `informational`, `Never: <why>`.
 - **Observable Gaps** — independent gaps, each with a signal to observe,
-  what to compare against, and a "Done when". A gap whose signal is absent
-  is already closed.
-- **Out of Scope** — what it must not touch, even if it looks related.
+  what to compare against, and a binary "Done when". A gap whose signal is
+  absent is already closed.
+- **Out of Scope** — only what goes beyond the "What is never touched"
+  list of the `chisel-update` skill.
 - **Reference Paths** — files of the reference tree to compare, each
   **copy** (the reference is the truth) or **adapt** (the project's own
-  answers win).
-- **Validation** — how to tell it worked.
+  answers win), or `None`.
+- **Validation** — yes-or-no checks the agent runs on the repo before
+  recording, while `.chisel-workspace/` still exists: no check may need
+  `chisel update`, which refuses to run then.
 - **Record Result** — `chisel record <id> --applied`, or
-  `--skipped "<reason>"` after the human's word.
+  `--skipped "<reason>"` after the human's word. For `automatic` and
+  `informational`: the closing `chisel update` records it.
