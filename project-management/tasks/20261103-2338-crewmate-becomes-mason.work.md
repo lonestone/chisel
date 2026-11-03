@@ -253,6 +253,9 @@ text.
   .agents socle/agents` shows only the four known differences; templates
   identical to their copies; `deno task check` and `deno task test` green
   (76 tests). Nothing in the plan went unanswered.
+- 2026-11-03 — Typist, commit 2: the Typist bullet added to both
+  `workflow.md` files; tick-rule intention added and listed in
+  `src/socle-files.ts`; gates green again (76 tests).
 
 ## Implementation Checkboxes
 
@@ -261,8 +264,8 @@ text.
 - [x] The rename in `CHARTER.md`, `README.md`, `PHILOSOPHY.md`, with the two rewrites
 - [x] The rename intention and its `src/socle-files.ts` line
 - [x] Gates green, commit 1
-- [ ] The Typist line, the tick-rule intention and its `src/socle-files.ts` line
-- [ ] Gates green, commit 2
+- [x] The Typist line, the tick-rule intention and its `src/socle-files.ts` line
+- [x] Gates green, commit 2
 - [ ] Criteria greps and the `diff -r` run
 - [ ] `code-review`, findings recorded
 - [ ] Close: criteria ticked, documents archived, journal entry, retro, commit 3

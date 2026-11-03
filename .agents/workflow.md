@@ -177,6 +177,9 @@ What the Mason writes when it launches a Typist:
 - the branch, the gate commands, the commit rule;
 - type the plan and decide nothing: anything the plan does not answer is
   reported, not guessed.
+- tick a box only for what really ran, on the real target; a dry run, or
+  a run on a copy or a test base, is written in the worklog and leaves
+  its box open.
 
 ## Blockers and questions
 
