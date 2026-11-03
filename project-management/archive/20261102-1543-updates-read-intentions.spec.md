@@ -1,6 +1,6 @@
 # Updates and installs read intentions
 
-**Status:** in-progress
+**Status:** done
 
 ---
 
@@ -111,7 +111,7 @@ Folder: `project-management/tasks/20261102-1543-updates-read-intentions/`.
 
 ## Deliverables
 
-- [ ] The three slices, each closed.
+- [x] The three slices, each closed.
 
 ## References
 
@@ -128,4 +128,28 @@ Folder: `project-management/tasks/20261102-1543-updates-read-intentions/`.
 
 ## Retrospective
 
-Added at the close.
+Closed 2026-11-03, after slice 03.
+
+**What held.** Taking the boilerplate as the model gave the three slices one
+shape: `update` and `init` take a fast path when nothing needs judgement and
+stage a workspace otherwise, and the judgement lives in pages an agent
+reads, never in the CLI. Removing `chisel-upgrade` left nothing behind it:
+its content is in the 0.2.0 intentions and `baseline`, and the integrity
+test asserts no installed page names the retired layer.
+
+**What cost.** The record of chisel itself predated the 0.2.0 intentions,
+so the dogfood had to record them by hand; real repos on 0.2.4 never wrote
+`intentions` and get the baseline record instead. Prose about the CLI
+drifted from the CLI twice ("the close records the baseline", a step cited
+by number): both found only by the fresh review.
+
+**Proposals, for the Owner to rule on.**
+1. *A claim a page makes about what a command writes is checked against
+   `src/` at review*, as a standing line of the Standards reviewer's brief.
+   Twice in this task the review caught it; nothing else would.
+2. *The releases themselves follow the boilerplate*: Release PR, intention
+   gate, promotion checked before merge, publishing from CI. Opened as its
+   own task, "Chisel releases through a Release PR, after the boilerplate".
+3. *Detecting a first-version layer outside `.agents/` beside a manifest*:
+   the code does not, the page now says so. Worth a slice only if a repo
+   in that state turns up.

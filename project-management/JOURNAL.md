@@ -5,6 +5,36 @@ ships.
 
 ---
 
+## 48. 2026-11-03 — The recipes become release intentions (slice 03, closing "Updates and installs read intentions")
+
+`chisel-upgrade` is gone. Its two hand-written recipes are now intentions
+that `update` reads. The 0.1.x recipe became the five intentions of 0.2.0;
+0.2.4 ships two informational ones. The first-version recipe became
+`baseline`, the one intention outside every release folder. It takes a repo
+chisel did not install, or installed in its first version, to the current
+layout whole, wherever its method lives. It is never recorded under its own
+id: the manifest the close leaves is its record. The update skill now closes
+links itself, and it records an intention a repo already applied by hand.
+
+On the Owner's word during the slice, the boilerplate's discipline came
+along:
+- an intention is written in the change's own pull request, under
+  `unreleased/` (`CONTRIBUTING.md`);
+- `deno task promote-intentions <version>` moves them at the release, with
+  their ids and the shipped list;
+- the Crewmate stops what it started, by identifier, before it reports.
+
+Chisel's own record was missing the 0.2.0 ids, which predate it. They were
+recorded applied by hand.
+
+Reviewed by `code-review` with two fresh reviewers. Two passages described
+the CLI wrongly: a step cited by number, and "the close records the
+baseline". The baseline had also lost two checks from the old recipe, and
+`TESTS.md` was out of date. All fixed. 51 tests green, `deno task check`
+clean, not published. The three slices are closed, so the task is done.
+Next is the task "Chisel releases through a Release PR, after the
+boilerplate".
+
 ## 47. 2026-11-03 — An install arranges what it finds (slice 02 of "Updates and installs read intentions")
 
 A first `chisel init` now looks before it writes. On a repo that already has

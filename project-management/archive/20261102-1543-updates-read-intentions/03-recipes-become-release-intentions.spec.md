@@ -1,6 +1,6 @@
 # 03 — The two recipes become release intentions
 
-**Status:** in-progress
+**Status:** done
 **Blocked by:** 01 — Update reads intentions
 
 ---
@@ -19,17 +19,17 @@ away; its content lives in these intentions and in the update skill.
 
 ## Acceptance criteria
 
-- [ ] **one-change-one-intention** — each change of 0.2.0 to 0.2.4 that a
+- [x] **one-change-one-intention** — each change of 0.2.0 to 0.2.4 that a
   repo must act on is one intention, in its release's folder, with its
   classification.
-- [ ] **baseline-intention** — one intention covers a repo without a
+- [x] **baseline-intention** — one intention covers a repo without a
   manifest, layout-free, ending with the human choosing which tree to keep.
-- [ ] **upgrade-skill-gone** — `chisel-upgrade` is removed from the socle;
+- [x] **upgrade-skill-gone** — `chisel-upgrade` is removed from the socle;
   nothing in the socle or the README points at it any more.
-- [ ] **replay-0.1.1** — a test fixture shaped like a 0.1.1 install gets,
+- [x] **replay-0.1.1** — a test fixture shaped like a 0.1.1 install gets,
   from `update`, a workspace listing exactly the intentions of 0.2.0 to
   the current release.
-- [ ] **suite-green** — `deno task test` and `deno task check` pass.
+- [x] **suite-green** — `deno task test` and `deno task check` pass.
 
 ---
 
@@ -51,3 +51,14 @@ away; its content lives in these intentions and in the update skill.
   intentions into a release folder; the ids change at the move. Decide
   in this slice whether the release step needs one, and say how a repo
   that recorded an `unreleased/` id is treated.
+- Closed 2026-11-03 (Crewmate). The 0.1.x recipe became the five 0.2.0
+  intentions, the first-version recipe became `baseline`, outside every
+  release folder; 0.2.1 to 0.2.3 changed only the README, so they ship
+  none. `baseline` is never recorded under its own id: the manifest the
+  close leaves, with no first-version layer beside it, is its record.
+  The promotion question is answered by `deno task promote-intentions`
+  (CONTRIBUTING.md), and a record under the unreleased id counts for the
+  promoted one. Added on the Owner's word during the slice: intentions
+  written in the change's PR, and the Crewmate stops what it started
+  (`unreleased/crewmate-cleans-up`). Review findings and answers: work
+  document, "Diff-Review Findings".

@@ -278,7 +278,7 @@ Added 2026-11-03 at Pierrick's request.
 - [x] CONTRIBUTING.md (authoring), promote-intentions script + test, §I line — commit
 - [x] workflow.md close: the Crewmate cleans up, with unreleased/crewmate-cleans-up — commit
 - [x] code-review, findings recorded
-- [ ] Close: retro, journal, archive
+- [x] Close: retro, journal, archive
 
 ## Notes & Snippets
 
