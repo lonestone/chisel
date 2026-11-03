@@ -1,0 +1,51 @@
+name: Intention promote
+
+# On the Release PR, every intention main holds under unreleased/ has moved
+# to socle/intentions/<version>/ with its rewritten id. The job fails with the
+# command to run (`deno task promote-intentions <version>`), so the check
+# blocks the merge; any other pull request skips it and passes. The rule is
+# scripts/release-check.ts `promoted`.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  intention-promote:
+    name: Intention promote
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect a Release PR
+        id: gate
+        env:
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          if [[ ",${LABELS}," == *",autorelease: pending,"* ]]; then
+            echo "required=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "required=false" >> "$GITHUB_OUTPUT"
+            echo "Not a Release PR (no autorelease: pending label). Skipping."
+          fi
+
+      - name: Setup Deno
+        if: steps.gate.outputs.required == 'true'
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Require the intentions to be promoted
+        if: steps.gate.outputs.required == 'true'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch --no-tags origin "${BASE_REF}"
+          deno task release-check promoted "origin/${BASE_REF}"

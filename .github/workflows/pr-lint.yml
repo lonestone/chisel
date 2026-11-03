@@ -1,0 +1,58 @@
+name: PR lint
+
+# The title and the description of a pull request become the squash commit
+# on main, which release-please reads: both follow scripts/commit-lint.ts.
+# Every commit of the branch does too, as the commit-msg hook asks
+# (`deno task hooks`).
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pr:
+    name: PR title and description
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Lint the title and the description
+        run: deno task commit-lint pr "$GITHUB_EVENT_PATH"
+
+  commits:
+    name: Commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      # release-please writes the Release PR's commits itself.
+      - name: Lint every commit of the branch
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          if [[ ",${LABELS}," == *",autorelease: pending,"* ]]; then
+            echo "Release PR (autorelease: pending). Skipping."
+            exit 0
+          fi
+          git fetch --no-tags origin "${BASE_REF}"
+          git checkout -q "${{ github.event.pull_request.head.sha }}"
+          deno task commit-lint range "origin/${BASE_REF}"

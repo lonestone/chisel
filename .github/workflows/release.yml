@@ -1,0 +1,95 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish again, for example v0.3.0
+        required: true
+        type: string
+
+# A human merges the Release PR from the GitHub UI as themselves, after the
+# chisel-release skill has promoted the intentions. Do not auto-merge it:
+# green checks are not consent to ship. A merge by GITHUB_TOKEN would not
+# start the run that tags and publishes.
+permissions:
+  contents: read
+
+jobs:
+  release-please:
+    name: Release Please
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - name: Open or update the Release PR, or tag the merged one
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout the tagged commit
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.tag_name }}
+
+      - name: Setup Deno
+        if: ${{ steps.release.outputs.release_created }}
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Add the release's intentions to the GitHub Release
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.release.outputs.tag_name }}
+        run: |
+          set -euo pipefail
+          NOTES="$(mktemp)"
+          gh release view "$TAG" --json body --jq .body > "$NOTES"
+          echo >> "$NOTES"
+          deno task -q release-check notes "${TAG#v}" >> "$NOTES"
+          gh release edit "$TAG" --notes-file "$NOTES"
+
+  # Same run as the tag: a tag pushed with GITHUB_TOKEN starts no workflow.
+  # Split from release-please so a failed publish can be retried by hand
+  # (Run workflow, with the tag) without running release-please again.
+  publish:
+    name: Publish @lonestone/chisel
+    needs: release-please
+    if: ${{ always() && !cancelled() && (needs.release-please.outputs.release_created == 'true' || github.event_name == 'workflow_dispatch') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || needs.release-please.outputs.tag_name }}
+    steps:
+      - name: Checkout the tagged commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Refuse a tag deno.json does not declare, or an unpromoted intention
+        run: deno task release-check publish "$TAG"
+
+      # JSR trades the id-token above for a publish token. That only works
+      # while jsr.io links @lonestone/chisel to the repository
+      # lonestone/chisel (package settings, a scope admin). No secret.
+      - name: Publish to JSR
+        run: deno publish
