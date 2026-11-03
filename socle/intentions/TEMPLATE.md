@@ -19,6 +19,10 @@ ships, records which ones a repo applied or skipped in its manifest
   again: a record under `unreleased/<slug>` counts for the promoted one.
   `deno task promote-intentions <version>` does both, and keeps
   `src/socle-files.ts` in step ([CONTRIBUTING.md](/CONTRIBUTING.md)).
+- **`baseline.md`**, beside this page and in no release folder, is the one
+  exception: the intention of a repo chisel did not install, or installed in
+  its first version. It is never pending for a repo already at the current
+  layout.
 - **The slug** names the change in a few words, lowercase with dashes, and
   is unique across every release.
 - **A new file under `socle/`** is added to `src/socle-files.ts`, or it

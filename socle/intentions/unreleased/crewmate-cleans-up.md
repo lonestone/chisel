@@ -26,8 +26,9 @@ container name or id, or its PID.
 
 ## Do Not Apply When
 
-- Never: `workflow.md` is a managed file, and the copy `chisel update`
-  makes is the whole change.
+- Never: there is nothing to apply. `workflow.md` is a managed file and
+  the copy `chisel update` makes carries the change; the session only
+  reads it to the human, who decides whether their own habits change.
 
 ## Observable Gaps
 

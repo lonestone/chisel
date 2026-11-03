@@ -173,8 +173,8 @@ async function reasonsToStage(
       `Symbolic links on paths chisel writes, and writing them would change the files ` +
         `they point at: ${
           linked.join(", ")
-        }. Step 3 of the update skill (${REFERENCE_DIR}/${UPDATE_SKILL}) ` +
-        `closes them with the human.`,
+        }. "Close the reasons first" in the update skill ` +
+        `(${REFERENCE_DIR}/${UPDATE_SKILL}) closes them with the human.`,
     );
   }
   const judged = pending.filter((intention) =>

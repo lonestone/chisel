@@ -31,9 +31,10 @@ collides with a release changelog.
 ## Applies When
 
 - `.agents/.chisel.json` does not exist, whatever else the repo has; or
-- the first version's rule files (`task-*.md` in a `rules/` directory) or
-  its visual guide (`workflows.md`) exist where `AGENTS.md`, `CLAUDE.md` or
-  `.agents/` lead.
+- the manifest exists and the first version's rule files
+  (`.agents/rules/task-*.md`) or its visual guide (`.agents/workflows.md`)
+  are still beside it. Without a manifest, the inventory finds the method
+  wherever `AGENTS.md`, `CLAUDE.md` or `.agents/` lead.
 
 ## Do Not Apply When
 
@@ -102,9 +103,12 @@ gone before the close runs it.
    the project's text that still describes the old method. If the repo has
    its own `scripts/task-id.sh`, compare it with
    `reference/scripts/task-id.sh`: the close overwrites it, so a script
-   that does more is renamed first, with the human's yes.
-   Done when: the glue exists, its questions are answered, and there is
-   one journal.
+   that does more is renamed first, with the human's yes. Tick the
+   adapters section of the glue from what is in place, and pose the
+   personal file from `reference/.agents/user.md.tpl` when the human wants
+   one: `init --arranged` does neither on a glue it did not write.
+   Done when: the glue exists, its questions are answered, its adapters
+   section matches what is on disk, and there is one journal.
 
 5. **The statuses.** Signal: an open task file whose status line holds one
    of the first version's six words, often after a coloured circle. Show
@@ -132,8 +136,9 @@ gone before the close runs it.
    journal, roadmap, the two templates, the task id script. Chisel's
    doctrine and skills always live in `.agents/`: the CLI writes nowhere
    else.
-   Done when: one task workspace remains, the human named it, and every
-   path the task workspace section names exists.
+   Done when: one task workspace remains, the human named it, every path
+   the task workspace section names exists, and nothing in `AGENTS.md`,
+   `CLAUDE.md` or the kept tree points at the tree that went.
 
 ## Out of Scope
 
@@ -173,8 +178,9 @@ gone before the close runs it.
 
 ## Record Result
 
-The baseline is not recorded by `chisel record`: the command that closes
-the session records it.
+The baseline is never recorded under its own id: the manifest the close
+leaves, with no first-version layer beside it, is its record, and `update`
+stops asking for it.
 
 - **No manifest.** Delete `.chisel-workspace/`, then run
   `chisel init --arranged .`. It poses the socle, writes the manifest and

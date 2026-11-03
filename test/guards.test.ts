@@ -183,7 +183,7 @@ Deno.test("guards: update stages instead of writing through a symbolic link", as
         `an agent has work to do\n${refused.output}`,
       );
       assertStringIncludes(refused.stdout, linked, "it names the linked path");
-      assertStringIncludes(refused.stdout, "Step 3 of the update skill");
+      assertStringIncludes(refused.stdout, "the update skill");
       assertEquals(
         outsideWorkspace(await snapshot(target)),
         targetBefore,

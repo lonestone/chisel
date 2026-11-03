@@ -6,9 +6,9 @@
 // chisel never promotes anything.
 
 import { join } from "@std/path";
+import { UNRELEASED } from "../src/intentions.ts";
 
 const INTENTIONS = "socle/intentions";
-const UNRELEASED = "unreleased";
 const SOCLE_FILES = "src/socle-files.ts";
 const NUMBERED = /^(\d+)-/;
 const VERSION = /^\d+\.\d+\.\d+$/;

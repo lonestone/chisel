@@ -154,8 +154,8 @@ section, seven statuses, the merge and publish section, and the journal
 renamed `JOURNAL.md`. The agent applies each one with you, then closes with
 `chisel update`, which removes what 0.1.x installed and this version
 retired. A file someone edited is left in place and named on an
-`orphaned:` line. **A repo chisel did not install**, or installed in its
-first version, gets one intention instead, `baseline`: it takes the repo
+`orphaned:` line. **A repo chisel did not install** but that already has an `.agents/`
+folder, or one chisel installed in its first version, gets one intention instead, `baseline`: it takes the repo
 to the current layout whole, wherever its method lives today.
 
 On a repo chisel has not installed yet, a path `init` would write that is

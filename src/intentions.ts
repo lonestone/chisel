@@ -101,7 +101,8 @@ export function shippedIntentions(): ShippedIntention[] {
  * The intention of a repo chisel did not install, or installed in its first
  * version: it takes the repo to the current layout whole, so it sits outside
  * every release folder and is never pending for a repo with a manifest of
- * the current layout. The command that closes its session records it.
+ * the current layout. It is never recorded: the manifest the session's close
+ * leaves, without the first version's layer beside it, is its record.
  */
 export const BASELINE: ShippedIntention = {
   id: "baseline",

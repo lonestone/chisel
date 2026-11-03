@@ -277,9 +277,59 @@ Added 2026-11-03 at Pierrick's request.
 - [x] chisel-update skill takes over the router; dogfood refreshed — commit
 - [x] CONTRIBUTING.md (authoring), promote-intentions script + test, §I line — commit
 - [x] workflow.md close: the Crewmate cleans up, with unreleased/crewmate-cleans-up — commit
-- [ ] code-review, findings recorded
+- [x] code-review, findings recorded
 - [ ] Close: retro, journal, archive
 
 ## Notes & Snippets
 
 ## Diff-Review Findings
+
+Two-axis `code-review` on `0824d3e...HEAD`, 2026-11-03, two fresh agents.
+
+**Standards**
+
+1. *The links reason cites "Step 3" of the update skill: a bare number,
+   against the writing rule of `.agents/discipline.md`, pinned by the test.*
+   Fixed: it names the step's title, "Close the reasons first"; the test
+   checks the skill is named, not its number.
+2. *`test/TESTS.md` stale: guards and integrity rows, no
+   `promote-intentions` row, `scripts/` absent from the check sentence.*
+   Fixed: all four.
+3. *`crewmate-cleans-up` is `informational`, while its Do Not Apply When
+   describes `automatic`.* Kept `informational` by design: the copy is the
+   whole file change, but the human must hear it, since it changes what
+   their agents do. The Do Not Apply When is reworded to say so.
+4. *Three texts say the close records `baseline`; no code writes it.*
+   Fixed: the doc comment, the baseline's Record Result and the update
+   skill now say it is never recorded under its own id: the manifest the
+   close leaves, with no first-version layer beside it, is its record.
+5. *`baseline.md` sits outside every release folder, and the template's
+   "Where it lives" does not say so.* Fixed: one bullet there.
+6. *Smells (judgement):* `scripts/promote-intentions.ts` redeclared
+   `UNRELEASED` — fixed, imported from `src/intentions.ts`. The other
+   constants stay local: the script works from the repo root, the CLI from
+   the socle root. `BASELINE` beside `baselineRecord()`, `release: ""`
+   sentinel, line-regex edit of `src/socle-files.ts`: answered, not
+   changed. The regex is the format `deno fmt` keeps, and the test asserts
+   the list after a promotion, so a layout change fails the test, not a
+   release.
+
+**Spec**
+
+1. *The baseline lost two done-whens of the old first-version recipe:
+   nothing points at the tree that went; adapters ticked and personal file
+   posed (`init --arranged` ticks the adapters only on a glue it wrote).*
+   Fixed: gap 4 ticks the adapters section and offers the personal file;
+   gap 6's done-when checks nothing points at the tree that went.
+2. *Detection is narrower than Applies When: a first-version layer outside
+   `.agents/` beside a manifest is never staged.* Pre-existing in the code.
+   Fixed on the page: Applies When now says what `update` detects; without
+   a manifest the inventory finds the method wherever it lives.
+3. *The README promised `baseline` to any repo chisel did not install;
+   `update` needs `.agents/`, else `init` runs the setup session.* Fixed:
+   the README says "that already has an `.agents/` folder".
+4. Every criterion met, no scope creep, `upgrade-skill-gone` holds: no
+   action.
+
+Gates after the fixes: `deno task check` clean, `deno task test` 51
+passed. Dogfood: `chisel update .` refreshed the update skill.

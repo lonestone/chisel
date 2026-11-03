@@ -102,8 +102,8 @@ staged the session; it is written `chisel` below.
      of `session.md`.
    - `automatic` intentions need nothing from you: the closing update
      records them. Read each `informational` one to the human.
-   - `baseline` is not recorded with `chisel record`: the close records
-     it.
+   - `baseline` is never recorded: the manifest the close leaves, with no
+     first-version layer beside it, is its record.
 
 6. **Stop** when validation keeps failing, when a move would lose
    something of the project's, or when you are unsure: say what blocks,
