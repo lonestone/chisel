@@ -71,10 +71,10 @@ until the user has answered for every item.
 
    | Found | Recommended | Kept in place means |
    |---|---|---|
-   | OpenSpec, Spec Kit | keep | a §C line pointing at the specs; tasks still go through chisel's specs |
-   | task folder | keep when it already pairs a spec with a work document, migrate otherwise | §A names that folder as the task workspace |
-   | decision records, glossary | keep | §G points at them |
-   | other agent's rules | keep | a §C line; a rule chisel now covers is sorted as in Step 7 |
+   | OpenSpec, Spec Kit | keep | a line in §C · Reading list pointing at the specs; tasks still go through chisel's specs |
+   | task folder | keep | §A · Task workspace names that folder |
+   | decision records, glossary | keep | §G · Glossary & decisions points at them |
+   | other agent's rules | keep | a line in §C; a rule chisel now covers is sorted as Step 7 (one voice in `AGENTS.md`) sorts a line |
    | instructions file | keep | Step 7 sorts its lines against chisel's block, later in this walk |
    | beads | keep | §B is beads, through Step 6 |
    | first chisel version | migrate | — its rules and visual guide are retired; the current files replace them |
@@ -83,12 +83,20 @@ until the user has answered for every item.
    A linked path is settled first, and it must end with no link on a path
    chisel writes: `init --arranged` still refuses one.
 
+   Before installing, name what `init --arranged` will overwrite: it always
+   writes `project-management/000-template.spec.md`,
+   `project-management/000-template.work.md` and `scripts/task-id.sh`. When
+   the repo already has its own file at one of those paths, put that to the
+   user as one more item: let chisel's file replace it, or `git mv` theirs
+   to another name first. Never let the install overwrite one unasked.
+
 3. **Install.** Once every item has an answer, delete `.chisel-workspace/`
    and run `deno x jsr:@lonestone/chisel init --arranged .` (the version the
    session names). It installs as if nothing had been found.
 
 4. **Write only what was accepted.** A *keep* becomes its pointer, written
-   with Step 4's span on the section the table names, as the walk reaches it
+   with the surgical span of Step 4 (one section rewritten, the rest left
+   byte for byte) on the section the table names, as the walk reaches it
    — state it then as a fact already decided, not a question. A *migrate*
    moves the files with `git mv` and rewrites only the links the move broke.
    A *leave* writes nothing. Show the user the diff of every move before the

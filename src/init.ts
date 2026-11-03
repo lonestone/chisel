@@ -1,5 +1,7 @@
 // `chisel init` — pose the socle and every adapter in a target repo, and
-// leave everything the repo already had exactly as it was.
+// leave everything the repo already had exactly as it was. A first `init` on
+// a repo with a method of its own installs nothing: it stages what it found
+// for the setup skill, and `init --arranged` installs once that is placed.
 
 import { basename, join } from "@std/path";
 import {

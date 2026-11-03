@@ -108,7 +108,7 @@ export async function stageWorkspace(
 }
 
 /** One line of what a first `init` found. */
-export function foundLine(found: Found): string {
+function foundLine(found: Found): string {
   return `- [ ] ${found.kind} — \`${found.path}\``;
 }
 

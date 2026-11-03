@@ -9,6 +9,7 @@ import {
 } from "@std/assert";
 import { join } from "@std/path";
 import {
+  goldenTree,
   installedTree,
   REPO_ROOT,
   runChisel,
@@ -18,13 +19,6 @@ import {
 
 const BLOCK_BEGIN = "<!-- chisel:begin -->";
 const BLOCK_END = "<!-- chisel:end -->";
-
-async function goldenTree(): Promise<string[]> {
-  const text = await Deno.readTextFile(
-    join(REPO_ROOT, "test", "fixtures", "golden-tree.txt"),
-  );
-  return text.split("\n").filter((line) => line !== "");
-}
 
 function managedBlockOf(agentsMd: string): string {
   const lines = agentsMd.split("\n");

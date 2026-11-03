@@ -132,6 +132,19 @@ const INSTALLED_ROOTS = [
   "project-management",
 ] as const;
 
+/** The expected installed layout, from `test/fixtures/golden-tree.txt`. */
+export async function goldenTree(): Promise<string[]> {
+  const text = await Deno.readTextFile(
+    join(REPO_ROOT, "test", "fixtures", "golden-tree.txt"),
+  );
+  return text.split("\n").filter((line) => line !== "");
+}
+
+/** True when nothing exists at the path; a dangling link counts as present. */
+export async function absent(path: string): Promise<boolean> {
+  return await Deno.lstat(path).then(() => false).catch(() => true);
+}
+
 /**
  * The installed layout, path by path — the tree chisel is responsible for,
  * root files left out. An exact comparison also catches an extra file, which

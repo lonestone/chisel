@@ -8,13 +8,9 @@ import {
   assertStringIncludes,
 } from "@std/assert";
 import { join } from "@std/path";
-import { appendTo, REPO_ROOT, runChisel, withRepo } from "./helpers.ts";
+import { absent, appendTo, REPO_ROOT, runChisel, withRepo } from "./helpers.ts";
 
 const MANIFEST = join(".agents", ".chisel.json");
-
-async function absent(path: string): Promise<boolean> {
-  return await Deno.lstat(path).then(() => false).catch(() => true);
-}
 
 async function sha256Of(text: string): Promise<string> {
   const digest = await crypto.subtle.digest(

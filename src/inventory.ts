@@ -6,6 +6,7 @@
 
 import { join } from "@std/path";
 import { initWrites, v1LayoutFound } from "./install.ts";
+import { BLOCK_BEGIN, BLOCK_END, CLAUDE_IMPORT_LINE } from "./markers.ts";
 import {
   isDirectory,
   isFile,
@@ -26,16 +27,18 @@ const TASK_FOLDERS = [
   "tasks/",
 ] as const;
 
-const DECISION_FOLDERS = ["docs/adr/", "doc/adr/", "adr/", "decisions/"];
+const DECISION_FOLDERS = [
+  "docs/adr/",
+  "doc/adr/",
+  "adr/",
+  "decisions/",
+] as const;
 
 const OTHER_AGENTS: ReadonlyArray<readonly [string, "dir" | "file"]> = [
   [".cursor/rules/", "dir"],
   [".windsurf/", "dir"],
   [".github/copilot-instructions.md", "file"],
 ];
-
-const BLOCK_BEGIN = "<!-- chisel:begin -->";
-const BLOCK_END = "<!-- chisel:end -->";
 
 /** Everything the repo already has that a first install must not talk over. */
 export async function takeInventory(targetDir: string): Promise<Found[]> {
@@ -72,10 +75,14 @@ export async function takeInventory(targetDir: string): Promise<Found[]> {
     if (present) found.push({ kind: "other agent's rules", path });
   }
   const linked = new Set(await linkedPaths(targetDir, initWrites()));
-  if (!linked.has("AGENTS.md") && ownText(await read(at("AGENTS.md")))) {
+  if (
+    !linked.has("AGENTS.md") && ownAgentsText(await readFile(at("AGENTS.md")))
+  ) {
     found.push({ kind: "instructions file", path: "AGENTS.md" });
   }
-  if (!linked.has("CLAUDE.md") && ownClaudeText(await read(at("CLAUDE.md")))) {
+  if (
+    !linked.has("CLAUDE.md") && ownClaudeText(await readFile(at("CLAUDE.md")))
+  ) {
     found.push({ kind: "instructions file", path: "CLAUDE.md" });
   }
   if (await isDirectory(at(".beads"))) {
@@ -90,7 +97,7 @@ export async function takeInventory(targetDir: string): Promise<Found[]> {
   return found;
 }
 
-async function read(path: string): Promise<string | null> {
+async function readFile(path: string): Promise<string | null> {
   return await isFile(path) ? await readTextIfPresent(path) : null;
 }
 
@@ -129,7 +136,7 @@ async function holdsAFile(directory: string): Promise<boolean> {
  * An `AGENTS.md` speaks for the project when something stands outside
  * chisel's block besides its title: the first heading line.
  */
-function ownText(text: string | null): boolean {
+function ownAgentsText(text: string | null): boolean {
   if (text === null) return false;
   const lines = text.split("\n");
   const begin = lines.indexOf(BLOCK_BEGIN);
@@ -148,6 +155,6 @@ function ownText(text: string | null): boolean {
 function ownClaudeText(text: string | null): boolean {
   if (text === null) return false;
   return text.split("\n").some((line) =>
-    line.trim() !== "" && line.trim() !== "@AGENTS.md"
+    line.trim() !== "" && line.trim() !== CLAUDE_IMPORT_LINE
   );
 }

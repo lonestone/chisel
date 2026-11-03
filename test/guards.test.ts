@@ -6,6 +6,7 @@
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { join } from "@std/path";
 import {
+  absent,
   appendTo,
   copyTree,
   outsideWorkspace,
@@ -15,10 +16,6 @@ import {
   WORKSPACE,
   type Workspace,
 } from "./helpers.ts";
-
-async function absent(path: string): Promise<boolean> {
-  return await Deno.lstat(path).then(() => false).catch(() => true);
-}
 
 Deno.test("guards: update stages, not copies, a repo still carrying the v1 layout", async () => {
   await withRepo(async (workspace) => {

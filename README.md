@@ -159,9 +159,9 @@ step.
 
 On a repo chisel has not installed yet, a path `init` would write that is
 a symbolic link, or sits under one, is one of the things it stages for the
-setup skill; `init --arranged` refuses one, naming each. Outside `.agents/`, `update` only refreshes the files it
-installed and you kept, so it never plants a second task workspace beside
-yours.
+setup skill; `init --arranged` refuses one, naming each. Outside
+`.agents/`, `update` only refreshes the files it installed and you kept, so
+it never plants a second task workspace beside yours.
 
 `chisel check` tells you which version is installed, whether anything
 drifted from it, and which intentions are pending.

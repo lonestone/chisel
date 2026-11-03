@@ -5,9 +5,10 @@
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { join } from "@std/path";
 import {
+  absent,
+  goldenTree,
   installedTree,
   outsideWorkspace,
-  REPO_ROOT,
   runChisel,
   snapshot,
   withRepo,
@@ -17,17 +18,6 @@ import {
 
 const SETUP_SKILL =
   `${WORKSPACE}/reference/.agents/skills/chisel-setup/SKILL.md`;
-
-async function goldenTree(): Promise<string[]> {
-  const text = await Deno.readTextFile(
-    join(REPO_ROOT, "test", "fixtures", "golden-tree.txt"),
-  );
-  return text.split("\n").filter((line) => line !== "");
-}
-
-async function exists(path: string): Promise<boolean> {
-  return await Deno.lstat(path).then(() => true).catch(() => false);
-}
 
 /** A directory holding exactly these files, built in the test. */
 async function repoWith(
@@ -54,7 +44,7 @@ Deno.test("arrange: init on a repo with nothing to arrange installs and exits 0"
     const result = await runChisel(["init", target]);
     assertEquals(result.code, 0, result.output);
     assertEquals(await installedTree(target), await goldenTree());
-    assert(!(await exists(join(target, WORKSPACE))), "no workspace staged");
+    assert(await absent(join(target, WORKSPACE)), "no workspace staged");
   });
 });
 
@@ -71,13 +61,13 @@ Deno.test("arrange: init on a repo with its own instructions stages and writes n
       "nothing outside the workspace moved",
     );
     assert(
-      !(await exists(join(target, ".agents", ".chisel.json"))),
+      await absent(join(target, ".agents", ".chisel.json")),
       "no manifest written",
     );
     assertStringIncludes(staged.stdout, "AGENTS.md");
     assertStringIncludes(staged.stdout, "CLAUDE.md");
     assertStringIncludes(staged.stdout, SETUP_SKILL, "it names the skill");
-    assert(await exists(join(target, SETUP_SKILL)), "the skill is staged");
+    assert(!await absent(join(target, SETUP_SKILL)), "the skill is staged");
 
     const session = await Deno.readTextFile(
       join(target, WORKSPACE, "session.md"),
@@ -227,7 +217,7 @@ Deno.test("arrange: init on a repo chisel installed does not look again", async 
     const target = await workspace.install("brownfield");
     const again = await runChisel(["init", target]);
     assertEquals(again.code, 0, again.output);
-    assert(!(await exists(join(target, WORKSPACE))), "no workspace staged");
+    assert(await absent(join(target, WORKSPACE)), "no workspace staged");
   });
 });
 

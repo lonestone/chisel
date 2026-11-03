@@ -191,6 +191,9 @@ usage text in `src/main.ts`.
   merge and publish ask the human, model tiers unset, reading list
   `CHARTER.md`, `PHILOSOPHY.md`, `review-360-decisions.md`. `chisel check .`
   clean. The old dogfood task is cancelled and archived, pointing here.
+- 2026-11-03 — Two-axis `code-review` by fresh reviewers. Findings and their
+  answers are below. Fixes landed in one commit, and the dogfood copy of the
+  setup skill was refreshed with `chisel update .`.
 
 ## Implementation Checkboxes
 
@@ -201,9 +204,64 @@ usage text in `src/main.ts`.
 - [x] re-run, workspace kept, arranged, moved guard tests
 - [x] Setup skill placement step, README, usage, TESTS.md
 - [x] Dogfood on the chisel repo, old dogfood task cancelled
-- [ ] code-review, findings answered
+- [x] code-review, findings answered
 - [ ] Close: criteria, archive, journal, retro
 
 ## Notes & Snippets
 
 ## Diff-Review Findings
+
+Reviewed since 75daa6f by fresh reviewers, 2026-11-03.
+
+**Standards**
+
+- *A second copy of the block markers in `src/inventory.ts`, and a
+  hard-coded `@AGENTS.md`* (hard: `src/markers.ts` says those literals are a
+  contract). Fixed: imported from `markers.ts`.
+- *A README line about 114 characters long in the linked-path paragraph.*
+  Fixed: rewrapped.
+- *`goldenTree` and an lstat helper duplicated across test files*
+  (`test/TESTS.md` says helpers live in `test/helpers.ts`). Fixed:
+  `goldenTree` and `absent` moved there, and four files use them.
+- *Mysterious names `ownText` and `read`.* Fixed: they are now
+  `ownAgentsText` and `readFile`. `DECISION_FOLDERS` is now `as const`, like
+  its neighbour.
+- *`foundLine` exported with no outside caller.* Fixed: made private.
+- *The header of `src/init.ts` did not say a first init may stage.* Fixed.
+- *Bare `§C`/`§G` and "Step 4's span" in the Placement step* (the writing
+  rule of `.agents/discipline.md`). Fixed: section titles named, and the
+  span says what it is.
+- *`Found.kind` as a string, the dir/file tuples, and `repoWith`'s trailing
+  slash* (possible Primitive Obsession). Declined: the kinds are words a
+  human reads in the session and the skill's table, and a union would add
+  ceremony with only one producer.
+- *A new import cycle between `init.ts` and `workspace.ts`.* Declined for
+  this slice: it is harmless under ES modules, and breaking it means moving
+  `poseSocle` out of `init.ts`. That is a refactor for a quieter moment.
+- *`--arranged` parsed inline in `run()`, and accepted in any position.*
+  Declined: it is one flag, and its position does not matter to the user.
+
+**Spec**
+
+- *`init --arranged` overwrites the repo's own task templates and
+  `scripts/task-id.sh` unasked*, against "writes only what the human
+  accepted". Fixed in the setup skill: before installing, Placement names
+  those three paths and puts any collision to the user as one more item.
+  The dogfood had raised it by hand.
+- *The skill's task-folder row ("keep when it pairs a spec with a work
+  document, migrate otherwise") had drifted from the approved plan
+  ("keep in place").* Fixed: the row now says keep.
+- *No record that the OpenSpec and Spec Kit layouts were checked against
+  their own documentation.* Answered: the layouts follow each tool's
+  documented tree. OpenSpec keeps everything under `openspec/` (`specs/`,
+  `changes/`, `project.md`). Spec Kit keeps `.specify/` (memory,
+  scripts, templates) and one `specs/<NNN-feature>/` per feature holding
+  `spec.md`, `plan.md` and `tasks.md`. The inventory reads the root folder
+  of each, plus a Spec Kit feature folder without `.specify/`.
+- *Empty decision-record and other-agent folders count as found, while an
+  empty task folder does not.* Answered: as the spec says ("with files" is
+  asked of the task folder only). An empty `docs/adr/` is a declared
+  intention to keep decisions there, which is worth one placement question.
+- *Scope beyond the spec* (`--arranged`, the "first chisel version" and
+  "linked path" signals, refusal while a workspace exists). All announced
+  in the approved plan or the worklog.
