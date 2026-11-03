@@ -234,7 +234,7 @@ Deno.test("guards: init refuses a linked skill and writes nothing", async () => 
     const targetBefore = await snapshot(target);
     const destinationBefore = await snapshot(ownSkills);
 
-    const refused = await runChisel(["init", target]);
+    const refused = await runChisel(["init", "--arranged", target]);
     assertEquals(refused.code, 1, `the refusal exits 1\n${refused.output}`);
     assertStringIncludes(refused.stderr, ".agents/skills/tdd");
     assertEquals(await snapshot(target), targetBefore, "nothing written");
@@ -315,7 +315,7 @@ Deno.test("guards: init refuses a linked CLAUDE.md and writes nothing", async ()
     const targetBefore = await snapshot(target);
     const destinationBefore = await snapshot(elsewhere);
 
-    const refused = await runChisel(["init", target]);
+    const refused = await runChisel(["init", "--arranged", target]);
     assertEquals(refused.code, 1, `the refusal exits 1\n${refused.output}`);
     assertStringIncludes(refused.stderr, "CLAUDE.md");
     assertEquals(await snapshot(target), targetBefore, "nothing written");

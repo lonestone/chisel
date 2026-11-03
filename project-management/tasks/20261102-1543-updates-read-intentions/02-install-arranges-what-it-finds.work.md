@@ -3,7 +3,7 @@
 Created by the Crewmate at the plan step, 2026-11-03. Spec:
 `project-management/tasks/20261102-1543-updates-read-intentions/02-install-arranges-what-it-finds.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Owner through the Architect, 2026-11-03, as written.
 
 ## Program Design
 
@@ -164,7 +164,7 @@ usage text in `src/main.ts`.
 
 ## Implementation Checkboxes
 
-- [ ] Plan approved
+- [x] Plan approved
 - [ ] Helpers and existing tests move to `init --arranged`, suite green
 - [ ] fast-install and stage-not-write, red then green
 - [ ] signals-detected table and counter-cases, red then green

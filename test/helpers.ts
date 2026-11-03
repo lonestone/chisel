@@ -45,7 +45,10 @@ export interface Workspace {
   readonly root: string;
   /** A raw copy of a fixture, untouched by chisel. */
   copy(fixture: string): Promise<string>;
-  /** A copy of a fixture with `chisel init` already run on it. */
+  /**
+   * A copy of a fixture with `chisel init --arranged` already run on it: a
+   * repo chisel installed, whatever method the fixture carried before.
+   */
   install(fixture: string): Promise<string>;
   /** An empty directory under the root, for a scratch file or a symlink. */
   dir(name: string): Promise<string>;
@@ -71,7 +74,7 @@ class TempWorkspace implements Workspace {
 
   async install(fixture: string): Promise<string> {
     const target = await this.copy(fixture);
-    const result = await runChisel(["init", target]);
+    const result = await runChisel(["init", "--arranged", target]);
     if (result.code !== 0) {
       throw new Error(
         `priming \`chisel init\` failed for ${fixture}:\n${result.output}`,

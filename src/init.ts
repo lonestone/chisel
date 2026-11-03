@@ -23,7 +23,18 @@ import {
 import { ChiselError } from "./report.ts";
 import { isDirectory } from "./target.ts";
 
-export async function init(targetDir: string): Promise<number> {
+export interface InitOptions {
+  /**
+   * The setup skill has placed what a first `init` found: install without
+   * taking the inventory again. Linked paths are still refused.
+   */
+  readonly arranged?: boolean;
+}
+
+export async function init(
+  targetDir: string,
+  options: InitOptions = {},
+): Promise<number> {
   if (!(await isDirectory(targetDir))) {
     throw new ChiselError(`target dir does not exist: ${targetDir}`);
   }

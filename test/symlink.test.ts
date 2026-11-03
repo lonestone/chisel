@@ -13,7 +13,7 @@ Deno.test("symlink: reached through a symlinked package directory, chisel finds 
     const target = await workspace.copy("brownfield");
 
     const result = await runChisel(
-      ["init", target],
+      ["init", "--arranged", target],
       join(linkedPackage, "src", "main.ts"),
     );
     assertEquals(
