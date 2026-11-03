@@ -1,6 +1,6 @@
 {
   "name": "@lonestone/chisel",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "license": "MIT",
   "exports": "./src/main.ts",
   "imports": {
@@ -17,14 +17,35 @@
     "hooks": "deno run --allow-read --allow-write --allow-run=git scripts/commit-lint.ts install-hook"
   },
   "publish": {
-    "include": ["src/", "socle/", "deno.json", "README.md"]
+    "include": [
+      "src/",
+      "socle/",
+      "deno.json",
+      "README.md"
+    ]
   },
   "fmt": {
-    "include": ["src/", "test/", "scripts/"],
-    "exclude": ["test/fixtures/", "test/TESTS.md", "scripts/*.md"]
+    "include": [
+      "src/",
+      "test/",
+      "scripts/"
+    ],
+    "exclude": [
+      "test/fixtures/",
+      "test/TESTS.md",
+      "scripts/*.md"
+    ]
   },
   "lint": {
-    "include": ["src/", "test/", "scripts/"],
-    "exclude": ["test/fixtures/", "test/TESTS.md", "scripts/*.md"]
+    "include": [
+      "src/",
+      "test/",
+      "scripts/"
+    ],
+    "exclude": [
+      "test/fixtures/",
+      "test/TESTS.md",
+      "scripts/*.md"
+    ]
   }
 }
