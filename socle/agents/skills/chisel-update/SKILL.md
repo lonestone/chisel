@@ -48,11 +48,20 @@ staged the session; it is written `chisel` below.
    (`find . -type l -not -path './.git/*' -not -path './node_modules/*'`).
 
 3. **Close the reasons first.** A reason under "Why update stopped" that
-   is a refusal — no manifest, the first version's layer, a symbolic link
-   on a path chisel writes — names the intention that closes it; apply that
-   one before the others. Where it says to run `chisel update`, leave that
-   run to the close below: `update` refuses while the workspace exists. A
-   reason that lists intentions is the list below it.
+   is a refusal comes before the intentions:
+   - **No manifest, or the first version's layer:** the session lists the
+     intention `baseline` first. Apply it before the others.
+   - **A symbolic link on a path chisel writes:** a plain write follows the
+     link and rewrites the file it points at. Show each link with its
+     target, and the diff between the target and the same path under
+     `reference/`. On the human's yes, replace the link by a real file
+     holding the content the human keeps, or remove it so the close poses
+     chisel's own. The link's target is never edited. A skill chisel does
+     not ship may stay linked: chisel never writes it.
+
+   Where an intention says to run `chisel update`, leave that run to the
+   close below: `update` refuses while the workspace exists. A reason that
+   lists intentions is the list below it.
 
 4. **Propose before any edit.** Read every pending intention: its goal,
    Applies When, Do Not Apply When and Observable Gaps. Inspect the repo.
@@ -65,6 +74,11 @@ staged the session; it is written `chisel` below.
    Finding the state an intention moves away from is the reason to apply
    it, never a reason to skip. A skip needs a hard "Do Not Apply When" or
    the human's own decision.
+
+   An intention the repo already applied by hand, before chisel shipped it,
+   shows no gap signal, and its journal often says when it was done.
+   Propose **apply** all the same: check each "done when" against the repo,
+   say which journal entry did it, and record it applied. Nothing moves.
 
 5. **One intention at a time**, in the session's order:
    - Re-check Applies When and Do Not Apply When against the repo as it is
@@ -88,6 +102,8 @@ staged the session; it is written `chisel` below.
      of `session.md`.
    - `automatic` intentions need nothing from you: the closing update
      records them. Read each `informational` one to the human.
+   - `baseline` is not recorded with `chisel record`: the close records
+     it.
 
 6. **Stop** when validation keeps failing, when a move would lose
    something of the project's, or when you are unsure: say what blocks,
@@ -116,9 +132,16 @@ update:
    managed files, records the `automatic` and `informational` intentions,
    and exits 0. An exit 3 means something is still pending: read the new
    `session.md` and start again from "Read `session.md`".
+   **When the session was the baseline with no manifest**, run
+   `chisel init --arranged .` instead: it poses the socle and writes the
+   manifest, every intention recorded applied. Then follow the baseline's
+   Record Result for a task workspace kept outside
+   `project-management/`.
 3. Run `chisel check`: it must be clean.
 4. Show the human the full diff; their reading of it validates the update.
 5. Once accepted, add one dated entry to the journal the task workspace
    section of `.agents/project.md` names: the versions, each intention
-   applied or skipped with its reason, what moved.
+   applied or skipped with its reason, what moved. End it with three lines
+   for whoever works here next: what changed in how they work, what was
+   skipped and why, and what is left for a human to decide.
 6. Commit it as one commit, on exact paths — never `git add -A`.

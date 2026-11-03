@@ -251,6 +251,22 @@ Added 2026-11-03 at Pierrick's request.
   after its version, and the guards expect the new reasons.
 - The journal intention's Validation no longer cites a warning that
   `check` does not print.
+- `chisel-upgrade` is gone, and every pointer to it. The `init` links
+  refusal says what to do inline, and the journal warning names the
+  intention.
+- The update skill takes over three things: the links reason (step 3),
+  an intention already applied by hand (step 4), and the close by
+  `init --arranged` after a baseline with no manifest.
+- Dogfood: chisel's own record dated from before the 0.2.0 intentions, so
+  `update .` staged all five. Each one's "done when" already holds here
+  (no formulas, one §B, seven statuses, §I, `JOURNAL.md`), so I recorded
+  them applied: the "applied by hand" case of the skill. The closing
+  `update` removed the three `chisel-upgrade` files and recorded the two
+  0.2.4 informational ones. The glue's journal line was rewritten by hand.
+- Note for the review: only a repo that ran a CLI from source after slice 01
+  has a record without the 0.2.0 ids. A published 0.2.4 never wrote
+  `intentions`, so its manifest gets `baselineRecord` and these are not
+  pending.
 
 ## Implementation Checkboxes
 
@@ -258,7 +274,7 @@ Added 2026-11-03 at Pierrick's request.
 - [x] Seven 0.2.x intentions + baseline.md + socle-files
 - [x] update/intentions/workspace stage the baseline — green, commit
 - [x] chisel-upgrade removed with every pointer — green, commit
-- [ ] chisel-update skill takes over the router; dogfood refreshed — commit
+- [x] chisel-update skill takes over the router; dogfood refreshed — commit
 - [ ] CONTRIBUTING.md (authoring), promote-intentions script + test, §I line — commit
 - [ ] workflow.md close: the Crewmate cleans up, with unreleased/crewmate-cleans-up — commit
 - [ ] code-review, findings recorded

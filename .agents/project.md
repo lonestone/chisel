@@ -22,8 +22,8 @@ that writes to it — the workflow, the skills — resolves through this line
 and never hardcodes a name. Its default is `JOURNAL.md`, a name no other
 document claims: a repo's `CHANGELOG.md` belongs to its releases, and this
 is a different document. A repo equipped under an older name (`CHANGELOG.md`,
-then `LOG.md`) keeps working with that name here; the `chisel-upgrade` skill
-renames it.
+then `LOG.md`) keeps working with that name here; an update session renames
+it, through the intention `0.2.0/journal-is-journal-md`.
 
 That journal is WRITTEN BY HAND — one dated entry per task, added by the agent
 at the end of the work. It is never generated: not from a tracker's audit

@@ -1,5 +1,33 @@
 {
   "intentions": {
+    "0.2.0/journal-is-journal-md": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
+    "0.2.0/merge-and-publish-section": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
+    "0.2.0/one-tracker-section": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
+    "0.2.0/seven-statuses": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
+    "0.2.0/workflow-replaces-formulas": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
+    "0.2.4/no-write-through-links": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
+    "0.2.4/update-writes-only-what-it-installed": {
+      "date": "2026-11-03",
+      "result": "applied"
+    },
     "unreleased/manifest-records-intentions": {
       "date": "2026-11-03",
       "result": "applied"
@@ -11,10 +39,7 @@
     ".agents/reference.md": "f1c0160e42d0b37a3eb87587bf12109e8b49f7370467072599a6139ed5fe8ffe",
     ".agents/skills/chisel-beads/SKILL.md": "98d524e6b412d4da87782888998c5a342a630178f33fad3d67056619988ba8e3",
     ".agents/skills/chisel-setup/SKILL.md": "14a34f648947eb0295dd2a7a32c7a7b63b3061ffff703bfb1675b32a52377762",
-    ".agents/skills/chisel-update/SKILL.md": "54364426dcb404e48909ce3947bcc2052a984e2032e978b8fd1390e359b87933",
-    ".agents/skills/chisel-upgrade/SKILL.md": "3925029ed879a4bef5676cfff76f4bfcc09bbc47c0cf6948e08583d98fc39fc6",
-    ".agents/skills/chisel-upgrade/from-0.1.x.md": "30645f50a7f41f55a6f2fc77cc44653683c3e6ec95fa42d9898bb15dfcfea98b",
-    ".agents/skills/chisel-upgrade/from-first-version.md": "8d8885e6ff3fe2875e948b438e31d052f57926f2ef80074f63ead532e184075e",
+    ".agents/skills/chisel-update/SKILL.md": "dba132b73f185c80eb236393038fddd7180be505ab48e919e13c460f5bef9e1f",
     ".agents/skills/code-review/SKILL.md": "b4b6ce41b45566b46a3d12c94f40dcf97e36890b5682827885168d6337bc1b64",
     ".agents/skills/codebase-audit/SKILL.md": "052249e7ae5238b867f857ebd61ebe39bbce5f5b4bca88af84ab33922df4496b",
     ".agents/skills/codebase-design/DEEPENING.md": "125e6b77413ad2bc7cf7a772bc74336d580a50f9e797db2178ed133d62333d06",
