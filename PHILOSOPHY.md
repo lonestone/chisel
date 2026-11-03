@@ -89,8 +89,8 @@ These are the beliefs chisel is built on:
   fresh reviewers read the diff. The **system design is the delegation
   boundary**: the architecture, the scope and the seams are settled in the
   spec; the program design and the typing belong to the session that
-  implements. A Typist on a cheaper model can type an approved plan, but in
-  the field the Crewmates typed their own work, so it is optional.
+  implements. A Typist on a cheaper model types the approved plan: the
+  frontier price goes to the judgement, not to the typing.
 - **No sub-agent without a reason.** Each one costs tokens and a brief. One
   is launched for a context that must stay clean, for parallel work, or for
   a cheaper model — and the code review is the one place where fresh eyes

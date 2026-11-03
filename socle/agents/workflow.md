@@ -19,8 +19,8 @@ or a script.
 | Role | Who plays it | What it does |
 |---|---|---|
 | **Architect** | The agent a human, or an orchestrator, talks to. This is its default role. | Reads the task, writes or sharpens the spec, launches a Crewmate and talks with it, reads and corrects the plan, rules on what the Crewmate reports, brings the key questions to the human. |
-| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then codes, runs `code-review`, and closes the task. |
-| **Typist** | Optional. A sub-agent launched by the Crewmate. | Types code from the approved plan and decides nothing. Worth it only when it runs on a cheaper model than the Crewmate. By default the Crewmate types itself. |
+| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then launches a Typist to code it, runs `code-review`, and closes the task. |
+| **Typist** | A sub-agent launched by the Crewmate once the plan is approved. | Types code from the approved plan and decides nothing, at the *mid* tier, or *cheap* when the plan is mechanical (`.agents/reference.md`, "Model tiers"). |
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the session that wrote it. |
 
 **The human** owns the intent and the decisions that shape the task. The
@@ -66,7 +66,13 @@ approval is written on the work document's `**Plan:**` line, with who and
 when. A plan that departs from a decision the human made goes to the human
 first.
 
-**5. Code — Crewmate, or a Typist it launches.** Execute the approved plan
+**5. Code — a Typist the Crewmate launches.** Once the plan is approved,
+the Crewmate launches a Typist with the brief below: at the *mid* tier, or
+*cheap* when the plan is mechanical, every change named down to its file
+and place. The cascade of `.agents/reference.md`, "Model tiers", resolves
+the model. The Crewmate types itself only a retouch of a few lines, or
+while the plan is not settled, and writes which and why in the work
+document's worklog. The Typist executes the approved plan
 in vertical steps, test-first at the agreed seams (the `tdd` skill). Tick
 the work document's checkboxes as work lands — they are the resume point —
 and commit at each green step. Run the gate commands declared in
@@ -99,6 +105,7 @@ explicit word on that very action is the only go.
 | Who stops | For whom | When |
 |---|---|---|
 | Crewmate | Architect | After the plan; after the close, with its report; on a blocker it cannot rule on |
+| Typist | Crewmate | After its part of the plan; on anything the plan does not answer |
 | Architect | Human | On an unclear intent; on a spec that carries decisions the task did not state; on a plan that departs from the human's decisions; on a blocker above what it owns |
 | Architect | Human | Before a merge or a publish, unless the project lets the agent do it |
 
@@ -140,7 +147,8 @@ write. Three earn it:
 
 - **The Crewmate** keeps the Architect's context clean for reading the plan
   and ruling on reports.
-- **The Typist** runs on a cheaper model, when there is one.
+- **The Typist** types the approved plan on a cheaper tier than the
+  Crewmate's.
 - **The reviewers** bring fresh eyes to the diff.
 
 A brief is artifacts and paths, never the conversation: whatever the

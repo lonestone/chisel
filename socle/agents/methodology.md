@@ -111,9 +111,12 @@ it goes back to the spec. An open *how* is not a hole: it is what the plan
 step is for.
 
 Once the plan is approved it is a complete brief, which is what makes a
-Typist possible: a cheaper model can type a settled plan. Whether it pays
-depends on the models at hand; by default the Crewmate types its own plan,
-which is what happened in the field. Either way the brief is **artifacts
+Typist possible: a cheaper model types a settled plan, and the frontier
+tier is kept for judgement — the spec, the plan, the review. So the
+Crewmate hands the typing to a Typist by default. A Crewmate that types its
+own plan pays the frontier price for typing: on 2026-11-03 one of chisel's
+own tasks ran 383 calls, all at the frontier tier, none of them a Typist's.
+The brief is **artifacts
 only, never the conversation**: explicit references beat shared memory, and
 a plan that could not be implemented from the artifacts is a finding
 against the spec — fix the file, not the session's context.

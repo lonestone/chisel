@@ -39,8 +39,9 @@ up where another stopped, even after a session dies.
 - **The reviewers** know nothing of the session that wrote the code, and
   that is the point. They read the diff against your standards and against
   the spec, with Pocock's `code-review` skill.
-- **The Typist** exists only if you want a much cheaper model to type an
-  approved plan. By default, the Crewmate types itself.
+- **The Typist** types the approved plan on a cheaper model: the *mid*
+  tier, or *cheap* when the plan is mechanical. The Crewmate types itself
+  only a retouch of a few lines.
 
 **Firm rules for the end of a task.** No task closes without the review and
 your gate commands: lint, tests, build. What an agent may do on its own is

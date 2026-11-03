@@ -48,8 +48,8 @@ the work — how much judgement it needs.
 | Tier | What it is for | Roles |
 |---|---|---|
 | **frontier** | Thinking and reviewing — where a wrong judgement is expensive and caught late | Architect, Crewmate, reviewers |
-| **mid** | Ordinary work that needs competence but not judgement | A Typist on a delicate plan, or in a codebase it does not know |
-| **cheap** | Typing a plan that is settled and mechanical | A Typist |
+| **mid** | Ordinary work that needs competence but not judgement | The Typist, by default |
+| **cheap** | Typing a mechanical plan: every change named down to its file and place, nothing left to choose | The Typist, when the plan is mechanical |
 
 (Not to be confused with **Frontier** in the glossary — a position in the
 dependency graph, not a model tier.)

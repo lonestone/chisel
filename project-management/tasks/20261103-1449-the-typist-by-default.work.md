@@ -181,11 +181,11 @@ after `"intentions/unreleased/manifest-records-intentions.md",`.
 
 ## Implementation Checkboxes
 
-- [ ] Edits 1–7 in `socle/agents/`
-- [ ] Edits 8–10 in chisel's own docs
-- [ ] Edit 11, the copies
-- [ ] Edit 12, the intention and `src/socle-files.ts`
-- [ ] Gates green
+- [x] Edits 1–7 in `socle/agents/`
+- [x] Edits 8–10 in chisel's own docs
+- [x] Edit 11, the copies
+- [x] Edit 12, the intention and `src/socle-files.ts`
+- [x] Gates green
 
 ## Notes & Snippets
 
