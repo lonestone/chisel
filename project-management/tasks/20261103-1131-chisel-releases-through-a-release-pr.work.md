@@ -149,7 +149,7 @@ I1 to I7, and the v2 → main squash merge with a conventional title.
 
 - [x] Plan approved
 - [x] `release-check` red, then green (commit)
-- [ ] `commit-lint` red, then green, hook task (commit)
+- [x] `commit-lint` red, then green, hook task (commit)
 - [ ] Workflows and release-please files (commit)
 - [ ] GitHub settings script, dry run shown (commit); applied after the PR
 - [ ] Skill and docs (commit)
