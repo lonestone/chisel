@@ -256,6 +256,10 @@ text.
 - 2026-11-03 — Typist, commit 2: the Typist bullet added to both
   `workflow.md` files; tick-rule intention added and listed in
   `src/socle-files.ts`; gates green again (76 tests).
+- 2026-11-03 — Mason: criteria greps and `diff -r` run, all as expected
+  (the one `AGENTS.md` occurrence is the approved gloss). `code-review`
+  run on `origin/main...HEAD`; the fixes below typed by the Mason itself,
+  under the retouch exception (a few lines in three files); gates green.
 
 ## Implementation Checkboxes
 
@@ -266,8 +270,8 @@ text.
 - [x] Gates green, commit 1
 - [x] The Typist line, the tick-rule intention and its `src/socle-files.ts` line
 - [x] Gates green, commit 2
-- [ ] Criteria greps and the `diff -r` run
-- [ ] `code-review`, findings recorded
+- [x] Criteria greps and the `diff -r` run
+- [x] `code-review`, findings recorded
 - [ ] Close: criteria ticked, documents archived, journal entry, retro, commit 3
 
 ## Notes & Snippets
@@ -298,3 +302,45 @@ text.
    intention); or nothing, the managed copy carries it silently.
 
 ## Diff-Review Findings
+
+Run 2026-11-03 on `origin/main...HEAD`, two fresh reviewers.
+
+**Standards axis**
+
+- *The rename intention's Out of Scope lists the archive*, already on
+  `chisel-update`'s "What is never touched" list (`TEMPLATE.md`, "Its
+  sections"). Fixed: only the journal and the changelog remain.
+- *"Harness" capitalised and undefined in the rename intention's Why.*
+  Fixed: "the harness that runs chisel's own projects", lower case, as
+  `CHARTER.md` writes it. The commit body of the rename keeps the word;
+  history is not rewritten.
+- *The tick-rule intention says a team reconciles its briefs, while Out of
+  Scope excludes the project's own instructions.* Answered and sharpened:
+  the human reconciles, not the update agent; the gap now reads
+  "reconciles them itself", the pattern of `0.3.0/typist-by-default`.
+- *The tick rule lives only in the Typist brief; a Mason typing a retouch
+  never reads it.* Answered: the spec's Implementation Decisions place it
+  there and keep step 5 unrepeated. Worth a later look if a Mason's retouch
+  ever ticks falsely.
+- *The new bullet followed one ending with "."* Fixed: the previous
+  bullet now ends with ";", the list reads as one.
+- *Shotgun Surgery: the role table lives in `CHARTER.md` and
+  `workflow.md`.* Answered: pre-existing, and the charter is the Owner's
+  page; out of this task's scope.
+- *`PHILOSOPHY.md` drops the role name where `AGENTS.md` maps it.*
+  Answered: Architect's ruling 1, a past run told without the old word.
+
+**Spec axis**
+
+- All six criteria re-run and passing; `AGENTS.md`'s kept "Crewmate" is the
+  approved gloss pointing at the decisions record. Answered: the
+  criterion is ticked with that exception named.
+- *The second intention is beyond the spec's one.* Answered: Architect's
+  ruling 3.
+- *Out of Scope lists the archive.* Fixed, as above.
+- *Gap 3 conflicts with `chisel-update`'s "never touched" without saying
+  so.* Fixed: the gap now says it names those files on purpose, each
+  rename on the human's word.
+- *Validation misses the manifest, which carries `crewmate` ids.* Fixed:
+  `.agents/.chisel.json` is named in the check.
+- *Punctuation of the new bullet.* Fixed, as above.

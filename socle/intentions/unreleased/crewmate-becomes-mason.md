@@ -13,8 +13,8 @@ files of chisel now do.
 
 ## Why
 
-In the Harness that runs chisel's projects, "crewmate" names the per-task
-session that plays chisel's Architect. Chisel used the same word for the
+In the harness that runs chisel's own projects, "crewmate" names the
+per-task session that plays chisel's Architect. Chisel used the same word for the
 sub-agent that Architect launches, and one word for two roles made a plan
 reading get skipped. The Owner renamed the role: Architect, Mason, Typist.
 A repo whose own files still say "Crewmate" while `.agents/workflow.md`
@@ -40,14 +40,15 @@ says "Mason" hands its agents a role the workflow no longer defines.
    Done when: no open task document names the Crewmate.
 3. **The project's own instructions and skills.** Signal: `AGENTS.md`
    outside the chisel markers, `CLAUDE.md`, or a skill chisel does not ship
-   names the Crewmate. These are the project's own files: show the human
-   each occurrence and rename it on their word. A "crewmate" that names
+   names the Crewmate. These are the project's own files, beyond what
+   `chisel-update` touches on its own: this intention names them on
+   purpose, so show the human each occurrence and rename it on their word. A "crewmate" that names
    something else, such as a harness's own session, stays.
    Done when: every occurrence is renamed, or kept on the human's word.
 
 ## Out of Scope
 
-- The archive, the journal and the changelog: history keeps its words.
+- The journal and the changelog: history keeps its words.
 - Past tracker events that carry the `crewmate` actor; new ones carry
   `mason`.
 - The intention ids recorded in `.agents/.chisel.json`.
@@ -60,8 +61,8 @@ says "Mason" hands its agents a role the workflow no longer defines.
 ## Validation
 
 - `git grep -il crewmate` lists only the managed files the closing update
-  will replace, the project's history, and the files where the human kept
-  an occurrence.
+  will replace, the manifest `.agents/.chisel.json`, the project's
+  history, and the files where the human kept an occurrence.
 - `git diff --stat` on the archive is empty.
 
 ## Record Result

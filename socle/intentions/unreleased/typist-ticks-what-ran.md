@@ -36,7 +36,7 @@ without anyone seeing it.
    human in one sentence: a Typist ticks a box only for what really ran,
    on the real target; a dry run or a run on a copy goes in the worklog
    and leaves its box open. A team whose own briefs say otherwise
-   reconciles them.
+   reconciles them itself.
    Done when: the human has read it.
 
 ## Out of Scope
