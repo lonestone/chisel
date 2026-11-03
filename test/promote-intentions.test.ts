@@ -8,45 +8,7 @@ import {
   promoteIntentions,
   PromotionRefused,
 } from "../scripts/promote-intentions.ts";
-import { copyTree, snapshot, withRepo } from "./helpers.ts";
-
-const REPO = new URL("..", import.meta.url).pathname;
-
-async function gitIn(root: string, ...args: string[]): Promise<string> {
-  const result = await new Deno.Command("git", { args, cwd: root }).output();
-  assert(result.success, new TextDecoder().decode(result.stderr));
-  return new TextDecoder().decode(result.stdout);
-}
-
-/** A git repo holding a copy of the intentions, the shipped list and a deno.json. */
-async function copyOfRepo(root: string, version: string): Promise<string> {
-  await copyTree(
-    join(REPO, "socle", "intentions"),
-    join(root, "socle", "intentions"),
-  );
-  await Deno.mkdir(join(root, "src"));
-  await Deno.copyFile(
-    join(REPO, "src", "socle-files.ts"),
-    join(root, "src", "socle-files.ts"),
-  );
-  await Deno.writeTextFile(
-    join(root, "deno.json"),
-    JSON.stringify({ version }),
-  );
-  await gitIn(root, "init", "-q");
-  await gitIn(root, "add", ".");
-  await gitIn(
-    root,
-    "-c",
-    "user.name=test",
-    "-c",
-    "user.email=test@example.invalid",
-    "commit",
-    "-qm",
-    "copy",
-  );
-  return root;
-}
+import { copyOfRepo, gitIn, snapshot, withRepo } from "./helpers.ts";
 
 async function unreleasedSlugs(root: string): Promise<string[]> {
   const slugs: string[] = [];

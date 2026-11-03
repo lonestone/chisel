@@ -4,7 +4,43 @@ Spec: `project-management/tasks/20261103-1131-chisel-releases-through-a-release-
 
 ## Program Design
 
-**Approval:** waiting for the Owner (sent to promethee, 2026-11-03).
+**Approval:** approved by the Owner, 2026-11-03 (through promethee,
+message 243328943825600512), I1 to I7 as proposed, with three amendments
+below. Before them, the commits of v2 were not conventional.
+
+### Amendments of the approval
+
+- **(a) Conventional commits on every commit**, not only PR titles,
+  following the boilerplate (its `commitlint.config.ts`, a `commit-msg`
+  hook through lefthook, `pr-lint.yml`) in Deno, without node:
+  `scripts/commit-lint.ts` holds the types and the scopes (the single
+  source) and validates
+  - one message (`message <file>`, the `commit-msg` hook, written into
+    `.git/hooks/` by `deno task hooks`);
+  - every commit of a range (`range <base>`, a CI job on each PR);
+  - a PR's title and description (`pr <event.json>`, the "PR title and
+    description" job).
+  The history of v2 before this task is exempt: commits that are
+  ancestors of `b7f121c` (the last commit written without the rule) are
+  not checked. Nothing pushed is rewritten. The v2 → main PR is squashed
+  under a `feat(...)` title, so `main` only ever sees conventional
+  commits.
+- **(b) GitHub settings in a script**, as the boilerplate's
+  `scripts/configure-github-repo.sh` and `scripts/github-repo-settings.md`
+  do (dry run by default, `--apply`): squash only, `PR_TITLE`/`PR_BODY`,
+  the `no-intention` label. It also does what the boilerplate's script
+  leaves to the UI: Actions may create pull requests (I3), and the
+  protection of `main` (I5: a PR, the required checks, no force-push, no
+  deletion), refused when `main` already has a protection. Applied by
+  the Crewmate with the Owner's go, once the v2 → main PR is open and its
+  checks are green, so that it never blocks itself.
+- **(c) I1 is the Owner's**, in JSR's interface: he is told when to do it
+  (before the first Release PR is merged).
+
+**Scopes**: `cli`, `socle`, `skills`, `intentions`, `release`, `tasks`,
+`tooling`. Every header is `type(scope): description`, as in the
+boilerplate. The Release PR title becomes `chore(release): release
+${version}`.
 
 ### 1. `scripts/release-check.ts` (tested first)
 
@@ -46,7 +82,8 @@ in the spec's Testing Strategy. Red first, one commit at green.
 - `ci.yml`, on `pull_request` and `push: main`:
   - `denoland/setup-deno@v2` (2.x), then `deno task check` and
     `deno task test`;
-  - on a PR, a title step: `^(feat|fix|docs|refactor|perf|test|chore|ci|build|revert)(\(.+\))?!?: .+`.
+  - on a PR, two more jobs: "PR title and description" (`commit-lint pr`)
+    and "Commits" (`commit-lint range`, skipped on the Release PR).
 - `intention-gate.yml`: `fetch-depth: 0`, then skip under `no-intention` or
   `autorelease: pending`, then `deno task release-check gate
   origin/${base_ref}`.
@@ -110,9 +147,11 @@ I1 to I7, and the v2 → main squash merge with a conventional title.
 
 ## Implementation Checkboxes
 
-- [ ] Plan approved
-- [ ] `release-check` red, then green (commit)
+- [x] Plan approved
+- [x] `release-check` red, then green (commit)
+- [ ] `commit-lint` red, then green, hook task (commit)
 - [ ] Workflows and release-please files (commit)
+- [ ] GitHub settings script, dry run shown (commit); applied after the PR
 - [ ] Skill and docs (commit)
 - [ ] code-review, findings recorded
 - [ ] Close: retro, journal, archive

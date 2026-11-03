@@ -283,3 +283,65 @@ export function outsideWorkspace(
     ),
   );
 }
+
+/** Runs git in `root` and returns its output; a failure fails the test. */
+export async function gitIn(root: string, ...args: string[]): Promise<string> {
+  const result = await new Deno.Command("git", {
+    args,
+    cwd: root,
+    stdout: "piped",
+    stderr: "piped",
+  }).output();
+  if (!result.success) {
+    throw new Error(
+      `git ${args.join(" ")}: ${new TextDecoder().decode(result.stderr)}`,
+    );
+  }
+  return new TextDecoder().decode(result.stdout);
+}
+
+/** Commits everything in `root` under `message`; returns the commit's id. */
+export async function commitAll(
+  root: string,
+  message: string,
+): Promise<string> {
+  await gitIn(root, "add", "-A");
+  await gitIn(
+    root,
+    "-c",
+    "user.name=test",
+    "-c",
+    "user.email=test@example.invalid",
+    "commit",
+    "-qm",
+    message,
+  );
+  return (await gitIn(root, "rev-parse", "HEAD")).trim();
+}
+
+/**
+ * A git repo holding a copy of chisel's intentions, its shipped list and a
+ * `deno.json` at `version`, committed once: what the maintainer's release
+ * scripts run on.
+ */
+export async function copyOfRepo(
+  root: string,
+  version: string,
+): Promise<string> {
+  await copyTree(
+    join(REPO_ROOT, "socle", "intentions"),
+    join(root, "socle", "intentions"),
+  );
+  await Deno.mkdir(join(root, "src"));
+  await Deno.copyFile(
+    join(REPO_ROOT, "src", "socle-files.ts"),
+    join(root, "src", "socle-files.ts"),
+  );
+  await Deno.writeTextFile(
+    join(root, "deno.json"),
+    JSON.stringify({ version }),
+  );
+  await gitIn(root, "init", "-q", "-b", "main");
+  await commitAll(root, "copy");
+  return root;
+}
