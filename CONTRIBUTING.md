@@ -55,30 +55,10 @@ image or a task list.
 
 ## At a release
 
-release-please keeps a **Release PR** open on `main`, titled
-`chore(release): release X.Y.Z`. It carries the version in `deno.json` and
-`.release-please-manifest.json`, and `CHANGELOG.md`, which nobody edits by
-hand. A maintainer prepares it with the `chisel-release` skill, last, just
-before merging, because every push to `main` rewrites its branch:
-
-```sh
-deno task promote-intentions <version>
-```
-
-It moves each `unreleased/<slug>.md` to `<version>/NN-<slug>.md`, numbered
-after the files already there, rewrites its id, and updates
-`src/socle-files.ts`. It refuses, moving nothing, when the version is not
-the one in `deno.json` or when `unreleased/` is empty. A repo that recorded
-the unreleased id is not asked again: the record counts for the promoted
-one. The "Intention promote" check fails the Release PR until every
-intention is promoted, and its message is the command to run.
-
-A human merges the Release PR. The same CI run tags `vX.Y.Z`, adds the
-release's intentions to the GitHub Release (`deno task release-check notes
-X.Y.Z`), refuses to publish when the tag and `deno.json` disagree or when an
-intention is left unreleased, and publishes to JSR by OIDC. Nobody runs
-`deno publish` by hand. The repository settings this needs are in
-`scripts/github-repo-settings.md`.
+release-please keeps a Release PR open on `main`; a maintainer prepares it
+with the `chisel-release` skill, and a human merges it. CI then tags and
+publishes. [RELEASING.md](RELEASING.md) explains the whole system: the
+pieces, how the version is chosen, and what to do when a step fails.
 
 ## Gates
 

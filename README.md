@@ -183,8 +183,8 @@ Every commit is conventional, `type(scope): description`: run
 
 To release, a maintainer prepares the Release PR that release-please keeps
 open on `main` with the `chisel-release` skill, and a human merges it; CI then
-tags it and publishes to JSR. [CONTRIBUTING.md](./CONTRIBUTING.md) says how,
-and what gets published is what `publish.include` in `deno.json` names.
+tags it and publishes to JSR. [RELEASING.md](./RELEASING.md) explains the
+system, and what gets published is what `publish.include` in `deno.json` names.
 
 The `sync-upstream` script pulls Matt Pocock's skill improvements into our
 forks: the agent proposes each merge, a human validates skill by skill.
