@@ -194,6 +194,10 @@ usage text in `src/main.ts`.
 - 2026-11-03 — Two-axis `code-review` by fresh reviewers. Findings and their
   answers are below. Fixes landed in one commit, and the dogfood copy of the
   setup skill was refreshed with `chisel update .`.
+- 2026-11-03 — Close: criteria ticked against reality, spec and work
+  archived together, journal entry 47, `retro` run (proposals below). No
+  evergreen material to promote: the repo has no living docs yet, and the
+  README already says what changed. 44 tests green, `deno task check` clean.
 
 ## Implementation Checkboxes
 
@@ -205,9 +209,31 @@ usage text in `src/main.ts`.
 - [x] Setup skill placement step, README, usage, TESTS.md
 - [x] Dogfood on the chisel repo, old dogfood task cancelled
 - [x] code-review, findings answered
-- [ ] Close: criteria, archive, journal, retro
+- [x] Close: criteria, archive, journal, retro
 
 ## Notes & Snippets
+
+**`retro` proposals, at the close**, none applied, each for its owner:
+
+1. **Automated checks** (`deno.json`, the fmt section, or `AGENTS.md`;
+   owner: the human). `deno fmt` given explicit markdown paths ignores the
+   project's `include` and reflowed 43 socle files and both slice specs.
+   The slip was caught by reading the diff, and then undone. Either a
+   `deno task fmt` that runs `deno fmt src/ test/` only, or one line in
+   `AGENTS.md`: "markdown is never formatted by a tool".
+2. **Process** (`.agents/workflow.md`, step 5 or the work template's
+   Program Design paragraph; owner: the human). A recommendation in the
+   approved plan changed while it was being written into the skill (the
+   task-folder row), and only the Spec reviewer saw it. The rule "a
+   revision that changes what the Architect approved goes back to it"
+   exists in the work template, but nothing prompts the Crewmate to diff
+   the plan against the result. The close step could ask for one line:
+   "the plan, compared with what landed".
+3. **Spec writing** (`project-management/000-template.spec.md`, "Acceptance
+   Criteria"; owner: the human). "Writes only what the human accepted"
+   hid a write the human was never asked about: the templates and the
+   script that install always copies. When a criterion says "only X", it
+   should name what the code writes unconditionally beside X.
 
 ## Diff-Review Findings
 

@@ -5,6 +5,36 @@ ships.
 
 ---
 
+## 47. 2026-11-03 — An install arranges what it finds (slice 02 of "Updates and installs read intentions")
+
+A first `chisel init` now looks before it writes. On a repo that already has
+a method of its own, it writes nothing in the project, stages
+`.chisel-workspace/` and exits 3, naming each thing it found. That covers
+OpenSpec, Spec Kit, a task folder holding files, decision records, a
+glossary, another tool's agent rules, a hand-written `AGENTS.md` or
+`CLAUDE.md`, beads, the first chisel version's layer and a linked path. The
+setup skill's new Placement step puts each item to the human, one at a
+time: keep it in place and point the glue at it, bring it into chisel's
+format, or leave it beside. `init --arranged` then installs. A repo with
+nothing to arrange installs as before, and `init` refuses while any session
+is staged.
+
+Chisel equipped itself this way. `project-management/` was kept,
+`AGENTS.md` kept its own lines minus the three the block now carries, and
+`chisel check` is clean. The older dogfood task is cancelled in favour of
+this slice. Reviewed by `code-review` with two fresh reviewers, which led to
+these fixes:
+- the block markers now have one source;
+- the test helpers are shared;
+- the task-folder recommendation is back to what was approved;
+- Placement now names the three files `init --arranged` always writes, so a
+  repo's own are never overwritten unasked.
+
+A new `arrange` test group. 44 tests green, `deno task check` clean, not
+published. Slice archived; slice 03 remains.
+
+---
+
 ## 46. 2026-11-02 — `update` reads intentions (slice 01 of "Updates and installs read intentions")
 
 The Owner's direction: an update reads intentions, changelogs written for
