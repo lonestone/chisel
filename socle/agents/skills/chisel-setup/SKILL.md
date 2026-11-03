@@ -1,6 +1,6 @@
 ---
 name: chisel-setup
-description: Fill in .agents/project.md — the per-repo glue — after `chisel init`. Explores the repo, prefills sections A-I, presents each one at a time for confirmation, and writes accepted sections back surgically. Also poses the current dev's personal .agents/user.md, and sorts out a hand-written AGENTS.md against the block chisel installed. Re-runnable later to revisit any section.
+description: Arrange what a first `chisel init` found — another method's specs, tasks, decisions, instructions — with the user before anything is installed, then fill in .agents/project.md, the per-repo glue. Explores the repo, prefills sections A-I, presents each one at a time for confirmation, and writes accepted sections back surgically. Also poses the current dev's personal .agents/user.md, and sorts out a hand-written AGENTS.md against the block chisel installed. Re-runnable later to revisit any section.
 disable-model-invocation: true
 ---
 
@@ -10,7 +10,9 @@ Turn `.agents/project.md`'s defaults into this repo's actual glue, pose the
 current dev's personal file, and leave `AGENTS.md` speaking with one voice.
 One pass, sections A through I, each confirmed before the next. Re-running
 later to revisit a single section is normal — treat the current file as the
-starting recommendation, not as done-forever.
+starting recommendation, not as done-forever. On a repo that already had a
+method of its own, a first `init` stages instead of installing, and this skill
+places what it found with the user before the walk (Step 0).
 
 ## How to talk to the user here
 
@@ -25,12 +27,75 @@ words someone who has never read this repo would understand. The section
 letters and titles of `.agents/project.md` (§A · Task workspace,
 §B · Tracker…) are for the file and for you.
 
-## Step 0 — Precondition
+## Step 0 — Precondition, or placement first
 
-Check `.agents/.chisel.json` exists. If it does not, stop here and tell the
-user to run `deno x jsr:@lonestone/chisel init` first — this skill configures the
-glue, it never installs the socle. Do not attempt to bootstrap `.agents/`
-yourself.
+Check `.agents/.chisel.json` exists. If it does, go to Step 1.
+
+If it does not, look for `.chisel-workspace/session.md`. When it is titled
+`# Chisel install session`, `chisel init` found a method this repo already
+has and installed nothing: run **Placement** below, then come back to Step 1.
+When there is neither a manifest nor an install session, stop here and tell
+the user to run `deno x jsr:@lonestone/chisel init` first — this skill
+configures the glue, it never installs the socle. Do not attempt to bootstrap
+`.agents/` yourself.
+
+### Placement — before the first install
+
+`init` names what it found; it does not judge. Deciding where each thing goes
+is this step's job, with the user, one thing at a time. Nothing is written
+until the user has answered for every item.
+
+1. **Read the session's list, then each item.** Open enough of each one to
+   say what it holds and whether it is alive: the last dated entry of a task
+   folder, the number of specs, whether an instructions file describes a way
+   of working or only build commands. The reference install the session
+   staged, under `.chisel-workspace/reference/`, shows what chisel would put
+   beside it.
+
+2. **Put each item to the user**, one message per item, waiting for the
+   answer before the next. Say what you found in a sentence, then the three
+   choices, each with what it buys and what it costs:
+
+> **I found <what, in plain words> in `<path>`.** <One sentence on what it
+> holds.>
+>
+> 1. **Keep it where it is** — chisel points at it, so every session reads
+>    it, and nothing moves.
+> 2. **Bring it into chisel's format** — <where it would go>. One way of
+>    working instead of two; the cost is the move and a review of the diff.
+> 3. **Leave it beside chisel** — untouched, and chisel never mentions it.
+>
+> Recommended: **<n> — <label>**, because <the reason, from what you read>.
+
+   Where to start the recommendation, before what you read changes it:
+
+   | Found | Recommended | Kept in place means |
+   |---|---|---|
+   | OpenSpec, Spec Kit | keep | a §C line pointing at the specs; tasks still go through chisel's specs |
+   | task folder | keep when it already pairs a spec with a work document, migrate otherwise | §A names that folder as the task workspace |
+   | decision records, glossary | keep | §G points at them |
+   | other agent's rules | keep | a §C line; a rule chisel now covers is sorted as in Step 7 |
+   | instructions file | keep | Step 7 sorts its lines against chisel's block, later in this walk |
+   | beads | keep | §B is beads, through Step 6 |
+   | first chisel version | migrate | — its rules and visual guide are retired; the current files replace them |
+   | linked path | ask where the link points before anything else | the link gives way to the file it points at, or the path moves out of chisel's way |
+
+   A linked path is settled first, and it must end with no link on a path
+   chisel writes: `init --arranged` still refuses one.
+
+3. **Install.** Once every item has an answer, delete `.chisel-workspace/`
+   and run `deno x jsr:@lonestone/chisel init --arranged .` (the version the
+   session names). It installs as if nothing had been found.
+
+4. **Write only what was accepted.** A *keep* becomes its pointer, written
+   with Step 4's span on the section the table names, as the walk reaches it
+   — state it then as a fact already decided, not a question. A *migrate*
+   moves the files with `git mv` and rewrites only the links the move broke.
+   A *leave* writes nothing. Show the user the diff of every move before the
+   walk goes on.
+
+5. **Continue with Step 1.** The answers stand as facts for the sections
+   they touch; do not ask them again.
 
 ## Step 1 — Silent exploration
 

@@ -173,6 +173,12 @@ usage text in `src/main.ts`.
   exit 3. One refinement: `init` refuses an existing workspace before
   anything else, `--arranged` included, since either session in progress
   must be finished first.
+- 2026-11-03 — The setup skill's Step 0 now runs Placement when an install
+  session is staged; README and `test/TESTS.md` say it. Slip caught and
+  undone: `deno fmt` run on explicit markdown paths reflowed files the
+  project's fmt config leaves alone (the plan commit had reflowed both
+  slice specs). Both specs are back to their wrapping, and markdown is no
+  longer passed to `deno fmt`.
 
 ## Implementation Checkboxes
 
@@ -181,7 +187,7 @@ usage text in `src/main.ts`.
 - [x] fast-install and stage-not-write, red then green
 - [x] signals-detected table and counter-cases, red then green
 - [x] re-run, workspace kept, arranged, moved guard tests
-- [ ] Setup skill placement step, README, usage, TESTS.md
+- [x] Setup skill placement step, README, usage, TESTS.md
 - [ ] Dogfood on the chisel repo, old dogfood task cancelled
 - [ ] code-review, findings answered
 - [ ] Close: criteria, archive, journal, retro

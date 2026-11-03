@@ -82,6 +82,16 @@ your lint and test commands, whether it may merge on its own. What you
 confirm is written to `.agents/project.md`, the one file that makes chisel
 yours.
 
+On a repo that already has a method of its own — OpenSpec or Spec Kit
+specs, a task folder, decision records, another agent's rules, a
+hand-written `AGENTS.md` — `init` installs nothing. It names what it found,
+stages a workspace git ignores, `.chisel-workspace/`, and exits with code 3.
+The same skill starts there: for each thing found, it recommends keeping it
+where it is with chisel pointing at it, bringing it into chisel's format, or
+leaving it beside chisel, and waits for your answer before the next. Then it
+installs with `init --arranged`, writes only what you accepted, and goes on
+with the settings.
+
 That's it. Give it a task.
 
 Chisel needs Deno 2.6 or later, and nothing else: no `node_modules`, no
@@ -147,8 +157,9 @@ become false is named on a `stale:` line. Then ask your agent to run the
 statuses to the new ones, and renames the journal, with you validating each
 step.
 
-`init` refuses to write a path that is a symbolic link, or sits under one,
-and names each. Outside `.agents/`, `update` only refreshes the files it
+On a repo chisel has not installed yet, a path `init` would write that is
+a symbolic link, or sits under one, is one of the things it stages for the
+setup skill; `init --arranged` refuses one, naming each. Outside `.agents/`, `update` only refreshes the files it
 installed and you kept, so it never plants a second task workspace beside
 yours.
 
