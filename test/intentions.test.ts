@@ -4,7 +4,7 @@
 
 import { assert, assertEquals, assertStringIncludes } from "@std/assert";
 import { join } from "@std/path";
-import { compareReleases, shippedIntentions } from "../src/intentions.ts";
+import { shippedIntentions } from "../src/intentions.ts";
 import {
   appendTo,
   outsideWorkspace,
@@ -137,19 +137,13 @@ Deno.test("intentions: a manifest from before intentions counts its own releases
     await writeManifestOf(target, manifest);
     const entry = await packageWith(workspace, [
       { release: "0.1.9", file: "01-older.md", classification: "migration" },
+      { release: "0.2.0", file: "01-own.md", classification: "migration" },
       { release: "0.2.1", file: "01-newer.md", classification: "automatic" },
-    ]);
+    ], { only: true });
 
     const result = await runChisel(["update", target], entry);
     assertEquals(result.code, 0, result.output);
     assertStringIncludes(result.stdout, "recorded: 0.2.1/newer (automatic)");
-    for (
-      const intention of shippedIntentions().filter((intention) =>
-        compareReleases(intention.release, "0.2.0") > 0
-      )
-    ) {
-      assertStringIncludes(result.stdout, `recorded: ${intention.id} `);
-    }
     assert(
       !result.stdout.includes("0.2.0/"),
       "the manifest's own release is not pending",
@@ -384,34 +378,36 @@ Deno.test("intentions: a 0.1.1 install is replayed through every intention since
       "\n## B1 · Where task statuses live\n",
     );
 
-    const result = await runChisel(["update", target]);
+    const entry = await packageWith(workspace, [
+      { release: "0.1.1", file: "01-old.md", classification: "migration" },
+      { release: "0.2.0", file: "01-a-move.md", classification: "migration" },
+      { release: "0.2.0", file: "02-a-copy.md", classification: "automatic" },
+      {
+        release: "0.2.4",
+        file: "01-a-notice.md",
+        classification: "informational",
+      },
+      {
+        release: "unreleased",
+        file: "a-call.md",
+        classification: "breaking-manual",
+      },
+    ], { only: true });
+
+    const result = await runChisel(["update", target], entry);
     assertEquals(result.code, 3, `an agent has work to do\n${result.output}`);
-    const ids = checklistIds(
-      await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
-    );
     assertEquals(
-      ids,
-      shippedIntentions()
-        .filter((intention) => intention.release !== "0.1.1")
-        .map((intention) => intention.id),
+      checklistIds(
+        await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
+      ),
+      ["0.2.0/a-move", "0.2.0/a-copy", "0.2.4/a-notice", "unreleased/a-call"],
       "every intention after 0.1.1, in order",
     );
-    // Written out once, so that a release's intention gone missing fails.
-    for (
-      const id of [
-        "0.2.0/workflow-replaces-formulas",
-        "0.2.0/one-tracker-section",
-        "0.2.0/seven-statuses",
-        "0.2.0/merge-and-publish-section",
-        "0.2.0/journal-is-journal-md",
-        "0.2.4/update-writes-only-what-it-installed",
-        "0.2.4/no-write-through-links",
-        "unreleased/manifest-records-intentions",
-      ]
-    ) {
-      assert(ids.includes(id), `${id} is in the session`);
-    }
-    assert(!ids.includes("baseline"), "a repo chisel installed has history");
+    assert(
+      !(await Deno.readTextFile(join(target, WORKSPACE, "session.md")))
+        .includes("`baseline`"),
+      "a repo chisel installed has history",
+    );
   });
 });
 
@@ -450,18 +446,19 @@ Deno.test("intentions: the first version's layer beside a manifest stages the ba
       "# Planning a task\n",
     );
 
-    const result = await runChisel(["update", target]);
+    const entry = await packageWith(workspace, [
+      { release: "0.2.4", file: "01-applied.md", classification: "migration" },
+      { release: "unreleased", file: "a-move.md", classification: "migration" },
+    ], { only: true });
+
+    const result = await runChisel(["update", target], entry);
     assertEquals(result.code, 3, `an agent has work to do\n${result.output}`);
-    const ids = checklistIds(
-      await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
-    );
-    assertEquals(ids[0], "baseline");
     assertEquals(
-      ids.slice(1),
-      shippedIntentions()
-        .filter((intention) => intention.release === "unreleased")
-        .map((intention) => intention.id),
-      "then what the manifest has not applied",
+      checklistIds(
+        await Deno.readTextFile(join(target, WORKSPACE, "session.md")),
+      ),
+      ["baseline", "unreleased/a-move"],
+      "the baseline, then what the manifest has not applied",
     );
   });
 });

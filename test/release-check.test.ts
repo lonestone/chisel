@@ -1,5 +1,5 @@
-// The maintainer's release checks, run on a temporary git repo holding a copy
-// of chisel's intentions: the intention gate of a pull request, the promotion
+// The maintainer's release checks, run on a throwaway git repo of test
+// intentions, never chisel's own (they move at every release): the intention gate of a pull request, the promotion
 // a Release PR must carry, the guard before publishing, and the release
 // note's list of intentions.
 
@@ -9,18 +9,24 @@ import { gate, notes, promoted, publish } from "../scripts/release-check.ts";
 import { promoteIntentions } from "../scripts/promote-intentions.ts";
 import {
   commitAll,
-  copyOfRepo,
   gitIn,
+  intentionsRepo,
   withRepo,
   type Workspace,
 } from "./helpers.ts";
 
 const UNRELEASED = "socle/intentions/unreleased";
 
+// After a release, git holds no unreleased/ folder at all: an empty one is
+// not tracked.
 async function unreleasedFiles(root: string): Promise<string[]> {
   const names: string[] = [];
-  for await (const entry of Deno.readDir(join(root, UNRELEASED))) {
-    names.push(entry.name);
+  try {
+    for await (const entry of Deno.readDir(join(root, UNRELEASED))) {
+      names.push(entry.name);
+    }
+  } catch (error) {
+    if (!(error instanceof Deno.errors.NotFound)) throw error;
   }
   return names.sort();
 }
@@ -31,8 +37,9 @@ async function emptyUnreleased(root: string): Promise<void> {
   }
 }
 
-/** An intention under `unreleased/`, so no case leans on the repo's own. */
+/** An intention under `unreleased/`, written by the case that needs it. */
 async function writeUnreleased(root: string, slug: string): Promise<void> {
+  await Deno.mkdir(join(root, UNRELEASED), { recursive: true });
   await Deno.writeTextFile(
     join(root, UNRELEASED, `${slug}.md`),
     `---\nid: unreleased/${slug}\nclassification: informational\n---\n\n# ${slug}\n`,
@@ -51,7 +58,7 @@ async function repoWithBranch(
   workspace: Workspace,
   version = "0.2.4",
 ): Promise<string> {
-  const root = await copyOfRepo(await workspace.dir("repo"), version);
+  const root = await intentionsRepo(await workspace.dir("repo"), version);
   await Deno.mkdir(join(root, "socle", "agents"), { recursive: true });
   await Deno.writeTextFile(join(root, "socle/agents/workflow.md"), "# W\n");
   await writeUnreleased(root, "fixture-change");
@@ -93,7 +100,7 @@ Deno.test("release-check gate: a change outside socle needs no intention", async
     await Deno.writeTextFile(
       join(
         root,
-        "socle/intentions/0.2.4/01-update-writes-only-what-it-installed.md",
+        "socle/intentions/0.2.4/01-first-move.md",
       ),
       "edited\n",
     );
@@ -151,7 +158,7 @@ Deno.test("release-check promoted: intentions deleted instead of promoted fail, 
 
 Deno.test("release-check publish: the tag of deno.json's version, nothing unreleased, passes", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.3.0");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.3.0");
     await emptyUnreleased(root);
 
     assertEquals((await publish(root, "v0.3.0")).ok, true);
@@ -160,7 +167,7 @@ Deno.test("release-check publish: the tag of deno.json's version, nothing unrele
 
 Deno.test("release-check publish: a tag deno.json does not declare fails", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.3.0");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.3.0");
     await emptyUnreleased(root);
 
     const result = await publish(root, "v0.3.1");
@@ -172,7 +179,7 @@ Deno.test("release-check publish: a tag deno.json does not declare fails", async
 
 Deno.test("release-check publish: an intention left in unreleased fails, naming it", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.3.0");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.3.0");
     await emptyUnreleased(root);
     await writeUnreleased(root, "left-behind");
     const left = "left-behind.md";
@@ -186,7 +193,7 @@ Deno.test("release-check publish: an intention left in unreleased fails, naming 
 
 Deno.test("release-check notes: lists each intention of the version with its classification and title", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.2.4");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.2.4");
 
     const result = await notes(root, "0.2.4");
 
@@ -195,17 +202,15 @@ Deno.test("release-check notes: lists each intention of the version with its cla
       line.startsWith("- ")
     );
     assertEquals(items.length, 2, result.message);
-    assertStringIncludes(
-      items[0],
-      "`0.2.4/update-writes-only-what-it-installed`",
-    );
-    assertStringIncludes(items[0], "informational");
+    assertStringIncludes(items[0], "`0.2.4/first-move`");
+    assertStringIncludes(items[0], "automatic");
+    assertStringIncludes(items[0], "A test intention, first-move");
   });
 });
 
 Deno.test("release-check notes: a version with no intention says so", async () => {
   await withRepo(async (workspace) => {
-    const root = await copyOfRepo(await workspace.dir("repo"), "0.2.2");
+    const root = await intentionsRepo(await workspace.dir("repo"), "0.2.2");
 
     const result = await notes(root, "0.2.2");
 
