@@ -150,6 +150,8 @@ action — never inferred from a "go" given on another subject. A glue
 without this section means the default. -->
 
 - **Merge:** ask the human
-- **Publish:** ask the human
-- **Before publishing:** `deno task promote-intentions <version>` once
-  `deno.json` carries the version, then the gates of Section F.
+- **Publish:** the human merges the Release PR; CI tags it and publishes
+  to JSR. Nobody runs `deno publish` by hand.
+- **Before publishing:** the `chisel-release` skill on the open Release PR
+  (`deno task promote-intentions <version>`, then the gates of Section F).
+  It never tags, merges or publishes.

@@ -178,9 +178,13 @@ deno run -A src/main.ts init ../some-repo
 `deno task test` runs the suite ([test/TESTS.md](./test/TESTS.md) says what
 it protects); `deno task check` type-checks, lints and format-checks.
 
-To release, bump `version` in `deno.json`, add a dated entry to
-`project-management/JOURNAL.md`, commit, and run `deno publish` from a clean
-tree. What gets published is what `publish.include` in `deno.json` names.
+Every commit is conventional, `type(scope): description`: run
+`deno task hooks` once in a clone to install the commit-msg hook.
+
+To release, a maintainer prepares the Release PR that release-please keeps
+open on `main` with the `chisel-release` skill, and a human merges it; CI then
+tags it and publishes to JSR. [CONTRIBUTING.md](./CONTRIBUTING.md) says how,
+and what gets published is what `publish.include` in `deno.json` names.
 
 The `sync-upstream` script pulls Matt Pocock's skill improvements into our
 forks: the agent proposes each merge, a human validates skill by skill.
