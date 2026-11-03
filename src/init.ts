@@ -1,7 +1,7 @@
 // `chisel init` — pose the socle and every adapter in a target repo, and
 // leave everything the repo already had exactly as it was.
 
-import { basename } from "@std/path";
+import { basename, join } from "@std/path";
 import {
   copyManagedFiles,
   ensureProjectManagementSkeleton,
@@ -20,8 +20,16 @@ import {
   pointNewGlueAtExistingJournal,
   tickAdapterInventory,
 } from "./project-md.ts";
-import { ChiselError } from "./report.ts";
-import { isDirectory } from "./target.ts";
+import { type Found, takeInventory } from "./inventory.ts";
+import { AGENT_WORK_EXIT, ChiselError, reportLine } from "./report.ts";
+import { isDirectory, pathExists } from "./target.ts";
+import {
+  REFERENCE_DIR,
+  SESSION_FILE,
+  SETUP_SKILL,
+  stageInstall,
+  WORKSPACE_DIR,
+} from "./workspace.ts";
 
 export interface InitOptions {
   /**
@@ -39,12 +47,29 @@ export async function init(
     throw new ChiselError(`target dir does not exist: ${targetDir}`);
   }
   const projectTitle = basename(await Deno.realPath(targetDir));
-  await refuseLinkedPaths(targetDir, initWrites());
+  if (await pathExists(join(targetDir, WORKSPACE_DIR))) {
+    throw new ChiselError(
+      `${targetDir}/${WORKSPACE_DIR} exists: a chisel session is in progress. ` +
+        `Finish it (${SESSION_FILE} says how), or delete the directory to start ` +
+        `again. Nothing was written.`,
+    );
+  }
 
   // What an earlier run installed here, read before this one writes: a skill
   // that manifest tracked is chisel's own, whatever the socle ships today, and
   // the intentions it recorded are the repo's history, kept as they are.
   const previous = await readManifest(targetDir);
+
+  // A repo chisel never installed may already have a method of its own.
+  // Installing beside it would leave two voices; the setup skill places each
+  // thing with the human first, then runs `init --arranged`. A repo with a
+  // manifest is one chisel installed: what it holds is chisel's own layout.
+  if (previous === null && !options.arranged) {
+    const found = await takeInventory(targetDir);
+    if (found.length > 0) return await stageFirstInstall(targetDir, found);
+  }
+
+  await refuseLinkedPaths(targetDir, initWrites());
   await poseSocle(targetDir, projectTitle, previous);
 
   console.log(
@@ -52,6 +77,25 @@ export async function init(
       `project-management/, scripts/task-id.sh)`,
   );
   return 0;
+}
+
+/** Stages the install session, names what was found, and hands over. */
+async function stageFirstInstall(
+  targetDir: string,
+  found: readonly Found[],
+): Promise<number> {
+  await stageInstall(targetDir, found);
+  console.log(
+    `chisel init: ${targetDir} already has a method of its own — staged ` +
+      `${WORKSPACE_DIR}/, nothing else written`,
+  );
+  for (const item of found) reportLine(`found: ${item.kind} — ${item.path}`);
+  reportLine(`session: ${SESSION_FILE}`);
+  reportLine(
+    `next: ask your agent to follow ${REFERENCE_DIR}/${SETUP_SKILL}, ` +
+      `which places each one with you before anything is installed`,
+  );
+  return AGENT_WORK_EXIT;
 }
 
 /**

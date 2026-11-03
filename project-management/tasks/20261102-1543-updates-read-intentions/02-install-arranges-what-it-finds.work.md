@@ -162,13 +162,25 @@ usage text in `src/main.ts`.
 
 ## Worklog
 
+- 2026-11-03 — Plan approved as written. `init --arranged` landed first,
+  with the helpers and the brownfield `init` tests moved to it (suite green
+  before any new behaviour). Then `test/arrange.test.ts`, red: the empty
+  repo, the brownfield stage, the signal table, the counter-cases, the
+  re-run, the staged workspace, the linked path. Green with
+  `src/inventory.ts` (`takeInventory`) and `stageInstall` in
+  `src/workspace.ts`, which now shares one `buildWorkspace` with the update
+  session. The relocated-layout guard test moved from init's exit 1 to its
+  exit 3. One refinement: `init` refuses an existing workspace before
+  anything else, `--arranged` included, since either session in progress
+  must be finished first.
+
 ## Implementation Checkboxes
 
 - [x] Plan approved
-- [ ] Helpers and existing tests move to `init --arranged`, suite green
-- [ ] fast-install and stage-not-write, red then green
-- [ ] signals-detected table and counter-cases, red then green
-- [ ] re-run, workspace kept, arranged, moved guard tests
+- [x] Helpers and existing tests move to `init --arranged`, suite green
+- [x] fast-install and stage-not-write, red then green
+- [x] signals-detected table and counter-cases, red then green
+- [x] re-run, workspace kept, arranged, moved guard tests
 - [ ] Setup skill placement step, README, usage, TESTS.md
 - [ ] Dogfood on the chisel repo, old dogfood task cancelled
 - [ ] code-review, findings answered

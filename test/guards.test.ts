@@ -280,7 +280,7 @@ async function relocatedLayout(workspace: Workspace): Promise<string> {
   return target;
 }
 
-Deno.test("guards: a relocated layout with no manifest is staged by update and refused by init", async () => {
+Deno.test("guards: a relocated layout with no manifest is staged by update and by init", async () => {
   await withRepo(async (workspace) => {
     const target = await relocatedLayout(workspace);
     const before = await snapshot(target);
@@ -296,9 +296,14 @@ Deno.test("guards: a relocated layout with no manifest is staged by update and r
     await Deno.remove(join(target, WORKSPACE), { recursive: true });
 
     const initialised = await runChisel(["init", target]);
-    assertEquals(initialised.code, 1, `init refuses\n${initialised.output}`);
-    assertStringIncludes(initialised.stderr, ".agents/skills/tdd");
-    assertEquals(await snapshot(target), before, "init wrote nothing");
+    assertEquals(initialised.code, 3, `init stages\n${initialised.output}`);
+    assertStringIncludes(initialised.stdout, ".agents/skills/tdd");
+    assertStringIncludes(initialised.stdout, "doc/project-management/");
+    assertEquals(
+      outsideWorkspace(await snapshot(target)),
+      before,
+      "init wrote nothing outside the workspace",
+    );
   });
 });
 
