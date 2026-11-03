@@ -30,26 +30,6 @@ const WAIVED = new Map<string, string>([
     ".agents/user.md",
     "BY DESIGN — personal file, deliberately never installed (the template is)",
   ],
-  [
-    ".agents/formulas",
-    "BY DESIGN (chisel-upgrade must name the 0.1.x pieces it retires)",
-  ],
-  [
-    ".agents/profiles",
-    "BY DESIGN (chisel-upgrade must name the 0.1.x pieces it retires)",
-  ],
-  [
-    ".agents/rules",
-    "BY DESIGN (chisel-upgrade must name the layer it retires)",
-  ],
-  [
-    ".agents/rules/task-*.md",
-    "BY DESIGN (chisel-upgrade must name the layer it retires)",
-  ],
-  [
-    ".agents/workflows.md",
-    "BY DESIGN (chisel-upgrade must name the layer it retires)",
-  ],
 ]);
 
 const RETIRED_LAYER = [
@@ -138,17 +118,14 @@ Deno.test("integrity: every pointer of the installed socle resolves", async () =
       "the waiver has no stale line: a fixed pointer must leave it",
     );
 
-    // ...and WHO is allowed to name the retired layer today.
-    const citers = dangling
-      .filter((entry) => RETIRED_LAYER.includes(entry.pointer))
-      .map((entry) => entry.source);
-    assert(citers.length > 0, "the migration skill names what it retires");
+    // ...and nobody in the installed socle names the retired layer any more:
+    // the intentions that retire it ship in the package, never in a repo.
     assertEquals(
-      [...new Set(citers)].filter((source) =>
-        !source.startsWith(".agents/skills/chisel-upgrade/")
-      ),
+      dangling
+        .filter((entry) => RETIRED_LAYER.includes(entry.pointer))
+        .map((entry) => `${entry.pointer} (in ${entry.source})`),
       [],
-      "only the migration skill names the pieces it retires",
+      "no installed page names the retired layer",
     );
 
     // Mutation test: plant one broken pointer of each shape, demand both are

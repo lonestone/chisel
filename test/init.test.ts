@@ -228,7 +228,7 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
     const warned = await runChisel(["init", "--arranged", legacy]);
     assertEquals(warned.code, 0, warned.output);
     assertStringIncludes(warned.stderr, "project-management/CHANGELOG.md");
-    assertStringIncludes(warned.stderr, "chisel-upgrade");
+    assertStringIncludes(warned.stderr, "0.2.0/journal-is-journal-md");
     assertEquals(
       await Deno.stat(join(legacy, "project-management", "JOURNAL.md")).then(
         () => true,

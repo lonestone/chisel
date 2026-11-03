@@ -148,14 +148,15 @@ where your repo keeps its method, shows each move before making it, stops
 for you on anything breaking, and records each result with
 `chisel record`. You validate the diff.
 
-**Coming from 0.1.x**, `update` also removes what that version installed
-and this one retired: the step files, the role pages, the agent definitions
-in `.claude/agents/` and `.codex/agents/`. A file someone edited is left in
-place and named on an `orphaned:` line; a line of your settings that has
-become false is named on a `stale:` line. Then ask your agent to run the
-`chisel-upgrade` skill: it rewrites the tracker settings, moves your task
-statuses to the new ones, and renames the journal, with you validating each
-step.
+**Coming from 0.1.x**, the session lists the intentions of 0.2.0: the
+prose workflow that replaces formulas and agent definitions, one tracker
+section, seven statuses, the merge and publish section, and the journal
+renamed `JOURNAL.md`. The agent applies each one with you, then closes with
+`chisel update`, which removes what 0.1.x installed and this version
+retired. A file someone edited is left in place and named on an
+`orphaned:` line. **A repo chisel did not install**, or installed in its
+first version, gets one intention instead, `baseline`: it takes the repo
+to the current layout whole, wherever its method lives today.
 
 On a repo chisel has not installed yet, a path `init` would write that is
 a symbolic link, or sits under one, is one of the things it stages for the

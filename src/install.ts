@@ -6,7 +6,6 @@
 import { dirname, join } from "@std/path";
 import { BLOCK_BEGIN, BLOCK_END, CLAUDE_IMPORT_LINE } from "./markers.ts";
 import {
-  packageVersion,
   readPackageFile,
   readPackageText,
   SOCLE,
@@ -145,7 +144,8 @@ export async function refuseLinkedPaths(
     `${targetDir}: these paths chisel writes are symbolic links, or sit under one, and ` +
       `writing them would change the files they point at:\n` +
       linked.map((path) => `  ${path}\n`).join("") +
-      (await upgradeRecipePointer()),
+      `Nothing was written. Replace each link by a copy of its target's content, or ` +
+      `remove it, then run init again.`,
   );
 }
 
@@ -349,8 +349,8 @@ export async function ensureProjectManagementSkeleton(
     warn(
       `${targetDir}/project-management/${legacy} is the journal this repo ` +
         `already has, and the current socle names it ${JOURNAL_NAME} — leaving it alone ` +
-        `rather than creating a second journal beside it. The chisel-upgrade skill renames ` +
-        `it properly and updates the project glue.`,
+        `rather than creating a second journal beside it. The intention ` +
+        `0.2.0/journal-is-journal-md renames it and updates the project glue.`,
     );
     return;
   }
@@ -384,17 +384,4 @@ export async function v1LayoutFound(targetDir: string): Promise<string[]> {
     found.push(".agents/workflows.md");
   }
   return found;
-}
-
-/**
- * The sentence the links refusal of `init` ends with: where the recipe is,
- * and how a repo that does not have it gets it. The version is pinned to the
- * running CLI's, so the recipe read is the one that matches the CLI that
- * refused.
- */
-export async function upgradeRecipePointer(): Promise<string> {
-  const version = await packageVersion();
-  return `Nothing was written. Follow the chisel-upgrade skill, ` +
-    `.agents/skills/chisel-upgrade/SKILL.md; a repo that does not have it gets it with ` +
-    `'deno x jsr:@lonestone/chisel@${version} init <a scratch directory outside this repo>'.`;
 }

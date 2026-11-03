@@ -257,7 +257,7 @@ Added 2026-11-03 at Pierrick's request.
 - [x] Red tests: replay-0.1.1, baseline staging, intentions parse
 - [x] Seven 0.2.x intentions + baseline.md + socle-files
 - [x] update/intentions/workspace stage the baseline — green, commit
-- [ ] chisel-upgrade removed with every pointer — green, commit
+- [x] chisel-upgrade removed with every pointer — green, commit
 - [ ] chisel-update skill takes over the router; dogfood refreshed — commit
 - [ ] CONTRIBUTING.md (authoring), promote-intentions script + test, §I line — commit
 - [ ] workflow.md close: the Crewmate cleans up, with unreleased/crewmate-cleans-up — commit

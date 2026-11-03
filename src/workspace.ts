@@ -18,7 +18,6 @@ export const SESSION_FILE = `${WORKSPACE_DIR}/session.md`;
 export const REFERENCE_DIR = `${WORKSPACE_DIR}/reference`;
 export const UPDATE_SKILL = ".agents/skills/chisel-update/SKILL.md";
 export const SETUP_SKILL = ".agents/skills/chisel-setup/SKILL.md";
-export const UPGRADE_SKILL = ".agents/skills/chisel-upgrade/SKILL.md";
 
 /** What a staged update hands over. */
 export interface Staging {
