@@ -104,7 +104,7 @@ discussed:
 ### Implementation vs review
 
 All work goes through two stages: implementation and review. The
-implementation session (the Crewmate writing its program design at the plan
+implementation session (the Mason writing its program design at the plan
 step, then typing it) carries the most context pressure — exploration, writing
 code, debugging failures. The review sub-agents carry the least —
 it receives a diff, no exploration needed. This is why coding standards

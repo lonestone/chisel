@@ -89,7 +89,7 @@ where `<time-id>` comes from `scripts/task-id.sh` and `<NN>` numbers the
 slices from `01` in dependency order (blockers first). The parent spec
 document (if one exists) stays in place and links to the slice folder.
 
-No work document is created here. The Crewmate that implements a slice creates
+No work document is created here. The Mason that implements a slice creates
 the matching `<NN>-<slug>.work.md` beside it at its `plan` step, from the work
 template declared in §A · Task workspace of `.agents/project.md`.
 
@@ -122,7 +122,7 @@ user's perspective — not a layer-by-layer implementation list.
 ## Notes
 
 _A question or a blocker met before the plan — only what is written into
-this document before its work document exists. Not the Crewmate's working
+this document before its work document exists. Not the Mason's working
 space: its notes, snippets and worklog live in the work document._
 
 </slice-template>

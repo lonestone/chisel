@@ -28,7 +28,7 @@ bd list --status draft   # any other status is a filter
 ```sh
 bd create "<the task's title>" --type task --priority <0-4> \
   --spec-id "<path to the spec document, from the repo root>" \
-  --actor <architect|crewmate|typist> --silent
+  --actor <architect|mason|typist> --silent
 ```
 
 `--spec-id` is the whole link; the work document's path follows from it.

@@ -1,6 +1,6 @@
 # The Crewmate becomes the Mason, and the Typist ticks only what really ran
 
-**Status:** ready
+**Status:** in-progress
 
 ---
 

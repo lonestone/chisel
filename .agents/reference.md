@@ -12,7 +12,7 @@ for every session are `.agents/discipline.md`.
 |---|---|
 | **Task** | The unit of work. Its spec document lives in the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`), named `<time-id>-<intention>.spec.md`, whatever tracker also carries it; once planned it has a matching `<time-id>-<intention>.work.md` beside it. |
 | **Spec document** | The review surface and the requirement: intent, acceptance criteria, seams, system design, decisions, testing strategy, slices, deliverables, references, pre-plan Notes and retrospective. It carries the task's status line and the reading gradient's two 🧑 zones. |
-| **Work document** | The Crewmate's companion file, created at the plan step beside the spec document. It carries the program design and its approval line, the worklog, the implementation checkboxes, Notes & Snippets and the review findings. No zone marker. |
+| **Work document** | The Mason's companion file, created at the plan step beside the spec document. It carries the program design and its approval line, the worklog, the implementation checkboxes, Notes & Snippets and the review findings. No zone marker. |
 | **Slice** | A child task produced by cutting a large task: a tracer-bullet vertical cut through every layer, demoable on its own, sized for one fresh context window. Lives as `tasks/<time-id>-<feature>/<NN>-<slug>.spec.md`. A small task IS its own single slice. |
 | **Seam** | The public boundary where a feature is tested — named in the spec BEFORE implementation. Tests live at seams, never against internals. Fewer is better (ideal: one). |
 | **Reading gradient** | The ordering of the spec document by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich) → 🧑 REVIEW IF RELEVANT. Detail is never cut, it is ordered. |
@@ -22,7 +22,7 @@ for every session are `.agents/discipline.md`.
 | **Expand–contract** | The sequencing for wide mechanical refactors (rename a column, retype a shared symbol): add the new form beside the old → migrate call sites in batches → delete the old form. The exception to vertical slicing. |
 | **One-shot** | Work done without a task artifact. The discipline still applies; only the file bookkeeping is skipped. |
 
-The roles — Architect, Crewmate, Typist, reviewers — are defined in "The
+The roles — Architect, Mason, Typist, reviewers — are defined in "The
 roles" of `.agents/workflow.md`.
 
 We do NOT use the word "ticket" for local work. It is reserved for items in an
@@ -36,7 +36,7 @@ decision tickets and resolves them one at a time).
 A 🧑 zone belongs to whoever **approved** it. The human approves a spec that
 carries decisions the task did not state; the Architect approves one written
 from a clear task, and then the zones carry the task's own decisions, which
-are the human's. The work document has no zone: it belongs to the Crewmate
+are the human's. The work document has no zone: it belongs to the Mason
 that wrote it. A 🧑 zone is never overridden silently — a conflict with one
 is surfaced, never edited sideways.
 
@@ -47,7 +47,7 @@ the work — how much judgement it needs.
 
 | Tier | What it is for | Roles |
 |---|---|---|
-| **frontier** | Thinking and reviewing — where a wrong judgement is expensive and caught late | Architect, Crewmate, reviewers |
+| **frontier** | Thinking and reviewing — where a wrong judgement is expensive and caught late | Architect, Mason, reviewers |
 | **mid** | Ordinary work that needs competence but not judgement | The Typist, by default |
 | **cheap** | Typing a mechanical plan: every change named down to its file and place, nothing left to choose | The Typist, when the plan is mechanical |
 

@@ -14,7 +14,7 @@ cannot be read without is not. The rule is the writing rule of
 The spec document is the human review surface, the requirement against which a
 diff is judged, and the archive record of what was asked. It contains no
 program design, pseudo-code, worklog or implementation checkboxes: these are
-in the work document, created at the plan step by the Crewmate.
+in the work document, created at the plan step by the Mason.
 
 A spec written from a clear task stays short and links the task rather than
 copying it. A spec with no work document beside it has never been planned.
@@ -32,7 +32,7 @@ copying it. A spec with no work document beside it has never been planned.
   [reference.md](/.agents/reference.md): whoever approved it.
 - The 🧑 zones carry their owner's decisions. Surface a conflict; never
   silently contradict one.
-- There is no agent zone here. The Crewmate's working space is the work
+- There is no agent zone here. The Mason's working space is the work
   document, a different file.
 
 ## The two documents
@@ -140,7 +140,7 @@ belongs wholly to the work document.
 ## Notes
 
 Only material written into this file before a work document exists. The
-Crewmate's notes, snippets and worklog belong in the work document's
+Mason's notes, snippets and worklog belong in the work document's
 **Notes & Snippets**.
 
 ## Retrospective
@@ -176,7 +176,7 @@ the `**Status:**` line:
 3. Fill both 🧑 zones carefully.
 4. Keep the top short; order detail rather than deleting it.
 5. At the close, tick acceptance criteria against reality.
-6. The Crewmate creates the work document at the plan step, never before.
+6. The Mason creates the work document at the plan step, never before.
 
 ## When Reviewing Tasks (human)
 

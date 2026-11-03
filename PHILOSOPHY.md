@@ -85,7 +85,7 @@ These are the beliefs chisel is built on:
   review, to dependent slices, and to re-runs.
 - **The fewest roles that hold the quality.** Current frontier models are
   good enough that heavy guidance costs more than it returns. The Architect
-  scopes the task and reads the plan; a Crewmate plans and closes, a Typist types;
+  scopes the task and reads the plan; a Mason plans and closes, a Typist types;
   fresh reviewers read the diff. The **system design is the delegation
   boundary**: the architecture, the scope and the seams are settled in the
   spec; the program design and the typing belong to the session that
@@ -123,14 +123,14 @@ Three situations, one discipline:
   there is nothing to file.
 - **One task** — the Architect reads it where it lives (a file, a bead, a
   Plane issue) and writes the spec document: straight from the task when
-  it is clear, after an interview when it is not. A Crewmate plans against
+  it is clear, after an interview when it is not. A Mason plans against
   the real code, persists the plan in the work document and stops; the
-  Architect reads and approves it; a Typist codes it; the Crewmate runs the two-axis
+  Architect reads and approves it; a Typist codes it; the Mason runs the two-axis
   review and closes (lint/tests/build, the journal, living docs, the
   tracker).
 - **A parent task with slices** — big features: a parent spec document plus
   thin vertical slices with dependency edges. Any slice whose blockers are
-  done can start, each with its own Crewmate and work document.
+  done can start, each with its own Mason and work document.
 
 **The workflow is prose**, one page, as the first version was. **Chisel
 processes one task and does not orchestrate**: chaining tasks, watching a
@@ -181,6 +181,6 @@ and, for the work document,
 evea-ai), dry-run tested on a third untouched monorepo, and dogfooded by
 this very repo — every chisel feature was built as a slice of its own
 methodology. An orchestrator thread has run the first version in production
-since 2026-08-03: over one milestone, eleven Crewmates each wrote a plan,
-stopped for its reading, then typed their own code; every review launched
-two fresh reviewers.
+since 2026-08-03: over one milestone, eleven planning sub-agents each wrote
+a plan, stopped for its reading, then typed their own code; every review
+launched two fresh reviewers.

@@ -9,14 +9,14 @@ and its section title — never a line number, which is wrong by the next edit
 — and says in one sentence what the reader finds there. The rule is the
 writing rule of `.agents/discipline.md`.
 
-The work document is the Crewmate's own file: its program design and the
+The work document is the Mason's own file: its program design and the
 line that records its approval, its worklog, its implementation checkboxes,
 its Notes & Snippets, and the findings of the review. No zone marker: the
 reading gradient does not apply to working material. The reasoning behind
 the split is "The two designs — and why they do not happen at the same
 moment" of [methodology.md](/.agents/methodology.md).
 
-**Who creates it, when, where, under what name.** The Crewmate creates it at
+**Who creates it, when, where, under what name.** The Mason creates it at
 the plan step, never earlier. It lives beside its spec, named by replacing
 the spec's `.spec.md` suffix with `.work.md`: same time id (or slice
 number), same directory. A spec with no work document beside it has never
@@ -30,11 +30,11 @@ system has. A parent spec of a sliced task never gets a work document of its
 own — only its slices do.
 
 **The Architect reads it and approves the plan.** It corrects the plan with
-the Crewmate, then the approval goes on the `**Plan:**` line. Plan approval
+the Mason, then the approval goes on the `**Plan:**` line. Plan approval
 is that line, not a status.
 
 **The review writes into it.** `code-review` reports its findings, and the
-Crewmate records each one in the Diff-Review Findings section with its fix
+Mason records each one in the Diff-Review Findings section with its fix
 or its answer.
 
 ## Work Document Template
@@ -44,7 +44,7 @@ All work documents MUST follow this structure:
 ```markdown
 # <Task name> — work
 
-Created by the Crewmate at the plan step, <date>. Spec:
+Created by the Mason at the plan step, <date>. Spec:
 `<same directory>/<same name>.spec.md`.
 
 **Plan:** waiting for the Architect's reading.
@@ -86,7 +86,7 @@ The findings of `code-review`, judged against the spec document with this
 file as evidence, each with its fix or its answer.
 ```
 
-## When Creating a Work Document (the Crewmate)
+## When Creating a Work Document (the Mason)
 
 1. Create it at the plan step, never before — an open question about the
    *what* at this point means the spec is unfinished; report it rather than
@@ -102,7 +102,7 @@ file as evidence, each with its fix or its answer.
 ## When Reading a Work Document
 
 - The Architect reads the Program Design at the plan step, corrects it with
-  the Crewmate, and records the approval on the `**Plan:**` line.
+  the Mason, and records the approval on the `**Plan:**` line.
 - The reviewers read the spec document as the requirement and this file as
   evidence.
 - A fresh session resuming the work reads the implementation checkboxes and

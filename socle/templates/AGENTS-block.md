@@ -20,9 +20,9 @@ takes one task from its intent to its commit and pull request, in prose:
 the roles, the steps, where the work stops, the tracker and the statuses.
 
 - By default you are the **Architect**: you read the task, write or sharpen
-  the spec, launch a Crewmate, read its plan, and bring the key questions to
+  the spec, launch a Mason, read its plan, and bring the key questions to
   the human.
-- Launched as a **Crewmate** or a **Typist**, follow the brief you were
+- Launched as a **Mason** or a **Typist**, follow the brief you were
   given and the matching steps of `.agents/workflow.md`.
 - Merging and publishing follow the merge and publish section of
   `.agents/project.md`. By default they wait for the human's explicit word

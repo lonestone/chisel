@@ -18,9 +18,9 @@ or a script.
 
 | Role | Who plays it | What it does |
 |---|---|---|
-| **Architect** | The agent a human, or an orchestrator, talks to. This is its default role. | Reads the task, writes or sharpens the spec, launches a Crewmate and talks with it, reads and corrects the plan, rules on what the Crewmate reports, brings the key questions to the human. |
-| **Crewmate** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then launches a Typist to code it, runs `code-review`, and closes the task. |
-| **Typist** | A sub-agent launched by the Crewmate once the plan is approved. | Types code from the approved plan and decides nothing, at a cheaper tier than the Crewmate's (`.agents/reference.md`, "Model tiers"). |
+| **Architect** | The agent a human, or an orchestrator, talks to. This is its default role. | Reads the task, writes or sharpens the spec, launches a Mason and talks with it, reads and corrects the plan, rules on what the Mason reports, brings the key questions to the human. |
+| **Mason** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then launches a Typist to code it, runs `code-review`, and closes the task. |
+| **Typist** | A sub-agent launched by the Mason once the plan is approved. | Types code from the approved plan and decides nothing, at a cheaper tier than the Mason's (`.agents/reference.md`, "Model tiers"). |
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the session that wrote it. |
 
 **The human** owns the intent and the decisions that shape the task. The
@@ -29,7 +29,7 @@ made goes back to the human, with the question stated.
 
 The Architect's thread can be one long thread that compacts and serves as
 the entry point to a project, or one thread per piece of work. In a long
-thread the Architect can run several Crewmates, one per task or slice.
+thread the Architect can run several Masons, one per task or slice.
 
 ## The steps
 
@@ -52,8 +52,8 @@ The human approves the spec when it carries decisions the task did not
 state; otherwise the Architect moves it to `ready` itself. Commit the spec.
 Status: `draft`, then `ready`.
 
-**3. Plan — Crewmate.** The Architect launches a Crewmate with the brief
-below. The Crewmate reads the spec document and what it links to, creates
+**3. Plan — Mason.** The Architect launches a Mason with the brief
+below. The Mason reads the spec document and what it links to, creates
 the work document beside it from the work template, and persists its
 program design there: files, seam signatures, test order, the decisions the
 spec left to the implementation. Then it stops and reports. No code before
@@ -61,13 +61,13 @@ the plan is approved. Status: `in-progress`, written by the Architect at
 launch.
 
 **4. Read the plan — Architect.** Read the spec and the work document,
-nothing else. Correct the plan with the Crewmate, then approve it: the
+nothing else. Correct the plan with the Mason, then approve it: the
 approval is written on the work document's `**Plan:**` line, with who and
 when. A plan that departs from a decision the human made goes to the human
 first.
 
-**5. Code — a Typist the Crewmate launches.** Once the plan is approved,
-the Crewmate launches a Typist with the brief below. The Crewmate types
+**5. Code — a Typist the Mason launches.** Once the plan is approved,
+the Mason launches a Typist with the brief below. The Mason types
 itself only a retouch of a few lines, or while the plan is not settled, and
 writes which exception applies and why in the work document's worklog. The
 Typist executes the approved plan in vertical steps, test-first at the
@@ -77,12 +77,12 @@ and commit at each green step. Run the gate commands declared in
 `.agents/project.md`. Reality that contradicts the plan is fixed in the
 plan, in writing; reality that contradicts the spec is reported.
 
-**6. Review — Crewmate.** Run the `code-review` skill on the full diff of
+**6. Review — Mason.** Run the `code-review` skill on the full diff of
 the task. Its reviewers are fresh sub-agents that never saw the session
 that wrote the code — never skip this step, even for a small retouch. Write
 the findings in the work document; fix each one or answer it there.
 
-**7. Close — Crewmate.** Tick the spec's acceptance criteria against
+**7. Close — Mason.** Tick the spec's acceptance criteria against
 reality. Promote evergreen material into the living docs declared in
 `.agents/project.md`, the glossary and the ADRs among them. Archive the spec and work documents together. Add the
 dated journal entry. Run the `retro` skill and put its proposals in the
@@ -102,8 +102,8 @@ explicit word on that very action is the only go.
 
 | Who stops | For whom | When |
 |---|---|---|
-| Crewmate | Architect | After the plan; after the close, with its report; on a blocker it cannot rule on |
-| Typist | Crewmate | After its part of the plan; on anything the plan does not answer |
+| Mason | Architect | After the plan; after the close, with its report; on a blocker it cannot rule on |
+| Typist | Mason | After its part of the plan; on anything the plan does not answer |
 | Architect | Human | On an unclear intent; on a spec that carries decisions the task did not state; on a plan that departs from the human's decisions; on a blocker above what it owns |
 | Architect | Human | Before a merge or a publish, unless the project lets the agent do it |
 
@@ -126,7 +126,7 @@ A task has one status. The thread doing a step writes the status it leaves.
 |---|---|---|
 | `draft` | The spec is being written, or waits for the human's approval | step 2 |
 | `ready` | The spec is approved and nothing holds the task | step 2 |
-| `in-progress` | A Crewmate is planning, coding, reviewing or closing it | step 3 |
+| `in-progress` | A Mason is planning, coding, reviewing or closing it | step 3 |
 | `done` | Criteria ticked, documents archived | step 7 |
 | `blocked` | Held by a named dependency, written after the value | whoever meets the block |
 | `deferred` | Postponed on purpose | the human |
@@ -143,21 +143,21 @@ Launch one only for a context that must stay clean, for work that runs in
 parallel, or for a cheaper model. Each one costs tokens and a brief to
 write. Three earn it:
 
-- **The Crewmate** keeps the Architect's context clean for reading the plan
+- **The Mason** keeps the Architect's context clean for reading the plan
   and ruling on reports.
 - **The Typist** types the approved plan on a cheaper tier than the
-  Crewmate's.
+  Mason's.
 - **The reviewers** bring fresh eyes to the diff.
 
 A brief is artifacts and paths, never the conversation: whatever the
 sub-agent needs must already be in the repo. Reviewers are always fresh. A
-Crewmate is reused within a live thread — the one that wrote the plan
+Mason is reused within a live thread — the one that wrote the plan
 launches its Typist and runs the review — and a resumed task starts fresh
 from the spec and work documents.
 
-## The Crewmate brief
+## The Mason brief
 
-What the Architect writes when it launches a Crewmate:
+What the Architect writes when it launches a Mason:
 
 - the spec document's path, and the work template's;
 - the branch to work on, and how to commit (explicit paths, no push);
@@ -169,7 +169,7 @@ What the Architect writes when it launches a Crewmate:
 
 ## The Typist brief
 
-What the Crewmate writes when it launches a Typist:
+What the Mason writes when it launches a Typist:
 
 - the approved work document's path, and the part of the plan to type;
 - its tier: *cheap* when the plan is mechanical, *mid* otherwise
