@@ -1,5 +1,5 @@
 ---
-id: unreleased/crewmate-becomes-mason
+id: 0.4.0/crewmate-becomes-mason
 classification: migration
 ---
 
