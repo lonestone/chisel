@@ -1,6 +1,6 @@
 # 03 — The two recipes become release intentions
 
-**Status:** ready
+**Status:** in-progress
 **Blocked by:** 01 — Update reads intentions
 
 ---
