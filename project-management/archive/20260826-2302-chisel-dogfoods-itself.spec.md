@@ -1,7 +1,9 @@
 # Chisel equips itself with the socle it ships
 
-**Status:** ready — chisel v2 closed on 2026-09-15
-(`archive/20260826-1512-chisel-v2.spec.md`)
+**Status:** cancelled — 2026-11-03, superseded by slice 02 of
+`20261102-1543-updates-read-intentions` (install arranges what it finds),
+whose dogfood equipped this repo through `chisel init` and the setup skill's
+placement step. See that slice's work document, "Worklog".
 
 ---
 

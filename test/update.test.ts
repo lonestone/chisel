@@ -8,13 +8,9 @@ import {
   assertStringIncludes,
 } from "@std/assert";
 import { join } from "@std/path";
-import { appendTo, REPO_ROOT, runChisel, withRepo } from "./helpers.ts";
+import { absent, appendTo, REPO_ROOT, runChisel, withRepo } from "./helpers.ts";
 
 const MANIFEST = join(".agents", ".chisel.json");
-
-async function absent(path: string): Promise<boolean> {
-  return await Deno.lstat(path).then(() => false).catch(() => true);
-}
 
 async function sha256Of(text: string): Promise<string> {
   const digest = await crypto.subtle.digest(
@@ -73,6 +69,15 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
 
     const result = await runChisel(["update", target]);
     assertEquals(result.code, 0, result.output);
+    for (
+      const edited of [".agents/skills/tdd/SKILL.md", ".agents/workflow.md"]
+    ) {
+      assertStringIncludes(
+        result.stdout,
+        `overwritten: ${edited}\n`,
+        "a local edit is named before it is replaced",
+      );
+    }
 
     assertEquals(
       await Deno.readTextFile(glue),
@@ -117,8 +122,8 @@ Deno.test("update: managed refresh, glue and personal file left alone", async ()
     assertStringIncludes(result.stdout, "chisel update:", "the summary header");
     assertMatch(
       result.stdout,
-      /^ {2}(changed: |\(no managed files changed\))/m,
-      "the summary reports changed-or-unchanged per the manifest",
+      /^ {2}(overwritten: |changed: |\(no managed files changed\))/m,
+      "the summary reports what it overwrote or changed, or that nothing did",
     );
   });
 });

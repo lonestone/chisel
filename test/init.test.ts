@@ -9,6 +9,7 @@ import {
 } from "@std/assert";
 import { join } from "@std/path";
 import {
+  goldenTree,
   installedTree,
   REPO_ROOT,
   runChisel,
@@ -18,13 +19,6 @@ import {
 
 const BLOCK_BEGIN = "<!-- chisel:begin -->";
 const BLOCK_END = "<!-- chisel:end -->";
-
-async function goldenTree(): Promise<string[]> {
-  const text = await Deno.readTextFile(
-    join(REPO_ROOT, "test", "fixtures", "golden-tree.txt"),
-  );
-  return text.split("\n").filter((line) => line !== "");
-}
 
 function managedBlockOf(agentsMd: string): string {
   const lines = agentsMd.split("\n");
@@ -46,7 +40,7 @@ Deno.test("init: full layout and content preservation", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.copy("brownfield");
 
-    const result = await runChisel(["init", target]);
+    const result = await runChisel(["init", "--arranged", target]);
     assertEquals(result.code, 0, `init exits 0\n${result.output}`);
 
     const tree = await installedTree(target);
@@ -115,7 +109,7 @@ Deno.test("init: a CLAUDE.md whose last line has no newline keeps the import on 
     const lastLine = "the last line of this file has no trailing newline";
     await Deno.writeTextFile(claudeMd, `# Notes\n\n${lastLine}`);
 
-    const result = await runChisel(["init", target]);
+    const result = await runChisel(["init", "--arranged", target]);
     assertEquals(result.code, 0, result.output);
 
     const lines = (await Deno.readTextFile(claudeMd)).split("\n");
@@ -128,7 +122,7 @@ Deno.test("idempotence: init twice changes nothing", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.copy("brownfield");
     assertEquals(
-      (await runChisel(["init", target])).code,
+      (await runChisel(["init", "--arranged", target])).code,
       0,
       "first init exits 0",
     );
@@ -212,7 +206,7 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
   await withRepo(async (workspace) => {
     // (a) A repo with no journal gets one, dated today, with one entry.
     const fresh = await workspace.copy("brownfield");
-    assertEquals((await runChisel(["init", fresh])).code, 0);
+    assertEquals((await runChisel(["init", "--arranged", fresh])).code, 0);
     const journal = await Deno.readTextFile(
       join(fresh, "project-management", "JOURNAL.md"),
     );
@@ -231,10 +225,10 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
       join(legacy, "project-management", "CHANGELOG.md"),
       "# Changelog\n\n## 2026-01-01\n\n- the journal this repo already had\n",
     );
-    const warned = await runChisel(["init", legacy]);
+    const warned = await runChisel(["init", "--arranged", legacy]);
     assertEquals(warned.code, 0, warned.output);
     assertStringIncludes(warned.stderr, "project-management/CHANGELOG.md");
-    assertStringIncludes(warned.stderr, "chisel-upgrade");
+    assertStringIncludes(warned.stderr, "0.2.0/journal-is-journal-md");
     assertEquals(
       await Deno.stat(join(legacy, "project-management", "JOURNAL.md")).then(
         () => true,
@@ -255,7 +249,7 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
       join(logged, "project-management", "LOG.md"),
       "# Log\n\n## 2026-09-10\n\n- chisel init: installed the dev-workflow socle.\n",
     );
-    const loggedRun = await runChisel(["init", logged]);
+    const loggedRun = await runChisel(["init", "--arranged", logged]);
     assertEquals(loggedRun.code, 0, loggedRun.output);
     assertStringIncludes(loggedRun.stderr, "project-management/LOG.md");
     assertEquals(

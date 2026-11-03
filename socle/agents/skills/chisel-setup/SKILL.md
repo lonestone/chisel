@@ -1,6 +1,6 @@
 ---
 name: chisel-setup
-description: Fill in .agents/project.md — the per-repo glue — after `chisel init`. Explores the repo, prefills sections A-I, presents each one at a time for confirmation, and writes accepted sections back surgically. Also poses the current dev's personal .agents/user.md, and sorts out a hand-written AGENTS.md against the block chisel installed. Re-runnable later to revisit any section.
+description: Fill in .agents/project.md, the per-repo glue, section by section with the user. Also places what a first `chisel init` found from another method before anything is installed, poses the dev's personal .agents/user.md, and reconciles a hand-written AGENTS.md with chisel's block. Re-runnable to revisit a section.
 disable-model-invocation: true
 ---
 
@@ -10,7 +10,9 @@ Turn `.agents/project.md`'s defaults into this repo's actual glue, pose the
 current dev's personal file, and leave `AGENTS.md` speaking with one voice.
 One pass, sections A through I, each confirmed before the next. Re-running
 later to revisit a single section is normal — treat the current file as the
-starting recommendation, not as done-forever.
+starting recommendation, not as done-forever. On a repo that already had a
+method of its own, a first `init` stages instead of installing, and this skill
+places what it found with the user before the walk (Step 0).
 
 ## How to talk to the user here
 
@@ -25,12 +27,17 @@ words someone who has never read this repo would understand. The section
 letters and titles of `.agents/project.md` (§A · Task workspace,
 §B · Tracker…) are for the file and for you.
 
-## Step 0 — Precondition
+## Step 0 — Precondition, or placement first
 
-Check `.agents/.chisel.json` exists. If it does not, stop here and tell the
-user to run `deno x jsr:@lonestone/chisel init` first — this skill configures the
-glue, it never installs the socle. Do not attempt to bootstrap `.agents/`
-yourself.
+Check `.agents/.chisel.json` exists. If it does, go to Step 1.
+
+If it does not, look for `.chisel-workspace/session.md`. When it is titled
+`# Chisel install session`, `chisel init` found a method this repo already
+has and installed nothing: run the placement in [PLACEMENT.md](PLACEMENT.md),
+then come back to Step 1. When there is neither a manifest nor an install session, stop here and tell
+the user to run `deno x jsr:@lonestone/chisel init` first — this skill
+configures the glue, it never installs the socle. Do not attempt to bootstrap
+`.agents/` yourself.
 
 ## Step 1 — Silent exploration
 
@@ -46,8 +53,9 @@ facts when you reach the section they affect.
 - **Existing docs**: `README.md`, `doc/`, `docs/`, `CONTEXT.md`, `docs/adr/`
   → candidates for §C (reading list) and §G (glossary/ADRs).
 - **Existing task workspace from a previous methodology** (e.g. a
-  `doc/project-management/` from an earlier convention): if one exists,
-  flag it for §A instead of silently assuming the default root.
+  `doc/project-management/` from an earlier convention; already settled by
+  the placement when it ran): if one exists, flag it for §A instead of
+  silently assuming the default root.
 - **`bd --version`**: run it, record what it says (or that the command does not
   exist), and do nothing else with it. It feeds §B's beads answer only.
   Never install anything.

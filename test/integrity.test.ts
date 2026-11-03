@@ -6,10 +6,15 @@
 // pointers: deep relative links, illustrative paths inside another project's
 // tree, placeholders.
 
-import { assert, assertEquals } from "@std/assert";
+import { assert, assertEquals, assertThrows } from "@std/assert";
 import { join } from "@std/path";
 import { REPO_ROOT, withRepo } from "./helpers.ts";
 import { SOCLE_FILES } from "../src/socle-files.ts";
+import {
+  BASELINE,
+  parseIntention,
+  shippedIntentions,
+} from "../src/intentions.ts";
 
 const AGENTS_PATH = /\.agents\/[A-Za-z0-9._*\/-]+/g;
 const SIBLING_LINK = /\]\((?:\.\/)?([A-Za-z0-9._-]+\.(?:md|toml|sh|tpl))\)/g;
@@ -24,26 +29,6 @@ const WAIVED = new Map<string, string>([
   [
     ".agents/user.md",
     "BY DESIGN — personal file, deliberately never installed (the template is)",
-  ],
-  [
-    ".agents/formulas",
-    "BY DESIGN (chisel-upgrade must name the 0.1.x pieces it retires)",
-  ],
-  [
-    ".agents/profiles",
-    "BY DESIGN (chisel-upgrade must name the 0.1.x pieces it retires)",
-  ],
-  [
-    ".agents/rules",
-    "BY DESIGN (chisel-upgrade must name the layer it retires)",
-  ],
-  [
-    ".agents/rules/task-*.md",
-    "BY DESIGN (chisel-upgrade must name the layer it retires)",
-  ],
-  [
-    ".agents/workflows.md",
-    "BY DESIGN (chisel-upgrade must name the layer it retires)",
   ],
 ]);
 
@@ -133,17 +118,14 @@ Deno.test("integrity: every pointer of the installed socle resolves", async () =
       "the waiver has no stale line: a fixed pointer must leave it",
     );
 
-    // ...and WHO is allowed to name the retired layer today.
-    const citers = dangling
-      .filter((entry) => RETIRED_LAYER.includes(entry.pointer))
-      .map((entry) => entry.source);
-    assert(citers.length > 0, "the migration skill names what it retires");
+    // ...and nobody in the installed socle names the retired layer any more:
+    // the intentions that retire it ship in the package, never in a repo.
     assertEquals(
-      [...new Set(citers)].filter((source) =>
-        !source.startsWith(".agents/skills/chisel-upgrade/")
-      ),
+      dangling
+        .filter((entry) => RETIRED_LAYER.includes(entry.pointer))
+        .map((entry) => `${entry.pointer} (in ${entry.source})`),
       [],
-      "only the migration skill names the pieces it retires",
+      "no installed page names the retired layer",
     );
 
     // Mutation test: plant one broken pointer of each shape, demand both are
@@ -220,3 +202,56 @@ async function* walkFiles(directory: string): AsyncGenerator<string> {
     }
   }
 }
+
+const INTENTION_SECTIONS = [
+  "Goal",
+  "Why",
+  "Applies When",
+  "Do Not Apply When",
+  "Observable Gaps",
+  "Out of Scope",
+  "Reference Paths",
+  "Validation",
+  "Record Result",
+];
+
+Deno.test("integrity: every shipped intention parses, under the id its path gives it", async () => {
+  const shipped = shippedIntentions();
+  assert(shipped.length > 0, "the package ships at least one intention");
+  const slugs = new Set<string>();
+  for (const intention of shipped) {
+    assert(
+      !slugs.has(intention.slug),
+      `the slug ${intention.slug} is shipped once`,
+    );
+    slugs.add(intention.slug);
+    const text = await Deno.readTextFile(join(REPO_ROOT, intention.source));
+    // Throws, naming the file, on a missing frontmatter, a frontmatter id that
+    // is not the path's, or a classification outside the four.
+    const parsed = parseIntention(intention, text);
+    assertEquals(parsed.id, intention.id);
+    assert(parsed.title.length > 0, `${intention.source} has a title`);
+  }
+  // Every intention, the baseline among them, answers the template's nine
+  // sections: an agent reads them in that order.
+  for (const intention of [...shipped, BASELINE]) {
+    const text = await Deno.readTextFile(join(REPO_ROOT, intention.source));
+    parseIntention(intention, text);
+    const headings = text.split("\n").filter((line) => line.startsWith("## "))
+      .map((line) => line.slice(3).trim());
+    assertEquals(headings, INTENTION_SECTIONS, `${intention.source} sections`);
+  }
+
+  // The parser refuses what must not ship: no frontmatter, an id its path
+  // does not give, a classification outside the four.
+  const [first] = shipped;
+  for (
+    const broken of [
+      "# No frontmatter\n",
+      "---\nid: unreleased/another-slug\nclassification: automatic\n---\n",
+      `---\nid: ${first.id}\nclassification: optional\n---\n`,
+    ]
+  ) {
+    assertThrows(() => parseIntention(first, broken));
+  }
+});

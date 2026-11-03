@@ -29,7 +29,7 @@ copying it. A spec with no work document beside it has never been planned.
 - The 🧑 REVIEW CAREFULLY zone must fit in working memory. Prefer a diagram or
   mockup over three paragraphs.
 - Who owns a zone is the rule of "Zone ownership" in
-  [reference.md](../socle/agents/reference.md): whoever approved it.
+  [reference.md](/.agents/reference.md): whoever approved it.
 - The 🧑 zones carry their owner's decisions. Surface a conflict; never
   silently contradict one.
 - There is no agent zone here. The Crewmate's working space is the work
@@ -159,7 +159,7 @@ name with `.spec.md` replaced by `.work.md`. For slices use
 ## Statuses
 
 A task has ONE status, one of the seven values of "Statuses" in
-[workflow.md](../socle/agents/workflow.md): `draft`, `ready`, `in-progress`,
+[workflow.md](/.agents/workflow.md): `draft`, `ready`, `in-progress`,
 `done`, `blocked`, `deferred`, `cancelled`. In a task file it is written on
 the `**Status:**` line:
 

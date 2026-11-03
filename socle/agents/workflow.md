@@ -82,8 +82,12 @@ the findings in the work document; fix each one or answer it there.
 reality. Promote evergreen material into the living docs declared in
 `.agents/project.md`, the glossary and the ADRs among them. Archive the spec and work documents together. Add the
 dated journal entry. Run the `retro` skill and put its proposals in the
-report. Commit, update the tracker, and report to the Architect: what
-landed, which criteria are met, what is left. Status: `done`.
+report. Stop everything you started — Docker containers, dev servers,
+background processes — each by its own identifier (container name or id,
+PID), and only those: never by pattern (`pkill -f`, `--all`), which stops
+the work of others. Commit, update the tracker, and report to the
+Architect: what landed, which criteria are met, what is left. Status:
+`done`.
 
 **After the close — Architect.** Read the close report and rule on anything
 left. Open the pull request. Merge and publish as the merge and publish

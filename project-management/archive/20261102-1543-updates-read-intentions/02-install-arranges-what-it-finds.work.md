@@ -1,0 +1,293 @@
+# 02 — Install arranges what it finds — work
+
+Created by the Crewmate at the plan step, 2026-11-03. Spec:
+`project-management/tasks/20261102-1543-updates-read-intentions/02-install-arranges-what-it-finds.spec.md`.
+
+**Plan:** approved by the Owner through the Architect, 2026-11-03, as written.
+
+## Program Design
+
+### When `init` looks
+
+`init` looks for what the repo already has **only when the repo has no
+manifest**. A repo with a manifest is one chisel installed: its `AGENTS.md`
+carries the markers, its `project-management/` holds the skeleton chisel wrote,
+and looking there would stage every re-run of `init`. A re-run keeps today's
+behaviour, exit 0.
+
+### What `init` looks for
+
+A new module `src/inventory.ts` exports
+`takeInventory(targetDir): Promise<Found[]>`, where a `Found` is
+`{ kind, path }`. It reads only, it is cheap (a few `stat`s and two file reads),
+and it never judges: it names. Kinds, in the order printed:
+
+| Kind                 | Found when                                                                                                                     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| OpenSpec             | `openspec/` is a directory                                                                                                     |
+| Spec Kit             | `.specify/` is a directory, or some `specs/<name>/spec.md` sits beside a `plan.md` or a `tasks.md`                             |
+| task folder          | `project-management/`, `doc/project-management/`, `docs/project-management/` or `tasks/` holds at least one file, at any depth |
+| decision records     | `docs/adr/`, `doc/adr/`, `adr/` or `decisions/` is a directory                                                                 |
+| glossary             | `CONTEXT.md` is a file                                                                                                         |
+| other agent's rules  | `.cursor/rules/` or `.windsurf/` is a directory, or `.github/copilot-instructions.md` is a file                                |
+| instructions file    | `AGENTS.md` holds text outside chisel's markers besides its title; `CLAUDE.md` holds anything but blank lines and `@AGENTS.md` |
+| beads                | `.beads/` is a directory                                                                                                       |
+| first chisel version | `.agents/rules/` or `.agents/workflows.md` (the existing `v1LayoutFound`)                                                      |
+| linked path          | a path `init` would write is a symlink (the existing `linkedPaths`)                                                            |
+
+Two rows go beyond the spec's list, both on purpose:
+
+- **The first chisel version.** Today `init` on such a repo copies the current
+  socle beside the old one, which is exactly what `update` refuses to do. It is
+  a method the repo already has; placement is where it is sorted.
+- **A linked path.** Slice 01 kept `init`'s link refusal at exit 1 "until slice
+  02". It becomes a staging signal, as it already is for `update`: the agent can
+  resolve where the link points with the human.
+
+### What `init` does on a signal
+
+It writes nothing outside the workspace and exits 3, as `update` does:
+
+```
+chisel init: <target> already has a method of its own — staged .chisel-workspace/
+found: OpenSpec — openspec/
+found: task folder — project-management/
+found: instructions file — AGENTS.md
+next: run the setup skill, reference/.agents/skills/chisel-setup/SKILL.md, from .chisel-workspace/
+```
+
+The workspace is the one of slice 01, built whole or not at all by
+`stageWorkspace`, now taking a session kind:
+
+- `.gitignore` (`*`), `reference/` (the socle posed in an empty directory), no
+  `intentions/` (a first install records everything, nothing is pending).
+- `session.md` titled `# Chisel install session`, with `## What init found` (one
+  checklist line per item: kind, path) and `## Next` naming the setup skill's
+  placement step.
+
+An existing workspace makes `init` refuse, exit 1, as it makes `update` refuse:
+a staged session is never overwritten.
+
+### How the agent finishes the install
+
+`chisel init --arranged <target>` skips the inventory and installs as today. It
+still refuses a linked path (exit 1): after placement a link left in place is a
+mistake. The setup skill runs it once the human has ruled, and nobody else needs
+it; the usage line names it.
+
+A flag is the narrowest seam I see. The alternatives — reading the session's
+rulings back, or the skill moving the files away before a plain `init` — either
+make `init` parse the agent's prose or force a move the human may have refused
+("keep in place").
+
+### The setup skill gains a placement step
+
+`chisel-setup` gets a **Step 0 — Placement**, run when there is no manifest and
+`.chisel-workspace/session.md` is an install session (the current Step 0
+precondition otherwise stands):
+
+1. Read the session. For each found item, read enough of it to recommend.
+2. Put the items to the user **one at a time**, each with one recommended
+   placement among three, said in the user's words:
+   - **keep in place** and point chisel's project file at it (§A for a task
+     folder, §G for decisions and a glossary, §C for the rest);
+   - **migrate** it into chisel's format (tasks into
+     `project-management/tasks/`, an instructions file through Step 7);
+   - **leave it alongside**, untouched and unreferenced. A recommendation table
+     per kind tells the agent where to start (OpenSpec and Spec Kit: keep in
+     place; a task folder already named `project-management/`: keep in place; an
+     instructions file: keep, sorted by Step 7; a linked path: resolve with the
+     user before anything else).
+3. Delete the workspace, run `chisel init --arranged .`, then write **only what
+   was accepted**: the pointers into `project.md` are the §A/§C/§G writes of
+   Step 4; a migration moves files with `git mv`. Nothing is written for "leave
+   alongside".
+4. Continue with Step 1, the rulings already standing as facts.
+
+The skill's description says it now also arranges what a fresh install finds.
+
+### What the tests become
+
+The `brownfield` fixture carries a hand-written `AGENTS.md` and `CLAUDE.md`, so
+`init` on it now stages. The tests that use it mean "a repo chisel installed",
+not "a repo with a method": `workspace.install` runs `init --arranged`, and the
+`init` tests on `brownfield` (golden tree, idempotence, journal, intentions
+baseline) run `init --arranged` too. The behaviour they pin does not change.
+
+New tests, in `test/arrange.test.ts`, red first, in this order:
+
+1. **fast-install** — `init` on an empty directory exits 0 and leaves the golden
+   tree minus the root files (the existing boilerplate fixture has no signal
+   either).
+2. **stage-not-write** — `init` on `brownfield` exits 3, nothing outside the
+   workspace moved, no manifest, `session.md` names `AGENTS.md` and `CLAUDE.md`,
+   stdout names the setup skill's path.
+3. **signals-detected** — one table-driven test: a directory per row of the
+   table above (built in the test, a few files each), `init` exits 3 and names
+   that kind and that path. Plus the counter-cases: an empty `tasks/`, a
+   `CLAUDE.md` that is only `@AGENTS.md`, a `specs/x/spec.md` alone.
+4. **re-run** — `init` on an installed repo (manifest present) exits 0.
+5. **workspace kept** — `init` with a workspace present exits 1.
+6. **arranged** — `init --arranged` on `brownfield` installs; on a linked path
+   it still exits 1.
+
+The moved guard tests ("init refuses a linked skill / a linked CLAUDE.md / a
+relocated layout") become exit 3 with nothing written. **placement-proposed** is
+prose in a skill: no test pins it (the suite tests behaviour, never prose); the
+dogfood exercises it.
+
+### The dogfood
+
+On the chisel repo, from this branch: `deno run -A src/main.ts init .` must
+stage, naming `project-management/` and `AGENTS.md`. I then run the placement
+step as the skill says, **asking you the rulings** (they are Pierrick's: this is
+his repo's method), run `init --arranged`, apply them, commit `.agents/`,
+`.claude/skills` and the glue (the Owner's 2026-08-26 ruling), and run
+`chisel check`. Known collisions to put to you then:
+
+- `project-management/000-template.{spec,work}.md` differ from the socle's only
+  by their links (`../socle/agents/X.md` against `/.agents/X.md`); `init`
+  overwrites them with the socle's, whose links now resolve.
+- `scripts/task-id.sh` is overwritten by the socle's copy (the same script, to
+  be diffed).
+- `AGENTS.md` gains the block; Step 7 sorts the hand-written bullets.
+
+The old task `20260826-2302-chisel-dogfoods-itself` is then marked cancelled
+with a pointer to this slice.
+
+### Documents
+
+README (init's exit 3 and `--arranged`), `test/TESTS.md` (the new group), the
+usage text in `src/main.ts`.
+
+## Worklog
+
+- 2026-11-03 — Plan approved as written. `init --arranged` landed first,
+  with the helpers and the brownfield `init` tests moved to it (suite green
+  before any new behaviour). Then `test/arrange.test.ts`, red: the empty
+  repo, the brownfield stage, the signal table, the counter-cases, the
+  re-run, the staged workspace, the linked path. Green with
+  `src/inventory.ts` (`takeInventory`) and `stageInstall` in
+  `src/workspace.ts`, which now shares one `buildWorkspace` with the update
+  session. The relocated-layout guard test moved from init's exit 1 to its
+  exit 3. One refinement: `init` refuses an existing workspace before
+  anything else, `--arranged` included, since either session in progress
+  must be finished first.
+- 2026-11-03 — The setup skill's Step 0 now runs Placement when an install
+  session is staged; README and `test/TESTS.md` say it. Slip caught and
+  undone: `deno fmt` run on explicit markdown paths reflowed files the
+  project's fmt config leaves alone (the plan commit had reflowed both
+  slice specs). Both specs are back to their wrapping, and markdown is no
+  longer passed to `deno fmt`.
+- 2026-11-03 — Dogfood. `chisel init .` on this repo staged (exit 3) and
+  named `task folder — project-management/` and `instructions file —
+  AGENTS.md`. The Owner placed both, through the Architect:
+  `project-management/` stays where it is, its templates replaced by the
+  socle's (only their links changed); `AGENTS.md` keeps its own text, gets
+  the chisel block, and loses the three bullets the block and the glue now
+  cover (the task workspace, the lifecycle, the task id script); `CLAUDE.md`
+  unchanged. Then `init --arranged .`, and the questionnaire answered as a
+  block: tracker default, gates `deno task test` and `deno task check`,
+  merge and publish ask the human, model tiers unset, reading list
+  `CHARTER.md`, `PHILOSOPHY.md`, `review-360-decisions.md`. `chisel check .`
+  clean. The old dogfood task is cancelled and archived, pointing here.
+- 2026-11-03 — Two-axis `code-review` by fresh reviewers. Findings and their
+  answers are below. Fixes landed in one commit, and the dogfood copy of the
+  setup skill was refreshed with `chisel update .`.
+- 2026-11-03 — Close: criteria ticked against reality, spec and work
+  archived together, journal entry 47, `retro` run (proposals below). No
+  evergreen material to promote: the repo has no living docs yet, and the
+  README already says what changed. 44 tests green, `deno task check` clean.
+
+## Implementation Checkboxes
+
+- [x] Plan approved
+- [x] Helpers and existing tests move to `init --arranged`, suite green
+- [x] fast-install and stage-not-write, red then green
+- [x] signals-detected table and counter-cases, red then green
+- [x] re-run, workspace kept, arranged, moved guard tests
+- [x] Setup skill placement step, README, usage, TESTS.md
+- [x] Dogfood on the chisel repo, old dogfood task cancelled
+- [x] code-review, findings answered
+- [x] Close: criteria, archive, journal, retro
+
+## Notes & Snippets
+
+**`retro` proposals, at the close**, none applied, each for its owner:
+
+1. **Automated checks** (`deno.json`, the fmt section, or `AGENTS.md`;
+   owner: the human). `deno fmt` given explicit markdown paths ignores the
+   project's `include` and reflowed 43 socle files and both slice specs.
+   The slip was caught by reading the diff, and then undone. Either a
+   `deno task fmt` that runs `deno fmt src/ test/` only, or one line in
+   `AGENTS.md`: "markdown is never formatted by a tool".
+2. **Process** (`.agents/workflow.md`, step 5 or the work template's
+   Program Design paragraph; owner: the human). A recommendation in the
+   approved plan changed while it was being written into the skill (the
+   task-folder row), and only the Spec reviewer saw it. The rule "a
+   revision that changes what the Architect approved goes back to it"
+   exists in the work template, but nothing prompts the Crewmate to diff
+   the plan against the result. The close step could ask for one line:
+   "the plan, compared with what landed".
+3. **Spec writing** (`project-management/000-template.spec.md`, "Acceptance
+   Criteria"; owner: the human). "Writes only what the human accepted"
+   hid a write the human was never asked about: the templates and the
+   script that install always copies. When a criterion says "only X", it
+   should name what the code writes unconditionally beside X.
+
+## Diff-Review Findings
+
+Reviewed since 75daa6f by fresh reviewers, 2026-11-03.
+
+**Standards**
+
+- *A second copy of the block markers in `src/inventory.ts`, and a
+  hard-coded `@AGENTS.md`* (hard: `src/markers.ts` says those literals are a
+  contract). Fixed: imported from `markers.ts`.
+- *A README line about 114 characters long in the linked-path paragraph.*
+  Fixed: rewrapped.
+- *`goldenTree` and an lstat helper duplicated across test files*
+  (`test/TESTS.md` says helpers live in `test/helpers.ts`). Fixed:
+  `goldenTree` and `absent` moved there, and four files use them.
+- *Mysterious names `ownText` and `read`.* Fixed: they are now
+  `ownAgentsText` and `readFile`. `DECISION_FOLDERS` is now `as const`, like
+  its neighbour.
+- *`foundLine` exported with no outside caller.* Fixed: made private.
+- *The header of `src/init.ts` did not say a first init may stage.* Fixed.
+- *Bare `§C`/`§G` and "Step 4's span" in the Placement step* (the writing
+  rule of `.agents/discipline.md`). Fixed: section titles named, and the
+  span says what it is.
+- *`Found.kind` as a string, the dir/file tuples, and `repoWith`'s trailing
+  slash* (possible Primitive Obsession). Declined: the kinds are words a
+  human reads in the session and the skill's table, and a union would add
+  ceremony with only one producer.
+- *A new import cycle between `init.ts` and `workspace.ts`.* Declined for
+  this slice: it is harmless under ES modules, and breaking it means moving
+  `poseSocle` out of `init.ts`. That is a refactor for a quieter moment.
+- *`--arranged` parsed inline in `run()`, and accepted in any position.*
+  Declined: it is one flag, and its position does not matter to the user.
+
+**Spec**
+
+- *`init --arranged` overwrites the repo's own task templates and
+  `scripts/task-id.sh` unasked*, against "writes only what the human
+  accepted". Fixed in the setup skill: before installing, Placement names
+  those three paths and puts any collision to the user as one more item.
+  The dogfood had raised it by hand.
+- *The skill's task-folder row ("keep when it pairs a spec with a work
+  document, migrate otherwise") had drifted from the approved plan
+  ("keep in place").* Fixed: the row now says keep.
+- *No record that the OpenSpec and Spec Kit layouts were checked against
+  their own documentation.* Answered: the layouts follow each tool's
+  documented tree. OpenSpec keeps everything under `openspec/` (`specs/`,
+  `changes/`, `project.md`). Spec Kit keeps `.specify/` (memory,
+  scripts, templates) and one `specs/<NNN-feature>/` per feature holding
+  `spec.md`, `plan.md` and `tasks.md`. The inventory reads the root folder
+  of each, plus a Spec Kit feature folder without `.specify/`.
+- *Empty decision-record and other-agent folders count as found, while an
+  empty task folder does not.* Answered: as the spec says ("with files" is
+  asked of the task folder only). An empty `docs/adr/` is a declared
+  intention to keep decisions there, which is worth one placement question.
+- *Scope beyond the spec* (`--arranged`, the "first chisel version" and
+  "linked path" signals, refusal while a workspace exists). All announced
+  in the approved plan or the worklog.

@@ -17,3 +17,6 @@ export function warn(message: string): void {
 export function reportLine(text: string): void {
   console.log(`  ${text}`);
 }
+
+/** The exit of a command that staged a workspace: an agent has work to do. */
+export const AGENT_WORK_EXIT = 3;

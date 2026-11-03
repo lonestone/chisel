@@ -3,6 +3,7 @@
 
 import { join } from "@std/path";
 import { agentsBlockHash, sha256File } from "./hash.ts";
+import { pendingIntentions, readIntention } from "./intentions.ts";
 import { BLOCK_KEY, manifestPath, readManifest } from "./manifest.ts";
 import { packageVersion } from "./paths.ts";
 import { reportStaleGlue } from "./project-md.ts";
@@ -91,6 +92,14 @@ export async function check(targetDir: string): Promise<number> {
     reportLine("OK adapter: AGENTS.md managed block markers");
   } else {
     reportLine("MISSING adapter: AGENTS.md managed block markers");
+    exitCode = 1;
+  }
+
+  // An intention the repo has neither applied nor skipped: the repo is not
+  // where this version of chisel expects it, as surely as a drifted file.
+  for (const shipped of pendingIntentions(manifest.intentions)) {
+    const intention = await readIntention(shipped);
+    reportLine(`pending: ${intention.id} (${intention.classification})`);
     exitCode = 1;
   }
 

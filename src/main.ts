@@ -8,6 +8,7 @@
 import { check } from "./check.ts";
 import { init } from "./init.ts";
 import { packageVersion } from "./paths.ts";
+import { record } from "./record.ts";
 import { ChiselError, UsageError } from "./report.ts";
 import { update } from "./update.ts";
 
@@ -16,16 +17,25 @@ export function usage(): string {
     "chisel — install, update, and check the Lonestone dev-workflow socle",
     "",
     "Usage:",
-    "  chisel init [target-dir]    copy the socle + adapters (default target-dir: .)",
+    "  chisel init [target-dir]    copy the socle + adapters (default target-dir: .);",
+    "                              a repo with a method of its own is staged instead",
+    "  chisel init --arranged [target-dir]",
+    "                              install once the setup skill has placed what init found",
     "  chisel update [target-dir]  refresh managed files + AGENTS.md block (default: .)",
-    "  chisel check [target-dir]   report version + local divergences, zero writes (default: .)",
+    "  chisel check [target-dir]   report version, divergences and pending intentions, zero writes",
+    "  chisel record <id> --applied [target-dir]",
+    '  chisel record <id> --skipped "<reason>" [target-dir]',
+    "                              write one intention's result into the manifest",
     "  chisel --version            print the installed chisel version",
     "  chisel --help               show this message",
     "",
     "Exit codes:",
     "  0  the command did what it says",
-    "  1  a refusal, a missing precondition, or a divergence found by check",
+    "  1  a refusal, a missing precondition, or a divergence or a pending",
+    "     intention found by check",
     "  2  a usage error: an unknown command, or an argument too many",
+    "  3  an agent has work to do: init or update staged .chisel-workspace/",
+    "     instead of copying, and names the skill that takes it from there",
     "",
     "Requires Deno 2.6 or later. `deno x jsr:@lonestone/chisel` runs with every",
     "permission and no prompt, as npx would. `deno run jsr:@lonestone/chisel`",
@@ -45,12 +55,19 @@ function targetOf(rest: string[]): string {
 export async function run(args: string[]): Promise<number> {
   const [command, ...rest] = args;
   switch (command) {
-    case "init":
-      return await init(targetOf(rest));
+    case "init": {
+      const arranged = rest.includes("--arranged");
+      return await init(
+        targetOf(rest.filter((arg) => arg !== "--arranged")),
+        { arranged },
+      );
+    }
     case "update":
       return await update(targetOf(rest));
     case "check":
       return await check(targetOf(rest));
+    case "record":
+      return await record(rest);
     case "--version":
     case "version":
       if (rest.length > 0) {

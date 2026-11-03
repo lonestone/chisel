@@ -10,17 +10,21 @@
   },
   "tasks": {
     "test": "deno test -A test/",
-    "check": "deno check src/ test/ && deno lint && deno fmt --check"
+    "check": "deno check src/ test/ scripts/ && deno lint && deno fmt --check",
+    "promote-intentions": "deno run --allow-read --allow-write --allow-run=git scripts/promote-intentions.ts",
+    "release-check": "deno run --allow-read --allow-run=git scripts/release-check.ts",
+    "commit-lint": "deno run --allow-read --allow-env=GITHUB_EVENT_PATH --allow-run=git scripts/commit-lint.ts",
+    "hooks": "deno run --allow-read --allow-write --allow-run=git scripts/commit-lint.ts install-hook"
   },
   "publish": {
     "include": ["src/", "socle/", "deno.json", "README.md"]
   },
   "fmt": {
-    "include": ["src/", "test/"],
-    "exclude": ["test/fixtures/", "test/TESTS.md"]
+    "include": ["src/", "test/", "scripts/"],
+    "exclude": ["test/fixtures/", "test/TESTS.md", "scripts/*.md"]
   },
   "lint": {
-    "include": ["src/", "test/"],
-    "exclude": ["test/fixtures/", "test/TESTS.md"]
+    "include": ["src/", "test/", "scripts/"],
+    "exclude": ["test/fixtures/", "test/TESTS.md", "scripts/*.md"]
   }
 }

@@ -5,7 +5,13 @@
 import { join } from "@std/path";
 import { agentsBlockHash, sha256File } from "./hash.ts";
 import { packageVersion } from "./paths.ts";
-import { managedSocleFiles } from "./install.ts";
+import {
+  baselineRecord,
+  type IntentionRecord,
+  type IntentionResult,
+  today,
+} from "./intentions.ts";
+import { ChiselError } from "./report.ts";
 import { isFile, readTextIfPresent } from "./target.ts";
 
 /** Not a file: the hash of the managed block inside `AGENTS.md`. */
@@ -14,6 +20,8 @@ export const BLOCK_KEY = "AGENTS.md#block";
 export interface Manifest {
   readonly version: string;
   readonly managed: Record<string, string>;
+  /** What the repo did with each intention it has met. */
+  readonly intentions: IntentionRecord;
 }
 
 /** Where the manifest sits, relative to the target. */
@@ -29,16 +37,40 @@ export async function readManifest(
   const text = await readTextIfPresent(manifestPath(targetDir));
   if (text === null) return null;
   const parsed = JSON.parse(text) as Partial<Manifest>;
-  return { version: parsed.version ?? "", managed: parsed.managed ?? {} };
+  const version = parsed.version ?? "";
+  return {
+    version,
+    managed: parsed.managed ?? {},
+    // A manifest written before intentions were recorded: what its version
+    // shipped counts as applied, and the next write makes it explicit.
+    intentions: parsed.intentions ?? baselineRecord(version, today()),
+  };
+}
+
+function sortedKeys<T>(record: Record<string, T>): Record<string, T> {
+  const sorted: Record<string, T> = {};
+  for (const key of Object.keys(record).sort()) sorted[key] = record[key];
+  return sorted;
 }
 
 /** Keys sorted, two-space indent, one trailing newline — stable across runs. */
 export function serializeManifest(manifest: Manifest): string {
-  const managed: Record<string, string> = {};
-  for (const name of Object.keys(manifest.managed).sort()) {
-    managed[name] = manifest.managed[name];
+  const intentions: Record<string, IntentionResult> = {};
+  for (
+    const [id, { date, reason, result }] of Object.entries(
+      sortedKeys(manifest.intentions),
+    )
+  ) {
+    intentions[id] = reason === undefined
+      ? { date, result }
+      : { date, reason, result };
   }
-  return `${JSON.stringify({ managed, version: manifest.version }, null, 2)}\n`;
+  const ordered = {
+    intentions,
+    managed: sortedKeys(manifest.managed),
+    version: manifest.version,
+  };
+  return `${JSON.stringify(ordered, null, 2)}\n`;
 }
 
 // The files the manifest tracks (the managed block excepted, which is not a
@@ -56,12 +88,13 @@ export function serializeManifest(manifest: Manifest): string {
 
 /**
  * Rewrites the manifest from the current state of the target, and returns it.
- * It records the files of `tracked` that exist — every managed file when
- * omitted — so a command that did not write a path never adopts it.
+ * It records the files of `tracked` that exist, so a command that did not
+ * write a path never adopts it, and the intentions record it is given.
  */
 export async function writeManifest(
   targetDir: string,
-  tracked: readonly string[] = managedSocleFiles(),
+  tracked: readonly string[],
+  intentions: IntentionRecord,
 ): Promise<Manifest> {
   const managed: Record<string, string> = {};
   for (const relative of tracked) {
@@ -71,12 +104,38 @@ export async function writeManifest(
   const agentsMd = await readTextIfPresent(join(targetDir, "AGENTS.md"));
   if (agentsMd !== null) managed[BLOCK_KEY] = await agentsBlockHash(agentsMd);
 
-  const manifest: Manifest = { version: await packageVersion(), managed };
+  const manifest: Manifest = {
+    version: await packageVersion(),
+    managed,
+    intentions,
+  };
   await Deno.writeTextFile(
     manifestPath(targetDir),
     serializeManifest(manifest),
   );
   return manifest;
+}
+
+/**
+ * Writes one intention's result into the manifest, and nothing else: the
+ * managed hashes and the version stay what the last install wrote.
+ */
+export async function recordIntention(
+  targetDir: string,
+  id: string,
+  result: IntentionResult,
+): Promise<void> {
+  const manifest = await readManifest(targetDir);
+  if (manifest === null) {
+    throw new ChiselError(`no manifest at ${manifestPath(targetDir)}`);
+  }
+  await Deno.writeTextFile(
+    manifestPath(targetDir),
+    serializeManifest({
+      ...manifest,
+      intentions: { ...manifest.intentions, [id]: result },
+    }),
+  );
 }
 
 export type OrphanVerdict = "removed" | "orphaned" | "gone";

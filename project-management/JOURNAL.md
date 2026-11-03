@@ -5,6 +5,132 @@ ships.
 
 ---
 
+## 49. 2026-11-03 — Chisel releases through a Release PR, after the boilerplate
+
+Chisel no longer releases from a laptop. On every push to `main`,
+release-please keeps a Release PR open with the next version and a
+generated `CHANGELOG.md`. A maintainer prepares it with the
+`chisel-release` skill: promote the intentions last, check each against
+the diff, push. A human merges it, and the same CI run tags it, adds the
+release's intentions to the GitHub Release and publishes to JSR through
+OIDC, with no stored token. `deno task release-check` holds every decision
+the workflows make:
+- a pull request that changes `socle/` adds an intention, or carries the
+  label `no-intention`;
+- the Release PR carries the promotion;
+- the tag matches `deno.json`, and nothing is left unreleased.
+
+On the Owner's word at the approval, every commit is now conventional,
+`type(scope): description`, as in the boilerplate but in Deno:
+`scripts/commit-lint.ts` holds the types and scopes, `deno task hooks`
+installs the commit-msg hook, and CI lints each pull request's commits and
+its title. The history of v2 before the rule is exempt rather than
+rewritten, and v2 lands on `main` as one squashed `feat` commit. The GitHub
+settings (squash only, the label, Actions that open pull requests, the
+protection of `main`) are a script, `scripts/configure-github-repo.sh`, dry
+run by default.
+
+Reviewed by `code-review` with two fresh reviewers. They found a WIP rule
+too wide, a breaking-change spelling missed, a settings script that needed
+`python3`, and a Release PR with nothing to promote that would never run
+its checks; all fixed. The spec, which still said "conventional titles,
+not conventional commits", was brought in step with the approval. 75 tests
+green, `deno task check` clean, nothing merged, tagged or published. Left
+to the Owner: the JSR link (I1), before the first Release PR is merged.
+
+## 48. 2026-11-03 — The recipes become release intentions (slice 03, closing "Updates and installs read intentions")
+
+`chisel-upgrade` is gone. Its two hand-written recipes are now intentions
+that `update` reads. The 0.1.x recipe became the five intentions of 0.2.0;
+0.2.4 ships two informational ones. The first-version recipe became
+`baseline`, the one intention outside every release folder. It takes a repo
+chisel did not install, or installed in its first version, to the current
+layout whole, wherever its method lives. It is never recorded under its own
+id: the manifest the close leaves is its record. The update skill now closes
+links itself, and it records an intention a repo already applied by hand.
+
+On the Owner's word during the slice, the boilerplate's discipline came
+along:
+- an intention is written in the change's own pull request, under
+  `unreleased/` (`CONTRIBUTING.md`);
+- `deno task promote-intentions <version>` moves them at the release, with
+  their ids and the shipped list;
+- the Crewmate stops what it started, by identifier, before it reports.
+
+Chisel's own record was missing the 0.2.0 ids, which predate it. They were
+recorded applied by hand.
+
+Reviewed by `code-review` with two fresh reviewers. Two passages described
+the CLI wrongly: a step cited by number, and "the close records the
+baseline". The baseline had also lost two checks from the old recipe, and
+`TESTS.md` was out of date. All fixed. 51 tests green, `deno task check`
+clean, not published. The three slices are closed, so the task is done.
+Next is the task "Chisel releases through a Release PR, after the
+boilerplate".
+
+## 47. 2026-11-03 — An install arranges what it finds (slice 02 of "Updates and installs read intentions")
+
+A first `chisel init` now looks before it writes. On a repo that already has
+a method of its own, it writes nothing in the project, stages
+`.chisel-workspace/` and exits 3, naming each thing it found. That covers
+OpenSpec, Spec Kit, a task folder holding files, decision records, a
+glossary, another tool's agent rules, a hand-written `AGENTS.md` or
+`CLAUDE.md`, beads, the first chisel version's layer and a linked path. The
+setup skill's new Placement step puts each item to the human, one at a
+time: keep it in place and point the glue at it, bring it into chisel's
+format, or leave it beside. `init --arranged` then installs. A repo with
+nothing to arrange installs as before, and `init` refuses while any session
+is staged.
+
+Chisel equipped itself this way. `project-management/` was kept,
+`AGENTS.md` kept its own lines minus the three the block now carries, and
+`chisel check` is clean. The older dogfood task is cancelled in favour of
+this slice. Reviewed by `code-review` with two fresh reviewers, which led to
+these fixes:
+- the block markers now have one source;
+- the test helpers are shared;
+- the task-folder recommendation is back to what was approved;
+- Placement now names the three files `init --arranged` always writes, so a
+  repo's own are never overwritten unasked.
+
+A new `arrange` test group. 44 tests green, `deno task check` clean, not
+published. Slice archived; slice 03 remains.
+
+---
+
+## 46. 2026-11-02 — `update` reads intentions (slice 01 of "Updates and installs read intentions")
+
+The Owner's direction: an update reads intentions, changelogs written for
+agents, on the model of the Lonestone boilerplate. This first slice ships
+the mechanism. A release carries its intentions under `socle/intentions/`,
+in `<version>/` folders and an `unreleased/` one. Each has an id and a
+classification (`automatic`, `migration`, `breaking-manual`,
+`informational`) in its frontmatter, then the sections of the
+`chisel-upgrade` intentions. The manifest records each one applied or
+skipped. A manifest written before this release counts everything up to
+its version as applied.
+
+`update` takes the fast path when nothing needs judgement: it copies as
+before, names each managed file someone edited on an `overwritten:` line
+(the Architect's ruling), and records what it closed. Otherwise it writes
+nothing in the project's files. A pending `migration` or `breaking-manual`,
+no manifest, the first version's layer or a linked path stages
+`.chisel-workspace/` instead: the pending intentions, the reference tree, a
+checklist, and a `.gitignore` of its own. `update` then exits 3 and names
+the new `chisel-update` skill. `chisel record` writes one result and ticks
+the checklist, and `check` reports what is pending. The one intention
+shipped is real: the manifest records intentions, `automatic`.
+
+Eight tests in a new `intentions` group, the copy of the package built in
+a test standing in for releases not yet written. The four `update`
+refusals of 0.2.4 now stage. Reviewed by `code-review` with two fresh
+reviewers: steps cited by number, a plain error for a refusal and a cast
+resting on a comment were fixed, and the departures from the literal
+criteria were written into the slice's Notes. 37 tests green. Not
+published. Slice archived; slices 02 and 03 remain.
+
+---
+
 ## 45. 2026-11-02 — 0.2.4: update refuses what it does not recognise
 
 Published on the Owner's word ("ok publie"), so that the refusal's pointer

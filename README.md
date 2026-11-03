@@ -82,6 +82,16 @@ your lint and test commands, whether it may merge on its own. What you
 confirm is written to `.agents/project.md`, the one file that makes chisel
 yours.
 
+On a repo that already has a method of its own — OpenSpec or Spec Kit
+specs, a task folder, decision records, another agent's rules, a
+hand-written `AGENTS.md` — `init` installs nothing. It names what it found,
+stages a workspace git ignores, `.chisel-workspace/`, and exits with code 3.
+The same skill starts there: for each thing found, it recommends keeping it
+where it is with chisel pointing at it, bringing it into chisel's format, or
+leaving it beside chisel, and waits for your answer before the next. Then it
+installs with `init --arranged`, writes only what you accepted, and goes on
+with the settings.
+
 That's it. Give it a task.
 
 Chisel needs Deno 2.6 or later, and nothing else: no `node_modules`, no
@@ -118,31 +128,44 @@ deno x jsr:@lonestone/chisel update
 ```
 
 `update` refreshes what chisel installed and never touches your settings,
-your journal or your own files.
+your journal or your own files. A file of chisel's that someone edited is
+put back and named on an `overwritten:` line.
 
-**Coming from 0.1.x**, `update` also removes what that version installed
-and this one retired: the step files, the role pages, the agent definitions
-in `.claude/agents/` and `.codex/agents/`. A file someone edited is left in
-place and named on an `orphaned:` line; a line of your settings that has
-become false is named on a `stale:` line. Then ask your agent to run the
-`chisel-upgrade` skill: it rewrites the tracker settings, moves your task
-statuses to the new ones, and renames the journal, with you validating each
-step.
+**Each release ships intentions**: one per change your repo must act on,
+written for an agent, and classified by how much judgement it needs. Your
+manifest, `.agents/.chisel.json`, records which ones you applied or
+skipped. When every pending intention needs no judgement, `update` copies
+and records them, as above.
 
-**Coming from the first version, or from a method chisel did not
-install**, `update` refuses and writes nothing: it only updates a repo
-whose manifest, `.agents/.chisel.json`, it wrote itself. It names the
-`chisel-upgrade` skill, which moves the repo over with you, wherever it
-keeps its method.
+**When one needs judgement, or your repo is not as chisel installed it** —
+no manifest, the first version's files, a symbolic link where chisel
+writes — `update` writes nothing in your files. It stages a workspace,
+`.chisel-workspace/`, that git ignores: the pending intentions, the
+reference tree of the new version, and a checklist. It prints the
+checklist and exits with code 3. Then ask your agent to follow the
+`chisel-update` skill it names: the agent proposes what to apply, finds
+where your repo keeps its method, shows each move before making it, stops
+for you on anything breaking, and records each result with
+`chisel record`. You validate the diff.
 
-`init` and `update` also refuse to write a path that is a symbolic link,
-or sits under one, and name each: writing through it would change a file
-chisel never installed. Outside `.agents/`, `update` only refreshes the
-files it installed and you kept, so it never plants a second task
-workspace beside yours.
+**Coming from 0.1.x**, the session lists the intentions of 0.2.0: the
+prose workflow that replaces formulas and agent definitions, one tracker
+section, seven statuses, the merge and publish section, and the journal
+renamed `JOURNAL.md`. The agent applies each one with you, then closes with
+`chisel update`, which removes what 0.1.x installed and this version
+retired. A file someone edited is left in place and named on an
+`orphaned:` line. **A repo chisel did not install** but that already has an `.agents/`
+folder, or one chisel installed in its first version, gets one intention instead, `baseline`: it takes the repo
+to the current layout whole, wherever its method lives today.
 
-`chisel check` tells you which version is installed and whether anything
-drifted from it.
+On a repo chisel has not installed yet, a path `init` would write that is
+a symbolic link, or sits under one, is one of the things it stages for the
+setup skill; `init --arranged` refuses one, naming each. Outside
+`.agents/`, `update` only refreshes the files it installed and you kept, so
+it never plants a second task workspace beside yours.
+
+`chisel check` tells you which version is installed, whether anything
+drifted from it, and which intentions are pending.
 
 ## Working on chisel itself
 
@@ -155,9 +178,13 @@ deno run -A src/main.ts init ../some-repo
 `deno task test` runs the suite ([test/TESTS.md](./test/TESTS.md) says what
 it protects); `deno task check` type-checks, lints and format-checks.
 
-To release, bump `version` in `deno.json`, add a dated entry to
-`project-management/JOURNAL.md`, commit, and run `deno publish` from a clean
-tree. What gets published is what `publish.include` in `deno.json` names.
+Every commit is conventional, `type(scope): description`: run
+`deno task hooks` once in a clone to install the commit-msg hook.
+
+To release, a maintainer prepares the Release PR that release-please keeps
+open on `main` with the `chisel-release` skill, and a human merges it; CI then
+tags it and publishes to JSR. [RELEASING.md](./RELEASING.md) explains the
+system, and what gets published is what `publish.include` in `deno.json` names.
 
 The `sync-upstream` script pulls Matt Pocock's skill improvements into our
 forks: the agent proposes each merge, a human validates skill by skill.

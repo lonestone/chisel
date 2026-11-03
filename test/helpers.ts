@@ -6,6 +6,7 @@
 // every use goes through a copy under a temp root.
 
 import { fromFileUrl, join } from "@std/path";
+import { SOCLE_FILES } from "../src/socle-files.ts";
 
 export const REPO_ROOT: string = fromFileUrl(new URL("../", import.meta.url));
 export const ENTRY: string = join(REPO_ROOT, "src", "main.ts");
@@ -44,7 +45,10 @@ export interface Workspace {
   readonly root: string;
   /** A raw copy of a fixture, untouched by chisel. */
   copy(fixture: string): Promise<string>;
-  /** A copy of a fixture with `chisel init` already run on it. */
+  /**
+   * A copy of a fixture with `chisel init --arranged` already run on it: a
+   * repo chisel installed, whatever method the fixture carried before.
+   */
   install(fixture: string): Promise<string>;
   /** An empty directory under the root, for a scratch file or a symlink. */
   dir(name: string): Promise<string>;
@@ -70,7 +74,7 @@ class TempWorkspace implements Workspace {
 
   async install(fixture: string): Promise<string> {
     const target = await this.copy(fixture);
-    const result = await runChisel(["init", target]);
+    const result = await runChisel(["init", "--arranged", target]);
     if (result.code !== 0) {
       throw new Error(
         `priming \`chisel init\` failed for ${fixture}:\n${result.output}`,
@@ -127,6 +131,19 @@ const INSTALLED_ROOTS = [
   "scripts",
   "project-management",
 ] as const;
+
+/** The expected installed layout, from `test/fixtures/golden-tree.txt`. */
+export async function goldenTree(): Promise<string[]> {
+  const text = await Deno.readTextFile(
+    join(REPO_ROOT, "test", "fixtures", "golden-tree.txt"),
+  );
+  return text.split("\n").filter((line) => line !== "");
+}
+
+/** True when nothing exists at the path; a dangling link counts as present. */
+export async function absent(path: string): Promise<boolean> {
+  return await Deno.lstat(path).then(() => false).catch(() => true);
+}
 
 /**
  * The installed layout, path by path — the tree chisel is responsible for,
@@ -198,4 +215,133 @@ async function hashOf(path: string): Promise<string> {
 
 export async function appendTo(path: string, text: string): Promise<void> {
   await Deno.writeTextFile(path, text, { append: true });
+}
+
+/** An intention a test package ships beside the real ones. */
+export interface ExtraIntention {
+  /** A version, or `unreleased`. */
+  readonly release: string;
+  /** The file name, `NN-<slug>.md` in a release, `<slug>.md` unreleased. */
+  readonly file: string;
+  readonly classification: string;
+}
+
+/**
+ * A copy of this package that ships extra intentions, for the cases no real
+ * release ships yet: a pending `migration`, an `automatic` beside the real
+ * ones. Its socle list is the real one plus the extras. Returns the copy's
+ * entry module, for `runChisel`.
+ */
+export async function packageWith(
+  workspace: Workspace,
+  extras: readonly ExtraIntention[],
+): Promise<string> {
+  const root = await workspace.dir("package");
+  await copyTree(join(REPO_ROOT, "src"), join(root, "src"));
+  await copyTree(SOCLE, join(root, "socle"));
+  await Deno.copyFile(join(REPO_ROOT, "deno.json"), join(root, "deno.json"));
+  const added: string[] = [];
+  for (const extra of extras) {
+    const slug = extra.file.replace(/^\d+-/, "").replace(/\.md$/, "");
+    const relative = `intentions/${extra.release}/${extra.file}`;
+    await Deno.mkdir(join(root, "socle", "intentions", extra.release), {
+      recursive: true,
+    });
+    await Deno.writeTextFile(
+      join(root, "socle", relative),
+      [
+        "---",
+        `id: ${extra.release}/${slug}`,
+        `classification: ${extra.classification}`,
+        "---",
+        "",
+        `# A test intention, ${slug}`,
+        "",
+      ].join("\n"),
+    );
+    added.push(relative);
+  }
+  await Deno.writeTextFile(
+    join(root, "src", "socle-files.ts"),
+    `export const SOCLE_FILES: readonly string[] = ${
+      JSON.stringify([...SOCLE_FILES, ...added], null, 2)
+    };\n`,
+  );
+  return join(root, "src", "main.ts");
+}
+
+/** Where a staged update leaves its workspace, inside the target. */
+export const WORKSPACE = ".chisel-workspace";
+
+/** A snapshot of everything but the workspace: the project's own files. */
+export function outsideWorkspace(
+  entries: Record<string, SnapshotEntry>,
+): Record<string, SnapshotEntry> {
+  return Object.fromEntries(
+    Object.entries(entries).filter(([path]) =>
+      path !== WORKSPACE && !path.startsWith(`${WORKSPACE}/`)
+    ),
+  );
+}
+
+/** Runs git in `root` and returns its output; a failure fails the test. */
+export async function gitIn(root: string, ...args: string[]): Promise<string> {
+  const result = await new Deno.Command("git", {
+    args,
+    cwd: root,
+    stdout: "piped",
+    stderr: "piped",
+  }).output();
+  if (!result.success) {
+    throw new Error(
+      `git ${args.join(" ")}: ${new TextDecoder().decode(result.stderr)}`,
+    );
+  }
+  return new TextDecoder().decode(result.stdout);
+}
+
+/** Commits everything in `root` under `message`; returns the commit's id. */
+export async function commitAll(
+  root: string,
+  message: string,
+): Promise<string> {
+  await gitIn(root, "add", "-A");
+  await gitIn(
+    root,
+    "-c",
+    "user.name=test",
+    "-c",
+    "user.email=test@example.invalid",
+    "commit",
+    "-qm",
+    message,
+  );
+  return (await gitIn(root, "rev-parse", "HEAD")).trim();
+}
+
+/**
+ * A git repo holding a copy of chisel's intentions, its shipped list and a
+ * `deno.json` at `version`, committed once: what the maintainer's release
+ * scripts run on.
+ */
+export async function copyOfRepo(
+  root: string,
+  version: string,
+): Promise<string> {
+  await copyTree(
+    join(REPO_ROOT, "socle", "intentions"),
+    join(root, "socle", "intentions"),
+  );
+  await Deno.mkdir(join(root, "src"));
+  await Deno.copyFile(
+    join(REPO_ROOT, "src", "socle-files.ts"),
+    join(root, "src", "socle-files.ts"),
+  );
+  await Deno.writeTextFile(
+    join(root, "deno.json"),
+    JSON.stringify({ version }),
+  );
+  await gitIn(root, "init", "-q", "-b", "main");
+  await commitAll(root, "copy");
+  return root;
 }
