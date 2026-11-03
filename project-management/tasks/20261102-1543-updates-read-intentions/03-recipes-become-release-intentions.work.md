@@ -3,7 +3,7 @@
 Created by the Crewmate at the plan step, 2026-11-03. Spec:
 `project-management/tasks/20261102-1543-updates-read-intentions/03-recipes-become-release-intentions.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** waiting for the Architect's reading. Points 1, 2 and 4: no objection from Pierrick (2026-11-03); point 3 revised after the boilerplate, Crewmate clean-up added.
 
 ## Program Design
 
@@ -85,20 +85,86 @@ layout-free.
 up to the version reached). I see no version to record for a repo chisel
 did not install. **To approve.**
 
-### `unreleased/` promotion
+### Maintaining intentions, after the Lonestone boilerplate
 
-**No command.** The release step is the two edits TEMPLATE.md already
-gives: `git mv unreleased/<slug>.md <version>/NN-<slug>.md`, then rewrite
-the id. Two guards hold it:
+Revised 2026-11-03 at Pierrick's request: copy what
+`lonestone-boilerplate` does. I read these files in that repo:
 
-- the existing integrity test parses every shipped intention, and fails
-  if a file's id does not match its path (I'll check it exists, and add
-  it if not);
-- `resolves()` already counts a recorded `unreleased/<slug>` for the
-  promoted id. A test pins that.
+- `.boilerstone/docs/release-maintainer-runbook.md`;
+- the `boilerstone-intention` and `boilerstone-release` skills;
+- the workflows `intention-gate`, `intention-promote` and
+  `release-please`;
+- `release-please-config.json`.
 
-The "I · Merge and publish" section of this repo's `.agents/project.md`
-gets one line: before a version bump, promote `unreleased/`.
+**What this slice takes:**
+
+- **One intention per PR, in `unreleased/`, written in the same PR as the
+  change.** The file is named `slug.md`, with no `NN-` prefix, and its id
+  is `unreleased/slug`. This is already the convention in TEMPLATE.md.
+  Chisel gains a `CONTRIBUTING.md` whose "Intention authoring" section is
+  the canon, copied from the runbook's:
+  - fill the nine sections, with Why required;
+  - keep the change narrow;
+  - a PR that needs no intention (refactor, chisel-internal test or doc)
+    says so in its description; there is no label until there is CI.
+- **Promotion at the release, by a command.** `deno task
+  promote-intentions <version>` runs `scripts/promote-intentions.ts`, the
+  equivalent of `pnpm boilerplate intentions promote --to X.Y.Z`:
+  - `git mv unreleased/<slug>.md <version>/NN-<slug>.md`, numbering after
+    the files already in the folder, and rewrites the `id`;
+  - it refuses when the version is not the one in `deno.json`, or when
+    `unreleased/` is empty;
+  - it is tested on a temporary copy of `socle/intentions/`.
+
+  It lives in `scripts/`, not in the CLI: a repo equipped with chisel
+  never promotes anything.
+- **A repo that recorded an `unreleased/` id is not asked again.**
+  `resolves()` already does this, and a test pins it if none does yet.
+- **`.agents/project.md` §I**, this repo's glue: before publishing, run
+  `deno task promote-intentions <version>`, then the gates.
+
+**What this slice leaves, for a separate task: the release circuit
+itself.** That is:
+
+- release-please (Release PR, version bump, generated CHANGELOG, tag);
+- the CI gates (`intention-gate` with the `no-intention` label,
+  `intention-promote` on the Release PR);
+- the release note;
+- JSR publishing from CI (OIDC / trusted publisher);
+- a `chisel-release` skill for the maintainer;
+- the guard that stands in for `intention-promote`: refusing a publish
+  while `unreleased/` is not empty. It needs a published version to
+  compare against, and this repo has no git tag (checked 2026-11-03), so
+  it goes with the circuit that will create the tags.
+
+Why it is out of this slice:
+
+- Chisel has no CI today (no `.github/`) and publishes by hand with `deno
+  publish`. The circuit is GitHub infrastructure.
+- It involves decisions that belong to Pierrick: secrets, a JSR trusted
+  publisher, labels, branch protection.
+- It is a release concern, not the conversion of the recipes this slice
+  is for.
+
+I propose the task "Chisel releases through a Release PR, after the
+boilerplate".
+
+### The Crewmate cleans up after itself
+
+Added 2026-11-03 at Pierrick's request.
+
+- **`socle/agents/workflow.md`, step 7 (Close — Crewmate):** before the
+  report, the Crewmate stops everything it started — Docker containers,
+  dev servers, background processes, each by its own identifier (container
+  name or id, PID) — and only those. It never stops by pattern
+  (`pkill -f`, `--all`), because that kills the work of others.
+- **Its intention:** `unreleased/crewmate-cleans-up`, classification
+  `informational`.
+  - `workflow.md` is a managed file, so the copy is enough.
+  - The update reads the change out to the human, so a team that changed
+    its practice knows about it.
+  - It is the first intention written by the new rule: one per change, in
+    the same commit.
 
 ### `chisel-upgrade` goes, and its content moves
 
@@ -179,6 +245,8 @@ gets one line: before a version bump, promote `unreleased/`.
 - [ ] update/intentions/workspace stage the baseline — green, commit
 - [ ] chisel-upgrade removed with every pointer — green, commit
 - [ ] chisel-update skill takes over the router; dogfood refreshed — commit
+- [ ] CONTRIBUTING.md (authoring), promote-intentions script + test, §I line — commit
+- [ ] workflow.md close: the Crewmate cleans up, with unreleased/crewmate-cleans-up — commit
 - [ ] code-review, findings recorded
 - [ ] Close: retro, journal, archive
 
