@@ -1,5 +1,5 @@
 ---
-id: unreleased/manifest-records-intentions
+id: 0.3.0/manifest-records-intentions
 classification: automatic
 ---
 
