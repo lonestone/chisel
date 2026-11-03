@@ -1,6 +1,6 @@
 # The Crewmate becomes the Mason, and the Typist ticks only what really ran
 
-**Status:** in-progress
+**Status:** done
 
 ---
 
@@ -51,20 +51,26 @@ seeing it.
 
 ## Acceptance Criteria
 
-- [ ] **no-crewmate-outside-history** — `git grep -il crewmate` lists only
+- [x] **no-crewmate-outside-history** — `git grep -il crewmate` lists only
   the history files of "Not Included", the new intention (it names the
   old word to find it), and this task's own documents.
-- [ ] **no-crewmate-idea-left** — a case-insensitive `git grep -w crew`
+  Met, with two named extras: `AGENTS.md` keeps "the Mason (named the
+  Crewmate in the record)" on the Architect's ruling, so the G16 citation
+  still leads to its ruling; `.agents/.chisel.json` and
+  `src/socle-files.ts` carry intention ids and 0.3.0 file names, which
+  "Not Included" keeps.
+- [x] **no-crewmate-idea-left** — a case-insensitive `git grep -w crew`
   outside history finds nothing that names the role.
-- [ ] **typist-ticks-what-ran** — "The Typist brief" of
+- [x] **typist-ticks-what-ran** — "The Typist brief" of
   `socle/agents/workflow.md` carries the tick rule: real run, real target,
   dry run or copy in the worklog.
-- [ ] **socle-copy-identical** — `diff -r .agents socle/agents` shows only
+- [x] **socle-copy-identical** — `diff -r .agents socle/agents` shows only
   `.chisel.json`, `project.md`/`project.md.tpl` and `skills/chisel-release`.
-- [ ] **intention-ships** — `socle/intentions/unreleased/crewmate-becomes-mason.md`
+- [x] **intention-ships** — `socle/intentions/unreleased/crewmate-becomes-mason.md`
   follows `socle/intentions/TEMPLATE.md`, classification `migration`, and
-  is listed in `src/socle-files.ts`.
-- [ ] **gates-green** — `deno task check` and `deno task test` pass.
+  is listed in `src/socle-files.ts`. A second, informational intention,
+  `unreleased/typist-ticks-what-ran`, ships beside it (Architect's ruling).
+- [x] **gates-green** — `deno task check` and `deno task test` pass.
 
 ## Seams
 
@@ -109,10 +115,11 @@ and is kept byte-identical for the shared files.
 
 ## Deliverables
 
-- [ ] The renamed socle and its copy, the docs and templates
-- [ ] The Typist line
-- [ ] The intention
-- [ ] A pull request in conventional commits
+- [x] The renamed socle and its copy, the docs and templates
+- [x] The Typist line
+- [x] The intention
+- [ ] A pull request in conventional commits — the commits are conventional;
+  opening the pull request is the Architect's, after the close
 
 ## References
 
@@ -124,3 +131,5 @@ and is kept byte-identical for the shared files.
 ## Notes
 
 ## Retrospective
+
+The Mason's `retro` proposals went to the Architect in its close report.

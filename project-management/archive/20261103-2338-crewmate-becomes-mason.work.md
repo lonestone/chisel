@@ -260,6 +260,11 @@ text.
   (the one `AGENTS.md` occurrence is the approved gloss). `code-review`
   run on `origin/main...HEAD`; the fixes below typed by the Mason itself,
   under the retouch exception (a few lines in three files); gates green.
+- 2026-11-03 — Mason, close: spec criteria ticked, status `done`; nothing
+  to promote (the living docs, glossary and ADR paths the glue names do
+  not exist in this repo); the Owner's ruling recorded as Addendum 19 of
+  the decisions record; journal entry 51; both documents archived. Nothing
+  started that needs stopping: no container, server or background process.
 
 ## Implementation Checkboxes
 
@@ -272,7 +277,7 @@ text.
 - [x] Gates green, commit 2
 - [x] Criteria greps and the `diff -r` run
 - [x] `code-review`, findings recorded
-- [ ] Close: criteria ticked, documents archived, journal entry, retro, commit 3
+- [x] Close: criteria ticked, documents archived, journal entry, retro, commit 3
 
 ## Notes & Snippets
 

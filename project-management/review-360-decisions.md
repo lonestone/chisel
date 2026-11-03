@@ -1401,3 +1401,17 @@ part. Ce qui remplace « Le Typist est optionnel » de l'Addendum 15 :
   tant que le plan n'est pas arrêté, et il le dit dans le worklog du
   document de travail.
 - ✅ **Les reviewers restent *frontier*.**
+
+## Addendum 19 (2026-11-03) — le Crewmate devient le Mason
+
+Dans le Harness, « crewmate » nomme la session par tâche lancée par un
+secondmate, qui joue l'Architect de chisel. Un même mot pour deux rôles a
+fait sauter une lecture de plan (tâche chisel-intentions). L'Owner :
+« Chisel ne doit pas parler de crewmate. Architect → Mason → Typist. »
+
+- ✅ **Le rôle s'appelle le Mason** partout hors historique ; l'acteur de
+  `chisel-beads` devient `mason`. Ce qu'il fait ne change pas. Les addenda
+  précédents gardent « Crewmate ».
+- ✅ **Le Typist ne coche que ce qui a vraiment tourné**, sur la vraie
+  cible ; un essai à blanc ou sur une copie va dans le worklog, la case
+  reste ouverte (retour d'un projet équipé, tâche id-by-rivoli).
