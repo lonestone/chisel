@@ -1,6 +1,6 @@
 # Human review: a step of its own, with crit, visual proof and questions off the chat
 
-**Status:** draft — decision 8 waits on the review tool; proposal 12 waits on the Owner; no Mason before it
+**Status:** draft — decision 8 waits on the review tool; no Mason before it
 
 ---
 
@@ -105,11 +105,10 @@ on his yes) or **open** (waits on something named).
     is woken to fix the review's comments, however long ago it closed; a
     fresh Mason only when its session is lost. When a comment changes a spec
     decision, the Architect fixes the spec first, then wakes the same Mason.
-12. **The Mason's resume summary** — open. Proposed: at the close, the
-    Mason adds to the work document a short summary (decisions, key files,
-    pitfalls, commands that work), the input of whoever fixes the comments.
-    With decision 11 it only serves a lost session; Pierrick (19/11): « du
-    coup pas utile ? ». Waits on his answer; likely withdrawn.
+12. **No resume summary** — withdrawn. With decision 11 the same Mason
+    fixes the comments with its own context; a summary would only serve a
+    lost session. Pierrick (19/11): « du coup pas utile ? », then « go » on
+    withdrawing it.
 13. **The depth is a line of the spec, the diff a floor** — Pierrick
     (question 1, 19/11): « Spec + plancher ». The Architect writes the depth
     of the review in one line of the spec (for example « captures + e2e »,
@@ -261,7 +260,7 @@ Folder `20261119-1644-relecture-humaine/`:
 1. **Human review with crit** (blocked by: none) — the step and §J with the
    default depth; the review skills join once the tool is chosen.
 2. **Who fixes the comments** (blocked by: 1) — the task's Mason, always;
-   the resume summary only if decision 12 keeps it.
+   no resume summary (decision 12).
 3. **Autoroute** (blocked by: 1).
 4. **Visual proof** (blocked by: 1) — `visual-proof`, §J commands, the
    agent's own check, the depth against the floor; the proofs are files
