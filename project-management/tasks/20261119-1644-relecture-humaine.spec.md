@@ -1,6 +1,6 @@
 # Human review: a step of its own, with crit, visual proof and questions off the chat
 
-**Status:** draft — decision 8 waits on the review tool; proposals 11 and 12 wait on the Owner; no Mason before it
+**Status:** draft — decision 8 waits on the review tool; proposal 12 waits on the Owner; no Mason before it
 
 ---
 
@@ -34,7 +34,7 @@ Source: the analysis page « Chisel, relecture en deux temps » (vault,
 - Questions to the human, the pre-development report and the proofs as
   pages that Chisel serves itself, written here as **needs**: what each page
   shows and what it brings back.
-- Who fixes the review's comments, and the Mason's resume summary.
+- Who fixes the review's comments.
 - An intention for every change under `socle/`.
 
 **Not Included:**
@@ -99,13 +99,17 @@ on his yes) or **open** (waits on something named).
     music-downloader `review-videos` skill made generic; the project gives
     the commands through §J, the skill writes the proof files. Showing them
     is the proofs page's job (decision 17).
-11. **Who fixes the comments** — proposed (the 11-04 note): no spec decision
-    changed and closed under an hour ago, the same Mason; over an hour, a
-    fresh Mason; a spec decision changed, the Architect fixes the spec, then
-    a fresh Mason.
-12. **The Mason's resume summary** — proposed: at the close, the Mason adds
-    to the work document a short summary (decisions, key files, pitfalls,
-    commands that work), the input of whoever fixes the comments.
+11. **The Mason who did the work fixes the comments** — Pierrick (19/11):
+    « toujours le macon qui a bossé ! Toujours. Le relancer couter aussi
+    cher qu'un neuf : oui mais il a tout le bon contexte. » The task's Mason
+    is woken to fix the review's comments, however long ago it closed; a
+    fresh Mason only when its session is lost. When a comment changes a spec
+    decision, the Architect fixes the spec first, then wakes the same Mason.
+12. **The Mason's resume summary** — open. Proposed: at the close, the
+    Mason adds to the work document a short summary (decisions, key files,
+    pitfalls, commands that work), the input of whoever fixes the comments.
+    With decision 11 it only serves a lost session; Pierrick (19/11): « du
+    coup pas utile ? ». Waits on his answer; likely withdrawn.
 13. **The depth is a line of the spec, the diff a floor** — Pierrick
     (question 1, 19/11): « Spec + plancher ». The Architect writes the depth
     of the review in one line of the spec (for example « captures + e2e »,
@@ -191,7 +195,7 @@ the Harness, and is served by Chisel.
   served by Chisel, and an answer given on the questions page reaches the
   agent, with no Harness command involved.
 - [ ] **who-fixes-written** — `workflow.md` gives the rule of decision
-  *who fixes the comments* and the Mason's resume summary.
+  *who fixes the comments*.
 - [ ] **intention-per-change** — every change under `socle/` has its
   intention in `socle/intentions/unreleased/`; the Intention gate passes.
 - [ ] **suite-green** — `deno task check` and `deno task test` pass.
@@ -256,8 +260,8 @@ Folder `20261119-1644-relecture-humaine/`:
 
 1. **Human review with crit** (blocked by: none) — the step and §J with the
    default depth; the review skills join once the tool is chosen.
-2. **Who fixes the comments** (blocked by: 1) — the rule and the Mason's
-   resume summary.
+2. **Who fixes the comments** (blocked by: 1) — the task's Mason, always;
+   the resume summary only if decision 12 keeps it.
 3. **Autoroute** (blocked by: 1).
 4. **Visual proof** (blocked by: 1) — `visual-proof`, §J commands, the
    agent's own check, the depth against the floor; the proofs are files
@@ -281,8 +285,8 @@ Folder `20261119-1644-relecture-humaine/`:
 - `project-management/review-360-decisions.md`, rulings E4 and G10: the
   earlier light lane and the « no switch » rule decision 14 honours.
 - Vault notes « Chisel, reprise après la review humaine » and « Chisel, coût
-  des Masons et relecture du plan » (2026-11-04): the source of decisions 11
-  and 12.
+  des Masons et relecture du plan » (2026-11-04): the source of the first
+  drafts of decisions 11 and 12.
 - Vault note « Chisel, règles de travail et crit » (2026-11-09): the rules
   to bring from the Harness into Chisel, source of the first draft of
   decision 8.
