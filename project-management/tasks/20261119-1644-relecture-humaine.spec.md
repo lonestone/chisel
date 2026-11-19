@@ -1,6 +1,6 @@
 # Human review: a step of its own, with crit, visual proof and questions off the chat
 
-**Status:** draft — questions 1 and 2 settled on 2026-11-19; waits on questions 3, 4 and 5; no Mason before them
+**Status:** draft — every question answered on 2026-11-19; proposals 7 to 12 wait on the Owner's reading; no Mason before it
 
 ---
 
@@ -26,37 +26,45 @@ Source: the analysis page « Chisel, relecture en deux temps » (vault,
 ## Scope
 
 **Included:**
-- A human-review step in `workflow.md`, with crit as the tool, shipped by
-  Chisel as a skill that points to crit (never a copy of crit).
-- A per-project review depth, and a lane without the human-only stops (the
-  « autoroute »).
+- A human-review step in `workflow.md`, with crit as the tool for now,
+  shipped by Chisel as a skill that points to crit (never a copy of crit).
+- The review depth, written per task in the spec, and a lane without the
+  human-only stops (the « autoroute »).
 - Visual proof when a screen is touched, and the agent's own check of it.
-- Questions to the human and the pre-development report as pages, not chat.
+- Questions to the human, the pre-development report and the proofs as
+  pages that Chisel serves itself, written here as **needs**: what each page
+  shows and what it brings back.
 - Who fixes the review's comments, and the Mason's resume summary.
 - An intention for every change under `socle/`.
 
 **Not Included:**
-- Our own review app (task `relecture-proto`, running in parallel) and any
-  fork of crit.
+- The design of the tool that serves Chisel's pages. Pierrick leans to an
+  end-to-end review tool of our own (spec, questions, final review), built
+  from pieces of diffmap, crit and Plannotator; its 360 analysis runs as the
+  task `relecture-analyse`, and the prototype as `relecture-proto`. This
+  spec states the needs and leaves the tool open.
+- Any fork of crit.
 - Reworking the crit prologue prompt: done « petit à petit », elsewhere.
-- What serves a page, opens a herdr tab or wakes an agent: that is the
-  Harness's (the shared page tool under way at Dédale).
+- The Harness's own pages (the gods' questionnaires and the like), which
+  head for Olympe.
 
 ## The decisions
 
-Each is marked **Pierrick** (quoted, settled), **proposed** (mine, waits on
-his yes) or **open** (a question below).
+Each is marked **Pierrick** (quoted, settled) or **proposed** (mine, waits
+on his yes). None is open.
 
 1. **crit ships with Chisel** — Pierrick: « ha Chisel n'embarque donc pas
    Crit ? Je pense que je vais l'ajouter. Moins modulaire, mais ajd le but
-   c'est d'aller vite. » then « fais le ».
+   c'est d'aller vite. » then « fais le ». It stays the review tool until
+   the tool of decision 16 replaces it.
 2. **A human-review step in the workflow** — Pierrick (question 4 of the
    analysis): « a. Mais c'est là où Chisel devrait certainement avoir un mode
    "autoroute" -> avec les checks auto mais sans toutes les étapes dédiées à
    l'humain uniquement ».
-3. **The depth is the project's** — Pierrick (question 5): the project
-   declares `human review: full | strategic`, plus the autoroute; « la
-   relecture humaine devient moins prioritaire en fonction des projets ».
+3. **The review weighs less on some projects** — Pierrick (question 5): the
+   project declares `human review: full | strategic` as its default, plus
+   the autoroute; « la relecture humaine devient moins prioritaire en
+   fonction des projets ».
 4. **No questions inside a crit review** — Pierrick, 11-09: « Les questions
    dans un Crit, c'est non ». A question goes to the questions page.
 5. **A touched screen has a proof** — Pierrick (questions 6 and 7): at least
@@ -79,14 +87,14 @@ his yes) or **open** (a question below).
    ships as a project file, `.crit/prompts/on_story_generate.md`, placed by
    `chisel-setup` and kept current by `chisel update`; Pierrick's global
    guide becomes a short default pointing to it.
-9. **A §J · Review section in `project.md`** — proposed: the depth, the
-   e2e command, the recording command, the screenshot command, and where the
-   proofs are written. No command means no proof of that kind, said in the
-   review.
+9. **A §J · Review section in `project.md`** — proposed: the project's
+   default depth, the e2e command, the recording command, the screenshot
+   command, and where the proofs are written. No command means no proof of
+   that kind, said in the review.
 10. **Visual proof as a Chisel skill** — proposed: `visual-proof`, the
     music-downloader `review-videos` skill made generic; the project gives
-    the commands through §J, the skill writes the files and an index page.
-    Serving that page is the Harness's.
+    the commands through §J, the skill writes the proof files. Showing them
+    is the proofs page's job (decision 17).
 11. **Who fixes the comments** — proposed (the 11-04 note): no spec decision
     changed and closed under an hour ago, the same Mason; over an hour, a
     fresh Mason; a spec decision changed, the Architect fixes the spec, then
@@ -94,52 +102,59 @@ his yes) or **open** (a question below).
 12. **The Mason's resume summary** — proposed: at the close, the Mason adds
     to the work document a short summary (decisions, key files, pitfalls,
     commands that work), the input of whoever fixes the comments.
-13. **What triggers each proof** — Pierrick (question 1, 19/11): « Spec +
-    plancher ». The Architect writes the depth of the review in one line of
-    the spec (for example « captures + e2e », « stratégique seul »); the diff
-    only adds a floor (a screen touched means captures), never removes. Path
-    patterns in `project.md` are set aside.
+13. **The depth is a line of the spec, the diff a floor** — Pierrick
+    (question 1, 19/11): « Spec + plancher ». The Architect writes the depth
+    of the review in one line of the spec (for example « captures + e2e »,
+    « stratégique seul »), starting from the project's default; the diff
+    only adds a floor (a screen touched means captures), never removes.
+    Path patterns in `project.md` are set aside. Pierrick adds: « On va
+    tester ça et faudra monitor que l'agent demande pas toujours PLUS que le
+    plancher, ce qui indiquerait un soucis. » So the close records, in the
+    work document, the depth chosen and the floor the diff computed, and
+    `retro` compares them: a task that asks more than the floor says why,
+    and a run of them is a finding of the retro.
 14. **When the autoroute is taken** — Pierrick (question 2, 19/11): « Taille
-    de la tache ? Demande explicite ? ». Proposed wording, with no project
-    switch (ruling G10): the Architect takes the autoroute when it judges the
-    task small at step 2, or when the human asks for it explicitly; it writes
-    the choice and its reason in one line of the spec, and the pull request
-    repeats it. On the autoroute the code review and the gates still run and
-    the pull request is still opened; the stops that only serve the human
-    (reading the spec, reading the plan, the human review) are skipped. A
-    human who asks for the full lane always gets it.
-15. **The pre-development report and the plan** — open, question 3.
-16. **The Chisel / Harness line** — open, question 4.
-17. **Where the human sees the proofs** — open, question 5; waits on the
-    `relecture-proto` prototype (Pierrick, 19/11: « Attendre le
-    prototype »). No slice depends on it.
+    de la tache ? Demande explicite ? », then « ok » to this wording. The
+    Architect takes the autoroute when it judges the task small at step 2,
+    or when the human asks for it explicitly; it writes the choice and its
+    reason in one line of the spec, and the pull request repeats it. On the
+    autoroute the code review and the gates still run and the pull request
+    is still opened; the stops that only serve the human (reading the spec,
+    reading the plan, the human review) are skipped. A human who asks for
+    the full lane always gets it. There is no project switch (ruling G10).
+15. **The report before and the review after share one form** — Pierrick
+    (question 3, 19/11): « Intéressant. Pas sur que la vue en colonnes soient
+    la bonne, mais l'idée l'est. » The Mason fills, at the plan step, the
+    same parts the final review shows (what changes, in a sentence; the
+    files touched; the data model before → after; the flows as diagrams),
+    so the gap between planned and done shows at once. How the two are put
+    side by side (columns or otherwise) is the review tool's, left open.
+16. **Chisel serves its own pages** — Pierrick (question 4, 19/11): « Non je
+    porte que Chisel doit etre complètement autonome car des gens
+    l'utilisent hors Harness ! Si on doit se monter un système de petit
+    serveur à la crit, so be it ! Le Harness sa responsabilité pour les
+    pages html c'est autre chose (questionnaires des dieux, etc.) et ça
+    finirait plutot dans Olympe en fait ! » Chisel serves its pages and
+    brings the answers back to the agent by itself; it relies neither on the
+    Harness nor on Dédale's page tool. Which tool does it is left open (see
+    Not Included).
+17. **The proofs live in Chisel's pages** — Pierrick (question 5, 19/11):
+    « je pense que mes réponses plus haut sont suffisantes ! » Screenshots,
+    comparisons and videos are shown in a page Chisel serves, not in the
+    crit story.
 
-## Open questions for Pierrick
+## The pages, as needs
 
-Questions 1 and 2 are settled (decisions 13 and 14). The numbers of the
-others are kept.
+What each page must do, whatever tool serves it:
 
-3. **Does the pre-development report reuse the review's template?** In plain
-   words: the final review shows four things on one page (what changed, in a
-   sentence; the files touched as a tree; the data model before → after; the
-   flows as diagrams). The question is whether the Mason fills that same page
-   *before* coding, from its plan, as the report you read before the code. If
-   yes, the final review becomes « prévu → fait » side by side, and a gap
-   shows at once. If no, the report is free-form and the review stands alone.
-   **I recommend yes**, filled at the plan step, at the cost of a slightly
-   longer plan.
-4. **Where is the Chisel / Harness line?** Proposed rule: Chisel ships what
-   works without the Harness (the step, the skills, the page templates as
-   static HTML files the agent writes, the story guide); the Harness serves
-   those files, opens the herdr tab, carries the answers back and wakes the
-   agent. Outside the Harness, the agent opens the file and the human
-   answers in the chat. Is that the line, and does the questions page wait
-   for Dédale's shared tool?
-5. **Where does the human see screenshots and videos?** (a) Inside the crit
-   story, if crit renders images there (to verify). (b) A separate proof
-   page linked from the story, served by the Harness. Waits on the
-   `relecture-proto` prototype; until then the proofs are files in a folder
-   and the story links them.
+| Page | When | Shows | Brings back |
+|---|---|---|---|
+| Questions | step 2, and whenever an agent has a question for the human | each question with its options, a recommendation, a mockup or diagram when it helps | the answers, to the agent that asked, without the chat |
+| Pre-development report | the plan step | what changes, the files touched, the data model before → after, the flows; the spec readable in the browser | the human's go or remarks |
+| Proofs | the human-review step | screenshots, before → after, videos | nothing; linked from the review |
+
+Each page is reachable by a link the agent gives the human, opens outside
+the Harness, and is served by Chisel.
 
 ## Acceptance Criteria
 
@@ -147,7 +162,7 @@ others are kept.
   named *Human review*, after the close, and its "Where the work stops"
   table lists it.
 - [ ] **autoroute-written** — `workflow.md` names the autoroute, what it
-  skips and what it keeps, and when the Architect takes it (decision 14).
+  skips and what it keeps, and when the Architect takes it.
 - [ ] **crit-skill-ships** — `socle/agents/skills/chisel-crit/SKILL.md`
   exists, is listed in `src/socle-files.ts`, and contains no copy of crit's
   own skills.
@@ -158,9 +173,11 @@ others are kept.
   repo's `.agents/project.md` have a §J · Review section.
 - [ ] **visual-proof-skill** — `socle/agents/skills/visual-proof/SKILL.md`
   exists, reads its commands from §J, and names no command of one project.
-- [ ] **questions-page-template** — a questions-page template and a
-  pre-development report template ship in `socle/templates/`, each opening
-  as a plain file without a server.
+- [ ] **depth-against-floor** — the work-document template records the
+  depth chosen and the floor computed, and the `retro` skill compares them.
+- [ ] **pages-without-harness** — the questions page and the report are
+  served by Chisel, and an answer given on the questions page reaches the
+  agent, with no Harness command involved.
 - [ ] **who-fixes-written** — `workflow.md` gives the rule of decision
   *who fixes the comments* and the Mason's resume summary.
 - [ ] **intention-per-change** — every change under `socle/` has its
@@ -173,8 +190,9 @@ others are kept.
   or skips it in autoroute, and knows who fixes the comments.
 - Seam: `chisel-setup` / `chisel update` — an equipped repo has the story
   guide in `.crit/prompts/` and the §J section.
-- Seam: the page templates — an agent writes a questions page or a report as
-  a file a browser opens; the Harness may serve it, nothing requires it.
+- Seam: Chisel's pages — an agent hands the human a link; the human reads
+  and answers in the browser; the answers come back to the agent. Outside
+  this seam, the tool is free.
 
 ## Architecture
 
@@ -184,15 +202,16 @@ flowchart LR
   Q --> P[plan<br/>+ pre-dev report]
   P --> C[code + agent's check<br/>e2e / browser]
   C --> R[close + PR]
-  R --> H[human review<br/>crit story + proofs]
+  R --> H[human review<br/>crit + proofs page]
   H -->|comments| F[who fixes]
   F --> R
   S -. autoroute .-> P2[plan] --> C2[code + checks] --> R2[PR]
 ```
 
-Chisel ships: the step text, the `chisel-crit` and `visual-proof` skills,
-the story guide, the page templates, §J. The Harness ships: serving,
-waking, the herdr tab, the `crit-review` script that listens on the tailnet.
+Chisel ships all of it: the step text, the `chisel-crit` and
+`visual-proof` skills, the story guide, §J, and the pages with what serves
+them. The Harness keeps only Pierrick's own setup (the `crit-review` script
+that listens on the tailnet) and its own pages.
 
 ---
 
@@ -202,8 +221,8 @@ waking, the herdr tab, the `crit-review` script that listens on the tailnet.
 
 - An external tool is never copied: the skill points to it, says how to
   install it and when to call it (the Harness rule on external skills).
-- crit stays unforked: everything rides on the story and on pages; small
-  additions go upstream (question 3 of the analysis).
+- crit stays unforked: small additions go upstream (question 3 of the
+  analysis).
 - Content written for agents goes through `writing-for-agents`
   (`CONTRIBUTING.md`).
 - Each slice adds its own intentions; the release promotes them.
@@ -216,21 +235,26 @@ waking, the herdr tab, the `crit-review` script that listens on the tailnet.
 - A dry run on music-downloader (screens, e2e, recording) validates
   `visual-proof` before it ships; a dry run on a repo without front checks
   that no screen means no capture.
+- A test answers the questions page and reads the answer on the agent's
+  side.
 
 ## Slices & Dependencies
 
 Folder `20261119-1644-relecture-humaine/`:
 
 1. **Human review with crit** (blocked by: none) — the step, `chisel-crit`,
-   the story guide, §J with the depth only.
+   the story guide, §J with the default depth.
 2. **Who fixes the comments** (blocked by: 1) — the rule and the Mason's
    resume summary.
 3. **Autoroute** (blocked by: 1).
-4. **Visual proof** (blocked by: 1) — `visual-proof`,
-   §J commands, the agent's own check.
-5. **Questions page** (blocked by: none; question 4) — the template and the
-   rule that questions leave the chat.
-6. **Pre-development report** (blocked by: 1 and 5; question 3).
+4. **Visual proof** (blocked by: 1) — `visual-proof`, §J commands, the
+   agent's own check, the depth against the floor; the proofs are files
+   until slice 5's tool shows them.
+5. **Questions page** (blocked by: the review tool chosen after
+   `relecture-analyse`) — Chisel serves the page and brings the answers
+   back; questions leave the chat.
+6. **Pre-development report** (blocked by: 1 and 5) — the shared form of
+   decision 15, and the proofs page on the same tool.
 
 ## Deliverables
 
@@ -250,8 +274,8 @@ Folder `20261119-1644-relecture-humaine/`:
   to bring from the Harness into Chisel, source of decision 8.
 - music-downloader, `.claude/skills/review-videos/SKILL.md`: the skill that
   decision 10 makes generic.
-- Apollon, `outils/formulaire.mjs`: a 31-line questions form, model for the
-  served side of slice 5.
+- Apollon, `outils/formulaire.mjs`: a 31-line questions form, one input for
+  the tool of slice 5.
 
 ## Notes
 
