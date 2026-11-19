@@ -5,6 +5,21 @@ ships.
 
 ---
 
+## 52. 2026-11-19 — Sub-agent briefs carry the runtime rules
+
+Sub-agents get only their brief, so the rules of the Harness that runs
+chisel's projects never reached them. On the Owner's word at the 19
+November hearing, "Sub-agents" of `workflow.md` now lists what every brief
+carries: long commands in the background and never behind a `sleep`, a git
+command that can erase alone in its call, stop what the sub-agent started,
+reuse existing code, say what a setting means and which way it acts. "The
+Mason brief" adds that the plan report is written in the work document
+before it is sent. Runtime tools are named as examples only. The
+informational intention `unreleased/sub-agent-briefs-carry-runtime-rules`
+tells updated repos.
+
+---
+
 ## 51. 2026-11-03 — The Crewmate becomes the Mason, and the Typist ticks only what really ran
 
 In the Harness that runs chisel's projects, "crewmate" names the per-task
