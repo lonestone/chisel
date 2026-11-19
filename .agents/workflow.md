@@ -155,6 +155,21 @@ Mason is reused within a live thread — the one that wrote the plan
 launches its Typist and runs the review — and a resumed task starts fresh
 from the spec and work documents.
 
+A sub-agent does not inherit the repo's or the runtime's rules, only its
+brief, so every brief below also carries these:
+
+- a command that may run over 2 minutes (tests, CI, a build) starts in the
+  background (a tool such as `run_in_background` or a monitor, whatever
+  the runtime offers), never behind a `sleep` or a wait in the foreground;
+- a git command that can erase work (`checkout`, `reset`, `restore`,
+  `clean`, `rm`, `rebase`, a forced push) runs alone in its own call, from
+  the repo's folder, never chained or behind a `cd`;
+- stop what it started itself (test runners, servers, containers) before
+  handing back, and never what another session started;
+- reuse existing code rather than copy it;
+- a brief or spec that sets a threshold, an option or a check says what it
+  means and which way it acts.
+
 ## The Mason brief
 
 What the Architect writes when it launches a Mason:
@@ -165,7 +180,9 @@ What the Architect writes when it launches a Mason:
 - the steps it owns: plan, then stop for the reading; code, through a
   Typist; `code-review`; close;
 - what it reports at each stop: the plan in a few lines and its questions;
-  at the close, the commits, the criteria met or not, and what is left.
+  at the close, the commits, the criteria met or not, and what is left;
+- two reports, so the first must not be lost: the plan report is written
+  in the work document before it is sent.
 
 ## The Typist brief
 
