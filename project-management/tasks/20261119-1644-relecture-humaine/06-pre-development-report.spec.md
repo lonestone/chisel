@@ -9,7 +9,9 @@
 
 **What to build:** once the questions are answered, the human reads in the
 browser what will be done, « une sorte de .spec mais chargé dans le
-browser ». The Mason fills it at the plan step with the same parts the
+browser ». Its look comes first: real variants of the report and of the
+review, chosen by Pierrick, before any form or tool (« faut se concentrer
+sur la UX »). The Mason fills it at the plan step with the same parts the
 final review shows (what changes, the files touched, the data model before
 → after, the flows), so the gap between planned and done shows at once; how
 the two sit side by side is the tool's. On the same tool, the proofs page

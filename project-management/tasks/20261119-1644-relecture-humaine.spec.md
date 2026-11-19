@@ -1,6 +1,6 @@
 # Human review: a step of its own, with crit, visual proof and questions off the chat
 
-**Status:** draft — every question answered on 2026-11-19; proposals 7 to 12 wait on the Owner's reading; no Mason before it
+**Status:** draft — decision 8 waits on the review tool; proposals 11 and 12 wait on the Owner; no Mason before it
 
 ---
 
@@ -50,8 +50,8 @@ Source: the analysis page « Chisel, relecture en deux temps » (vault,
 
 ## The decisions
 
-Each is marked **Pierrick** (quoted, settled) or **proposed** (mine, waits
-on his yes). None is open.
+Each is marked **Pierrick** (quoted, settled), **proposed** (mine, waits
+on his yes) or **open** (waits on something named).
 
 1. **crit ships with Chisel** — Pierrick: « ha Chisel n'embarque donc pas
    Crit ? Je pense que je vais l'ajouter. Moins modulaire, mais ajd le but
@@ -77,21 +77,25 @@ on his yes). None is open.
    aussi… » A page holds the thread; after the answers, an HTML report of
    what will be done, « une sorte de .spec mais chargé dans le browser ». He
    stays in herdr, the links always at hand.
-7. **Step placement** — proposed: step 8, *Human review*, after the close
+7. **Step placement** — Pierrick (19/11): « ok ». Step 8, *Human review*, after the close
    and the pull request; it reviews the pull request's diff (`crit --pr`, or
    the branch diff without a remote). One task, one pull request, one human
    review (11-09).
-8. **The `chisel-crit` skill** — proposed: a short skill that says where
-   crit is, how to install it (`crit install <agent>`), when to call it, and
-   the loop (background, `approved`, reply to each comment). The story guide
-   ships as a project file, `.crit/prompts/on_story_generate.md`, placed by
-   `chisel-setup` and kept current by `chisel update`; Pierrick's global
-   guide becomes a short default pointing to it.
-9. **A §J · Review section in `project.md`** — proposed: the project's
+8. **The review skills** — open, waits on the review tool. Pierrick
+   (19/11): « attendons de settle sur un outil. Je pense que ça sera plus
+   large comme skill, ça touche comment lancer la review / preview / spec,
+   (p-e 3 skills ?) et ça pourrait appeler des sous skills pour
+   l'outillage ». So: likely several skills, one per thing the human reads
+   (launch the review, the preview, the spec), each calling a sub-skill for
+   the tool behind it. My first draft, a single `chisel-crit` skill plus a
+   story guide in `.crit/prompts/`, is set aside until the tool is chosen.
+9. **A §J · Review section in `project.md`** — Pierrick (19/11): « ok ».
+   The project's
    default depth, the e2e command, the recording command, the screenshot
    command, and where the proofs are written. No command means no proof of
    that kind, said in the review.
-10. **Visual proof as a Chisel skill** — proposed: `visual-proof`, the
+10. **Visual proof as a Chisel skill** — Pierrick (19/11): « yes ».
+    `visual-proof`, the
     music-downloader `review-videos` skill made generic; the project gives
     the commands through §J, the skill writes the proof files. Showing them
     is the proofs page's job (decision 17).
@@ -129,6 +133,10 @@ on his yes). None is open.
     files touched; the data model before → after; the flows as diagrams),
     so the gap between planned and done shows at once. How the two are put
     side by side (columns or otherwise) is the review tool's, left open.
+    Pierrick (on proposal 15, 19/11): « je pense que faut se concentrer sur
+    la UX : à quoi on veut que ça ressemble. Avant de s'arreter sur le
+    comment ». So the look of the report and of the review, shown as real
+    variants, comes before any choice of form or tool.
 16. **Chisel serves its own pages** — Pierrick (question 4, 19/11): « Non je
     porte que Chisel doit etre complètement autonome car des gens
     l'utilisent hors Harness ! Si on doit se monter un système de petit
@@ -163,12 +171,16 @@ the Harness, and is served by Chisel.
   table lists it.
 - [ ] **autoroute-written** — `workflow.md` names the autoroute, what it
   skips and what it keeps, and when the Architect takes it.
-- [ ] **crit-skill-ships** — `socle/agents/skills/chisel-crit/SKILL.md`
+- [ ] ~~**crit-skill-ships** — `socle/agents/skills/chisel-crit/SKILL.md`
   exists, is listed in `src/socle-files.ts`, and contains no copy of crit's
-  own skills.
-- [ ] **story-guide-placed** — `chisel-setup` on an empty repo produces
+  own skills.~~
+- [ ] ~~**story-guide-placed** — `chisel-setup` on an empty repo produces
   `.crit/prompts/on_story_generate.md`, and crit uses it there (checked with
-  `crit story --guide`).
+  `crit story --guide`).~~
+- [ ] **review-skills** (2026-11-19, replaces the two above; written once
+  the tool is chosen) — the skills that launch the review, the preview and
+  the spec ship in `socle/agents/skills/`, are listed in
+  `src/socle-files.ts`, and copy no external tool's own skills.
 - [ ] **project-review-section** — `socle/agents/project.md.tpl` and this
   repo's `.agents/project.md` have a §J · Review section.
 - [ ] **visual-proof-skill** — `socle/agents/skills/visual-proof/SKILL.md`
@@ -188,8 +200,8 @@ the Harness, and is served by Chisel.
 
 - Seam: `workflow.md` — an agent following it reaches a human-review step,
   or skips it in autoroute, and knows who fixes the comments.
-- Seam: `chisel-setup` / `chisel update` — an equipped repo has the story
-  guide in `.crit/prompts/` and the §J section.
+- Seam: `chisel-setup` / `chisel update` — an equipped repo has the §J
+  section, and, once the tool is chosen, what the review skills need.
 - Seam: Chisel's pages — an agent hands the human a link; the human reads
   and answers in the browser; the answers come back to the agent. Outside
   this seam, the tool is free.
@@ -208,8 +220,8 @@ flowchart LR
   S -. autoroute .-> P2[plan] --> C2[code + checks] --> R2[PR]
 ```
 
-Chisel ships all of it: the step text, the `chisel-crit` and
-`visual-proof` skills, the story guide, §J, and the pages with what serves
+Chisel ships all of it: the step text, the review skills (decision 8,
+open) and `visual-proof`, §J, and the pages with what serves
 them. The Harness keeps only Pierrick's own setup (the `crit-review` script
 that listens on the tailnet) and its own pages.
 
@@ -242,8 +254,8 @@ that listens on the tailnet) and its own pages.
 
 Folder `20261119-1644-relecture-humaine/`:
 
-1. **Human review with crit** (blocked by: none) — the step, `chisel-crit`,
-   the story guide, §J with the default depth.
+1. **Human review with crit** (blocked by: none) — the step and §J with the
+   default depth; the review skills join once the tool is chosen.
 2. **Who fixes the comments** (blocked by: 1) — the rule and the Mason's
    resume summary.
 3. **Autoroute** (blocked by: 1).
@@ -251,10 +263,11 @@ Folder `20261119-1644-relecture-humaine/`:
    agent's own check, the depth against the floor; the proofs are files
    until slice 5's tool shows them.
 5. **Questions page** (blocked by: the review tool chosen after
-   `relecture-analyse`) — Chisel serves the page and brings the answers
+   `relecture-analyse`, and the UX of decision 15) — Chisel serves the page and brings the answers
    back; questions leave the chat.
 6. **Pre-development report** (blocked by: 1 and 5) — the shared form of
-   decision 15, and the proofs page on the same tool.
+   decision 15, its look settled first, and the proofs page on the same
+   tool.
 
 ## Deliverables
 
@@ -271,7 +284,8 @@ Folder `20261119-1644-relecture-humaine/`:
   des Masons et relecture du plan » (2026-11-04): the source of decisions 11
   and 12.
 - Vault note « Chisel, règles de travail et crit » (2026-11-09): the rules
-  to bring from the Harness into Chisel, source of decision 8.
+  to bring from the Harness into Chisel, source of the first draft of
+  decision 8.
 - music-downloader, `.claude/skills/review-videos/SKILL.md`: the skill that
   decision 10 makes generic.
 - Apollon, `outils/formulaire.mjs`: a 31-line questions form, one input for
@@ -279,10 +293,10 @@ Folder `20261119-1644-relecture-humaine/`:
 
 ## Notes
 
-- The crit project-prompt trust gate is unverified: slice 1 checks that a
-  committed `.crit/prompts/` file is used without a manual trust step.
-- `.crit/prompts/` sits outside `.agents/`: a new placement for
-  `chisel-setup`, written in its `PLACEMENT.md`.
+- If crit stays the tool: its project-prompt trust gate is unverified (is a
+  committed `.crit/prompts/` file used without a manual trust step?), and
+  `.crit/prompts/` sits outside `.agents/`, a new placement for
+  `chisel-setup`.
 
 ## Retrospective
 
