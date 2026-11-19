@@ -1,7 +1,7 @@
 # 04 — Visual proof
 
 **Status:** draft
-**Blocked by:** 01 — Human review with crit; the parent spec's questions 1 and 5
+**Blocked by:** 01 — Human review with crit
 
 ---
 
@@ -12,8 +12,10 @@
 and the human review shows at least a screenshot of it, with a before →
 after comparison when the screen existed. A `visual-proof` skill, made
 generic from music-downloader's `review-videos`, does this from the commands
-§J declares; the trigger follows question 1. Parent spec: decisions 5, 10,
-13, 17.
+§J declares. The depth is the Architect's line in the spec; the diff only
+adds a floor (a screen touched means captures). Where the human sees the
+proofs waits on the `relecture-proto` prototype: until then they are files
+in a folder that the crit story links. Parent spec: decisions 5, 10, 13, 17.
 
 ## Acceptance criteria
 
@@ -21,6 +23,8 @@ generic from music-downloader's `review-videos`, does this from the commands
   §J, and names no command of one project.
 - [ ] **review-section-commands** — §J declares the e2e, recording and
   screenshot commands, each optional.
+- [ ] **spec-line-read** — the skill reads the depth line of the spec and
+  adds captures when the diff touches a screen the line left out.
 - [ ] **no-screen-no-capture** — a dry run on a repo with no front touched
   produces no capture.
 - [ ] **intention-per-change** — the Intention gate passes.

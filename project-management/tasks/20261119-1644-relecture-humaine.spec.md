@@ -1,6 +1,6 @@
 # Human review: a step of its own, with crit, visual proof and questions off the chat
 
-**Status:** draft — waits on the Owner's answers to the open questions below; no Mason before them
+**Status:** draft — questions 1 and 2 settled on 2026-11-19; waits on questions 3, 4 and 5; no Mason before them
 
 ---
 
@@ -94,30 +94,31 @@ his yes) or **open** (a question below).
 12. **The Mason's resume summary** — proposed: at the close, the Mason adds
     to the work document a short summary (decisions, key files, pitfalls,
     commands that work), the input of whoever fixes the comments.
-13. **What triggers each proof** — open, question 1.
-14. **How the autoroute is chosen** — open, question 2.
+13. **What triggers each proof** — Pierrick (question 1, 19/11): « Spec +
+    plancher ». The Architect writes the depth of the review in one line of
+    the spec (for example « captures + e2e », « stratégique seul »); the diff
+    only adds a floor (a screen touched means captures), never removes. Path
+    patterns in `project.md` are set aside.
+14. **When the autoroute is taken** — Pierrick (question 2, 19/11): « Taille
+    de la tache ? Demande explicite ? ». Proposed wording, with no project
+    switch (ruling G10): the Architect takes the autoroute when it judges the
+    task small at step 2, or when the human asks for it explicitly; it writes
+    the choice and its reason in one line of the spec, and the pull request
+    repeats it. On the autoroute the code review and the gates still run and
+    the pull request is still opened; the stops that only serve the human
+    (reading the spec, reading the plan, the human review) are skipped. A
+    human who asks for the full lane always gets it.
 15. **The pre-development report and the plan** — open, question 3.
 16. **The Chisel / Harness line** — open, question 4.
-17. **Where the human sees the proofs** — open, question 5.
+17. **Where the human sees the proofs** — open, question 5; waits on the
+    `relecture-proto` prototype (Pierrick, 19/11: « Attendre le
+    prototype »). No slice depends on it.
 
 ## Open questions for Pierrick
 
-1. **What triggers a proof?** (a) Path patterns in §J (`front: apps/web/**`
-   and so on): a script reads the diff and lists the pieces due. (b) The
-   Architect writes the depth in one line of the spec (« captures + e2e »,
-   « stratégique seul »); the diff only adds a floor (a screen touched means
-   captures), never removes. **I recommend (b)**: one line to read, no pattern
-   list to maintain, and the diff still catches what the spec forgot. You
-   answered « a me parait bien » to (a) after « pas forcément convaincu »:
-   which one?
-2. **How is the autoroute chosen?** Ruling G10 (28/08): « je ne veux pas
-   d'interrupteur », the flow is chosen at each invocation. (a) The project
-   declares it in §J, and a task may ask for more. (b) The Architect writes
-   it in the spec, per task, the project giving the default. (c) You say it
-   when you launch the task. **I recommend (b)**: it is per task, written,
-   and visible in the review, not a hidden switch. In autoroute, the code
-   review and the gates still run; the human stops (spec reading, plan
-   reading, human review) are skipped, the pull request is still opened.
+Questions 1 and 2 are settled (decisions 13 and 14). The numbers of the
+others are kept.
+
 3. **Does the pre-development report reuse the review's template?** In plain
    words: the final review shows four things on one page (what changed, in a
    sentence; the files touched as a tree; the data model before → after; the
@@ -136,8 +137,9 @@ his yes) or **open** (a question below).
    for Dédale's shared tool?
 5. **Where does the human see screenshots and videos?** (a) Inside the crit
    story, if crit renders images there (to verify). (b) A separate proof
-   page linked from the story, served by the Harness. **I recommend (a) for
-   screenshots, (b) for videos**, until verified.
+   page linked from the story, served by the Harness. Waits on the
+   `relecture-proto` prototype; until then the proofs are files in a folder
+   and the story links them.
 
 ## Acceptance Criteria
 
@@ -145,7 +147,7 @@ his yes) or **open** (a question below).
   named *Human review*, after the close, and its "Where the work stops"
   table lists it.
 - [ ] **autoroute-written** — `workflow.md` names the autoroute, what it
-  skips and what it keeps, in the form question 2 settles.
+  skips and what it keeps, and when the Architect takes it (decision 14).
 - [ ] **crit-skill-ships** — `socle/agents/skills/chisel-crit/SKILL.md`
   exists, is listed in `src/socle-files.ts`, and contains no copy of crit's
   own skills.
@@ -223,8 +225,8 @@ Folder `20261119-1644-relecture-humaine/`:
    the story guide, §J with the depth only.
 2. **Who fixes the comments** (blocked by: 1) — the rule and the Mason's
    resume summary.
-3. **Autoroute** (blocked by: 1; question 2).
-4. **Visual proof** (blocked by: 1; questions 1 and 5) — `visual-proof`,
+3. **Autoroute** (blocked by: 1).
+4. **Visual proof** (blocked by: 1) — `visual-proof`,
    §J commands, the agent's own check.
 5. **Questions page** (blocked by: none; question 4) — the template and the
    rule that questions leave the chat.
@@ -240,7 +242,7 @@ Folder `20261119-1644-relecture-humaine/`:
   Outillage, 2026-11-19): the four-part review folder and the nine
   questions this spec answers.
 - `project-management/review-360-decisions.md`, rulings E4 and G10: the
-  earlier light lane and the « no switch » rule question 2 has to honour.
+  earlier light lane and the « no switch » rule decision 14 honours.
 - Vault notes « Chisel, reprise après la review humaine » and « Chisel, coût
   des Masons et relecture du plan » (2026-11-04): the source of decisions 11
   and 12.

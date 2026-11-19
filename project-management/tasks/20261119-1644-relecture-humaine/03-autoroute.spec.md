@@ -1,7 +1,7 @@
 # 03 — Autoroute
 
 **Status:** draft
-**Blocked by:** 01 — Human review with crit; the parent spec's question 2
+**Blocked by:** 01 — Human review with crit
 
 ---
 
@@ -10,14 +10,15 @@
 **What to build:** a task can run on the autoroute: the code review and the
 gates still run, the pull request is still opened, the stops that only
 serve the human (reading the spec, reading the plan, the human review) are
-skipped. Where the choice is written follows the parent spec's question 2,
-within ruling G10 (« je ne veux pas d'interrupteur »). Parent spec:
-decisions 2 and 14.
+skipped. The Architect takes it when it judges the task small at step 2, or
+when the human asks for it explicitly, and writes the choice and its reason
+in one line of the spec; there is no project switch (ruling G10). Parent
+spec: decisions 2 and 14.
 
 ## Acceptance criteria
 
 - [ ] **autoroute-written** — `workflow.md` names the autoroute, what it
-  skips, what it keeps, and where the choice is written.
+  skips, what it keeps, and the two ways it is taken.
 - [ ] **autoroute-visible** — a task on the autoroute says so in its spec
   and in its pull request.
 - [ ] **intention-per-change** — the Intention gate passes.
