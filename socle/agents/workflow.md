@@ -167,7 +167,7 @@ brief, so every brief below also carries these:
 - stop what it started itself (test runners, servers, containers) before
   handing back, and never what another session started;
 - reuse existing code rather than copy it;
-- a brief or spec that sets a threshold, an option or a check says what it
+- a request or spec that sets a threshold, an option or a check says what it
   means and which way it acts.
 
 ## The Mason brief

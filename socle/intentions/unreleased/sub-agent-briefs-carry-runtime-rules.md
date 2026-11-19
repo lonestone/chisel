@@ -34,7 +34,7 @@ in the wrong direction, and code copied instead of reused.
 ## Observable Gaps
 
 1. **What the human knows.** Signal: none in the repo. Say it to the
-   human in one sentence: every sub-agent brief now carries six rules
+   human in one sentence: every sub-agent brief now carries five rules
    (long commands in the background, a git command that erases alone in
    its call, stop what it started, reuse existing code, say what a setting
    means and which way it acts), and the Mason writes its plan report in
