@@ -11,8 +11,8 @@
 the work is woken to fix them, however long ago it closed; a fresh Mason
 only when its session is lost. When a comment changes a spec decision, the
 Architect fixes the spec first, then wakes the same Mason. Pierrick:
-« toujours le macon qui a bossé ! Toujours. » Parent spec: decision 11
-(and decision 12, the resume summary, only if Pierrick keeps it).
+« toujours le macon qui a bossé ! Toujours. » Parent spec: decision 11;
+decision 12, the resume summary, is withdrawn.
 
 ## Acceptance criteria
 

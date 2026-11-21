@@ -1,6 +1,6 @@
 # 04 — Visual proof
 
-**Status:** draft
+**Status:** draft — group A, can start after 01
 **Blocked by:** 01 — Human review with crit
 
 ---
@@ -10,20 +10,45 @@
 **What to build:** when a task touches a screen, the agent checks it itself
 (a recorded Playwright e2e test, or at least a browser or Playwright check)
 and the human review shows at least a screenshot of it, with a before →
-after comparison when the screen existed. A `visual-proof` skill, made
-generic from music-downloader's `review-videos`, does this from the commands
-§J declares. The depth is the Architect's line in the spec; the diff only
-adds a floor (a screen touched means captures). The
-proofs are shown in a page Chisel serves, built at slice 06; until then
-they are files in the folder §J names. The close records the depth chosen
-and the floor the diff computed, and `retro` compares them, so an agent
-that always asks more than the floor shows. Parent spec: decisions 5, 10,
-13, 17.
+after comparison when the screen existed.
+
+Two pieces, inside Chisel, with no Harness command (decision 16):
+
+- **A capture command**, the equivalent of the Harness's `captures.ts`:
+  Playwright captures written to disk, at the widths asked; a before →
+  after comparison at the pixel, with a `.diff.png` map and a verdict per
+  screen (identical, changed, new, size); and a text report: overflow,
+  console errors, off-site requests, content below the fold. Playwright
+  comes from the project. The code of `captures.ts` belongs to Olympe: a
+  copy needs Olympe's agreement, asked by promethee; otherwise Chisel
+  writes its own from the same behaviour.
+- **A `visual-proof` skill**, made generic from music-downloader's
+  `review-videos`, that carries the method of the Harness's
+  `verification-visuelle`: mechanical first, through the capture command,
+  whose text often suffices; an agent never reads a capture in its own
+  thread; when looking is needed, a fresh sub-agent gets the paths, the
+  report, the precise question and the list of what it must find, reports
+  per capture, and says « not verified » for what it cannot see, never
+  « absent ». The human sees the images himself.
+
+The project declares in §J its e2e, recording and screenshot commands, each
+optional, and where the proofs go. The depth is the Architect's line in the
+spec; the diff only adds a floor (a screen touched means captures). The
+proofs are the second of the three readings of the human review (slice 01);
+until group B's tool shows them in a page, they are files in the folder §J
+names, linked from the review. The close records the depth chosen and the
+floor the diff computed, and `retro` compares them, so an agent that always
+asks more than the floor shows. Parent spec: decisions 5, 10, 13, 16, 17,
+24.
 
 ## Acceptance criteria
 
 - [ ] **visual-proof-skill** — the skill exists, reads its commands from
-  §J, and names no command of one project.
+  §J, names no command of one project, and says an agent never reads a
+  capture in its own thread.
+- [ ] **capture-tool** — the capture command ships with Chisel, is listed
+  in `src/socle-files.ts`, and on a page captured twice produces the
+  captures, a `.diff.png` for a changed screen and a text report.
 - [ ] **review-section-commands** — §J declares the e2e, recording and
   screenshot commands, each optional.
 - [ ] **spec-line-read** — the skill reads the depth line of the spec and
@@ -42,3 +67,8 @@ that always asks more than the floor shows. Parent spec: decisions 5, 10,
 ## Notes
 
 - Dry run on music-downloader before shipping (screens, e2e, recording).
+- Sources: Harness `scripts/captures.ts` (245 lines, Node, Playwright) and
+  `skills/verification-visuelle/SKILL.md`. Why the method exists: on 02/11
+  a crewmate read 22 PNGs (about 10 MB) in its own thread, for about $10.
+- Copy or rewrite, and in which language, is question A3 of the 21/11
+  report.

@@ -1,6 +1,21 @@
 # Human review: a step of its own, with crit, visual proof and questions off the chat
 
-**Status:** draft — decision 8 waits on the review tool; no Mason before it
+**Status:** draft — split in two (21/11): group A can start, group B waits
+on the review tool
+
+> **Two groups, two paces.** Pierrick (21/11): « P-e devrait ont split le
+> chantier en 2 ? Les procédures / regles d'un coté qui ne necessitent pas
+> forcément + d'outillage, et puis l'outil eensuite » ; « ça permettrait
+> d'améliorer Chisel dès ajd ».
+>
+> - **A — the rules** (slices 01 to 04): the human-review step and its
+>   strategic reading, who fixes the comments, the one shot, the visual
+>   proof. They work with crit and plain files, need no new tool, and can
+>   start now.
+> - **B — the tool** (slices 05 and 06): the questions page and the
+>   pre-development report. They wait on the tool the task
+>   `relecture-analyse` prepares, and are not rewritten here. Decision 8
+>   waits with them.
 
 ---
 
@@ -29,7 +44,9 @@ Source: the analysis page « Chisel, relecture en deux temps » (vault,
 - A human-review step in `workflow.md`, with crit as the tool for now,
   shipped by Chisel as a skill that points to crit (never a copy of crit).
 - The review depth, written per task in the spec, and a lane without the
-  human-only stops (the « autoroute »).
+  human-only stops after the spec (the « one shot », first called the
+  autoroute).
+- The strategic reading the human review opens on (decisions 21, 22).
 - Visual proof when a screen is touched, and the agent's own check of it.
 - Questions to the human, the pre-development report and the proofs as
   pages that Chisel serves itself, written here as **needs**: what each page
@@ -47,6 +64,9 @@ Source: the analysis page « Chisel, relecture en deux temps » (vault,
 - Reworking the crit prologue prompt: done « petit à petit », elsewhere.
 - The Harness's own pages (the gods' questionnaires and the like), which
   head for Olympe.
+- The queue, and anything that gathers several tasks, projects or
+  worktrees: that is the Harness (decision 23). Chisel works one task at a
+  time.
 
 ## The decisions
 
@@ -129,6 +149,8 @@ on his yes) or **open** (waits on something named).
     is still opened; the stops that only serve the human (reading the spec,
     reading the plan, the human review) are skipped. A human who asks for
     the full lane always gets it. There is no project switch (ruling G10).
+    Amended on 21/11 by decision 18: the lane is named the one shot, and
+    the spec reading stays.
 15. **The report before and the review after share one form** — Pierrick
     (question 3, 19/11): « Intéressant. Pas sur que la vue en colonnes soient
     la bonne, mais l'idée l'est. » The Mason fills, at the plan step, the
@@ -154,6 +176,61 @@ on his yes) or **open** (waits on something named).
     comparisons and videos are shown in a page Chisel serves, not in the
     crit story.
 
+Decisions of 21/11, from Pierrick's notes on the page « Relecture, parcours
+et fonctionnalités » (vault, `23.17 Outillage/artefacts/2026-11-19`):
+
+18. **The one shot** — Pierrick (21/11): « Sur 7 8 9 j'interviens
+    uniquement quand on est pas en mode ~ "one shot" ». Steps 7, 8 and 9 of
+    the page are *review*, *fix the comments* and *merge*. The autoroute of
+    decisions 2 and 14 takes this name: in one shot, the human's last stop
+    is the spec; there is no human review, no fixing round, and no stop
+    before the merge. The page reads it the same way: « en one shot, il
+    s'arrête à la spec ». This amends decision 14, which also skipped the
+    spec reading; the merge without a stop is open (question A2 of the
+    21/11 report).
+19. **Clarifying only when needed** — Pierrick (21/11): « A ne pas lancer
+    si le besoin est archi clair » ; « Voir wayfinder si ça semble trop le
+    bordel ». The interview of step 2 (`grilling`) is skipped when the need
+    is clear, as `workflow.md` already says; when it gets tangled, the
+    Architect switches to the `wayfinder` skill, a map of decision tickets.
+20. **The spec stays a document** — Pierrick (21/11): « Le document ne doit
+    pas disparaitre. Mais efectivement une vue web nous donne + de
+    leviers. » The spec stays a file on disk; a web view comes on top of it
+    with group B's tool, never in its place.
+21. **The strategic reading comes first** — Pierrick (21/11): « Ici ça doit
+    se lire aussi bie nqu'un bon article. Après avoir relu ça je devrais
+    déjà voir un gros niveau de confiance, et le cas contraire je stop ici
+    direct avec commentaires » ; « j'ai jamais demandé en 1 phrase. Surtout
+    pas. C'est au max une page d'article » ; it carries « uniquement le plus
+    critique notamment le schema de données mais aussi effectivement un
+    grand changement d'archi ». The human review opens on a synthesis: what
+    was done and why for the critical decisions, the data schema before →
+    after and any large architecture change, one article page at most,
+    never one sentence. If it gives him confidence, Pierrick goes down or
+    approves; otherwise he stops there, with comments.
+22. **Three readings** — from the same notes: the human review has three
+    readings, highest first: the *strategic* one (the synthesis), the
+    *proofs* (captures, before → after, video, command output) and the
+    *reading guide* (the diff in chapters, the core first). The page's
+    « System » card is merged into the strategic reading. The depth line of
+    the spec (decision 13) says how far down the human goes: `strategic`
+    stops at the synthesis, plus the proofs the floor demands; `full` goes
+    to the guide.
+23. **The queue is the Harness** — Pierrick (21/11), on the queue and
+    anything that gathers several tasks: « ça c'est un peu mon harness
+    actuel. Chisel c'est la couche juste en dessous, restons en là pour le
+    moment ».
+24. **The visual proof starts from the Harness's method** — Pierrick
+    (21/11): « on a quelque chose dans le harness ». That is the script
+    `captures.ts` (Playwright captures written to disk, a pixel comparison
+    with a `.diff.png` map, and a text report: overflow, console errors,
+    off-site requests) and the skill `verification-visuelle` (mechanical
+    first; an agent never reads a capture in its own thread; a fresh
+    sub-agent looks when needed and reports « non vérifié » for what it
+    cannot see). Chisel must work without the Harness (decision 16), so
+    slice 04 carries an equivalent inside Chisel. The code of `captures.ts`
+    belongs to Olympe: a copy needs Olympe's agreement, asked by promethee.
+
 ## The pages, as needs
 
 What each page must do, whatever tool serves it:
@@ -172,8 +249,14 @@ the Harness, and is served by Chisel.
 - [ ] **workflow-has-human-review** — `socle/agents/workflow.md` has a step
   named *Human review*, after the close, and its "Where the work stops"
   table lists it.
-- [ ] **autoroute-written** — `workflow.md` names the autoroute, what it
+- [ ] **autoroute-written** — `workflow.md` names the one shot, what it
   skips and what it keeps, and when the Architect takes it.
+- [ ] **strategic-reading-written** (2026-11-21) — `workflow.md`'s human
+  review opens on a synthesis of one article page at most, written from a
+  template the socle ships, and says the human may stop there.
+- [ ] **capture-tool** (2026-11-21) — Chisel ships a capture command that
+  writes captures, a before → after pixel comparison and a text report,
+  with no Harness command involved.
 - [ ] ~~**crit-skill-ships** — `socle/agents/skills/chisel-crit/SKILL.md`
   exists, is listed in `src/socle-files.ts`, and contains no copy of crit's
   own skills.~~
@@ -217,10 +300,10 @@ flowchart LR
   Q --> P[plan<br/>+ pre-dev report]
   P --> C[code + agent's check<br/>e2e / browser]
   C --> R[close + PR]
-  R --> H[human review<br/>crit + proofs page]
+  R --> H[human review<br/>synthesis, then proofs, then guide]
   H -->|comments| F[who fixes]
   F --> R
-  S -. autoroute .-> P2[plan] --> C2[code + checks] --> R2[PR]
+  S -. one shot .-> P2[plan] --> C2[code + checks] --> R2[PR]
 ```
 
 Chisel ships all of it: the step text, the review skills (decision 8,
@@ -245,8 +328,8 @@ that listens on the tailnet) and its own pages.
 ## Testing Strategy
 
 - `test/integrity.test.ts` catches a new socle file not listed.
-- A test runs `chisel-setup`'s placement on an empty folder and checks the
-  story guide and §J appear.
+- A test runs `chisel-setup`'s placement on an empty folder and checks §J
+  and the synthesis template appear.
 - A dry run on music-downloader (screens, e2e, recording) validates
   `visual-proof` before it ships; a dry run on a repo without front checks
   that no screen means no capture.
@@ -257,14 +340,23 @@ that listens on the tailnet) and its own pages.
 
 Folder `20261119-1644-relecture-humaine/`:
 
+Group A, the rules, starts now:
+
 1. **Human review with crit** (blocked by: none) — the step and §J with the
-   default depth; the review skills join once the tool is chosen.
+   default depth; the strategic reading first, with the possible stop
+   (decisions 21, 22); the review skills join once the tool is chosen.
 2. **Who fixes the comments** (blocked by: 1) — the task's Mason, always;
    no resume summary (decision 12).
-3. **Autoroute** (blocked by: 1).
-4. **Visual proof** (blocked by: 1) — `visual-proof`, §J commands, the
-   agent's own check, the depth against the floor; the proofs are files
-   until slice 5's tool shows them.
+3. **One shot** (blocked by: 1) — the lane without the human after the
+   spec; Clarifier skipped when the need is clear, `wayfinder` when it
+   tangles (decisions 18, 19).
+4. **Visual proof** (blocked by: 1) — `visual-proof`, the capture command
+   and the method of decision 24, §J commands, the agent's own check, the
+   depth against the floor; the proofs are files until group B's tool
+   shows them.
+
+Group B, the tool, waits on `relecture-analyse`:
+
 5. **Questions page** (blocked by: the review tool chosen after
    `relecture-analyse`, and the UX of decision 15) — Chisel serves the page and brings the answers
    back; questions leave the chat.
