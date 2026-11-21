@@ -43,9 +43,9 @@ Source: the analysis page « Chisel, relecture en deux temps » (vault,
 **Included:**
 - A human-review step in `workflow.md`, with crit as the tool for now,
   shipped by Chisel as a skill that points to crit (never a copy of crit).
-- The review depth, written per task in the spec, and a lane without the
-  human-only stops after the spec (the « one shot », first called the
-  autoroute).
+- The review depth, written per task in the spec, and a lane whose only
+  possible human stop is the final review (the « one shot », first called
+  the autoroute).
 - The strategic reading the human review opens on (decisions 21, 22).
 - Visual proof when a screen is touched, and the agent's own check of it.
 - Questions to the human, the pre-development report and the proofs as
@@ -149,8 +149,8 @@ on his yes) or **open** (waits on something named).
     is still opened; the stops that only serve the human (reading the spec,
     reading the plan, the human review) are skipped. A human who asks for
     the full lane always gets it. There is no project switch (ruling G10).
-    Amended on 21/11 by decision 18: the lane is named the one shot, and
-    the spec reading stays.
+    Amended on 21/11 by decision 18: the lane is named the one shot, the
+    spec reading is still skipped, and the final review becomes optional.
 15. **The report before and the review after share one form** — Pierrick
     (question 3, 19/11): « Intéressant. Pas sur que la vue en colonnes soient
     la bonne, mais l'idée l'est. » The Mason fills, at the plan step, the
@@ -182,12 +182,17 @@ et fonctionnalités » (vault, `23.17 Outillage/artefacts/2026-11-19`):
 18. **The one shot** — Pierrick (21/11): « Sur 7 8 9 j'interviens
     uniquement quand on est pas en mode ~ "one shot" ». Steps 7, 8 and 9 of
     the page are *review*, *fix the comments* and *merge*. The autoroute of
-    decisions 2 and 14 takes this name: in one shot, the human's last stop
-    is the spec; there is no human review, no fixing round, and no stop
-    before the merge. The page reads it the same way: « en one shot, il
-    s'arrête à la spec ». This amends decision 14, which also skipped the
-    spec reading; the merge without a stop is open (question A2 of the
-    21/11 report).
+    decisions 2 and 14 takes this name. Then, answering question A2 of the
+    21/11 report: « En oneshot je n'interviens que pour la review finale.
+    Et encore. », and question A4 (does the one shot keep the spec
+    reading?): « non ». So in one shot there is no spec reading; the only
+    human stop left is the final review, and it may be skipped too: the
+    Architect's one-shot line in the spec says whether it happens. The page
+    said « il s'arrête à la spec »; Pierrick's answers replace it.
+    *Proposed* for the merge: when the final review happens, Pierrick's
+    approval there is his word for the merge; when it is skipped, the merge
+    follows the merge and publish section of `project.md` (by default, his
+    explicit word).
 19. **Clarifying only when needed** — Pierrick (21/11): « A ne pas lancer
     si le besoin est archi clair » ; « Voir wayfinder si ça semble trop le
     bordel ». The interview of step 2 (`grilling`) is skipped when the need
@@ -230,6 +235,13 @@ et fonctionnalités » (vault, `23.17 Outillage/artefacts/2026-11-19`):
     cannot see). Chisel must work without the Harness (decision 16), so
     slice 04 carries an equivalent inside Chisel. The code of `captures.ts`
     belongs to Olympe: a copy needs Olympe's agreement, asked by promethee.
+    Pierrick (21/11, question A3): « a »: `captures.ts` is copied, in Node,
+    once Olympe agrees; Chisel does not rewrite it.
+25. **The Mason writes the synthesis** — Pierrick (21/11, question A1):
+    « faut un bon modele. Le mason pour test ». The task's Mason writes the
+    synthesis of decision 21 at the close, because it holds the why, on a
+    strong model (never the light tier). It is a trial: the retro of the
+    first tasks says whether it holds.
 
 ## The pages, as needs
 
@@ -253,7 +265,8 @@ the Harness, and is served by Chisel.
   skips and what it keeps, and when the Architect takes it.
 - [ ] **strategic-reading-written** (2026-11-21) — `workflow.md`'s human
   review opens on a synthesis of one article page at most, written from a
-  template the socle ships, and says the human may stop there.
+  template the socle ships, by the task's Mason at the close, and says
+  the human may stop there.
 - [ ] **capture-tool** (2026-11-21) — Chisel ships a capture command that
   writes captures, a before → after pixel comparison and a text report,
   with no Harness command involved.
@@ -347,9 +360,9 @@ Group A, the rules, starts now:
    (decisions 21, 22); the review skills join once the tool is chosen.
 2. **Who fixes the comments** (blocked by: 1) — the task's Mason, always;
    no resume summary (decision 12).
-3. **One shot** (blocked by: 1) — the lane without the human after the
-   spec; Clarifier skipped when the need is clear, `wayfinder` when it
-   tangles (decisions 18, 19).
+3. **One shot** (blocked by: 1) — no spec reading, the final review the
+   only stop left and optional; Clarifier skipped when the need is clear,
+   `wayfinder` when it tangles (decisions 18, 19).
 4. **Visual proof** (blocked by: 1) — `visual-proof`, the capture command
    and the method of decision 24, §J commands, the agent's own check, the
    depth against the floor; the proofs are files until group B's tool

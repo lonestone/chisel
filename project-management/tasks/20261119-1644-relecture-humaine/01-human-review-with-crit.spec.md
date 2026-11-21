@@ -11,7 +11,8 @@
 the workflow reaches a *Human review* step. The review opens on the
 **strategic reading**: a synthesis of what was done and why for the
 critical decisions, with the data schema before → after and any large
-architecture change, and nothing less critical. It reads like a good
+architecture change, and nothing less critical. The task's Mason writes it
+at the close, on a strong model (never the light tier), as a trial. It reads like a good
 article, one page at most, never one sentence. Pierrick reads it first:
 if it gives him confidence, he goes down to the proofs and the reading
 guide, or approves; otherwise he stops there and comments, and the review
@@ -28,7 +29,7 @@ A freshly equipped repo has a §J · Review section declaring its default
 depth (`full` or `strategic`). The socle ships a synthesis template. The
 review skills (parent spec, decision 8) wait on the review tool; until
 then the step calls crit directly. Parent spec: decisions 1, 2, 3, 4, 7, 9,
-21, 22.
+21, 22, 25.
 
 ## Acceptance criteria
 
@@ -54,7 +55,9 @@ then the step calls crit directly. Parent spec: decisions 1, 2, 3, 4, 7, 9,
 
 ## Notes
 
-- Who writes the synthesis, and where Pierrick reads it while crit is the
-  tool, are questions A1 of the 21/11 report.
+- Who writes the synthesis: the Mason, on a strong model, as a trial
+  (parent spec, decision 25). Where Pierrick reads it while crit is the
+  tool is the plan's to propose: a markdown file in the task folder,
+  committed in the pull request, which the crit story opens on.
 - Sources: the page « Relecture, parcours et fonctionnalités », step 7
   « Relire » and notes 7, 8, 11 of 21/11.

@@ -19,9 +19,9 @@ Two pieces, inside Chisel, with no Harness command (decision 16):
   after comparison at the pixel, with a `.diff.png` map and a verdict per
   screen (identical, changed, new, size); and a text report: overflow,
   console errors, off-site requests, content below the fold. Playwright
-  comes from the project. The code of `captures.ts` belongs to Olympe: a
-  copy needs Olympe's agreement, asked by promethee; otherwise Chisel
-  writes its own from the same behaviour.
+  comes from the project. Pierrick (21/11): `captures.ts` is copied, in
+  Node, not rewritten. Its code belongs to Olympe: the copy waits on
+  Olympe's agreement, asked by promethee.
 - **A `visual-proof` skill**, made generic from music-downloader's
   `review-videos`, that carries the method of the Harness's
   `verification-visuelle`: mechanical first, through the capture command,
@@ -70,5 +70,5 @@ asks more than the floor shows. Parent spec: decisions 5, 10, 13, 16, 17,
 - Sources: Harness `scripts/captures.ts` (245 lines, Node, Playwright) and
   `skills/verification-visuelle/SKILL.md`. Why the method exists: on 02/11
   a crewmate read 22 PNGs (about 10 MB) in its own thread, for about $10.
-- Copy or rewrite, and in which language, is question A3 of the 21/11
-  report.
+- The copy starts only once Olympe has agreed; the socle ships only shell
+  scripts today, so a Node script under `socle/scripts/` is a first.
