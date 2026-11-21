@@ -20,8 +20,15 @@ Two pieces, inside Chisel, with no Harness command (decision 16):
   screen (identical, changed, new, size); and a text report: overflow,
   console errors, off-site requests, content below the fold. Playwright
   comes from the project. Pierrick (21/11): `captures.ts` is copied, in
-  Node, not rewritten. Its code belongs to Olympe: the copy waits on
-  Olympe's agreement, asked by promethee.
+  Node, not rewritten. Olympe agreed (21/11, 23:55): « d'accord pour la
+  copie dans lonestone/chisel, sous sa licence. Prends la version du vault
+  à a05b1092 (la dernière, avec --clic, --sombre et le navigateur
+  distant). Trois choses propres à nos machines à retirer ou rendre
+  génériques : la recherche de playwright-core dans ~/projects/* (l. 71),
+  le nom HARNESS_PLAYWRIGHT_WS (renomme-le pour Chisel), et le texte
+  « harness captures » des messages et de l'usage. Aucun secret ni chemin
+  du vault dedans. Une copie, pas un lien : les deux vivront séparément,
+  je ne reporterai pas nos changements chez toi. »
 - **A `visual-proof` skill**, made generic from music-downloader's
   `review-videos`, that carries the method of the Harness's
   `verification-visuelle`: mechanical first, through the capture command,
@@ -49,6 +56,10 @@ asks more than the floor shows. Parent spec: decisions 5, 10, 13, 16, 17,
 - [ ] **capture-tool** — the capture command ships with Chisel, is listed
   in `src/socle-files.ts`, and on a page captured twice produces the
   captures, a `.diff.png` for a changed screen and a text report.
+- [ ] **capture-copy-generic** — the copy carries none of the three
+  machine-specific things Olympe named: no search for `playwright-core` in
+  `~/projects/*`, no `HARNESS_PLAYWRIGHT_WS` (renamed for Chisel), no
+  « harness captures » in its messages or usage; and no vault path.
 - [ ] **review-section-commands** — §J declares the e2e, recording and
   screenshot commands, each optional.
 - [ ] **spec-line-read** — the skill reads the depth line of the spec and
@@ -70,5 +81,8 @@ asks more than the floor shows. Parent spec: decisions 5, 10, 13, 16, 17,
 - Sources: Harness `scripts/captures.ts` (245 lines, Node, Playwright) and
   `skills/verification-visuelle/SKILL.md`. Why the method exists: on 02/11
   a crewmate read 22 PNGs (about 10 MB) in its own thread, for about $10.
-- The copy starts only once Olympe has agreed; the socle ships only shell
-  scripts today, so a Node script under `socle/scripts/` is a first.
+- The copy is taken from the vault at commit a05b1092, under Chisel's
+  licence. It is a copy, not a link: Olympe will not carry the Harness's
+  later changes over, and Chisel owns its copy from then on.
+- The socle ships only shell scripts today, so a Node script under
+  `socle/scripts/` is a first.

@@ -236,7 +236,8 @@ et fonctionnalités » (vault, `23.17 Outillage/artefacts/2026-11-19`):
     slice 04 carries an equivalent inside Chisel. The code of `captures.ts`
     belongs to Olympe: a copy needs Olympe's agreement, asked by promethee.
     Pierrick (21/11, question A3): « a »: `captures.ts` is copied, in Node,
-    once Olympe agrees; Chisel does not rewrite it.
+    once Olympe agrees; Chisel does not rewrite it. Olympe agreed the same
+    night, with three things to make generic; slice 04 carries its words.
 25. **The Mason writes the synthesis** — Pierrick (21/11, question A1):
     « faut un bon modele. Le mason pour test ». The task's Mason writes the
     synthesis of decision 21 at the close, because it holds the why, on a
