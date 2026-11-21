@@ -1,7 +1,7 @@
 # Working rules from the field: branches, commits, gates, docs and the retro
 
-**Status:** draft — waits on the Owner's answers to the open questions; no
-plan before
+**Status:** draft — waits on the Owner's answers on branches, the README
+ceiling and rebase; no plan before his approval
 
 ---
 
@@ -89,8 +89,8 @@ table and who raised it.
    `discipline.md` for the rule; a new `project.md` section, Branches, for
    the settings. *Source:* Pierrick, 09/11: « c'est un peu devenu mon
    default, mais porté par Chisel plutôt » (the worktree); the install
-   first, a retro he passed on the same day. The defaults are open
-   question 1.
+   first, a retro he passed on the same day. The defaults wait on
+   the Owner.
 6. **a-pushed-branch-is-never-rewritten** — a branch brought up to date
    takes its base by a merge, never a rebase: the agent has no forced push,
    and a squash merge leaves no trace of the merge commits. *Where:* the
@@ -173,7 +173,7 @@ table and who raised it.
 | the story's first chapter (17/11), and the note's question 3 (story order) | `relecture-humaine`, decisions 21 and 22: the strategic reading first, then the proofs, then the guide, core first |
 | the note's proposals 1, 2, 3, 5 and question 2 (crit for every project) | `relecture-humaine`, decisions 1, 2, 3, 7 and 8 |
 | the note's point 4 and question 4 (`crit-review.sh`) | the Harness |
-| the note's question 5 (one task?) | its two other parts are done: the Typist types by default since 0.3.0 (journal 50), and the resume after the review is `relecture-humaine`, decision 11. What is left is open question 2 |
+| the note's question 5 (one task?) | its two other parts are done: the Typist types by default since 0.3.0 (journal 50), and the resume after the review is `relecture-humaine`, decision 11. What is left was decided on 21/11: one task, one pull request, one commit per rule |
 | the note's question 6 (chisel as our default outside a repo) | Notes, out of scope |
 
 ## Acceptance Criteria
@@ -252,29 +252,35 @@ flowchart LR
 
 ## Slices & Dependencies
 
-Folder `20261122-0002-working-rules-from-the-field/`, slices written by
-`slice-task` once the questions are answered:
+One task, one pull request, one commit per rule (decided 21/11). The
+slices below are reading chapters inside that pull request, in commit
+order, not separate pull requests: the task applies its own rule
+`small-feedback-is-one-pass`. No slice files.
 
 1. **Ambient rules** (blocked by: none) — rules `proof-before-cause`,
    `readme-presents-and-points`, `agent-docs-say-what-and-why`,
-   `actions-carry-a-verb`, and the README ceiling in §D.
-2. **The glue: branches, commits, commands** (blocked by: open question 1)
-   — rules `a-branch-per-task`, `a-pushed-branch-is-never-rewritten`,
-   `the-commit-rule-is-in-the-glue`, `the-commands-are-in-the-glue`; the
-   three sections, `chisel-setup`, the migration intention.
-3. **The workflow steps** (blocked by: 2, and pull requests #7 and #8 merged,
-   which edit the same paragraphs) — rules `the-typist-sees-red-first`,
-   `small-feedback-is-one-pass`, `the-full-suite-runs-once`,
-   `ci-is-read-by-its-verdict`, `a-deferral-has-a-home`, and the close
-   checks of slice 1's ceiling.
+   `actions-carry-a-verb`, and the README ceiling in §D (its size waits on
+   the Owner's answer on the ceiling).
+2. **The glue: branches, commits, commands** (blocked by: the Owner's
+   answers on branches and rebase) — rules `a-branch-per-task`,
+   `a-pushed-branch-is-never-rewritten`, `the-commit-rule-is-in-the-glue`,
+   `the-commands-are-in-the-glue`; the three sections, `chisel-setup`, the
+   migration intention.
+3. **The workflow steps** (blocked by: 2, and pull requests #7, #8 and
+   `lead-ux` merged, which edit the same paragraphs of `workflow.md`) —
+   rules `the-typist-sees-red-first`, `small-feedback-is-one-pass`,
+   `the-full-suite-runs-once`, `ci-is-read-by-its-verdict`,
+   `a-deferral-has-a-home`, and the close checks of slice 1's ceiling.
 4. **The retro written down** (blocked by: none) — rule
    `the-retro-is-written-down`.
 
-How many pull requests is open question 2.
+Chapters 1, 2 and 4 can be typed before #7, #8 and `lead-ux` merge;
+chapter 3 waits for them, and the pull request opens once it is done.
 
 ## Deliverables
 
-- [ ] The four slices, each with its intentions and a passing gate.
+- [ ] One pull request: one commit per rule, in chapter order, each with
+  its intentions, and a passing gate.
 
 ## References
 
