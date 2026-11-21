@@ -25,6 +25,16 @@ human goes: `strategic` stops at the synthesis, plus the proofs the floor
 demands; `full` goes to the guide. The agent waits for the human and
 answers every comment; no question goes into crit.
 
+Two rules from the Harness's use of crit, raised by the Architect of
+`chisel-workflow` (21/11):
+
+- **The diff's base is the pull request's base.** On stacked pull
+  requests the base is not `main`: the step reads it from the pull request
+  (`gh pr view --json baseRefName`) and reviews the diff against it.
+- **An expired wait is not a blocker.** When the wait for the human times
+  out, the agent reconnects to the same review and waits again; it reports
+  a blocker only on another failure.
+
 A freshly equipped repo has a §J · Review section declaring its default
 depth (`full` or `strategic`). The socle ships a synthesis template. The
 review skills (parent spec, decision 8) wait on the review tool; until
@@ -44,6 +54,10 @@ then the step calls crit directly. Parent spec: decisions 1, 2, 3, 4, 7, 9,
 - [ ] **three-readings-ordered** — the step names the three readings in
   order (strategic, proofs, reading guide) and maps the depth line onto
   them.
+- [ ] **diff-base-from-pr** — the step takes the diff's base from the
+  pull request, not from `main`.
+- [ ] **expired-wait-resumes** — the step says an expired wait reconnects
+  to the same review and waits again, and is not a blocker.
 - [ ] **project-review-section** — the project template and this repo's
   `project.md` have §J with the depth.
 - [ ] **intention-per-change** — the Intention gate passes.

@@ -99,7 +99,8 @@ on his yes) or **open** (waits on something named).
    stays in herdr, the links always at hand.
 7. **Step placement** — Pierrick (19/11): « ok ». Step 8, *Human review*, after the close
    and the pull request; it reviews the pull request's diff (`crit --pr`, or
-   the branch diff without a remote). One task, one pull request, one human
+   the branch diff without a remote), against the pull request's base,
+   not `main`, when pull requests are stacked. One task, one pull request, one human
    review (11-09).
 8. **The review skills** — open, waits on the review tool. Pierrick
    (19/11): « attendons de settle sur un outil. Je pense que ça sera plus
