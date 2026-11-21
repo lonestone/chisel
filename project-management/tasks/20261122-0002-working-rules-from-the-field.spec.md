@@ -1,0 +1,316 @@
+# Working rules from the field: branches, commits, gates, docs and the retro
+
+**Status:** draft — waits on the Owner's answers to the open questions; no
+plan before
+
+---
+
+> 🧑 **REVIEW CAREFULLY** — human decision surface. Read it all before code.
+
+## Context
+
+From 9 to 21 November 2026, the Owner (Pierrick) and the projects that run
+chisel asked, one by one, for working rules to move into chisel. The
+toolkit maintainer gathered them in a table, each line with its words and
+its source: the vault note « Chisel, règles de travail et crit »
+(`23.17 Outillage/artefacts/2026-11-09`), section « Ce qui passerait dans
+Chisel ». On 21/11 the Owner asked for the work to move on: « Continue à
+avancer cette nuit en autonomie. »
+
+Part of the table is already carried elsewhere: the human review and crit
+by the task `relecture-humaine`, the rules every sub-agent brief carries by
+pull request #7, the model named at launch by pull request #8. This spec
+takes the rest, written so it holds for any team that uses chisel, not only
+ours. "Where each line of the table goes" below says, line by line, what is
+taken here, what is carried elsewhere, and what leaves.
+
+## Scope
+
+**Included:** the fourteen rules of "The rules" below, each in the file it
+names, with:
+- the `.agents/` copy of each changed socle file, kept identical;
+- the new sections of `project.md.tpl`, this repo's `.agents/project.md`,
+  and the `chisel-setup` steps that fill them;
+- one intention per change under `socle/`.
+
+**Not Included:**
+- The human review, crit, the review synthesis, who fixes the comments, the
+  one shot and the visual proof: `relecture-humaine`
+  (`project-management/tasks/20261119-1644-relecture-humaine.spec.md`, on
+  its own branch).
+- What every sub-agent brief carries (long commands in the background, a git
+  command that erases alone in its call, stop what you started): pull
+  request #7. The model named at launch: pull request #8.
+- Pushing only after the local gates: the task `lead-ux`, on its own
+  branch.
+- The `crit-review` script, which stays with the Harness (point 4 of the
+  note), and anything that only holds for the Harness or our machines.
+- Chisel for tasks without code (analysis, redesign, framing): a subject of
+  its own, recorded in Notes, not treated here.
+
+## The rules
+
+Each rule is stated as chisel would carry it. The source is the Owner's
+words with their date when the table has them; otherwise the line of the
+table and who raised it.
+
+1. **proof-before-cause** — before giving the human a cause, or asking them
+   to act, cite in one line the proof read: the command and its message, the
+   output, their words. Without proof, write "not verified"; when one read
+   gives the proof, read first. *Where:* `discipline.md`, a rule beside
+   "Read before acting". *Source:* Pierrick, 12/11: « Yes. C'est aussi
+   qqchose à remonter dans Chisel ».
+2. **readme-presents-and-points** — the README presents the repo and points
+   to the docs. A feature adds a line and a link to it, never its reference
+   doc, which goes in the living docs root. The project declares a size
+   ceiling for its README; the close checks it. *Where:* `discipline.md`
+   for the rule; `project.md`, §D · Documentation reference, for the
+   ceiling; the close step of `workflow.md` checks it. *Source:* Pierrick,
+   music-downloader review #42, 12/11: « un README qui grossit, qui grossit
+   […] peut-être quelque chose à mettre dans Chisel ».
+3. **agent-docs-say-what-and-why** — a doc an agent writes is concise: what
+   and why, the overall architecture and the delicate points, diagrams
+   welcome, never a text version of the code. *Where:* `discipline.md`,
+   beside the README rule; the close step's promotion into the living docs
+   points to it. *Source:* Pierrick, music-downloader review #73, comment
+   c_42ebfa, 18/11, raised by Apollon. music-downloader's own line leaves
+   its `AGENTS.md` once this ships.
+4. **actions-carry-a-verb** — a command or a function that acts is named
+   with a verb: `library retag-artists-from-tidal`, not `library artists`.
+   *Where:* `discipline.md`, the writing rule "name things by their
+   meaning", extended to the names in code. Not `codebase-design`, a
+   verbatim fork, and chisel installs no coding standards of its own.
+   *Source:* Pierrick, music-downloader review #42, 12/11: « artists n'est
+   pas un verbe, ça ne veut rien dire ».
+5. **a-branch-per-task** — each task works on its own branch, named and
+   based as `project.md` says, in a worktree when `project.md` says so; in a
+   fresh worktree the dependency install runs first, before any other
+   command, and a dev stack started there picks free ports. *Where:*
+   `discipline.md` for the rule; a new `project.md` section, Branches, for
+   the settings. *Source:* Pierrick, 09/11: « c'est un peu devenu mon
+   default, mais porté par Chisel plutôt » (the worktree); the install
+   first, a retro he passed on the same day. The defaults are open
+   question 1.
+6. **a-pushed-branch-is-never-rewritten** — a branch brought up to date
+   takes its base by a merge, never a rebase: the agent has no forced push,
+   and a squash merge leaves no trace of the merge commits. *Where:* the
+   same `discipline.md` rule, and the Branches section, which may say
+   otherwise for a project. *Source:* the table's line
+   `rebase-demande-push-force-interdit`, 09/11, no quote.
+7. **the-commit-rule-is-in-the-glue** — `project.md` carries the repo's
+   commit rule: the format, the accepted scopes, the scope for the task
+   files, the body's line length. `chisel-setup` fills it from the repo's
+   commit linter; the briefs point to it instead of saying "the commit rule"
+   with no place to read it. *Where:* a new `project.md` section, Commits;
+   `chisel-setup`, exploration and writes; the Mason and Typist briefs.
+   *Source:* Olympe, 17/11, a spec commit refused for its scope.
+8. **the-commands-are-in-the-glue** — `project.md` names the commands a
+   sub-agent needs beyond the gates: regenerate a generated client, create a
+   migration, start and stop the dev stack. `chisel-setup` looks for them as
+   it looks for the gates. *Where:* a new `project.md` section, Other
+   commands; `chisel-setup`, step 1. *Source:* a Mason's retro, passed on by
+   Pierrick on 09/11: each sub-agent looked for them alone.
+9. **the-typist-sees-red-first** — the Typist writes the test, runs it and
+   sees it fail before writing the code. *Where:* "The Typist brief" of
+   `workflow.md`. *Source:* the same retro, 09/11.
+10. **small-feedback-is-one-pass** — the sizing check first asks "one
+    pass?". A list of small feedback is one task, one pull request, one
+    commit per item. Only what is delicate, long, deep or complex is cut
+    apart. A task is sized in agent time: a small feedback item is minutes,
+    not a slice. *Where:* step 2 of `workflow.md`; `slice-task`, one line:
+    never slice a list of small feedback. *Source:* Pierrick, 13/11: « une
+    bonne partie sont à faire faire 1 PR. On ne sépare que les gros
+    chantiers qui nécessitent des changements délicats, longs, profonds,
+    complexes » ; « 1 commit par truc » ; « pourquoi j'ai autant de review
+    à faire ?! ».
+11. **the-full-suite-runs-once** — the fast checks (type check, lint) run at
+    each change, the tests of what changed at each green step, the full
+    suite once, before the review is proposed. *Where:* steps 5 to 7 of
+    `workflow.md`. *Source:* Pierrick, 09/11: « pas tout relancer à chaque
+    modification de code ».
+12. **ci-is-read-by-its-verdict** — waiting on CI reads only the final
+    state and the logs of the failing jobs, never the whole stream. How to
+    wait is pull request #7's rule. *Where:* "After the close" of
+    `workflow.md`. *Source:* the table's line `gh-pr-checks-watch-verbeux`,
+    raised by Dédale, 09/11. Its other half, « au premier plan », was
+    reversed by the Owner's go of 17/11: long waits run in the background.
+13. **a-deferral-has-a-home** — a "later" leaves a review or a report as a
+    task in the tracker, status `deferred` or `draft`, written by the role
+    that defers, when it defers. The close checks that no "later" stays
+    orphaned in the Notes of the spec or the work document. *Where:*
+    "Blockers and questions" and the close step of `workflow.md`. *Source:*
+    raised by Apollon for Pierrick, 11/11: on music-downloader #33 a
+    deferral stayed in the spec's Notes and was archived with the task.
+14. **the-retro-is-written-down** — the retro writes its proposals in the
+    spec's Retrospective, archived with the task, not only in the close
+    report. A proposal that targets chisel's socle (`.agents/`, its skills)
+    names chisel's maintainers as its owner: `update` overwrites a local
+    edit there. *Where:* `retro`, steps 4 and 5; the close step of
+    `workflow.md`. *Source:* Pierrick, 18/11: « si on ne les utilise pas on
+    s'en sortira pas ».
+
+## Where each line of the table goes
+
+| Line of the table | Goes to |
+|---|---|
+| `rebase-demande-push-force-interdit` | rule `a-pushed-branch-is-never-rewritten` |
+| `gh-pr-checks-watch-verbeux` | the wait: pull request #7 (and reversed on 17/11); the reading: rule `ci-is-read-by-its-verdict` |
+| `crit-review-fichiers-au-lieu-du-diff` | `relecture-humaine`, decision 7: the review reads the pull request's diff (`crit --pr`). Not written there: the base of a branch diff without a remote, which must be the pull request's base, not `main`. The « commande » is the Harness's `crit-review` script |
+| `crit-client-expire-24h-daemon-parasite` | fixed in the Harness's script. The rule chisel keeps (an expired wait is not a blocker) is not written in `relecture-humaine`; it belongs to its review skills, decision 8, open |
+| the branch rules | rule `a-branch-per-task` |
+| `chisel-gates-avant-revue` | rule `the-full-suite-runs-once`; `lead-ux` adds the push after the local gates |
+| the commands of a sub-agent | rule `the-commands-are-in-the-glue` |
+| the Typist brief | rule `the-typist-sees-red-first`; the commit rule with its limits by rule `the-commit-rule-is-in-the-glue` |
+| the deferrals | rule `a-deferral-has-a-home` |
+| `preuve-avant-diagnostic` | rule `proof-before-cause` |
+| `readme-qui-grossit` | rule `readme-presents-and-points` |
+| `petits-retours-une-pr` | one human review per pull request: `relecture-humaine`, decision 7. The rest: rule `small-feedback-is-one-pass` |
+| `pas-de-question-dans-crit` | `relecture-humaine`, decision 4, and its questions page (slice 5) |
+| `nom-de-commande-verbe` | rule `actions-carry-a-verb` |
+| `regle-de-commit` | rule `the-commit-rule-is-in-the-glue` |
+| `doc-des-agents` | rule `agent-docs-say-what-and-why` |
+| `retro-qui-reste` | rule `the-retro-is-written-down`. Leaves: routing a proposal to the right secondmate, a Harness matter, already in its secondmate role |
+| the story's first chapter (17/11), and the note's question 3 (story order) | `relecture-humaine`, decisions 21 and 22: the strategic reading first, then the proofs, then the guide, core first |
+| the note's proposals 1, 2, 3, 5 and question 2 (crit for every project) | `relecture-humaine`, decisions 1, 2, 3, 7 and 8 |
+| the note's point 4 and question 4 (`crit-review.sh`) | the Harness |
+| the note's question 5 (one task?) | its two other parts are done: the Typist types by default since 0.3.0 (journal 50), and the resume after the review is `relecture-humaine`, decision 11. What is left is open question 2 |
+| the note's question 6 (chisel as our default outside a repo) | Notes, out of scope |
+
+## Acceptance Criteria
+
+- [ ] **each-rule-in-its-file** — each of the fourteen rules is found, in
+  substance, in the file "The rules" names for it.
+- [ ] **copies-identical** — each changed file under `socle/agents/` is
+  byte-identical to its `.agents/` copy.
+- [ ] **glue-sections** — `socle/agents/project.md.tpl` and this repo's
+  `.agents/project.md` have the Branches, Commits and Other commands
+  sections and the README ceiling line in §D.
+- [ ] **setup-fills-them** — `chisel-setup` explores the commit linter and
+  the extra commands, and asks the Branches section with its defaults.
+- [ ] **close-checks** — the close step of `workflow.md` checks the README
+  ceiling and the orphan "later", and writes the retro into the spec.
+- [ ] **no-harness-word** — no changed socle file names the Harness, crit's
+  script, a secondmate, a machine of ours or one of our projects.
+- [ ] **forks-recorded** — each edit to a vendored skill (`retro`,
+  `slice-task`) is added to its `x-upstream` `changes` line.
+- [ ] **intention-per-change** — every change under `socle/` has its
+  intention in `socle/intentions/unreleased/`, listed in
+  `src/socle-files.ts`; the glue sections come with a migration intention,
+  since `update` never touches `project.md`.
+- [ ] **suite-green** — `deno task check` and `deno task test` pass.
+
+## Seams
+
+- Seam: `discipline.md` — any session, with or without a task, follows the
+  ambient rules (proof, docs, names, branches).
+- Seam: `workflow.md` — an agent running a task meets the sizing check, the
+  Typist's red test, the gate cadence, the CI reading, the deferral and the
+  close checks where the steps put them.
+- Seam: `project.md` — the Branches, Commits and Other commands sections are
+  the only place the socle reads these settings from; nothing in the socle
+  hardcodes a branch name, a commit scope or a command.
+
+## Architecture
+
+**System design:** prose only, no CLI change. The ambient rules go to
+`discipline.md`, the step rules to `workflow.md` and two skills, the
+project's settings to `project.md`, which `chisel-setup` fills on install
+and a migration intention fills on update.
+
+```mermaid
+flowchart LR
+  D[discipline.md<br/>proof, docs, verbs, branches] --> P
+  W[workflow.md<br/>sizing, red test, gates,<br/>CI, deferral, close] --> P
+  P[project.md<br/>Branches · Commits · Other commands<br/>README ceiling in §D]
+  S[chisel-setup] -->|fills on install| P
+  I[migration intention] -->|fills on update| P
+  R[retro skill] -->|writes into| SP[spec · Retrospective]
+```
+
+---
+
+> 🧑 **REVIEW IF RELEVANT** — decisions, testing, slicing.
+
+## Implementation Decisions
+
+- The new `project.md` sections take the letters after §J, which
+  `relecture-humaine` reserves for Review: K · Branches, L · Commits,
+  M · Other commands, unless an earlier merge takes a letter first.
+- The end-to-end test command lives once: in §J of `relecture-humaine` when
+  it lands, which "Other commands" then points to; in "Other commands"
+  until then.
+- Runtime tools are named as examples only, as pull request #7 does.
+- Content written for agents goes through `writing-for-agents`
+  (`CONTRIBUTING.md`).
+
+## Testing Strategy
+
+- `test/integrity.test.ts` catches a new socle file not listed.
+- A test renders `project.md.tpl` placement on an empty folder and finds the
+  three new sections.
+- A grep test for `no-harness-word` over the changed socle files.
+
+## Slices & Dependencies
+
+Folder `20261122-0002-working-rules-from-the-field/`, slices written by
+`slice-task` once the questions are answered:
+
+1. **Ambient rules** (blocked by: none) — rules `proof-before-cause`,
+   `readme-presents-and-points`, `agent-docs-say-what-and-why`,
+   `actions-carry-a-verb`, and the README ceiling in §D.
+2. **The glue: branches, commits, commands** (blocked by: open question 1)
+   — rules `a-branch-per-task`, `a-pushed-branch-is-never-rewritten`,
+   `the-commit-rule-is-in-the-glue`, `the-commands-are-in-the-glue`; the
+   three sections, `chisel-setup`, the migration intention.
+3. **The workflow steps** (blocked by: 2, and pull requests #7 and #8 merged,
+   which edit the same paragraphs) — rules `the-typist-sees-red-first`,
+   `small-feedback-is-one-pass`, `the-full-suite-runs-once`,
+   `ci-is-read-by-its-verdict`, `a-deferral-has-a-home`, and the close
+   checks of slice 1's ceiling.
+4. **The retro written down** (blocked by: none) — rule
+   `the-retro-is-written-down`.
+
+How many pull requests is open question 2.
+
+## Deliverables
+
+- [ ] The four slices, each with its intentions and a passing gate.
+
+## References
+
+- Vault note « Chisel, règles de travail et crit » (`23.17 Outillage/
+  artefacts/2026-11-09`): the table this spec takes, with each line's words
+  and source.
+- `project-management/tasks/20261119-1644-relecture-humaine.spec.md`, on
+  branch `chisel-relecture-humaine`: the human review's decisions this spec
+  leaves to it.
+- Pull requests #7 (the rules every sub-agent brief carries) and #8 (the
+  model named at launch).
+- `project-management/tasks/20261120-2208-lead-ux.spec.md`, on branch
+  `chisel-lead-ux`: the push after the local gates.
+
+## Notes
+
+- **Out of scope: chisel for tasks without code.** Raised on 21/11 by the
+  Owner through Dédale: Atlas lost decisions of his (the old expense
+  classification, the screen decisions of 18/11) because its "meta" tasks
+  (analysis, redesign, framing) run on a Harness brief and not through
+  chisel, and nothing brought the spec up to date. His words: « tout ça
+  c'est du Chisel […] Avoir Chisel un peu étendu peut-être pour ce genre
+  de tâches-là, mais qui est utilisé par tous les dieux, ça nous ferait
+  gagner du temps parce que là on maintient un peu deux trucs ». What I
+  understand: chisel today takes a task "from intent to commit", and its
+  spec is where a human's decisions are kept; a task with no code has no
+  spec, so its decisions live in a brief or a chat and are lost at the next
+  session. The question is whether chisel takes such tasks, with a spec and
+  no Mason or Typist, for every project. `relecture-humaine` decision 6
+  already leans that way (« C'est applicable aux agents non dev aussi »).
+  It touches the charter's first line, so it is a task of its own, with the
+  Owner.
+- The base of a branch diff in a human review (the pull request's base, not
+  `main`, on stacked pull requests) is not written in `relecture-humaine`:
+  to pass to that task, whose spec this task does not touch.
+
+## Retrospective
+
+_At the close._
