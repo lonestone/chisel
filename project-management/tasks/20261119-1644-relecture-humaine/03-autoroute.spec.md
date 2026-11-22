@@ -1,6 +1,6 @@
 # 03 — One shot
 
-**Status:** ready — group A, approved by Pierrick on 22/11 (ffaf5ec)
+**Status:** in-progress — group A, approved by Pierrick on 22/11 (ffaf5ec); Mason launched 22/11
 **Blocked by:** 01 — Human review with crit
 
 ---
