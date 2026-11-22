@@ -5,6 +5,36 @@ ships.
 
 ---
 
+## 56. 2026-11-22 — A touched screen has a proof
+
+Slice 04 of the human-review task gives the review its second reading.
+Two pieces ship in the socle:
+
+- the capture command, `.agents/skills/visual-proof/scripts/captures.ts`,
+  a copy of the Harness's `captures.ts` at a05b1092 with Olympe's
+  agreement and her three changes. It is the socle's first Node file;
+- the `visual-proof` skill, the method of `verification-visuelle` made
+  generic: the text report first, never a capture read in the agent's own
+  thread, a fresh sub-agent when an image must be looked at.
+
+§J · Review declares the E2E, Recording and Screenshot commands, each
+optional, and a committed proofs folder beside the spec; `chisel-setup`
+asks for them. The spec's `**Review depth:**` line can ask for proofs, the
+diff adds a floor (a screen touched means captures), the work document's
+`**Depth:**` line records both at the close, and `retro` compares them.
+The intentions `unreleased/review-proofs` (migration) and
+`unreleased/visual-proof` tell updated repos.
+
+The Mason wrote the plan and a Sonnet Typist typed it; the browser test
+ran for real against a local `playwright-core`. The fresh reviewers found
+private names and topics left in the copied script's comments, which the
+Mason removed as a retouch, with a test that now refuses them. This repo
+has no front, so the slice's own close was the no-screen dry run: no
+capture. The dry run on music-downloader is left open: there is no
+checkout here, and `review-videos` is in no history.
+
+---
+
 ## 55. 2026-11-22 — A task can run in one shot
 
 Slice 03 of the human-review task gives a task a second lane. On

@@ -1,6 +1,6 @@
 # 04 — Visual proof
 
-**Status:** in-progress — group A, approved by Pierrick on 22/11 (ffaf5ec); Mason launched 22/11
+**Status:** done — group A, approved by Pierrick on 22/11 (ffaf5ec); closed 22/11
 **Blocked by:** 01 — Human review with crit
 
 ---
@@ -50,26 +50,26 @@ asks more than the floor shows. Parent spec: decisions 5, 10, 13, 16, 17,
 
 ## Acceptance criteria
 
-- [ ] **visual-proof-skill** — the skill exists, reads its commands from
+- [x] **visual-proof-skill** — the skill exists, reads its commands from
   §J, names no command of one project, and says an agent never reads a
   capture in its own thread.
-- [ ] **capture-tool** — the capture command ships with Chisel, is listed
+- [x] **capture-tool** — the capture command ships with Chisel, is listed
   in `src/socle-files.ts`, and on a page captured twice produces the
   captures, a `.diff.png` for a changed screen and a text report.
-- [ ] **capture-copy-generic** — the copy carries none of the three
+- [x] **capture-copy-generic** — the copy carries none of the three
   machine-specific things Olympe named: no search for `playwright-core` in
   `~/projects/*`, no `HARNESS_PLAYWRIGHT_WS` (renamed for Chisel), no
   « harness captures » in its messages or usage; and no vault path.
-- [ ] **review-section-commands** — §J declares the e2e, recording and
+- [x] **review-section-commands** — §J declares the e2e, recording and
   screenshot commands, each optional.
-- [ ] **spec-line-read** — the skill reads the depth line of the spec and
+- [x] **spec-line-read** — the skill reads the depth line of the spec and
   adds captures when the diff touches a screen the line left out.
-- [ ] **depth-against-floor** — the work-document template records the
+- [x] **depth-against-floor** — the work-document template records the
   depth chosen and the floor computed, and `retro` compares them.
-- [ ] **no-screen-no-capture** — a dry run on a repo with no front touched
+- [x] **no-screen-no-capture** — a dry run on a repo with no front touched
   produces no capture.
-- [ ] **intention-per-change** — the Intention gate passes.
-- [ ] **suite-green** — `deno task check` and `deno task test` pass.
+- [x] **intention-per-change** — the Intention gate passes.
+- [x] **suite-green** — `deno task check` and `deno task test` pass.
 
 ---
 

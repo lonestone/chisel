@@ -17,6 +17,12 @@ item, flagged to the human; (6a) no command, no captures; (7) Typist on the
 mid tier. The finding on `review-videos` is accepted.
 Mason handle: aa450428155af1d37.
 
+**Depth:** chosen `full`, §J's default, since the spec has no `**Review
+depth:**` line; floor none, no screen touched (this repo has no front, and
+the diff changes the socle's prose, its install lists and a script, never a
+page). At the floor: no capture taken and no `04-visual-proof.proofs/`
+folder created. This is the no-screen-no-capture dry run.
+
 ## Program Design
 
 This slice carries these parent decisions:
@@ -1070,6 +1076,11 @@ proof` (step 5).
   was written, so the text test was never seen red. The workflow
   paragraphs were reflowed greedily to 80 columns, so each reflowed
   paragraph's earlier lines moved too.
+- 2026-11-22 — Mason. `code-review` from 157991e; findings below. Retouch
+  of the script's header comment (private names and topics) and one
+  assertion in the text test. Gates green, the browser test included: 81
+  passed, 0 ignored. Close: criteria ticked, Depth line, synthesis,
+  journal entry 55, retro, status `done`.
 
 ## Implementation Checkboxes
 
@@ -1078,8 +1089,8 @@ proof` (step 5).
 - [x] Step 4 — workflow, templates, retro (Edits 4–12)
 - [x] Step 5 — intentions, TESTS.md (Edits 13, 14, 16)
 - [x] Step 6 — gates, browser test, release gate, publish dry run
-- [ ] Code review from 157991e, findings answered
-- [ ] Close: criteria, depth line, synthesis, journal, retro, status
+- [x] Code review from 157991e, findings answered
+- [x] Close: criteria, depth line, synthesis, journal, retro, status
 
 ## Notes & Snippets
 
@@ -1089,6 +1100,84 @@ proof` (step 5).
   `/home/pierrick/projects/atlas/node_modules/playwright-core`. Chromium
   is in `~/.cache/ms-playwright`.
 
+### Retro (2026-11-22, Mason) — proposals, none applied
+
+From this session, its Typist's report and its two reviewers. Severity
+order; each waits for its owner's yes.
+
+1. **Automated checks** — a socle-wide test that refuses private markers
+   in shipped files (vault paths, Harness command names, personal names,
+   internal topic slugs), not only in the copied script. The plan's grep
+   and the first text test listed only the three things Olympe named, and
+   the private topics in the comments passed both. Target: `test/`, the
+   integrity tests. Owner: the human.
+2. **Coding standards** — the 80-column rule counts characters, not bytes.
+   A reviewer's byte count flagged three lines with em dashes as 81. Say so
+   in the writing rules, with `wc -m` under a UTF-8 locale, or ship a
+   small check. Target: `CONTRIBUTING.md`. Owner: the human.
+3. **Information access** — the spec named two sources that are not
+   reachable here: music-downloader's `review-videos` and its checkout. The
+   Architect could check at spec time that each named source exists, and
+   write its repo and commit in the Notes, as was done for `captures.ts`.
+   Target: workflow step 2. Owner: the human.
+4. **Tool economy** — the Typist reflowed whole paragraphs greedily, which
+   moved untouched lines and made the workflow diff mostly noise for the
+   review. The writing rule could say: reflow from the first changed line
+   to the paragraph's end, and keep the earlier lines as they are. Target:
+   the work template's writing rules. Owner: the human.
+5. **Depth against floor** — nothing to propose: this task sits at the
+   floor, and slices 01–03 predate the `**Depth:**` line.
+
 ## Diff-Review Findings
 
-None yet.
+`code-review` from 157991e, two fresh reviewers (Standards, Spec), on
+2026-11-22. Neither opened a PNG.
+
+**Standards**
+
+- **The copied script carried private names and topics** (hard): « les
+  pages d'Olympe », « go de Pierrick le 05/11 », `lot3-corrections` and two
+  `sujet …` slugs, in the header comment. Fixed as a retouch of five comment
+  lines, both copies, French kept: the incident and the internal-scroll
+  case stay, without names, dates or topics. The text test now also refuses
+  `Pierrick`, `lot3-` and `sujet captures-`. The licence lines 3–4 keep
+  « the Harness » and Olympe: that is the attribution ruling 2a asked for.
+- **Three workflow lines over 80 columns** (hard): false positive. The
+  check counted bytes; with the em dash counted as one character, lines
+  42, 79 and 96 are 77, 79 and 79.
+- **`§J` / `· Review` split across a line in step 7**: kept. It reads
+  correctly; fixing it reflows the paragraph again.
+- **The proofs rule and the Depth line written in several places**
+  (judgement): answered. Workflow step 8 and the work template each carry
+  the one sentence their reader needs at that point; the skill carries the
+  method. The same layering as the review section and the workflow in
+  slices 01–03.
+- **The text test pins the script's source** (judgement, TESTS.md rule 1):
+  answered. It pins the absence of machine-specific names, which is the
+  criterion capture-copy-generic itself, not the socle's prose.
+- **Smells in `captures.ts`** (usage string three times, a one-entry loop
+  left by the removed search, short names, magic numbers, French names):
+  answered. Ruling 2a makes the file a copy with Olympe's three changes and
+  nothing else; refactoring it would make the copy diverge for no
+  behaviour.
+
+**Spec**
+
+- **`review-videos` not used**: recorded in Program Design and accepted on
+  the `**Plan:**` line.
+- **music-downloader dry run not done**: open item (ruling 5a), flagged in
+  the close report.
+- **no-screen-no-capture has no test**: met by this slice's close, recorded
+  on the `**Depth:**` line above.
+- **capture-tool rests on a run with `CHISEL_TEST_PLAYWRIGHT`**: run again
+  after the retouch, 81 passed, 0 ignored.
+- **The copy's comment still carried Harness topics**: fixed, see
+  Standards.
+- **The test's `['"]projects['"]` guard is weak**: answered. The code
+  holds no home-directory search at all (`chargerPlaywright` tries the
+  working directory, then beside the script); the guard is a tripwire, not
+  the proof.
+- **Scope beyond the letter** (the chisel-setup question, retro reading
+  recent Depth lines, the greedy reflow): answered. The first two serve the
+  spec's « an agent that always asks more than the floor shows »; the
+  reflow is noise the Typist recorded in the worklog.
