@@ -36,6 +36,8 @@ export const SOCLE_FILES: readonly string[] = [
   "agents/skills/tdd/SKILL.md",
   "agents/skills/tdd/mocking.md",
   "agents/skills/tdd/tests.md",
+  "agents/skills/visual-proof/SKILL.md",
+  "agents/skills/visual-proof/scripts/captures.ts",
   "agents/skills/wayfinder/SKILL.md",
   "agents/skills/writing-great-skills/GLOSSARY.md",
   "agents/skills/writing-great-skills/SKILL.md",

@@ -49,6 +49,10 @@
 .agents/skills/tdd/SKILL.md
 .agents/skills/tdd/mocking.md
 .agents/skills/tdd/tests.md
+.agents/skills/visual-proof
+.agents/skills/visual-proof/SKILL.md
+.agents/skills/visual-proof/scripts
+.agents/skills/visual-proof/scripts/captures.ts
 .agents/skills/wayfinder
 .agents/skills/wayfinder/SKILL.md
 .agents/skills/writing-great-skills
