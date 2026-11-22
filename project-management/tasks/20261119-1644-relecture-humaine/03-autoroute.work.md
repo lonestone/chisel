@@ -432,6 +432,11 @@ integrity test catches a socle file missing from `socle-files.ts`).
   `deno task release-check gate origin/main` exit 0 ("The socle change adds
   an intention.").
 
+- 2026-11-22: `code-review` from 45fd8c1; ten findings fixed by a retouch,
+  six answered (Diff-Review Findings). `cmp` silent on the four pairs;
+  `deno task check` exit 0; `deno task test` 77 passed; Intention gate
+  exit 0.
+
 ## Implementation Checkboxes
 
 - [x] workflow.md: edits 1 to 4, in `socle/agents/` and `.agents/`
@@ -448,4 +453,49 @@ integrity test catches a socle file missing from `socle-files.ts`).
 
 ## Diff-Review Findings
 
-_After the code review._
+`code-review` on the diff from 45fd8c1 (the Typist's commit), Standards
+and Spec side by side. Fixed by a Mason retouch, in the socle files and
+their `.agents/` copies:
+
+- **Glossary "One shot" named a task, the workflow a lane.** The row now
+  defines the lane, and says the other one is the full lane.
+- **"one-shot line" hyphenated in the stops table.** Now the
+  `**One shot:**` line, in backticks.
+- **Rule 3 lost the case of a spec with no new decision.** The Typist
+  replaced the rule's text with the plan's, which had missed it. The rule
+  now names both cases in which the Architect approved, and points at
+  "Zone ownership" in `reference.md`.
+- **The roles paragraph and the plan step had no one-shot exception.** A
+  question still goes to the human "except in one shot", in both.
+- **"The task's own decisions" against "the human's decisions".** The
+  one-shot section now says "the human's decisions", as the Architect's
+  ruling on departures from them does.
+- **Step 2's "otherwise" was ambiguous.** Rewritten: the human approves a
+  spec with new decisions unless the task runs in one shot; in every other
+  case the Architect moves it to `ready`.
+- **The final step's merge sentence ignored the one shot.** It now points
+  at "After the close", which holds both cases.
+- **The Mason row said "Kept" even with no final review.** Now "Kept; no
+  comments to fix when the final review is skipped".
+- **The side lanes and the workflow named different `wayfinder`
+  triggers.** The side lanes row now adds "a spec interview that tangles".
+- **The intention cited bare step numbers.** Now it says what happens:
+  the Architect takes the one shot when it writes the spec.
+
+Answered, not fixed:
+
+- **The same rule told in several places.** The stops table, the one-shot
+  section, step 2 and "After the close" each list what applies where they
+  are read; the table is a summary by design, and the actions live in the
+  steps.
+- **"step 2" inside `workflow.md`.** The house convention: a step is cited
+  by its name within the file that numbers it; every new mention names the
+  step.
+- **Scope creep: the quick-fix rename and rule 9.** Covered by rulings 1a
+  and 3a on the `**Plan:**` line.
+- **The spec's Note says "nothing to remove there", ruling 2a removes a
+  stop.** The Note sits in a 🧑 zone, which the Mason does not edit: left
+  to the Architect to amend.
+- **The merge rule still "proposed" in the spec.** Ruling 3a settled it;
+  same 🧑 zone, same answer.
+- **No `**One shot:**` line in the spec template.** Ruling 4a.

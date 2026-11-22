@@ -21,7 +21,7 @@ for every session are `.agents/discipline.md`.
 | **Frontier** | The set of slices whose blockers are all done — what can be worked on right now; a task on it has the status `ready`. |
 | **Expand–contract** | The sequencing for wide mechanical refactors (rename a column, retype a shared symbol): add the new form beside the old → migrate call sites in batches → delete the old form. The exception to vertical slicing. |
 | **Quick fix** | Work done without a task artifact. The discipline still applies; only the file bookkeeping is skipped. |
-| **One shot** | A task whose only possible human stop is the final review, and that one only when its spec's `**One shot:**` line keeps it ("The one shot" in `.agents/workflow.md`). |
+| **One shot** | The lane where a task's only possible human stop is the final review, and that one only when its spec's `**One shot:**` line keeps it ("The one shot" in `.agents/workflow.md`). The other lane is the full lane. |
 
 The roles — Architect, Mason, Typist, reviewers — are defined in "The
 roles" of `.agents/workflow.md`.

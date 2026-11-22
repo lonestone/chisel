@@ -36,15 +36,15 @@ in the old sense where the workflow now means the lane.
 ## Observable Gaps
 
 1. **What the human knows.** Signal: none in the repo. Say it to the
-   human in a few sentences: the Architect takes the one shot at step 2
-   when it judges the task small, or when the human asks, and writes a
-   `**One shot:**` line in the spec, with its reason and whether the final
-   review is kept or skipped; the pull request repeats it; a human who
-   asks for the full lane always gets it, and no project setting switches
-   it on. With the final review, approving it is the word for the merge,
-   and the Architect says so when it hands the review; without it, the
-   merge goes as the glue's merge and publish section says. Step 2 now
-   switches from `grilling` to `wayfinder` when the interview tangles.
+   human in a few sentences: the Architect takes the one shot when it
+   writes the spec, if it judges the task small or the human asks, and
+   writes a `**One shot:**` line in the spec, with its reason and whether
+   the final review is kept or skipped; the pull request repeats it; a
+   human who asks for the full lane always gets it, and no project setting
+   switches it on. With the final review, approving it is the word for the
+   merge, and the Architect says so when it hands the review; without it,
+   the merge goes as the glue's merge and publish section says. The spec
+   interview now switches from `grilling` to `wayfinder` when it tangles.
    Work done without a task artifact is now called a quick fix.
    Done when: the human has read it.
 

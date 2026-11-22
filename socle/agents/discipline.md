@@ -17,9 +17,10 @@ feature; the only difference is the paperwork.
 
 3. **🧑 zones are law.** Sections marked 🧑 in a spec document carry the
    decisions of whoever approved them — the human, unless the Architect
-   approved the spec ("Zone ownership" in `.agents/reference.md`). Never
-   contradict one silently: if the work reveals a conflict with a 🧑 zone,
-   stop and surface it.
+   approved a spec that carried no new decision, or one of a task in one
+   shot ("Zone ownership" in `.agents/reference.md`). Never contradict one
+   silently: if the work reveals a conflict with a 🧑 zone, stop and
+   surface it.
 
 4. **Verify before "done".** Run the project's gate commands declared in
    `.agents/project.md` §F (lint, tests, build; a browser check when UI
@@ -88,7 +89,7 @@ Not everything starts as a feature idea:
 | Something's broken (hard bug, flake, regression) | `diagnosing-bugs` — build a repeatable failing check first, THEN theorize; regression test before the fix | the fix lands as normal work |
 | A design question that talking cannot settle | `prototype` — throwaway code, one command to run; keep the answer, and keep the code on a throwaway branch out of main with a pointer to that branch | back into the spec |
 | Reading legwork (docs, API facts) | `research` — background agent, cited markdown file | feeds the spec |
-| So big and foggy it cannot even be sliced | `wayfinder` — map the open DECISIONS first, resolve them one by one | then the spec document and its slices |
+| So big and foggy it cannot even be sliced, or a spec interview that tangles | `wayfinder` — map the open DECISIONS first, resolve them one by one | then the spec document and its slices |
 | A spare moment to make the codebase nicer to work in | `improve-codebase-architecture` | produces an idea → normal flow |
 | A whole repo to judge, rather than one change | `codebase-audit` — blind finders one per lens, every claim reproduced, findings triaged against what was already decided | decisions and an action plan; each piece becomes a task by the normal path |
 
