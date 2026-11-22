@@ -1055,14 +1055,29 @@ proof` (step 5).
   script under Node 24.13.0: two captures, a `.diff.png`, a report; the
   browser closed itself. `review-videos` is not in this repo's history.
   Plan written; waiting for the Architect.
+- 2026-11-22 — Typist. Typed the approved plan, steps 1 to 6, in four
+  commits: the capture command, its test and the skill (steps 1–2); §J,
+  chisel-setup and the init test (step 3); workflow, templates and retro
+  (step 4); the two intentions and TESTS.md (step 5). Every socle file with
+  a copy here checked with `cmp`; §J compared with `diff`. Gates: `deno task
+  check` and `deno task test` green at each commit (80 passed, 1 ignored:
+  the browser test, when run without `CHISEL_TEST_PLAYWRIGHT`). The browser
+  test ran for real with `CHISEL_TEST_PLAYWRIGHT=/home/pierrick/projects/atlas/node_modules/playwright-core`:
+  4 passed, 0 failed, 0 ignored (the page captured twice took 4 s).
+  `deno task release-check gate origin/main`: "The socle change adds an
+  intention." `deno publish --dry-run --allow-dirty`: success. Departure
+  from the plan's order: the copy was made before `test/captures.test.ts`
+  was written, so the text test was never seen red. The workflow
+  paragraphs were reflowed greedily to 80 columns, so each reflowed
+  paragraph's earlier lines moved too.
 
 ## Implementation Checkboxes
 
-- [ ] Step 1–2 — the copy, its tests, the skill, the lists (Edits 1, 15)
-- [ ] Step 3 — §J and chisel-setup, init test (Edits 2, 3)
-- [ ] Step 4 — workflow, templates, retro (Edits 4–12)
-- [ ] Step 5 — intentions, TESTS.md (Edits 13, 14, 16)
-- [ ] Step 6 — gates, browser test, release gate, publish dry run
+- [x] Step 1–2 — the copy, its tests, the skill, the lists (Edits 1, 15)
+- [x] Step 3 — §J and chisel-setup, init test (Edits 2, 3)
+- [x] Step 4 — workflow, templates, retro (Edits 4–12)
+- [x] Step 5 — intentions, TESTS.md (Edits 13, 14, 16)
+- [x] Step 6 — gates, browser test, release gate, publish dry run
 - [ ] Code review from 157991e, findings answered
 - [ ] Close: criteria, depth line, synthesis, journal, retro, status
 
