@@ -310,3 +310,16 @@ exception), made after the Typist's hand-back; gates green after them
   left to the Architect to place, most likely slice 04.
 - **crit treated as an outside install, against parent decision 1 "crit
   ships with Chisel"** (Spec, noted). Answered: ruling 4.
+
+## Architect's rulings on the close — 2026-11-22
+
+- **Archive:** agreed, the slice 01 files move with the parent's folder when
+  the last slice of group A closes.
+- **Parent decision 13's close record** (depth chosen, floor computed,
+  compared by `retro`): goes to slice 04, whose criterion
+  `depth-against-floor` already owns the depth against the floor. Its Mason
+  adds the line to step 7.
+- **chisel-setup §J question:** read, accepted as written.
+- **Retro proposals** (integrity test of `.agents/` against `socle/agents/`,
+  the sliced-task archive sentence in step 7, the intention-in-same-commit
+  wording): not applied here; carried to Pierrick in the PR report.
