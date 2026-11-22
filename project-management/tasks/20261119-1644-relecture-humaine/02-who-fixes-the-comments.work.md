@@ -209,4 +209,47 @@ every socle file and will catch a missing `socle-files.ts` line).
 
 ## Diff-Review Findings
 
-_At step 6._
+`code-review` since 60a6da7, 2026-11-22: two fresh reviewers, Standards and
+Spec. The fixes are a Mason retouch of a few lines (workflow step 5
+exception), made after the Typist's hand-back. Gates green after them:
+`deno task check` ok, `deno task test` 77 passed, the Intention gate ok.
+
+- **The `AGENTS.md` line cited "decision 11" and an unquoted path**
+  (Standards, writing rule of `discipline.md`). Fixed: the decision is
+  named by its title, the path is in backticks with its section, "The
+  decisions".
+- **Step 7 said "for step 8 wakes it"** (both reviewers): a bare step
+  number, and step 8 is the Architect's. Fixed: "so that the Architect can
+  wake it at step 8, Human review, to fix the comments."
+- **Lines patched in place, not reflowed** (both, judgement). Fixed: steps
+  4 and 7, step 8's paragraph, the Sub-agents paragraph, the Mason brief
+  and the intention reflowed to the house width. Step 2's long line is
+  older than this slice and left alone.
+- **The lost-session rule written twice in `workflow.md`** (Standards,
+  Duplicated Code). Fixed: the Sub-agents paragraph now says the Mason is
+  kept for its whole task and points at "Who fixes the comments" for when
+  a fresh one replaces it. Kept in `AGENTS.md` and the intention: one is
+  this repo's routing page, the other travels alone.
+- **"Handle" is not a glossary term** (Standards, Mysterious Name). Fixed:
+  the workflow and the intention say "the id the Mason's harness resumes it
+  by". The Architect's `**Plan:**` line keeps its own word.
+- **The documents are already archived when the comments come** (Spec).
+  Fixed: a fresh Mason starts from the documents "where step 7 archived
+  them"; the Architect and the Mason write in those same files.
+- **The Statuses table says `in-progress` is "A Mason is … closing it", yet
+  a Mason now works under `done`** (Spec). Answered: step 8's sentence now
+  carries its reason, "the review is of a pull request, not a status"
+  (ruling 3a); the table lists what leaves each status, and fixing
+  comments leaves none.
+- **The Mason's lifecycle touches seven places of one file** (Standards,
+  Shotgun Surgery). Answered: the roles table, the stops table and the
+  Mason brief are listings by design; after the dedup only step 8 states
+  the rule, and step 7 and Sub-agents point at it.
+- **Step 4's id clause is a new duty the slice spec did not ask for**
+  (Spec). Answered: ruling 1a on the `**Plan:**` line; the synthesis names
+  it as a decision.
+- **"Signal: none in the repo" read against the template's "a gap whose
+  signal is absent is already closed"** (Standards). Answered: the same
+  wording as `unreleased/human-review-step`; an informational intention's
+  gap is the human's knowledge, which the repo cannot show. A retro
+  proposal, not a fix here.

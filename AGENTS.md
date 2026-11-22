@@ -11,11 +11,12 @@ methodology it ships.
   record (`project-management/review-360-decisions.md`), the doctrine — never
   in an assistant's private memory: future agents are not necessarily the
   same assistant (Owner ruling G17, 2026-09-02). Role reuse follows ruling
-  G16, widened by decision 11 of the human-review task
-  (project-management/tasks/20261119-1644-relecture-humaine.spec.md):
-  reviewers fresh, the Mason (named the Crewmate in the record) kept for its
-  whole task, the human review's comments included; a fresh Mason only when
-  its session is lost.
+  G16, widened by the decision "The Mason who did the work fixes the
+  comments" of the human-review task
+  (`project-management/tasks/20261119-1644-relecture-humaine.spec.md`, "The
+  decisions"): reviewers fresh, the Mason (named the Crewmate in the record)
+  kept for its whole task, the human review's comments included; a fresh
+  Mason only when its session is lost.
 - The canonical socle now lives in `socle/` (imported from the music-downloader
   pilot at slice 01).
 

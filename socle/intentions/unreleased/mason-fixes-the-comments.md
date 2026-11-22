@@ -33,11 +33,11 @@ comments, loses that context and pays to rebuild it from the documents.
 1. **What the human knows.** Signal: none in the repo. Say it to the
    human in a few sentences: a comment of the human review that asks for a
    change goes to the task's Mason, woken in its own session however long
-   ago it closed; the close no longer ends that session, and step 4 writes
-   the Mason's handle on the `**Plan:**` line so the Architect can find it
-   again; a fresh Mason starts from the spec, work and synthesis documents
-   only when the session is lost. A team whose own steps say otherwise
-   reconciles them itself.
+   ago it closed; the close no longer ends that session, and step 4
+   writes the id the Mason's harness resumes it by on the `**Plan:**` line
+   so the Architect can find it again; a fresh Mason starts from the
+   spec, work and synthesis documents only when the session is lost. A
+   team whose own steps say otherwise reconciles them itself.
    Done when: the human has read it.
 
 ## Out of Scope
