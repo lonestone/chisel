@@ -33,8 +33,9 @@ tier » — Pierrick's « pas Sonnet » excludes the mid tier too (decision 25).
 | `socle/intentions/unreleased/review-section.md` (new) | Migration intention: add §J to an existing `project.md`. |
 | `test/TESTS.md` | The `init` row names §J and the synthesis template (one clause). |
 
-Untouched: crit itself, the spec template (unless the Architect accepts the
-depth-line question below), `reference.md` (same).
+| `socle/templates/000-template.spec.md` and `project-management/000-template.spec.md` | A `**Review depth:** full \| strategic` line in the header (ruling 2). |
+
+Untouched: crit itself, `reference.md`.
 
 ### Where the synthesis template lives
 
@@ -66,9 +67,9 @@ No proofs and no file-by-file account. Those are the two other readings.
 - **Where it lives:** beside the spec of what the PR delivers, named by
   replacing `.spec.md` with `.synthesis.md`. For a sliced task that is the
   slice.
-- **Who writes it:** the Mason, at step 7 (close), before archiving. The
-  Mason runs on the frontier tier already (reference.md), so decision 25
-  needs no extra rule beyond "never the light tier" in the step.
+- **Who writes it:** the Mason, at step 7 (close), before archiving, on
+  the frontier tier (decision 25: not the mid tier either). The step says
+  « frontier tier » in those words.
 - **What happens to it:** it is archived with the spec and work documents
   and committed in the PR.
 
@@ -115,7 +116,8 @@ close — Architect", in the same register as the other steps. In order:
   - an expired wait re-runs the same crit command (or `crit --session <id>`)
     and waits again. It is not a blocker; only another failure is.
 - **Missing crit:** if `crit` is not installed, the step names where to get
-  it and stops for the human (see the questions).
+  it (https://crit.md, then `crit install <agent>`) and stops for the human
+  (ruling 4).
 - **Exit:** the human approves, or comments are answered and addressed;
   merging still follows `.agents/project.md`'s merge and publish section.
 
@@ -129,8 +131,8 @@ Neither needs a restructuring: each reading is its own short paragraph.
 ### Other workflow.md edits
 
 - **Step 7 (close):**
-  - the Mason writes the synthesis from `.agents/synthesis.md.tpl`, on a
-    strong model, never the light tier;
+  - the Mason writes the synthesis from `.agents/synthesis.md.tpl`, on the
+    frontier tier;
   - the archiving sentence moves the synthesis with the spec and work
     documents.
 - **"After the close":** the merge waits for step 8.
@@ -155,6 +157,20 @@ The section is a comment, then the depth line:
 
 Slice 04 appends its commands and the proofs location under it. It is parsed
 by `src/glue.ts` like any lettered section; nothing in `src/` reads it yet.
+
+### The spec's depth line (ruling 2)
+
+- Spec template (socle and this repo's copy, kept identical): under
+  `**Status:** draft` in the template block, add
+  the line `**Review depth:** full`. After the template's "## Statuses"
+  section, add a short "## Review depth" section: the value is `full` or
+  `strategic`; it says how far down the human goes at the human review
+  (step 8 of [workflow.md](/.agents/workflow.md)); omitted, the review
+  section of `.agents/project.md` gives the default.
+- workflow.md step 2: one sentence: the spec carries the review depth
+  line, `full` or `strategic`, when the task departs from §J's default.
+- The diff stays a floor (parent decision 13): `strategic` never skips the
+  proofs the floor demands.
 
 ### chisel-setup
 
@@ -193,11 +209,13 @@ what the step says are verified at review, not committed.
 3. **workflow.md:** step 7, step 8, the stops row and "After the close" in
    `socle/`, then copied to `.agents/`. The integrity pointer test checks
    `.agents/synthesis.md.tpl`.
-4. **chisel-setup:** the §J question and the A–J wording, mirrored.
-5. **Intentions:** the two files and their socle-files lines. The intention
+4. **Depth line:** the spec template line (both copies) and the step 2
+   sentence (both workflow copies).
+5. **chisel-setup:** the §J question and the A–J wording, mirrored.
+6. **Intentions:** the two files and their socle-files lines. The intention
    parse test is green and `deno task release-check gate origin/main`
-   passes.
-6. **Gates:** `deno task check`, `deno task test`; TESTS.md row.
+   passes. `human-review-step` also names the spec template's new line.
+7. **Gates:** `deno task check`, `deno task test`; TESTS.md row.
 
 A commit at each green step.
 
@@ -206,6 +224,8 @@ A commit at each green step.
 - 2026-11-22: plan written. Read the slice spec, the parent spec, workflow.md,
   project.md.tpl, chisel-setup, install.ts, paths.ts, manifest.ts,
   socle-files.ts, the integrity tests, TESTS.md and the crit story CLI.
+- 2026-11-22: plan revised after the Architect's rulings: frontier tier for
+  the synthesis, the spec depth line, crit's source (https://crit.md).
 
 ## Implementation Checkboxes
 
@@ -213,6 +233,7 @@ A commit at each green step.
 - [ ] Synthesis template, `SOCLE` key, `COPIED_FILES` entry, socle-files, golden tree
 - [ ] §J in `project.md.tpl` (test green) and in `.agents/project.md`
 - [ ] workflow.md: step 7, step 8, stops row, "After the close"; mirrored to `.agents/`
+- [ ] Spec template depth line (both copies) and the step 2 sentence
 - [ ] chisel-setup: §J question, A–J wording; mirrored
 - [ ] Intentions `human-review-step` and `review-section`, listed
 - [ ] TESTS.md `init` row
