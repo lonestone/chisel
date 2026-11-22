@@ -419,13 +419,26 @@ integrity test catches a socle file missing from `socle-files.ts`).
   (glossary, zone ownership), the spec and work templates, the intention
   template and the unreleased intentions, the `wayfinder` skill.
 
+- 2026-11-22, Typist: typed the plan as written. Edits 1 to 4 in
+  `socle/agents/workflow.md`; edits 5 to 8 in `reference.md`,
+  `discipline.md`, `methodology.md`; edit 10 in `PHILOSOPHY.md`; the
+  intention `one-shot.md` and its `src/socle-files.ts` line. The `.agents/`
+  copies were byte-identical to the socle files before the edits, so each
+  was made by copying the edited socle file; `cmp` silent on the four
+  pairs. Deviation: none. Note: in `discipline.md` rule 3 the text in the
+  repo differed from the plan's "before" (it spoke of a spec "that carried
+  no new decision"); replaced by the plan's new text as given. Gates:
+  `deno task check` exit 0; `deno task test` 77 passed, 0 failed;
+  `deno task release-check gate origin/main` exit 0 ("The socle change adds
+  an intention.").
+
 ## Implementation Checkboxes
 
-- [ ] workflow.md: edits 1 to 4, in `socle/agents/` and `.agents/`
-- [ ] reference.md, discipline.md, methodology.md: edits 5 to 8, mirrored;
+- [x] workflow.md: edits 1 to 4, in `socle/agents/` and `.agents/`
+- [x] reference.md, discipline.md, methodology.md: edits 5 to 8, mirrored;
   PHILOSOPHY.md: edit 10
-- [ ] Intention `one-shot`, listed in `socle-files.ts`
-- [ ] `deno task check`, `deno task test`, Intention gate green
+- [x] Intention `one-shot`, listed in `socle-files.ts`
+- [x] `deno task check`, `deno task test`, Intention gate green
 
 ## Notes & Snippets
 

@@ -46,12 +46,17 @@ it. When the intent is unclear, interview the human first with the
 `grilling` skill, one question at a time, a recommended answer with each,
 with `domain-modeling` underneath: new domain terms land in the glossary
 and hard-to-reverse decisions in an ADR, where the glossary and decisions
-section of `.agents/project.md` puts them. Either way the seams are named, and the sizing check is said out loud: the
-task fits one pass, or it is cut into slices with the `slice-task` skill.
-The spec carries a `**Review depth:**` line, `full` or `strategic`, when
-the task departs from the default of §J · Review of `.agents/project.md`.
-The human approves the spec when it carries decisions the task did not
-state; otherwise the Architect moves it to `ready` itself. Commit the spec.
+section of `.agents/project.md` puts them. When the interview tangles —
+each answer opens more questions than it settles — switch to the
+`wayfinder` skill: a map of decision tickets, resolved one at a time, whose
+destination is the spec. Either way the seams are named, and the sizing
+check is said out loud: the task fits one pass, or it is cut into slices
+with the `slice-task` skill. The spec carries a `**Review depth:**` line,
+`full` or `strategic`, when the task departs from the default of §J ·
+Review of `.agents/project.md`, and a `**One shot:**` line when the
+Architect takes the one shot ("The one shot", below). The human approves
+the spec when it carries decisions the task did not state, except in one
+shot; otherwise the Architect moves it to `ready` itself. Commit the spec.
 Status: `draft`, then `ready`.
 
 **3. Plan — Mason.** The Architect launches a Mason with the brief
@@ -101,10 +106,14 @@ tracker, and report to the Architect: what landed, which criteria are met,
 what is left. Status: `done`.
 
 **After the close — Architect.** Read the close report and rule on anything
-left. Open the pull request, and run the human review (step 8) on it. Once
-the review is done, merge and publish as the merge and publish section of
+left. Open the pull request; in one shot, its description opens with the
+spec's `**One shot:**` line, copied as is. Run the human review (step 8) on
+it, unless that line skips the final review. Once the review is done or
+skipped, merge and publish as the merge and publish section of
 `.agents/project.md` says; by default, ask the human, whose explicit word
-on that very action is the only go.
+on that very action is the only go. In one shot with the final review, the
+Architect says in so many words, as it hands the review, that approving it
+is the word for the merge; the approval is then that word.
 
 **8. Human review — Architect.** The pull request is open and the
 synthesis is committed in it. The human reads in three readings, in this
@@ -160,15 +169,46 @@ The status stays `done`: the review is of a pull request, not a status.
 The review ends when the human approves, or when every comment is answered
 and addressed. Merging then follows `.agents/project.md`.
 
+## The one shot
+
+A task can run in **one shot**: the human's only possible stop is the final
+review, and the spec says whether it happens. The Architect takes the one
+shot at step 2 when it judges the task small, or when the human asks for
+it. A human who asks for the full lane always gets it. There is no project
+switch: the lane is chosen task by task.
+
+The Architect writes the choice in one line of the spec, directly under its
+`**Status:**` line, or under `**Review depth:**` when the spec has one:
+
+    **One shot:** <why>; final review kept
+
+`<why>` is the reason: the task is small, or the human asked for it. The
+line ends in `final review skipped` when there is no final review. The
+pull request repeats it.
+
+What the one shot skips: the human's reading of the spec, which the
+Architect approves itself even when it carries decisions the task did not
+state, and every stop that only serves a human reading after it; "Where the
+work stops" says which. What it keeps: the plan and the Architect's reading
+of it, the Typist, the code review and its fresh reviewers, the gate
+commands, the close and its synthesis, and the pull request. When the line
+keeps the final review, it runs as step 8 says, at the spec's depth. A plan
+that departs from the task's own decisions is the Architect's to rule on:
+it writes the ruling on the `**Plan:**` line, and the synthesis names it
+among the critical decisions.
+
 ## Where the work stops
 
-| Who stops | For whom | When |
-|---|---|---|
-| Mason | Architect | After the plan; after the close, with its report; after fixing the human review's comments; on a blocker it cannot rule on |
-| Typist | Mason | After its part of the plan; on anything the plan does not answer |
-| Architect | Human | On an unclear intent; on a spec that carries decisions the task did not state; on a plan that departs from the human's decisions; on a blocker above what it owns |
-| Architect | Human | At the human review, waiting for the human's reading of the pull request |
-| Architect | Human | Before a merge or a publish, unless the project lets the agent do it |
+| Who stops | For whom | When | In one shot |
+|---|---|---|---|
+| Mason | Architect | After the plan; after the close, with its report; after fixing the human review's comments; on a blocker it cannot rule on | Kept |
+| Typist | Mason | After its part of the plan; on anything the plan does not answer | Kept |
+| Architect | Human | On an unclear intent | Kept: the intent is settled before the lane is chosen |
+| Architect | Human | On a spec that carries decisions the task did not state | Removed: the Architect approves the spec |
+| Architect | Human | On a plan that departs from the human's decisions | Removed: the Architect rules, and the synthesis says so |
+| Architect | Human | On a blocker above what it owns | Kept |
+| Architect | Human | At the human review, waiting for the human's reading of the pull request | Only when the spec's one-shot line keeps the final review |
+| Architect | Human | Before a merge or a publish, unless the project lets the agent do it | With the final review, its approval is the word for the merge; without it, kept |
 
 Everything else runs without a stop. A question that is not one of these is
 the Architect's to settle.

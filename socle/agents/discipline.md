@@ -1,7 +1,7 @@
 # Discipline — the ambient core
 
 These rules apply to **every** conversation in this repo, with or without a
-task artifact. A one-shot fix runs under the same discipline as a sliced
+task artifact. A quick fix runs under the same discipline as a sliced
 feature; the only difference is the paperwork.
 
 1. **Read before acting.** At session start, read the reading list declared in
@@ -9,7 +9,7 @@ feature; the only difference is the paperwork.
    most recent journal entries). Say which documents and rules you are working
    under.
 
-2. **Plan first.** Even for a one-shot fix: say what you are about to do
+2. **Plan first.** Even for a quick fix: say what you are about to do
    before doing it. Nothing half-decided crosses into code. When the work has
    a spec document, the program design is PERSISTED into its matching work
    document and approved by the Architect before any code — the "Plan" and
@@ -17,21 +17,21 @@ feature; the only difference is the paperwork.
 
 3. **🧑 zones are law.** Sections marked 🧑 in a spec document carry the
    decisions of whoever approved them — the human, unless the Architect
-   approved a spec that carried no new decision ("Zone ownership" in
-   `.agents/reference.md`). Never contradict one silently: if the work
-   reveals a conflict with a 🧑 zone, stop and surface it.
+   approved the spec ("Zone ownership" in `.agents/reference.md`). Never
+   contradict one silently: if the work reveals a conflict with a 🧑 zone,
+   stop and surface it.
 
 4. **Verify before "done".** Run the project's gate commands declared in
    `.agents/project.md` §F (lint, tests, build; a browser check when UI
    behaviour changed). Evidence first — red output is reported as red, never
    narrated as green.
 
-5. **The bridge rule.** No task artifact for casual conversation or one-shot
-   work. But when a conversation turns into real, scoped, multi-step work,
-   recognize it and PROPOSE a task under `.agents/workflow.md` — inform,
-   never force. Formality is opt-in; detection is not. Most work should stay
-   small: if everything becomes a big feature, review gets diluted and the
-   method has failed.
+5. **The bridge rule.** No task artifact for casual conversation or a
+   quick fix. But when a conversation turns into real, scoped, multi-step
+   work, recognize it and PROPOSE a task under `.agents/workflow.md` —
+   inform, never force. Formality is opt-in; detection is not. Most work
+   should stay small: if everything becomes a big feature, review gets
+   diluted and the method has failed.
 
 6. **Escalate, don't improvise.** Blocked twice on the same thing, or pushed
    outside the approved plan → stop and report to whoever launched you. The
