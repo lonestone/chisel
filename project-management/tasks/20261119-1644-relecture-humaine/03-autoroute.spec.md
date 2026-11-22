@@ -1,6 +1,6 @@
 # 03 — One shot
 
-**Status:** in-progress — group A, approved by Pierrick on 22/11 (ffaf5ec); Mason launched 22/11
+**Status:** done — group A, approved by Pierrick on 22/11 (ffaf5ec); closed 22/11
 **Blocked by:** 01 — Human review with crit
 
 ---
@@ -33,19 +33,19 @@ map of decision tickets. Parent spec: decisions 2, 14, 18, 19.
 
 ## Acceptance criteria
 
-- [ ] **autoroute-written** — `workflow.md` names the one shot, what it
+- [x] **autoroute-written** — `workflow.md` names the one shot, what it
   skips (the spec reading, the stops of the full lane after it), what it
   keeps (the code review, the gates, the pull request, the final review
   when the spec line asks for it), and the two ways it is taken.
-- [ ] **autoroute-visible** — a task in one shot says so in its spec and in
+- [x] **autoroute-visible** — a task in one shot says so in its spec and in
   its pull request, with whether the final review happens.
-- [ ] **stops-table-one-shot** — the "Where the work stops" table says
+- [x] **stops-table-one-shot** — the "Where the work stops" table says
   which stops the one shot removes, and how the merge goes with and
   without the final review.
-- [ ] **wayfinder-named** — step 2 names `wayfinder` for an interview that
+- [x] **wayfinder-named** — step 2 names `wayfinder` for an interview that
   tangles, and keeps « no interview » for a clear need.
-- [ ] **intention-per-change** — the Intention gate passes.
-- [ ] **suite-green** — `deno task check` and `deno task test` pass.
+- [x] **intention-per-change** — the Intention gate passes.
+- [x] **suite-green** — `deno task check` and `deno task test` pass.
 
 ---
 

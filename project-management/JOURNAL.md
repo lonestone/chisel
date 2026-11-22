@@ -5,6 +5,40 @@ ships.
 
 ---
 
+## 55. 2026-11-22 — A task can run in one shot
+
+Slice 03 of the human-review task gives a task a second lane. On
+Pierrick's « En oneshot je n'interviens que pour la review finale. Et
+encore. », `workflow.md` has a section called "The one shot". In it:
+
+- the Architect takes the one shot when it writes the spec, if it judges
+  the task small or the human asks;
+- it writes a `**One shot:**` line in the spec, with the reason and
+  whether the final review is kept or skipped, and the pull request opens
+  with that line;
+- the human's reading of the spec and the ruling on a plan that departs
+  from the human's decisions are removed, and the Architect rules on both;
+- the code review, the gates, the close, the synthesis and the pull request
+  stay.
+
+The stops table gains an "In one shot" column. When the final review is
+kept, the Architect says in so many words that approving it is the word for
+the merge. Step 2 names `wayfinder` for a spec interview that tangles. The
+old "one-shot", work done without a task artifact, is now "quick fix" in
+`reference.md`, `discipline.md`, `methodology.md` and `PHILOSOPHY.md`. The
+informational intention `unreleased/one-shot` tells updated repos.
+
+The Mason wrote the exact text and a Sonnet Typist typed it, with the gates
+green. The Typist replaced discipline rule 3 with the plan's text, which had
+missed the case of a spec with no new decision; the fresh reviewers caught
+it. They also found the glossary defining a task where the workflow meant a
+lane, and the roles paragraph and step 4 missing the one-shot exception. The
+Mason fixed ten findings as retouches and answered six. One is left to the
+Architect: the spec's Note says the one shot removes nothing at the plan,
+and ruling 2a removes a stop there.
+
+---
+
 ## 54. 2026-11-22 — The Mason who did the work fixes the review's comments
 
 Slice 02 of the human-review task answers who fixes the human review's
