@@ -29,6 +29,16 @@ nothing says the Mason's session outlives step 7's "Stop everything".
 | `socle/agents/workflow.md` and `.agents/workflow.md` | Six edits, below. Both copies byte-identical (checked with `diff`). |
 | `socle/intentions/unreleased/mason-fixes-the-comments.md` (new) | Informational intention. |
 | `src/socle-files.ts` | The intention's line, sorted (before `review-section.md`). |
+| `AGENTS.md` (this repo, outside the chisel markers) | The Mason-reuse line (ruling 4a), exact text below. |
+
+**The `AGENTS.md` line (ruling 4a).** In the bullet on the repo as memory,
+the last sentence "Role reuse follows ruling G16: reviewers fresh, the
+Mason (named the Crewmate in the record) reused within a live thread."
+becomes: `Role reuse follows ruling G16, widened by decision 11 of the
+human-review task (project-management/tasks/20261119-1644-relecture-humaine.spec.md):
+reviewers fresh, the Mason (named the Crewmate in the record) kept for its
+whole task, the human review's comments included; a fresh Mason only when
+its session is lost.`
 
 Untouched: `CHARTER.md` (it already says "The fixes after a review belong
 to the Mason that wrote the code"), `methodology.md` ("Re-runs and crashes"
@@ -179,6 +189,7 @@ every socle file and will catch a missing `socle-files.ts` line).
 
 - [ ] workflow.md: the six edits in `socle/agents/`, mirrored to `.agents/`
 - [ ] Intention `mason-fixes-the-comments`, listed in `socle-files.ts`
+- [ ] `AGENTS.md` Mason-reuse line (ruling 4a)
 - [ ] `deno task check`, `deno task test`, intention gate green
 
 ## Notes & Snippets
