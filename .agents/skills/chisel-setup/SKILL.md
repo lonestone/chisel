@@ -174,7 +174,7 @@ handed over.
 
 > **When you review a pull request, how far down do you read?**
 >
-> 1. **Full** — the synthesis, the proofs, then the diff through the crit
+> 1. **Full** — the synthesis, the proofs, then the whole diff through the
 >    reading guide.
 > 2. **Strategic** — the synthesis and the proofs; the diff only where
 >    something calls you further.

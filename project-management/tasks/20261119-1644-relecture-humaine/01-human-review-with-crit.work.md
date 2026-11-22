@@ -334,3 +334,9 @@ exception), made after the Typist's hand-back; gates green after them
   `**Review depth:**` line, and the closing line names the two values and
   the next question. The A–J wording and slice 01's part of the defaults
   line read clean and stay. Gates green.
+- **Code review of the pass** (fresh reviewers, diff since 97a27f9, slice
+  04's commits included). Slice 01's one finding: Full had lost « whole »
+  and named a « crit reading guide » that step 8 calls the reading guide.
+  Fixed: « then the whole diff through the reading guide ». The findings
+  on visual-proof and on §J's second question belong to slice 04's text
+  and go to the Architect.
