@@ -85,7 +85,7 @@ For each section, in letter order:
    from `package.json`; glossary/ADRs into `apps/documentation` for
    boilerplate else root `CONTEXT.md` + `docs/adr/`; model tiers unset;
    merge and publish left to the human; review depth `full`; proof commands
-   from `package.json`, else none).
+   as §J's second question recommends).
 3. Wait for the user's answer before moving to the next section. Accepting a
    recommendation in one word ("yes", "ok", "sounds good") is enough to move
    on — do not demand elaboration when the user is happy with the default.
@@ -195,19 +195,18 @@ question.
 > 2. **Recording**: the command that runs them and keeps a video
 >    (example: `npx playwright test --video on`).
 > 3. **Screenshots**: the command that captures pages and compares them
->    before → after.
+>    before → after (chisel ships one:
+>    `node .agents/skills/visual-proof/scripts/captures.ts`).
 >
-> Answer « none » for any the project lacks: the task has no proof of that
-> kind, and the review says so.
+> Answer « none » for any the project lacks: its tasks then carry no proof
+> of that kind, and the review says so.
 >
-> Recommended: the e2e and recording commands found in `package.json`, else
-> none; for screenshots, the capture command chisel ships,
-> `node .agents/skills/visual-proof/scripts/captures.ts`, when Playwright
-> is among the project's dependencies, else none.
+> Recommended: e2e and recording from `package.json`; for screenshots,
+> chisel's command when Playwright is among the dependencies; else none.
 
 Write each answer on its §J line: *E2E command*, *Recording command*,
-*Screenshot command*. Leave *Proofs folder* as the reference writes it,
-unless the human names another folder.
+*Screenshot command*. Keep the reference's *Proofs folder* unless the human
+names another folder.
 
 ## Step 3 — §E is read-back only, never asked
 

@@ -40,7 +40,7 @@ discussed:
 - Its **work document** — the program design, the implementation checkboxes,
   the worklog, Notes & Snippets and the review findings, including
   whatever was noted without stopping along the way, and its `**Depth:**`
-  line: the depth chosen and the floor the diff computed.
+  line.
 - The diff and commit messages of the session (`git log`, `git diff`).
 - The dated journal entry the work produced.
 - Any blocker, and the ruling on it, where the task keeps it: an
@@ -83,11 +83,12 @@ discussed:
 - **Information access**: opportunities to increase access to information —
   tee'd logs, read-only access to a third-party service. _Use when_ a
   crucial piece of information was not available.
-- **Depth against floor**: read the `**Depth:**` line of this task's work
-  document and of the recently archived ones. A task above the floor
-  with no reason given is a candidate. So is a run of tasks above the floor:
-  either the floor is too low, or the Architect asks for more than the work
-  needs. _Use when_ the depth chosen and the floor differ.
+- **Depth against floor**: compare the depth chosen with the floor the diff
+  computed, on the `**Depth:**` line of this task's work document and of the
+  recently archived ones. A candidate is a task above the floor with no
+  reason given, or a run of tasks above it: either the floor is too low, or
+  the Architect asks for more than the work needs. _Use when_ the depth
+  chosen and the floor differ.
 
 4. For each candidate, resolve its **target file** via `.agents/project.md`
    (the reading list of §C · Reading list, the living docs of
