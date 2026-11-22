@@ -3,7 +3,19 @@
 Created by the Mason at the plan step, 2026-11-22. Spec:
 `project-management/tasks/20261119-1644-relecture-humaine/04-visual-proof.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Architect, 2026-11-22, with these rulings on the
+Mason's questions: (1a) the script lives in the skill folder; (2a) the copy
+as described — Olympe's three changes, the MIT header (the licence
+`deno.json` declares), the rewritten comment, `visual-proof`, `node
+captures.ts`; the French stays, no translation; the skill says in one line
+that a project whose linter reaches `.agents/` excludes the script; (3a) one
+`**Review depth:**` line; (4a) a committed `<name>.proofs/` folder beside
+the spec, as §J's default — the skill keeps captures to the screens and
+widths the floor asks, since PNGs weigh in git; (5a) the fixture browser
+test and this slice's own close; music-downloader's dry run stays an open
+item, flagged to the human; (6a) no command, no captures; (7) Typist on the
+mid tier. The finding on `review-videos` is accepted.
+Mason handle: aa450428155af1d37.
 
 ## Program Design
 
