@@ -5,6 +5,45 @@ ships.
 
 ---
 
+## 54. 2026-11-22 — The Mason who did the work fixes the review's comments
+
+Slice 02 of the human-review task answers who fixes the human review's
+comments. On Pierrick's « toujours le maçon qui a bossé ! Toujours. », step
+8 of the workflow now has a paragraph called "Who fixes the comments". It
+says:
+
+- the task's Mason is woken in its own session, however long ago it
+  closed;
+- a fresh Mason starts from the archived documents only when that session
+  is lost;
+- a comment that changes a spec decision goes into the spec first, written
+  by the Architect.
+
+The fix follows the discipline of a review finding. It goes through a
+Typist unless it is a retouch, runs the gates and a fresh `code-review` on
+its diff, and records each comment in the work document. The status stays
+`done`.
+
+The rest of the workflow was brought into line. Step 7's "stop everything"
+no longer ends the Mason's session. The Sub-agents section keeps a Mason
+for its whole task, which replaces "a resumed task starts fresh". Step 4
+writes, on the `**Plan:**` line, the id the Mason's harness resumes it by,
+so the Architect can find it after a compaction. This repo's `AGENTS.md`
+widens ruling G16 to match. The informational intention
+`unreleased/mason-fixes-the-comments` tells updated repos.
+
+The Mason wrote the exact text and a Sonnet Typist typed it, with the gates
+green. Two fresh reviewers then found the following, all fixed by the Mason
+as retouches:
+
+- a decision cited by its number;
+- a bare step number;
+- lines patched in place rather than reflowed;
+- the lost-session rule written twice;
+- "handle", which is not a glossary term.
+
+---
+
 ## 53. 2026-11-22 — The workflow gains a human review, opened on a synthesis
 
 The workflow used to end when the pull request opened, and the human then

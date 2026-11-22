@@ -191,6 +191,12 @@ every socle file and will catch a missing `socle-files.ts` line).
   line. Gates: `deno task check` ok (34 files), `deno task test` 77 passed
   0 failed, `deno task release-check gate origin/main` ok ("The socle
   change adds an intention.").
+- 2026-11-22 (Mason): `code-review` since 60a6da7; the fixes typed by the
+  Mason as a retouch of a few lines (workflow step 5 exception), see
+  Diff-Review Findings. Close: the spec's three criteria ticked, the
+  synthesis written beside the spec (frontier tier), journal entry 53,
+  `retro` run, status `done`. The files stay in the task folder and
+  archive with the parent when group A closes.
 
 ## Implementation Checkboxes
 

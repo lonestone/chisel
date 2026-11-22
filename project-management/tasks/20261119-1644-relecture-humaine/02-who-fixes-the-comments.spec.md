@@ -1,6 +1,6 @@
 # 02 — Who fixes the comments
 
-**Status:** in-progress — group A, approved by Pierrick on 22/11 (ffaf5ec); Mason launched 22/11
+**Status:** done — group A, approved by Pierrick on 22/11 (ffaf5ec); closed by the Mason 22/11
 **Blocked by:** 01 — Human review with crit
 
 ---
@@ -16,10 +16,10 @@ decision 12, the resume summary, is withdrawn.
 
 ## Acceptance criteria
 
-- [ ] **who-fixes-written** — `workflow.md` says the task's Mason fixes the
+- [x] **who-fixes-written** — `workflow.md` says the task's Mason fixes the
   comments, names the lost-session exception, and the spec-first case.
-- [ ] **intention-per-change** — the Intention gate passes.
-- [ ] **suite-green** — `deno task check` and `deno task test` pass.
+- [x] **intention-per-change** — the Intention gate passes.
+- [x] **suite-green** — `deno task check` and `deno task test` pass.
 
 ---
 
