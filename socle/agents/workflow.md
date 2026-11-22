@@ -39,34 +39,35 @@ skill or tool the tracker section of `.agents/project.md` names: an issue
 in a tracker, a line in beads, a spec document in the task workspace, or
 simply the message in the prompt.
 
-**2. Write or sharpen the spec — Architect.** When the task arrives clear —
-a well-written issue, a clear request — write the spec document from it,
-with no interview: from the spec template declared in `.agents/project.md`,
-named with the task id script, short, linking the issue rather than copying
-it. When the intent is unclear, interview the human first with the
-`grilling` skill, one question at a time, a recommended answer with each,
-with `domain-modeling` underneath: new domain terms land in the glossary
-and hard-to-reverse decisions in an ADR, where the glossary and decisions
-section of `.agents/project.md` puts them. When the interview tangles —
-each answer opens more questions than it settles — switch to the
-`wayfinder` skill: a map of decision tickets, resolved one at a time, whose
-destination is the spec. Either way the seams are named, and the sizing
-check is said out loud: the task fits one pass, or it is cut into slices
-with the `slice-task` skill. The spec carries a `**Review depth:**` line,
-`full` or `strategic`, when the task departs from the default of §J ·
-Review of `.agents/project.md`, and a `**One shot:**` line when the
-Architect takes the one shot ("The one shot", below). The human approves
-the spec when it carries decisions the task did not state, unless the task
-runs in one shot. In every other case the Architect moves it to `ready`
-itself. Commit the spec. Status: `draft`, then `ready`.
+**2. Write or sharpen the spec — Architect.** When the task arrives clear — a
+well-written issue, a clear request — write the spec document from it, with no
+interview: from the spec template declared in `.agents/project.md`, named with
+the task id script, short, linking the issue rather than copying it. When the
+intent is unclear, interview the human first with the `grilling` skill, one
+question at a time, a recommended answer with each, with `domain-modeling`
+underneath: new domain terms land in the glossary and hard-to-reverse decisions
+in an ADR, where the glossary and decisions section of `.agents/project.md` puts
+them. When the interview tangles — each answer opens more questions than it
+settles — switch to the `wayfinder` skill: a map of decision tickets, resolved
+one at a time, whose destination is the spec. Either way the seams are named,
+and the sizing check is said out loud: the task fits one pass, or it is cut into
+slices with the `slice-task` skill. The spec carries a `**Review depth:**` line
+when the task departs from the default of §J · Review of `.agents/project.md`.
+The line gives `full` or `strategic`, then each proof the Architect asks for
+after a `+` (`captures`, `recording`, `e2e`), as in `strategic + captures`. The
+spec also carries a `**One shot:**` line when the Architect takes the one shot
+("The one shot", below). The human approves the spec when it carries decisions
+the task did not state, unless the task runs in one shot. In every other case
+the Architect moves it to `ready` itself. Commit the spec. Status: `draft`, then
+`ready`.
 
-**3. Plan — Mason.** The Architect launches a Mason with the brief
-below. The Mason reads the spec document and what it links to, creates
-the work document beside it from the work template, and persists its
-program design there: files, seam signatures, test order, the decisions the
-spec left to the implementation. Then it stops and reports. No code before
-the plan is approved. Status: `in-progress`, written by the Architect at
-launch.
+**3. Plan — Mason.** The Architect launches a Mason with the brief below. The
+Mason reads the spec document and what it links to, creates the work document
+beside it from the work template, and persists its program design there: files,
+seam signatures, test order, the decisions the spec left to the implementation,
+and, when the task touches a screen, the screens and the proofs the
+`visual-proof` skill asks for. Then it stops and reports. No code before the
+plan is approved. Status: `in-progress`, written by the Architect at launch.
 
 **4. Read the plan — Architect.** Read the spec and the work document,
 nothing else. Correct the plan with the Mason, then approve it: the
@@ -75,37 +76,40 @@ when, and the id the Mason's harness resumes it by. A plan that departs
 from a decision the human made goes to the human first, except in one
 shot.
 
-**5. Code — a Typist the Mason launches.** Once the plan is approved,
-the Mason launches a Typist with the brief below. The Mason types
-itself only a retouch of a few lines, or while the plan is not settled, and
-writes which exception applies and why in the work document's worklog. The
-Typist executes the approved plan in vertical steps, test-first at the
-agreed seams (the `tdd` skill). Tick
-the work document's checkboxes as work lands — they are the resume point —
-and commit at each green step. Run the gate commands declared in
-`.agents/project.md`. Reality that contradicts the plan is fixed in the
-plan, in writing; reality that contradicts the spec is reported.
+**5. Code — a Typist the Mason launches.** Once the plan is approved, the Mason
+launches a Typist with the brief below. The Mason types itself only a retouch of
+a few lines, or while the plan is not settled, and writes which exception
+applies and why in the work document's worklog. The Typist executes the approved
+plan in vertical steps, test-first at the agreed seams (the `tdd` skill). When
+the task touches a screen, the before captures are taken before the first code
+change, and the screen is checked once it is typed, as the `visual-proof` skill
+says. Tick the work document's checkboxes as work lands — they are the resume
+point — and commit at each green step. Run the gate commands declared in
+`.agents/project.md`. Reality that contradicts the plan is fixed in the plan, in
+writing; reality that contradicts the spec is reported.
 
 **6. Review — Mason.** Run the `code-review` skill on the full diff of
 the task. Its reviewers are fresh sub-agents that never saw the session
 that wrote the code — never skip this step, even for a small retouch. Write
 the findings in the work document; fix each one or answer it there.
 
-**7. Close — Mason.** Tick the spec's acceptance criteria against
-reality. Promote evergreen material into the living docs declared in
-`.agents/project.md`, the glossary and the ADRs among them. Write the
-synthesis from `.agents/synthesis.md.tpl`, beside the spec and named by
-replacing `.spec.md` with `.synthesis.md`: it is the first reading of the
-human review (step 8), so write it on the frontier tier. Archive the spec,
-work and synthesis documents together. Add the dated journal entry. Run
-the `retro` skill and put its proposals in the report. Stop everything you
-started — Docker containers, dev servers, background processes — each by
-its own identifier (container name or id, PID), and only those: never by
-pattern (`pkill -f`, `--all`), which stops the work of others. This does
-not end the Mason itself: its session is kept, so that the Architect can
-wake it at step 8, Human review, to fix the comments. Commit, update the
-tracker, and report to the Architect: what landed, which criteria are met,
-what is left. Status: `done`.
+**7. Close — Mason.** Tick the spec's acceptance criteria against reality. When
+the task touches a screen, take the after captures into the proofs folder of §J
+· Review. Write the work document's `**Depth:**` line: the depth chosen, the
+floor the diff computed with the `visual-proof` skill, and why the task went
+above the floor when it did. Promote evergreen material into the living docs
+declared in `.agents/project.md`, the glossary and the ADRs among them. Write
+the synthesis from `.agents/synthesis.md.tpl`, beside the spec and named by
+replacing `.spec.md` with `.synthesis.md`: it is the first reading of the human
+review (step 8), so write it on the frontier tier. Archive the spec, work and
+synthesis documents together. Add the dated journal entry. Run the `retro` skill
+and put its proposals in the report. Stop everything you started — Docker
+containers, dev servers, background processes — each by its own identifier
+(container name or id, PID), and only those: never by pattern (`pkill -f`,
+`--all`), which stops the work of others. This does not end the Mason itself:
+its session is kept, so that the Architect can wake it at step 8, Human review,
+to fix the comments. Commit, update the tracker, and report to the Architect:
+what landed, which criteria are met, what is left. Status: `done`.
 
 **After the close — Architect.** Read the close report and rule on anything
 left. Open the pull request; in one shot, its description opens with the
@@ -126,8 +130,14 @@ order, and may stop after the first.
   decisions, the data schema before and after, any large architecture
   change. The human may stop there with comments, and the review goes no
   further.
-- **Proofs: what the floor demands.** The proofs the project's floor
-  asks for, read after the synthesis and before the guide.
+- **Proofs: what the depth and the floor demand.** The captures,
+  recordings and e2e results the spec's depth line asks for, plus the
+  captures the floor adds when the diff touches a screen. They are read
+  after the synthesis and before the guide. They are files in the proofs
+  folder of §J · Review, committed with the work. The pull request's
+  description links each one, with a before → after pair for each changed
+  screen. The human looks at them himself. A kind of proof the project has
+  no command for is named there as missing.
 - **Reading guide: the crit story.** The Architect writes it with
   `crit story --guide` and the project's guide, on the PR diff. Its first
   chapter holds only the synthesis file's hunk, and its prologue says to
@@ -136,8 +146,9 @@ order, and may stop after the first.
 
 How far the human goes is the spec's `**Review depth:**` line, or §J ·
 Review of `.agents/project.md` when the spec has none. `strategic` is the
-synthesis plus the proofs the floor demands; `full` goes down to the
-reading guide. The diff stays a floor: `strategic` never skips the proofs.
+synthesis plus the proofs; `full` goes down to the reading guide. The diff
+stays a floor: `strategic` never skips the proofs, and a screen touched
+brings captures whatever the line says.
 
 The base is read from the pull request, never assumed to be `main`:
 `gh pr view <n> --json number,baseRefName`. The story is prepared and

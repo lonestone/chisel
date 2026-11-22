@@ -75,7 +75,7 @@ All spec documents MUST follow this structure:
 # <Task name>
 
 **Status:** draft
-**Review depth:** full | strategic
+**Review depth:** full | strategic [+ captures] [+ recording] [+ e2e]
 
 ---
 
@@ -173,9 +173,14 @@ the `**Status:**` line:
 ## Review depth
 
 The `**Review depth:**` line says how far down the human goes at the human
-review; step 8 of [workflow.md](/.agents/workflow.md) defines its two
-values. Keep the one the task needs, or delete the line and the review
-section of `.agents/project.md` gives the default.
+review, and which proofs the Architect asks for. It starts with one of the
+two depths that step 8 of [workflow.md](/.agents/workflow.md) defines.
+Each proof wanted follows after a `+`: `captures`, `recording`, `e2e`, as
+in `strategic + captures`. The diff only adds a floor: a screen touched
+brings captures even when the line leaves them out (the `visual-proof`
+skill). Keep what the task needs. Or delete the line: the review section
+of `.agents/project.md` then gives the default depth, and the only proofs
+are the floor's.
 
 ## When Creating New Tasks
 

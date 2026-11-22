@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/in-progress/retro
   sha: 6654f6b60cd9d5be8b54c6fafe44346dabeb3b76
-  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (the task's spec document, and its work document with the program design, the checkboxes and the worklog, plus the diff and the journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by discipline.md rule 8; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of the workflow, not only on user request; a blocker is read where the task's own documents keep it rather than in the project journal."
+  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (the task's spec document, and its work document with the program design, the checkboxes and the worklog, plus the diff and the journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by discipline.md rule 8; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of the workflow, not only on user request; a blocker is read where the task's own documents keep it rather than in the project journal; compares the depth each task chose with the floor its diff computed, from the work documents' Depth lines."
 ---
 
 You are suggesting improvements to the **working rules** — the steering
@@ -39,7 +39,8 @@ discussed:
   before a work document existed.
 - Its **work document** — the program design, the implementation checkboxes,
   the worklog, Notes & Snippets and the review findings, including
-  whatever was noted without stopping along the way.
+  whatever was noted without stopping along the way, and its `**Depth:**`
+  line: the depth chosen and the floor the diff computed.
 - The diff and commit messages of the session (`git log`, `git diff`).
 - The dated journal entry the work produced.
 - Any blocker, and the ruling on it, where the task keeps it: an
@@ -82,6 +83,11 @@ discussed:
 - **Information access**: opportunities to increase access to information —
   tee'd logs, read-only access to a third-party service. _Use when_ a
   crucial piece of information was not available.
+- **Depth against floor**: read the `**Depth:**` line of this task's work
+  document and of the recently archived ones. A task above the floor
+  with no reason given is a candidate. So is a run of tasks above the floor:
+  either the floor is too low, or the Architect asks for more than the work
+  needs. _Use when_ the depth chosen and the floor differ.
 
 4. For each candidate, resolve its **target file** via `.agents/project.md`
    (the reading list of §C · Reading list, the living docs of
