@@ -5,8 +5,8 @@
 // captures : prendre les captures d'une page et dire, en texte, ce qui a changé.
 //
 // Pourquoi : une capture lue par l'outil Read reste dans le contexte de la session et se relit
-// à chaque appel. Le 02/11, lot3-corrections a lu 22 PNG (~10 Mo) et coûté près de 10 $
-// (sujet captures-dans-le-contexte). Ce script fait le travail mécanique sans modèle :
+// à chaque appel. Une session qui a lu 22 PNG (~10 Mo) a coûté près de 10 $.
+// Ce script fait le travail mécanique sans modèle :
 // les captures vont sur le disque, la comparaison avant/après se fait au pixel, et seul un
 // rapport en texte revient. Regarder une image reste le travail d'un sous-agent
 // (skill visual-proof), jamais du fil principal.
@@ -15,9 +15,9 @@
 //   node captures.ts <url de base> <chemin,chemin…> --out <dossier> [--largeurs 390,1280] [--avant <dossier>] [--plein] [--sombre] [--clic <sélecteur>]... [--json]
 // --sombre : la page avec prefers-color-scheme: dark. --clic <sélecteur> : clique cet élément avant la capture ; répétée,
 // elle enchaîne les clics dans l'ordre (un menu ouvert, un onglet, un accordéon). Un sélecteur sans élément fait échouer la commande.
-// Une page qui défile dans un conteneur interne (les pages d'Olympe) se capture à la hauteur de la fenêtre : ce qui est
-// sous le pli manque, et un sous-agent l'a dit absent (04/11). Le rapport le signale ; --plein agrandit la fenêtre
-// jusqu'à ce que le conteneur montre tout (sujet captures-hauteur-fixe-defilement-interne, go de Pierrick le 05/11).
+// Une page qui défile dans un conteneur interne se capture à la hauteur de la fenêtre : ce qui est
+// sous le pli manque, et un sous-agent l'a déjà dit absent. Le rapport le signale ; --plein agrandit la fenêtre
+// jusqu'à ce que le conteneur montre tout.
 // Un conteneur qui défile de côté est signalé, avec ce qu'il cache.
 // Playwright vient du repo où l'on se trouve (node_modules : playwright, playwright-core ou
 // @playwright/test), sinon d'un playwright-core posé à côté de ce script.

@@ -69,6 +69,10 @@ Deno.test("captures: the copy carries nothing of the machines it came from", asy
     !text.includes("ContainersData") && !text.includes("obsidian"),
     "no vault path",
   );
+  assert(
+    !/Pierrick|lot3-|sujet captures-/.test(text),
+    "no private name or topic of the machines it came from",
+  );
 });
 
 Deno.test({
