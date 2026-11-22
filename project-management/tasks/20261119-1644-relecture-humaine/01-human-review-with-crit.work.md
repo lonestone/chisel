@@ -323,3 +323,14 @@ exception), made after the Typist's hand-back; gates green after them
 - **Retro proposals** (integrity test of `.agents/` against `socle/agents/`,
   the sliced-task archive sentence in step 7, the intention-in-same-commit
   wording): not applied here; carried to Pierrick in the PR report.
+
+**Human review (PR #9)**
+
+- **« Est-ce que tous les skills ont utilisé /writing-for-agents ? »**
+  No: the slice wrote chisel-setup's review-depth question without that
+  skill. Fixed in 92981e7, the task's Mason, 2026-11-22. The first §J
+  question went through `writing-for-agents`, with no change of meaning:
+  the options name what is read, the task override points at the spec's
+  `**Review depth:**` line, and the closing line names the two values and
+  the next question. The A–J wording and slice 01's part of the defaults
+  line read clean and stay. Gates green.
