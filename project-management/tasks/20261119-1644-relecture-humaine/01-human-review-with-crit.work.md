@@ -3,7 +3,15 @@
 Created by the Mason at the plan step, 2026-11-22. Spec:
 `project-management/tasks/20261119-1644-relecture-humaine/01-human-review-with-crit.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Architect, 2026-11-22, with these rulings on the
+Mason's questions: (1) the template lives at `.agents/synthesis.md.tpl`;
+(2) yes, add `**Review depth:** full | strategic` to the spec template and
+a sentence in step 2 (parent decision 13 already makes it a line of the
+spec); (3) yes, the chisel-setup §J question is in this slice; (4) a repo
+without crit: the step says where to get it and stops for the human;
+(5) always read `baseRefName` and pass `--base-branch`. One correction:
+the synthesis is written on the **frontier** tier, not « never the light
+tier » — Pierrick's « pas Sonnet » excludes the mid tier too (decision 25).
 
 ## Program Design
 
