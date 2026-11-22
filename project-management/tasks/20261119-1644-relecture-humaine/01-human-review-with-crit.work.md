@@ -263,3 +263,50 @@ A commit at each green step.
   exists; fixed to A–J in passing.
 
 ## Diff-Review Findings
+
+`code-review` since 43af38e, 2026-11-22: two fresh reviewers, Standards and
+Spec. The fixes are a Mason retouch of a few lines (workflow step 5
+exception), made after the Typist's hand-back; gates green after them
+(`deno task check`, `deno task test` 77 passed).
+
+- **This repo's `.agents/synthesis.md.tpl` was missing** (both reviewers).
+  Step 7 of this repo's own workflow pointed at nothing; the integrity test
+  only checks a freshly installed target. Fixed: copied from the socle.
+- **The spec template pinned `full`** (Standards). Every spec copied from it
+  would silently override a project whose §J says `strategic`. Fixed: the
+  line reads `full | strategic` (the Architect's ruling 2 literally), and
+  the template's "Review depth" section says to keep one value or delete
+  the line to take §J's default.
+- **The depth's meaning was written in several places** (Standards).
+  Fixed in part: the §J comment (template and this repo) and the spec
+  template now point at step 8 instead of redefining `full` and
+  `strategic`. Kept: the chisel-setup question, which a human reads without
+  the workflow at hand, and the intentions, which travel alone.
+- **The synthesis contents are listed both in the template and in step 8**
+  (Standards). Answered: the criterion "strategic-reading-written" asks the
+  step itself to name what the synthesis carries; the template carries the
+  form.
+- **"Never one sentence" was missing from step 8** (Spec). Fixed: the
+  bullet now says "One article page at most, never one sentence" and "any
+  large architecture change".
+- **The proofs bullet was circular** (Spec). Fixed: "read after the
+  synthesis and before the guide". Its one sentence is the place the proofs
+  slice replaces.
+- **Step 7's rewrap left an overlong line** (Standards). Fixed.
+- **The `init` test pinned template text** (Standards). Fixed: it reads §J
+  through `parseGlue` and checks the `Default depth` item's value, so the
+  prose around it can change. The stat on `.agents/synthesis.md.tpl`
+  overlaps the golden tree; kept, since the parent spec's testing strategy
+  asks for that check by name.
+- **The intentions landed in a commit after the socle change** (Standards,
+  soft). Answered: CONTRIBUTING and the Intention gate work at the pull
+  request, which carries both; the squash merges them into one commit.
+- **The stops-table row overlaps step 8** (Standards, judgement). Answered:
+  the table is the summary of every stop, and the criterion
+  "workflow-has-human-review" asks for the row.
+- **Parent decision 13's close record (depth chosen and floor computed,
+  compared by `retro`) is not in step 7** (Spec). Answered: decision 13 is
+  not in this slice's list, and the floor is computed by the proofs work;
+  left to the Architect to place, most likely slice 04.
+- **crit treated as an outside install, against parent decision 1 "crit
+  ships with Chisel"** (Spec, noted). Answered: ruling 4.

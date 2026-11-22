@@ -151,8 +151,8 @@ without this section means the default. -->
 
 ## J · Review
 
-<!-- How far down the human goes at the human review (workflow step 8):
-`strategic` stops at the synthesis and the proofs the floor demands;
-`full` goes down to the reading guide. A spec's own depth line wins. -->
+<!-- How far down the human goes at the human review: `full` or
+`strategic`, as step 8 of `.agents/workflow.md` defines them. A spec's own
+`**Review depth:**` line wins over this default. -->
 
 - **Default depth:** full

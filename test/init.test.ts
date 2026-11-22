@@ -8,6 +8,7 @@ import {
   assertStringIncludes,
 } from "@std/assert";
 import { join } from "@std/path";
+import { glueItem, glueSection, parseGlue } from "../src/glue.ts";
 import {
   goldenTree,
   installedTree,
@@ -293,8 +294,13 @@ Deno.test("init: the review section and the synthesis template are installed", a
       (await Deno.stat(join(target, ".agents", "synthesis.md.tpl"))).isFile,
       "the synthesis template is installed",
     );
-    const glue = await Deno.readTextFile(join(target, ".agents", "project.md"));
-    assertStringIncludes(glue, "## J · Review");
-    assertStringIncludes(glue, "- **Default depth:** full");
+    const glue = parseGlue(
+      await Deno.readTextFile(join(target, ".agents", "project.md")),
+    );
+    assertEquals(
+      glueItem(glueSection(glue, "J"), "Default depth")?.value,
+      "full",
+      "§J declares a default review depth",
+    );
   });
 });

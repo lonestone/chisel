@@ -75,7 +75,7 @@ All spec documents MUST follow this structure:
 # <Task name>
 
 **Status:** draft
-**Review depth:** full
+**Review depth:** full | strategic
 
 ---
 
@@ -172,10 +172,10 @@ the `**Status:**` line:
 
 ## Review depth
 
-The `**Review depth:**` line is `full` or `strategic`. It says how far down
-the human goes at the human review (step 8 of
-[workflow.md](/.agents/workflow.md)). Omit it and the review section of
-`.agents/project.md` gives the default.
+The `**Review depth:**` line says how far down the human goes at the human
+review; step 8 of [workflow.md](/.agents/workflow.md) defines its two
+values. Keep the one the task needs, or delete the line and the review
+section of `.agents/project.md` gives the default.
 
 ## When Creating New Tasks
 

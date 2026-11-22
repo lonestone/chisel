@@ -90,8 +90,8 @@ reality. Promote evergreen material into the living docs declared in
 synthesis from `.agents/synthesis.md.tpl`, beside the spec and named by
 replacing `.spec.md` with `.synthesis.md`: it is the first reading of the
 human review (step 8), so write it on the frontier tier. Archive the spec,
-work and synthesis documents together. Add the dated journal entry. Run the `retro` skill and put its proposals in the
-report. Stop everything you started — Docker containers, dev servers,
+work and synthesis documents together. Add the dated journal entry. Run
+the `retro` skill and put its proposals in the report. Stop everything you started — Docker containers, dev servers,
 background processes — each by its own identifier (container name or id,
 PID), and only those: never by pattern (`pkill -f`, `--all`), which stops
 the work of others. Commit, update the tracker, and report to the
@@ -108,12 +108,13 @@ on that very action is the only go.
 synthesis is committed in it. The human reads in three readings, in this
 order, and may stop after the first.
 
-- **Strategic: the synthesis.** One page at most, written at step 7: what
-  changed and why, the critical decisions, the data schema before and
-  after, the architecture change. The human may stop there with comments,
-  and the review goes no further.
+- **Strategic: the synthesis.** One article page at most, never one
+  sentence, written at step 7: what changed and why, the critical
+  decisions, the data schema before and after, any large architecture
+  change. The human may stop there with comments, and the review goes no
+  further.
 - **Proofs: what the floor demands.** The proofs the project's floor
-  asks for, as the human reads them.
+  asks for, read after the synthesis and before the guide.
 - **Reading guide: the crit story.** The Architect writes it with
   `crit story --guide` and the project's guide, on the PR diff. Its first
   chapter holds only the synthesis file's hunk, and its prologue says to
