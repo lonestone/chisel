@@ -1,6 +1,6 @@
 # 01 — Human review with crit
 
-**Status:** ready — group A, approved by Pierrick on 22/11 (ffaf5ec)
+**Status:** done — closed by the Mason on 2026-11-22; spec, work and synthesis stay in the slice folder until the parent closes (sliced-task archive rule)
 **Blocked by:** None — can start immediately
 
 ---
@@ -43,25 +43,25 @@ then the step calls crit directly. Parent spec: decisions 1, 2, 3, 4, 7, 9,
 
 ## Acceptance criteria
 
-- [ ] **workflow-has-human-review** — `workflow.md` has the step, and its
+- [x] **workflow-has-human-review** — `workflow.md` has the step, and its
   "Where the work stops" table lists it.
-- [ ] **strategic-reading-written** — the step opens on the synthesis,
+- [x] **strategic-reading-written** — the step opens on the synthesis,
   names what it carries and its length (one article page at most), and
   says the human may stop there with comments.
-- [ ] **synthesis-template** — a synthesis template ships in the socle, is
+- [x] **synthesis-template** — a synthesis template ships in the socle, is
   listed in `src/socle-files.ts`, and has a place for the data schema
   before → after and for a large architecture change.
-- [ ] **three-readings-ordered** — the step names the three readings in
+- [x] **three-readings-ordered** — the step names the three readings in
   order (strategic, proofs, reading guide) and maps the depth line onto
   them.
-- [ ] **diff-base-from-pr** — the step takes the diff's base from the
+- [x] **diff-base-from-pr** — the step takes the diff's base from the
   pull request, not from `main`.
-- [ ] **expired-wait-resumes** — the step says an expired wait reconnects
+- [x] **expired-wait-resumes** — the step says an expired wait reconnects
   to the same review and waits again, and is not a blocker.
-- [ ] **project-review-section** — the project template and this repo's
+- [x] **project-review-section** — the project template and this repo's
   `project.md` have §J with the depth.
-- [ ] **intention-per-change** — the Intention gate passes.
-- [ ] **suite-green** — `deno task check` and `deno task test` pass.
+- [x] **intention-per-change** — the Intention gate passes.
+- [x] **suite-green** — `deno task check` and `deno task test` pass.
 
 ---
 

@@ -5,6 +5,46 @@ ships.
 
 ---
 
+## 53. 2026-11-22 — The workflow gains a human review, opened on a synthesis
+
+The workflow used to end when the pull request opened, and the human then
+read the diff with nothing to guide them. Slice 01 of the human-review task
+adds step 8, *Human review*, which the Architect runs after the close. It
+puts three readings in order:
+
+- the **synthesis**, one article page that the Mason writes at the close on
+  the frontier tier, where the human may stop with comments;
+- the **proofs**, a place kept for the slice that fills it;
+- the **reading guide**, the crit story on the pull request's diff, which
+  opens on the synthesis.
+
+A review depth, `full` or `strategic`, sets how far down the human goes.
+Its default is in a new glue section, §J · Review, and a spec can change it
+with a `**Review depth:**` line. Two rules come from the Harness:
+
+- the diff's base is read from the pull request, never assumed to be `main`;
+- an expired wait resumes on the same review, so it is not a blocker.
+
+The synthesis template ships as `.agents/synthesis.md.tpl`, so every
+update refreshes it.
+
+Two intentions cover the change. `unreleased/human-review-step` is
+informational. `unreleased/review-section` is a migration that adds §J to
+existing glues. The setup skill now asks the §J question.
+
+A Sonnet Typist typed the approved plan, and the gates were green. Two
+fresh reviewers then found the following, and the Mason fixed each as a
+retouch:
+
+- this repo's own `.agents/` lacked the template, so step 7 pointed at
+  nothing;
+- the spec template pinned `full`, which would override a `strategic`
+  project;
+- the meaning of the depth was restated in several files;
+- the `init` test pinned the template's text.
+
+---
+
 ## 52. 2026-11-19 — Sub-agent briefs carry the runtime rules
 
 Sub-agents get only their brief, so the rules of the Harness that runs
