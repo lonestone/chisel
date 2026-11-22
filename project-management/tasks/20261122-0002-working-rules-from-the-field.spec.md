@@ -1,7 +1,7 @@
 # Working rules from the field: branches, commits, gates, docs and the retro
 
-**Status:** draft — waits on the Owner's answers on branches, the README
-ceiling and rebase; no plan before his approval
+**Status:** draft — the Owner answered on 22/11; waits on his approval of
+this spec; no plan before
 
 ---
 
@@ -62,12 +62,14 @@ table and who raised it.
    qqchose à remonter dans Chisel ».
 2. **readme-presents-and-points** — the README presents the repo and points
    to the docs. A feature adds a line and a link to it, never its reference
-   doc, which goes in the living docs root. The project declares a size
-   ceiling for its README; the close checks it. *Where:* `discipline.md`
-   for the rule; `project.md`, §D · Documentation reference, for the
-   ceiling; the close step of `workflow.md` checks it. *Source:* Pierrick,
-   music-downloader review #42, 12/11: « un README qui grossit, qui grossit
-   […] peut-être quelque chose à mettre dans Chisel ».
+   doc, which goes in the living docs root. The Standards axis of
+   `code-review` flags an existing doc that the diff grows beyond a
+   threshold (decision `docs-growth-in-review`). *Where:* `discipline.md`
+   for the rule; `code-review`, the Standards axis, for the check; §D ·
+   Documentation reference of `project.md` when a project sets another
+   threshold. *Source:* Pierrick, music-downloader review #42, 12/11: « un
+   README qui grossit, qui grossit […] peut-être quelque chose à mettre
+   dans Chisel »; the check, Pierrick, 22/11.
 3. **agent-docs-say-what-and-why** — a doc an agent writes is concise: what
    and why, the overall architecture and the delicate points, diagrams
    welcome, never a text version of the code. *Where:* `discipline.md`,
@@ -89,14 +91,19 @@ table and who raised it.
    `discipline.md` for the rule; a new `project.md` section, Branches, for
    the settings. *Source:* Pierrick, 09/11: « c'est un peu devenu mon
    default, mais porté par Chisel plutôt » (the worktree); the install
-   first, a retro he passed on the same day. The defaults wait on
-   the Owner.
-6. **a-pushed-branch-is-never-rewritten** — a branch brought up to date
-   takes its base by a merge, never a rebase: the agent has no forced push,
-   and a squash merge leaves no trace of the merge commits. *Where:* the
-   same `discipline.md` rule, and the Branches section, which may say
-   otherwise for a project. *Source:* the table's line
-   `rebase-demande-push-force-interdit`, 09/11, no quote.
+   first, a retro he passed on the same day. Each project chooses, the
+   worktree is the default (decision `branches-each-project-chooses`).
+6. **an-agent-rebases-only-its-own-branch** — the agent may rebase its own
+   branch on the main branch and push it with `--force-with-lease`, never
+   a branch that is not its own: another session's, a parent pull
+   request's branch others build on, or the main branch. The forced push
+   runs alone in its call, as pull request #7 says of every git command
+   that can erase. *Where:* the same `discipline.md` rule, and the
+   Branches section, which may forbid it for a project. *Source:*
+   Pierrick, 22/11: « Un agent qui rebase sa branche sur main doit force
+   push, il en a le droit sur sa branche » (decision `rebase-own-branch`).
+   It reverses the table's line `rebase-demande-push-force-interdit`,
+   09/11.
 7. **the-commit-rule-is-in-the-glue** — `project.md` carries the repo's
    commit rule: the format, the accepted scopes, the scope for the task
    files, the body's line length. `chisel-setup` fills it from the repo's
@@ -153,7 +160,7 @@ table and who raised it.
 
 | Line of the table | Goes to |
 |---|---|
-| `rebase-demande-push-force-interdit` | rule `a-pushed-branch-is-never-rewritten` |
+| `rebase-demande-push-force-interdit` | rule `an-agent-rebases-only-its-own-branch`, which reverses it (Pierrick, 22/11) |
 | `gh-pr-checks-watch-verbeux` | the wait: pull request #7 (and reversed on 17/11); the reading: rule `ci-is-read-by-its-verdict` |
 | `crit-review-fichiers-au-lieu-du-diff` | `relecture-humaine`, decision 7: the review reads the pull request's diff (`crit --pr`). Not written there: the base of a branch diff without a remote, which must be the pull request's base, not `main`. The « commande » is the Harness's `crit-review` script |
 | `crit-client-expire-24h-daemon-parasite` | fixed in the Harness's script. The rule chisel keeps (an expired wait is not a blocker) is not written in `relecture-humaine`; it belongs to its review skills, decision 8, open |
@@ -184,15 +191,20 @@ table and who raised it.
   byte-identical to its `.agents/` copy.
 - [ ] **glue-sections** — `socle/agents/project.md.tpl` and this repo's
   `.agents/project.md` have the Branches, Commits and Other commands
-  sections and the README ceiling line in §D.
+  sections; Branches says worktree by default.
 - [ ] **setup-fills-them** — `chisel-setup` explores the commit linter and
-  the extra commands, and asks the Branches section with its defaults.
-- [ ] **close-checks** — the close step of `workflow.md` checks the README
-  ceiling and the orphan "later", and writes the retro into the spec.
+  the extra commands, and asks the worktree question of decision
+  `branches-each-project-chooses`, once it is confirmed.
+- [ ] **docs-growth-flagged** — the Standards axis of `code-review` flags,
+  as a judgement call, an existing doc the diff grows beyond the threshold
+  of decision `docs-growth-in-review`, read from §D when a project sets
+  one.
+- [ ] **close-checks** — the close step of `workflow.md` checks the orphan
+  "later" and writes the retro into the spec.
 - [ ] **no-harness-word** — no changed socle file names the Harness, crit's
   script, a secondmate, a machine of ours or one of our projects.
 - [ ] **forks-recorded** — each edit to a vendored skill (`retro`,
-  `slice-task`) is added to its `x-upstream` `changes` line.
+  `slice-task`, `code-review`) is added to its `x-upstream` `changes` line.
 - [ ] **intention-per-change** — every change under `socle/` has its
   intention in `socle/intentions/unreleased/`, listed in
   `src/socle-files.ts`; the glue sections come with a migration intention,
@@ -221,15 +233,61 @@ and a migration intention fills on update.
 flowchart LR
   D[discipline.md<br/>proof, docs, verbs, branches] --> P
   W[workflow.md<br/>sizing, red test, gates,<br/>CI, deferral, close] --> P
-  P[project.md<br/>Branches · Commits · Other commands<br/>README ceiling in §D]
+  P[project.md<br/>Branches · Commits · Other commands<br/>docs threshold in §D, optional]
   S[chisel-setup] -->|fills on install| P
   I[migration intention] -->|fills on update| P
+  C[code-review · Standards<br/>docs growth] -->|reads threshold| P
   R[retro skill] -->|writes into| SP[spec · Retrospective]
 ```
 
 ---
 
 > 🧑 **REVIEW IF RELEVANT** — decisions, testing, slicing.
+
+## The Owner's answers (22/11)
+
+Given on Olympe's questions page, 22/11, passed on by the toolkit
+maintainer.
+
+- **branches-each-project-chooses** — his words: « Chaque projet choisit »,
+  and in a note: « Worktree comme default. P-e demandé lors de
+  l'install ? ». Each project writes its choice in the Branches section of
+  `project.md`; the template's default is a worktree per task, in
+  `.worktrees/<branch>`. *To confirm:* `chisel-setup` asks it at install,
+  in step 2, after §I, verbatim like §B and §I:
+  > **Should each task work in its own worktree?**
+  > 1. **Yes, in `.worktrees/<branch>`** — several sessions can work on the
+  >    repo at once without touching each other's files.
+  > 2. **No, a branch in the main checkout** — one session at a time.
+  >
+  > Recommended: **1 — a worktree per task.**
+
+  The branch name, its base and the cleanup are stated, not asked: the
+  task's slug, from the freshly fetched main branch (the parent's branch
+  when stacked), the worktree removed by the agent once merged. An
+  existing `.worktrees/` folder or a team habit found in step 1 is stated
+  as the answer, not asked again.
+- **rebase-own-branch** — his words: « Un agent qui rebase sa branche sur
+  main doit force push, il en a le droit sur sa branche ». It becomes rule
+  `an-agent-rebases-only-its-own-branch`, with `--force-with-lease` so a
+  push someone else made in between is never lost. Checked against this
+  spec and `.agents/workflow.md`, `.agents/discipline.md`: nothing else
+  forbids a forced push; discipline's "never force" (rule on formality) is
+  about passages, not git.
+- **docs-growth-in-review** — his words: « Je pense qu'il faut un role
+  "gardien" qui tourne régulièrement. Mais ça fait tres meta harness. P-e
+  sinon rajouter ça à l'axe de review ? Avec un % d'augmentation des docs
+  existants. » The simpler road is taken: a criterion of the Standards axis
+  of `code-review`. A doc that existed before the diff (the README, a page
+  of the living docs root) and grows by more than **25 %**, and by at least
+  **1 500 characters**, is flagged as a judgement call, never a hard
+  violation. The reason: a feature that follows rule
+  `readme-presents-and-points` adds a line and a link, a few percent;
+  a quarter more means a reference section moved in. The floor keeps a
+  short page from being flagged for a paragraph. §D may set another
+  threshold for a project. It replaces the README size ceiling first
+  proposed: no ceiling, no gate. The periodic "guardian" role leaves
+  scope (Notes).
 
 ## Implementation Decisions
 
@@ -259,18 +317,18 @@ order, not separate pull requests: the task applies its own rule
 
 1. **Ambient rules** (blocked by: none) — rules `proof-before-cause`,
    `readme-presents-and-points`, `agent-docs-say-what-and-why`,
-   `actions-carry-a-verb`, and the README ceiling in §D (its size waits on
-   the Owner's answer on the ceiling).
-2. **The glue: branches, commits, commands** (blocked by: the Owner's
-   answers on branches and rebase) — rules `a-branch-per-task`,
-   `a-pushed-branch-is-never-rewritten`, `the-commit-rule-is-in-the-glue`,
+   `actions-carry-a-verb`, and the docs growth criterion in `code-review`
+   with its optional threshold line in §D.
+2. **The glue: branches, commits, commands** (blocked by: none; the
+   install question waits on its confirmation) — rules `a-branch-per-task`,
+   `an-agent-rebases-only-its-own-branch`, `the-commit-rule-is-in-the-glue`,
    `the-commands-are-in-the-glue`; the three sections, `chisel-setup`, the
    migration intention.
 3. **The workflow steps** (blocked by: 2, and pull requests #7, #8 and
    `lead-ux` merged, which edit the same paragraphs of `workflow.md`) —
    rules `the-typist-sees-red-first`, `small-feedback-is-one-pass`,
    `the-full-suite-runs-once`, `ci-is-read-by-its-verdict`,
-   `a-deferral-has-a-home`, and the close checks of slice 1's ceiling.
+   `a-deferral-has-a-home`, and the close checks.
 4. **The retro written down** (blocked by: none) — rule
    `the-retro-is-written-down`.
 
@@ -297,6 +355,9 @@ chapter 3 waits for them, and the pull request opens once it is done.
 
 ## Notes
 
+- **Out of scope: a periodic "guardian" role** that watches the docs grow
+  between tasks: Pierrick calls it « tres meta harness » (22/11); chisel
+  takes one task and orchestrates nothing.
 - **Out of scope: chisel for tasks without code.** Raised on 21/11 by the
   Owner through Dédale: Atlas lost decisions of his (the old expense
   classification, the screen decisions of 18/11) because its "meta" tasks
