@@ -26,7 +26,7 @@ taken here, what is carried elsewhere, and what leaves.
 
 ## Scope
 
-**Included:** the fourteen rules of "The rules" below, each in the file it
+**Included:** the fifteen rules of "The rules" below, each in the file it
 names, with:
 - the `.agents/` copy of each changed socle file, kept identical;
 - the new sections of `project.md.tpl`, this repo's `.agents/project.md`,
@@ -155,6 +155,15 @@ table and who raised it.
     edit there. *Where:* `retro`, steps 4 and 5; the close step of
     `workflow.md`. *Source:* Pierrick, 18/11: « si on ne les utilise pas on
     s'en sortira pas ».
+15. **skills-go-through-the-writing-guide** — the agent that writes or
+    edits a skill goes through the skill-writing guide chisel ships before
+    its commit; the Standards axis of `code-review` checks that a skill
+    the diff touches follows it. *Where:* step 5 of `workflow.md` and the
+    Typist brief; `code-review`, the Standards axis. *Source:* Pierrick,
+    22/11, to « toute skill écrite ou modifiée passe-t-elle par
+    writing-for-agents ? »: « Règle du workflow ». In chisel pull request
+    #9, skills written without it had weakened a guard rule, and only the
+    code review saw it.
 
 ## Where each line of the table goes
 
@@ -182,10 +191,11 @@ table and who raised it.
 | the note's point 4 and question 4 (`crit-review.sh`) | the Harness |
 | the note's question 5 (one task?) | its two other parts are done: the Typist types by default since 0.3.0 (journal 50), and the resume after the review is `relecture-humaine`, decision 11. What is left was decided on 21/11: one task, one pull request, one commit per rule |
 | the note's question 6 (chisel as our default outside a repo) | Notes, out of scope |
+| not in the table: Pierrick's answer of 22/11 on skills and `writing-for-agents` | rule `skills-go-through-the-writing-guide` |
 
 ## Acceptance Criteria
 
-- [ ] **each-rule-in-its-file** — each of the fourteen rules is found, in
+- [ ] **each-rule-in-its-file** — each of the fifteen rules is found, in
   substance, in the file "The rules" names for it.
 - [ ] **copies-identical** — each changed file under `socle/agents/` is
   byte-identical to its `.agents/` copy.
@@ -194,7 +204,7 @@ table and who raised it.
   sections; Branches says worktree by default.
 - [ ] **setup-fills-them** — `chisel-setup` explores the commit linter and
   the extra commands, and asks the worktree question of decision
-  `branches-each-project-chooses`, once it is confirmed.
+  `branches-each-project-chooses`.
 - [ ] **docs-growth-flagged** — the Standards axis of `code-review` flags,
   as a judgement call, an existing doc the diff grows beyond the threshold
   of decision `docs-growth-in-review`, read from §D when a project sets
@@ -253,8 +263,9 @@ maintainer.
   and in a note: « Worktree comme default. P-e demandé lors de
   l'install ? ». Each project writes its choice in the Branches section of
   `project.md`; the template's default is a worktree per task, in
-  `.worktrees/<branch>`. *To confirm:* `chisel-setup` asks it at install,
-  in step 2, after §I, verbatim like §B and §I:
+  `.worktrees/<branch>`. `chisel-setup` asks it at install (Pierrick,
+  22/11, to « P-e demandé lors de l'install ? »: « La poser »), in step 2,
+  after §I, verbatim like §B and §I:
   > **Should each task work in its own worktree?**
   > 1. **Yes, in `.worktrees/<branch>`** — several sessions can work on the
   >    repo at once without touching each other's files.
@@ -279,13 +290,12 @@ maintainer.
   sinon rajouter ça à l'axe de review ? Avec un % d'augmentation des docs
   existants. » The simpler road is taken: a criterion of the Standards axis
   of `code-review`. A doc that existed before the diff (the README, a page
-  of the living docs root) and grows by more than **25 %**, and by at least
-  **1 500 characters**, is flagged as a judgement call, never a hard
-  violation. The reason: a feature that follows rule
-  `readme-presents-and-points` adds a line and a link, a few percent;
-  a quarter more means a reference section moved in. The floor keeps a
-  short page from being flagged for a paragraph. §D may set another
-  threshold for a project. It replaces the README size ceiling first
+  of the living docs root) and grows by more than **10 %** is flagged as a
+  judgement call, never a hard violation; no floor in characters.
+  Pierrick, 22/11, on the threshold: « +10 % ». The reason: a feature that
+  follows rule `readme-presents-and-points` adds a line and a link, a few
+  percent; beyond a tenth, a reference section is likely moving in. The
+  threshold stays adjustable per project, in §D. It replaces the README size ceiling first
   proposed: no ceiling, no gate. The periodic "guardian" role leaves
   scope (Notes).
 
@@ -297,6 +307,11 @@ maintainer.
 - The end-to-end test command lives once: in §J of `relecture-humaine` when
   it lands, which "Other commands" then points to; in "Other commands"
   until then.
+- The skill-writing guide chisel ships is `writing-great-skills`, the
+  upstream skill now named `writing-for-agents`, vendored under its former
+  name (see `retro`, step 1). The rule names the shipped skill. It is
+  user-invoked (`disable-model-invocation`): the rule says to read its
+  `SKILL.md`, which works whether or not the Skill tool may call it.
 - Runtime tools are named as examples only, as pull request #7 does.
 - Content written for agents goes through `writing-for-agents`
   (`CONTRIBUTING.md`).
@@ -319,8 +334,8 @@ order, not separate pull requests: the task applies its own rule
    `readme-presents-and-points`, `agent-docs-say-what-and-why`,
    `actions-carry-a-verb`, and the docs growth criterion in `code-review`
    with its optional threshold line in §D.
-2. **The glue: branches, commits, commands** (blocked by: none; the
-   install question waits on its confirmation) — rules `a-branch-per-task`,
+2. **The glue: branches, commits, commands** (blocked by: none) —
+   rules `a-branch-per-task`,
    `an-agent-rebases-only-its-own-branch`, `the-commit-rule-is-in-the-glue`,
    `the-commands-are-in-the-glue`; the three sections, `chisel-setup`, the
    migration intention.
@@ -328,7 +343,8 @@ order, not separate pull requests: the task applies its own rule
    `lead-ux` merged, which edit the same paragraphs of `workflow.md`) —
    rules `the-typist-sees-red-first`, `small-feedback-is-one-pass`,
    `the-full-suite-runs-once`, `ci-is-read-by-its-verdict`,
-   `a-deferral-has-a-home`, and the close checks.
+   `a-deferral-has-a-home`, `skills-go-through-the-writing-guide` (with
+   its `code-review` criterion), and the close checks.
 4. **The retro written down** (blocked by: none) — rule
    `the-retro-is-written-down`.
 
