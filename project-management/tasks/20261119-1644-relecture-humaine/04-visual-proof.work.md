@@ -1185,7 +1185,18 @@ order; each waits for its owner's yes.
 **Human review (PR #9)**
 
 - **« Est-ce que tous les skills ont utilisé /writing-for-agents ? »**, on
-  `visual-proof/SKILL.md`. No: the slice wrote it without that skill.
-  Fixed in 17932f7, the task's Mason, 2026-11-22. The skill, the retro
-  depth check and chisel-setup's proof-command question went through
-  `writing-for-agents`, with no change of meaning; gates green.
+  `visual-proof/SKILL.md`. No: the slice wrote its skill text without that
+  skill. Fixed in 17932f7, the task's Mason, 2026-11-22. The fix covers all
+  the skill text the slice wrote: `visual-proof`, the depth check in
+  `retro`, and the proof-command question in `chisel-setup`. Gates green.
+- A fresh `code-review` of that pass (slice 01's Mason) found it had
+  dropped meaning, and the Architect ruled. Fixed in d794142:
+  - the explicit rule against reading a capture in one's own thread is back
+    as a guardrail, with its reason;
+  - the capture options are back with their purpose, and the default widths
+    390 and 1280;
+  - the plan, code and close triggers, « no general description » and
+    « only » the touched screens are back;
+  - chisel-setup recommends each proof command on its own.
+
+  Gates green.
