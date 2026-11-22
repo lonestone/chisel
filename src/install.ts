@@ -42,6 +42,7 @@ const COPIED_FILES: ReadonlyArray<readonly [string, string]> = [
   // package and no network. `init` never writes `.agents/user.md`: a shared
   // installer has no business creating a personal, gitignored file.
   [SOCLE.userMdTemplate, ".agents/user.md.tpl"],
+  [SOCLE.synthesisTemplate, ".agents/synthesis.md.tpl"],
   [SOCLE.specTemplate, "project-management/000-template.spec.md"],
   [SOCLE.workTemplate, "project-management/000-template.work.md"],
 ];

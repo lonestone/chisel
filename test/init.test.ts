@@ -282,3 +282,19 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
     assertNotEquals(handWritten, journal);
   });
 });
+
+Deno.test("init: the review section and the synthesis template are installed", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.copy("boilerplate");
+    const result = await runChisel(["init", target]);
+    assertEquals(result.code, 0, result.output);
+
+    assert(
+      (await Deno.stat(join(target, ".agents", "synthesis.md.tpl"))).isFile,
+      "the synthesis template is installed",
+    );
+    const glue = await Deno.readTextFile(join(target, ".agents", "project.md"));
+    assertStringIncludes(glue, "## J · Review");
+    assertStringIncludes(glue, "- **Default depth:** full");
+  });
+});

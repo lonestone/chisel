@@ -39,6 +39,7 @@ export const SOCLE_FILES: readonly string[] = [
   "agents/skills/wayfinder/SKILL.md",
   "agents/skills/writing-great-skills/GLOSSARY.md",
   "agents/skills/writing-great-skills/SKILL.md",
+  "agents/synthesis.md.tpl",
   "agents/user.md.tpl",
   "agents/workflow.md",
   "intentions/0.2.0/01-workflow-replaces-formulas.md",

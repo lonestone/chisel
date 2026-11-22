@@ -71,6 +71,7 @@ export const SOCLE = {
   taskIdScript: "socle/scripts/task-id.sh",
   projectMdTemplate: "socle/agents/project.md.tpl",
   userMdTemplate: "socle/agents/user.md.tpl",
+  synthesisTemplate: "socle/agents/synthesis.md.tpl",
   discipline: "socle/agents/discipline.md",
   methodology: "socle/agents/methodology.md",
   reference: "socle/agents/reference.md",

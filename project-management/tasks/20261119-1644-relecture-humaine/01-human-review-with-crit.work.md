@@ -229,9 +229,9 @@ A commit at each green step.
 
 ## Implementation Checkboxes
 
-- [ ] `init` test for the template and §J (red)
-- [ ] Synthesis template, `SOCLE` key, `COPIED_FILES` entry, socle-files, golden tree
-- [ ] §J in `project.md.tpl` (test green) and in `.agents/project.md`
+- [x] `init` test for the template and §J (red)
+- [x] Synthesis template, `SOCLE` key, `COPIED_FILES` entry, socle-files, golden tree
+- [x] §J in `project.md.tpl` (test green) and in `.agents/project.md`
 - [ ] workflow.md: step 7, step 8, stops row, "After the close"; mirrored to `.agents/`
 - [ ] Spec template depth line (both copies) and the step 2 sentence
 - [ ] chisel-setup: §J question, A–J wording; mirrored

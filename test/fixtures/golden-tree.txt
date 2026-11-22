@@ -54,6 +54,7 @@
 .agents/skills/writing-great-skills
 .agents/skills/writing-great-skills/GLOSSARY.md
 .agents/skills/writing-great-skills/SKILL.md
+.agents/synthesis.md.tpl
 .agents/user.md.tpl
 .agents/workflow.md
 .claude
