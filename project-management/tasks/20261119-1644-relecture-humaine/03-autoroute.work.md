@@ -55,6 +55,7 @@ Found while reading, and shaping the plan:
 | `socle/agents/reference.md` and `.agents/reference.md` | Glossary: the old term renamed, the new one added; one sentence in "Zone ownership". Edits 5 and 6. |
 | `socle/agents/discipline.md` and `.agents/discipline.md` | Rule 3's parenthesis; the three "one-shot" of the old sense. Edit 7. |
 | `socle/agents/methodology.md` and `.agents/methodology.md` | One word of the old sense. Edit 8. |
+| `PHILOSOPHY.md` (this repo only, no socle copy) | One word of the old sense (ruling 1a). Edit 10. |
 | `socle/intentions/unreleased/one-shot.md` (new) | Informational intention. Edit 9. |
 | `src/socle-files.ts` | `"intentions/unreleased/one-shot.md",` after the `mason-fixes-the-comments.md` line. |
 
@@ -122,8 +123,8 @@ it, unless that line skips the final review. Once the review is done or
 skipped, merge and publish as the merge and publish section of
 `.agents/project.md` says; by default, ask the human, whose explicit word
 on that very action is the only go. In one shot with the final review, the
-Architect says as it hands the review that approving it is the word for
-the merge; the approval is then that word.
+Architect says in so many words, as it hands the review, that approving it
+is the word for the merge; the approval is then that word.
 ```
 
 ### Edit 3 — `workflow.md`, a new section "The one shot"
@@ -254,6 +255,12 @@ breakdown.", "one-shot" becomes "a quick fix". Reflow:
   gets a single spec/work pair, only large work gets the full breakdown.
 ```
 
+### Edit 10 — `PHILOSOPHY.md` (ruling 1a)
+
+In the bullet "**Ambient by default, ceremony on demand.**", the last
+sentence "The one-shot fix stays cheap." becomes "The quick fix stays
+cheap." Nothing else moves.
+
 ### Edit 9 — the intention `socle/intentions/unreleased/one-shot.md`
 
 ```markdown
@@ -358,7 +365,7 @@ integrity test catches a socle file missing from `socle-files.ts`).
 1. Edits 1 to 4 in `socle/agents/workflow.md`, copied to
    `.agents/workflow.md`; `cmp` silent.
 2. Edits 5 to 8 in `socle/agents/`, copied to `.agents/`; `cmp` silent on
-   each pair.
+   each pair. Edit 10 in `PHILOSOPHY.md`.
 3. The intention and its `socle-files.ts` line.
 4. `deno task check`, `deno task test`,
    `deno task release-check gate origin/main`. One commit.
@@ -415,7 +422,8 @@ integrity test catches a socle file missing from `socle-files.ts`).
 ## Implementation Checkboxes
 
 - [ ] workflow.md: edits 1 to 4, in `socle/agents/` and `.agents/`
-- [ ] reference.md, discipline.md, methodology.md: edits 5 to 8, mirrored
+- [ ] reference.md, discipline.md, methodology.md: edits 5 to 8, mirrored;
+  PHILOSOPHY.md: edit 10
 - [ ] Intention `one-shot`, listed in `socle-files.ts`
 - [ ] `deno task check`, `deno task test`, Intention gate green
 
