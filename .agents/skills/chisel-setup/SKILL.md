@@ -172,19 +172,19 @@ handed over.
 
 ### §J — ask this, verbatim
 
-> **When you review a pull request, how far down do you go?**
+> **When you review a pull request, how far down do you read?**
 >
-> 1. **Full** — you read the synthesis, the proofs, then the whole diff
->    through the reading guide.
-> 2. **Strategic** — you read the synthesis and the proofs, and stop there
->    unless something calls you further.
+> 1. **Full** — the synthesis, the proofs, then the diff through the crit
+>    reading guide.
+> 2. **Strategic** — the synthesis and the proofs; the diff only where
+>    something calls you further.
 >
-> A task can say otherwise for itself in its spec.
+> A task can set its own depth on its spec's `**Review depth:**` line.
 >
 > Recommended: **1 — full**.
 
-Write the answer on §J's line *Default depth*. Then ask the second
-question.
+Write `full` or `strategic` on §J's *Default depth* line. Then ask §J's
+second question, below.
 
 ### §J — then ask this, verbatim
 
