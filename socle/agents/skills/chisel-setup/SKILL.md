@@ -201,8 +201,12 @@ second question, below.
 > Answer « none » for any the project lacks: its tasks then carry no proof
 > of that kind, and the review says so.
 >
-> Recommended: e2e and recording from `package.json`; for screenshots,
-> chisel's command when Playwright is among the dependencies; else none.
+> Recommended, each on its own:
+>
+> - e2e: the command found in `package.json`, else none;
+> - recording: the command found in `package.json`, else none;
+> - screenshots: chisel's capture command when Playwright is among the
+>   project's dependencies, else none.
 
 Write each answer on its §J line: *E2E command*, *Recording command*,
 *Screenshot command*. Keep the reference's *Proofs folder* unless the human

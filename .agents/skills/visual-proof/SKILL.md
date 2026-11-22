@@ -1,6 +1,6 @@
 ---
 name: visual-proof
-description: Prove a change to a screen with captures compared by a command, while a fresh sub-agent does any looking. Use when a task touches a screen (a page, a component, a stylesheet, a template, a displayed string, an image), or when you are about to take or look at a screenshot.
+description: Prove a change to a screen with captures compared by a command, while a fresh sub-agent does any looking. Use when a task touches a screen (a page, a component, a stylesheet, a template, a displayed string, an image), at its plan, code and close steps, or when you are about to take or look at a screenshot.
 ---
 
 # Visual proof
@@ -38,10 +38,11 @@ check line of §F · Gate commands says.
    an image or a font. Judge it from the diff; path patterns miss cases. A
    screen touched makes the floor `captures`; otherwise the floor is none.
 3. **List the proofs**: the line's plus the floor's, so a screen touched
-   gets captures even when the line left them out. Name each screen touched
-   with its path and only the widths it needs (`--largeurs`): every
-   committed image weighs in the repo's history. Done when every screen
-   touched has its widths and every proof asked has a line.
+   gets captures even when the line left them out. Capture only the screens
+   the diff touches, each with its path and only the widths it needs
+   (`--largeurs`): every committed image weighs in the repo's history.
+   Done when every screen touched has its widths and every proof asked has
+   a line.
 4. **Empty list: stop.** No floor and no proof asked means no capture and
    no browser. Write it in the depth record.
 
@@ -64,8 +65,18 @@ check line of §F · Gate commands says.
 ## Mechanical first
 
 The capture command writes the captures to disk and prints a text report,
-in French. Run it with no argument for its usage line and options. With
-`--avant <folder>`, each screen gets a verdict:
+in French. Its options:
+
+- `--largeurs` sets the widths, 390 and 1280 by default;
+- `--avant <folder>` compares each capture, at the pixel, with the one of
+  the same name in that folder;
+- `--clic <selector>`, repeated, clicks before the capture, to open a
+  menu, a tab or an accordion;
+- `--sombre` captures the dark colour scheme;
+- `--plein` grows the window until a scrolling container shows everything;
+- `--json` prints the same facts as JSON.
+
+With `--avant`, each screen gets a verdict:
 
 - `identique`: nothing changed;
 - a share of pixels changed, with the zone and a `.diff.png` map;
@@ -74,8 +85,7 @@ in French. Run it with no argument for its usage line and options. With
 
 The report also gives an overflow at each width (`DÉBORDE`), console
 errors, requests that leave the site, and content hidden below the fold of
-a scrolling container (`SOUS LE PLI`: run again with `--plein` to capture
-it).
+a scrolling container (`SOUS LE PLI`: run again with `--plein`).
 
 Often the text settles it. `identique` where nothing should change is
 verified. An overflow at 390 px is a bug: fix it before anyone looks.
@@ -100,12 +110,13 @@ When the text does not settle it, a fresh sub-agent on the mid tier of
 - the precise question, and the list of what it must find on each capture;
 - the rule that what it cannot see is « not verified », never « absent »;
 - the report's form: for each capture, compliant or not, and where each
-  defect sits;
+  defect sits; no general description;
 - the order to change nothing.
 
-The capture paths go to the sub-agent only: a capture opened with your own
-Read tool, even one, stays in your context. Launch a new sub-agent for each
-round, since one that saw the old version sees what it expects.
+Never open a capture with your own Read tool, not even one: the paths go
+to a fresh sub-agent, since one capture read stays in your context for
+every later call. Launch a new sub-agent for each round, since one that saw
+the old version sees what it expects.
 
 ## The proofs at the review
 
