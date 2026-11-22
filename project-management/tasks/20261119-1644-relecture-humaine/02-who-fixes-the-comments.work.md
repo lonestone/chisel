@@ -184,13 +184,20 @@ every socle file and will catch a missing `socle-files.ts` line).
   `CHARTER.md`, `methodology.md` (session and Typist sections), ruling G16
   in `review-360-decisions.md`, the intention template and
   `unreleased/human-review-step`, `release-check.ts`'s gate.
+- 2026-11-22 (Typist): typed the plan, no deviation. The six edits in
+  `socle/agents/workflow.md` (rulings 1a, 2a, 3a applied), copied to
+  `.agents/workflow.md` (`diff` empty); the intention
+  `mason-fixes-the-comments` and its `socle-files.ts` line; the `AGENTS.md`
+  line. Gates: `deno task check` ok (34 files), `deno task test` 77 passed
+  0 failed, `deno task release-check gate origin/main` ok ("The socle
+  change adds an intention.").
 
 ## Implementation Checkboxes
 
-- [ ] workflow.md: the six edits in `socle/agents/`, mirrored to `.agents/`
-- [ ] Intention `mason-fixes-the-comments`, listed in `socle-files.ts`
-- [ ] `AGENTS.md` Mason-reuse line (ruling 4a)
-- [ ] `deno task check`, `deno task test`, intention gate green
+- [x] workflow.md: the six edits in `socle/agents/`, mirrored to `.agents/`
+- [x] Intention `mason-fixes-the-comments`, listed in `socle-files.ts`
+- [x] `AGENTS.md` Mason-reuse line (ruling 4a)
+- [x] `deno task check`, `deno task test`, intention gate green
 
 ## Notes & Snippets
 

@@ -19,7 +19,7 @@ or a script.
 | Role | Who plays it | What it does |
 |---|---|---|
 | **Architect** | The agent a human, or an orchestrator, talks to. This is its default role. | Reads the task, writes or sharpens the spec, launches a Mason and talks with it, reads and corrects the plan, rules on what the Mason reports, brings the key questions to the human. |
-| **Mason** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then launches a Typist to code it, runs `code-review`, and closes the task. |
+| **Mason** | A sub-agent launched by the Architect. | Writes the plan in the work document and stops for the Architect's reading. Then launches a Typist to code it, runs `code-review`, and closes the task. Woken again after the close, it fixes the human review's comments. |
 | **Typist** | A sub-agent launched by the Mason once the plan is approved. | Types code from the approved plan and decides nothing, at a cheaper tier than the Mason's (`.agents/reference.md`, "Model tiers"). |
 | **Reviewers** | Sub-agents launched by the `code-review` skill. | Read the diff with no context from the session that wrote it. |
 
@@ -65,7 +65,7 @@ launch.
 **4. Read the plan — Architect.** Read the spec and the work document,
 nothing else. Correct the plan with the Mason, then approve it: the
 approval is written on the work document's `**Plan:**` line, with who and
-when. A plan that departs from a decision the human made goes to the human
+when, and the Mason's handle: the id its harness resumes it by. A plan that departs from a decision the human made goes to the human
 first.
 
 **5. Code — a Typist the Mason launches.** Once the plan is approved,
@@ -94,7 +94,8 @@ work and synthesis documents together. Add the dated journal entry. Run
 the `retro` skill and put its proposals in the report. Stop everything you started — Docker containers, dev servers,
 background processes — each by its own identifier (container name or id,
 PID), and only those: never by pattern (`pkill -f`, `--all`), which stops
-the work of others. Commit, update the tracker, and report to the
+the work of others. This does not end the Mason itself: its session is
+kept, for step 8 wakes it to fix the comments. Commit, update the tracker, and report to the
 Architect: what landed, which criteria are met, what is left. Status:
 `done`.
 
@@ -140,6 +141,21 @@ wait is not a blocker: re-run the same crit command, or `crit --session
 installed, say where to get it (https://crit.md, then `crit install
 <agent>`) and stop for the human.
 
+**Who fixes the comments.** A comment that asks for a change goes to
+the task's Mason, the one that planned, coded and closed it. The
+Architect wakes it in its own session, however long ago it closed:
+waking it costs as much as a fresh one, but it holds the whole
+context. A fresh Mason only when that session is lost; it starts from
+the spec, work and synthesis documents. A comment that changes a
+decision of the spec: the Architect writes the new decision into the
+spec first, then wakes the same Mason on it. The Mason fixes as it
+fixes a review finding: through a Typist unless the fix is a retouch
+of a few lines, the gate commands, `code-review` on the fix's diff,
+each comment written in the work document with its fix or its answer,
+the synthesis amended when a critical decision moved. It commits on
+the pull request's branch and reports to the Architect, who answers
+the comment in crit and waits again. The status stays `done`.
+
 The review ends when the human approves, or when every comment is answered
 and addressed. Merging then follows `.agents/project.md`.
 
@@ -147,7 +163,7 @@ and addressed. Merging then follows `.agents/project.md`.
 
 | Who stops | For whom | When |
 |---|---|---|
-| Mason | Architect | After the plan; after the close, with its report; on a blocker it cannot rule on |
+| Mason | Architect | After the plan; after the close, with its report; after fixing the human review's comments; on a blocker it cannot rule on |
 | Typist | Mason | After its part of the plan; on anything the plan does not answer |
 | Architect | Human | On an unclear intent; on a spec that carries decisions the task did not state; on a plan that departs from the human's decisions; on a blocker above what it owns |
 | Architect | Human | At the human review, waiting for the human's reading of the pull request |
@@ -197,9 +213,11 @@ write. Three earn it:
 
 A brief is artifacts and paths, never the conversation: whatever the
 sub-agent needs must already be in the repo. Reviewers are always fresh. A
-Mason is reused within a live thread — the one that wrote the plan
-launches its Typist and runs the review — and a resumed task starts fresh
-from the spec and work documents.
+Mason is kept for its whole task: the one that wrote the plan
+launches its Typist, runs the review, closes, and is woken to fix the
+human review's comments, however long after the close. A fresh Mason
+starts from the spec, work and synthesis documents only when that
+session is lost.
 
 A sub-agent does not inherit the repo's or the runtime's rules, only its
 brief, so every brief below also carries these:
@@ -224,7 +242,8 @@ What the Architect writes when it launches a Mason:
 - the branch to work on, and how to commit (explicit paths, no push);
 - the gate commands;
 - the steps it owns: plan, then stop for the reading; code, through a
-  Typist; `code-review`; close;
+  Typist; `code-review`; close; then, when
+  woken, the human review's comments;
 - the model tiers, resolved to concrete models (`.agents/reference.md`,
   "Model tiers"): the Mason's own, which the Architect **names explicitly
   when it launches the Mason**, and the Typist's, for the Mason to name
@@ -232,6 +251,8 @@ What the Architect writes when it launches a Mason:
   launcher's;
 - what it reports at each stop: the plan in a few lines and its questions;
   at the close, the commits, the criteria met or not, and what is left;
+  after the comments, the commits and how each comment was fixed or
+  answered;
 - two reports, so the first must not be lost: the plan report is written
   in the work document before it is sent.
 
