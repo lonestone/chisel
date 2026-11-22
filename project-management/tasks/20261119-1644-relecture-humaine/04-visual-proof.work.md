@@ -436,7 +436,9 @@ Browser check line of §F · Gate commands says.
    floor is none.
 3. **The proofs to produce** are the line's plus the floor's. A screen
    touched gets captures even when the line left them out. Never produce
-   fewer proofs than the floor.
+   fewer proofs than the floor. Capture only the screens the diff touches,
+   at the widths they need (`--largeurs`): the captures are committed, and
+   every image weighs in the repo's history.
 4. **No floor and no proof asked: no capture.** Take no capture and start
    no browser. Write it in the depth record and stop here.
 
@@ -495,6 +497,10 @@ The command needs these, run from the project's root:
 
 When `CHISEL_PLAYWRIGHT_WS` is set, it names a remote Playwright server,
 and the command uses that server's browser instead of a local one.
+
+The script is TypeScript for Node, not for the project's own build. A
+project whose linter or type checker reaches `.agents/` excludes the
+script, `.agents/skills/visual-proof/scripts/captures.ts`.
 
 ## Looking: a sub-agent, never you
 
