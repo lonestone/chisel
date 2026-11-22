@@ -1,6 +1,6 @@
 # 01 — Human review with crit
 
-**Status:** draft — group A, can start
+**Status:** ready — group A, approved by Pierrick on 22/11 (ffaf5ec)
 **Blocked by:** None — can start immediately
 
 ---

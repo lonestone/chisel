@@ -1,7 +1,7 @@
 # Human review: a step of its own, with crit, visual proof and questions off the chat
 
-**Status:** draft — split in two (21/11): group A can start, group B waits
-on the review tool
+**Status:** draft — split in two (21/11): group A (slices 01-04) approved
+by Pierrick on 22/11 and ready; group B waits on the review tool
 
 > **Two groups, two paces.** Pierrick (21/11): « P-e devrait ont split le
 > chantier en 2 ? Les procédures / regles d'un coté qui ne necessitent pas

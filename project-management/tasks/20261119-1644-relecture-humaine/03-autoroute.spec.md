@@ -1,6 +1,6 @@
 # 03 — One shot
 
-**Status:** draft — group A, can start after 01
+**Status:** ready — group A, approved by Pierrick on 22/11 (ffaf5ec)
 **Blocked by:** 01 — Human review with crit
 
 ---

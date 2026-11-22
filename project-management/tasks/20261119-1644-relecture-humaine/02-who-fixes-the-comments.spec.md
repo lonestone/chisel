@@ -1,6 +1,6 @@
 # 02 — Who fixes the comments
 
-**Status:** draft
+**Status:** ready — group A, approved by Pierrick on 22/11 (ffaf5ec)
 **Blocked by:** 01 — Human review with crit
 
 ---
