@@ -226,18 +226,27 @@ A commit at each green step.
   socle-files.ts, the integrity tests, TESTS.md and the crit story CLI.
 - 2026-11-22: plan revised after the Architect's rulings: frontier tier for
   the synthesis, the spec depth line, crit's source (https://crit.md).
+- 2026-11-22 (Typist): typed the plan. The `init` test failed first (no
+  `.agents/synthesis.md.tpl`), then went green with the template and §J.
+  Deviations, for the Architect: step 8 is a bold-lead paragraph
+  (`**8. Human review — Architect.**`), not a `###` heading, to match steps
+  1–7; it sits after "After the close". chisel-setup also moved its
+  "hand-added `## I`" example to `## K` and "after §I" to "after §J". The
+  `Review depth` line sits directly under `**Status:**` in the spec
+  template. Gates: `deno task check`, `deno task test` (77 passed) and
+  `deno task release-check gate origin/main` green.
 
 ## Implementation Checkboxes
 
 - [x] `init` test for the template and §J (red)
 - [x] Synthesis template, `SOCLE` key, `COPIED_FILES` entry, socle-files, golden tree
 - [x] §J in `project.md.tpl` (test green) and in `.agents/project.md`
-- [ ] workflow.md: step 7, step 8, stops row, "After the close"; mirrored to `.agents/`
-- [ ] Spec template depth line (both copies) and the step 2 sentence
-- [ ] chisel-setup: §J question, A–J wording; mirrored
-- [ ] Intentions `human-review-step` and `review-section`, listed
-- [ ] TESTS.md `init` row
-- [ ] `deno task check`, `deno task test`, intention gate green
+- [x] workflow.md: step 7, step 8, stops row, "After the close"; mirrored to `.agents/`
+- [x] Spec template depth line (both copies) and the step 2 sentence
+- [x] chisel-setup: §J question, A–J wording; mirrored
+- [x] Intentions `human-review-step` and `review-section`, listed
+- [x] TESTS.md `init` row
+- [x] `deno task check`, `deno task test`, intention gate green
 
 ## Notes & Snippets
 
