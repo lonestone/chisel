@@ -3,7 +3,18 @@
 Created by the Mason at the plan step, 2026-11-22. Spec:
 `project-management/tasks/20261119-1644-relecture-humaine/03-autoroute.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Architect, 2026-11-22, with these rulings on the
+Mason's questions: (1a) the lane is « One shot », Pierrick's word; the old
+meaning (work without a task artifact) becomes « quick fix » in
+`reference.md`, `discipline.md`, `methodology.md` and `PHILOSOPHY.md`, both
+copies where one exists; flagged to the human in the PR report. (2a) in one
+shot the Architect rules on a plan that departs from the human's decisions,
+writes it on the `**Plan:**` line, and the synthesis names it. (3a) when the
+Architect hands the final review, it says in so many words that approving
+it is the word for the merge; discipline rule 9 is untouched. (4a) no
+template change. (5) a Typist on the mid tier, not cheap: four mirrored
+files and a table. The four calls made without asking stand.
+Mason handle: aea639ed84342cb55.
 
 ## Program Design
 
