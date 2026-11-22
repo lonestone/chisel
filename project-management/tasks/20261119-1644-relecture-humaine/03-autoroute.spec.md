@@ -61,3 +61,12 @@ map of decision tickets. Parent spec: decisions 2, 14, 18, 19.
 - A spec that carries decisions the task did not state still goes to the
   human today (step 2). In one shot it does not: the one shot overrides
   that stop, on Pierrick's « non » of 21/11.
+- **Architect, 2026-11-22, at the plan reading (rulings in the work
+  document's `**Plan:**` line):** the second note above is superseded. In
+  one shot, a plan that departs from the human's decisions does not go to
+  him: the Architect rules, writes it on the `**Plan:**` line, and the
+  synthesis names it (ruling 2a, on « je n'interviens que pour la review
+  finale »). The merge paragraph's « proposed » is read as settled by
+  Pierrick's go of 22/11 on this spec (ruling 3a): approving the final
+  review is his word for the merge, said in so many words when the review
+  is handed. Flagged to him in the pull request; he may withdraw it there.
