@@ -86,3 +86,13 @@ asks more than the floor shows. Parent spec: decisions 5, 10, 13, 16, 17,
   later changes over, and Chisel owns its copy from then on.
 - The socle ships only shell scripts today, so a Node script under
   `socle/scripts/` is a first.
+- **Architect, 2026-11-22, at the close:** `review-videos` is nowhere in
+  this repo's history and music-downloader has no checkout on this
+  machine. The skill was built from `verification-visuelle` and this spec;
+  the dry run was replaced by the fixture browser test (run for real
+  against a local `playwright-core`) and this slice's own close, which has
+  no screen and took no capture. The music-downloader dry run stays open,
+  for the human.
+- **Archive:** the four slices of group A stay in the task folder until the
+  parent closes with group B; that corrects the slice 01 close ruling,
+  which said « when the last slice of group A closes ».
