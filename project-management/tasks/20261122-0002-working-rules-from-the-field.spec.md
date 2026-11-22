@@ -98,7 +98,8 @@ table and who raised it.
    a branch that is not its own: another session's, a parent pull
    request's branch others build on, or the main branch. The forced push
    runs alone in its call, as pull request #7 says of every git command
-   that can erase. *Where:* the same `discipline.md` rule, and the
+   that can erase. It needs `origin/HEAD` set, which `chisel-setup` does.
+   *Where:* the same `discipline.md` rule, and the
    Branches section, which may forbid it for a project. *Source:*
    Pierrick, 22/11: « Un agent qui rebase sa branche sur main doit force
    push, il en a le droit sur sa branche » (decision `rebase-own-branch`).
@@ -204,7 +205,8 @@ table and who raised it.
   sections; Branches says worktree by default.
 - [ ] **setup-fills-them** — `chisel-setup` explores the commit linter and
   the extra commands, and asks the worktree question of decision
-  `branches-each-project-chooses`.
+  `branches-each-project-chooses`, and sets `origin/HEAD` when it is
+  missing.
 - [ ] **docs-growth-flagged** — the Standards axis of `code-review` flags,
   as a judgement call, an existing doc the diff grows beyond the threshold
   of decision `docs-growth-in-review`, read from §D when a project sets
@@ -278,6 +280,16 @@ maintainer.
   when stacked), the worktree removed by the agent once merged. An
   existing `.worktrees/` folder or a team habit found in step 1 is stated
   as the answer, not asked again.
+
+  At the same step, when `origin/HEAD` is missing (`git symbolic-ref
+  refs/remotes/origin/HEAD` fails), `chisel-setup` runs `git remote
+  set-head origin -a` and says so; the migration intention does the same
+  for an already equipped repo. It writes only a local ref and is
+  harmless. With it, every tool knows the repo's default branch, and a
+  guard that only allows `--force-with-lease` off the default branch can
+  tell which branch that is. *Source:* a prerequisite passed on by the
+  toolkit maintainer, 22/11: the guard of our agent setup refuses the
+  forced push when it cannot resolve the default branch.
 - **rebase-own-branch** — his words: « Un agent qui rebase sa branche sur
   main doit force push, il en a le droit sur sa branche ». It becomes rule
   `an-agent-rebases-only-its-own-branch`, with `--force-with-lease` so a
