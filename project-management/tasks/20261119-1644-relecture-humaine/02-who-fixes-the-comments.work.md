@@ -3,7 +3,14 @@
 Created by the Mason at the plan step, 2026-11-22. Spec:
 `project-management/tasks/20261119-1644-relecture-humaine/02-who-fixes-the-comments.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
+**Plan:** approved by the Architect, 2026-11-22, with these rulings on the
+Mason's questions: (1a) step 4 writes the Mason's handle on the `**Plan:**`
+line; (2a) `code-review` always runs again, fresh reviewers, on the fix's
+diff; (3a) the status stays `done`; (4a) amend the Mason-reuse line of this
+repo's `AGENTS.md` (outside the chisel markers), citing parent decision 11 —
+the G16 entry of `review-360-decisions.md` is left to the human; (5) a
+Typist on the mid tier. The three calls made without asking stand.
+Mason handle: a922d3d1d9042bc18.
 
 ## Program Design
 
