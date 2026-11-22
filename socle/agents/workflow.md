@@ -48,6 +48,8 @@ with `domain-modeling` underneath: new domain terms land in the glossary
 and hard-to-reverse decisions in an ADR, where the glossary and decisions
 section of `.agents/project.md` puts them. Either way the seams are named, and the sizing check is said out loud: the
 task fits one pass, or it is cut into slices with the `slice-task` skill.
+The spec carries a `**Review depth:**` line, `full` or `strategic`, when
+the task departs from the default of §J · Review of `.agents/project.md`.
 The human approves the spec when it carries decisions the task did not
 state; otherwise the Architect moves it to `ready` itself. Commit the spec.
 Status: `draft`, then `ready`.
@@ -84,8 +86,11 @@ the findings in the work document; fix each one or answer it there.
 
 **7. Close — Mason.** Tick the spec's acceptance criteria against
 reality. Promote evergreen material into the living docs declared in
-`.agents/project.md`, the glossary and the ADRs among them. Archive the spec and work documents together. Add the
-dated journal entry. Run the `retro` skill and put its proposals in the
+`.agents/project.md`, the glossary and the ADRs among them. Write the
+synthesis from `.agents/synthesis.md.tpl`, beside the spec and named by
+replacing `.spec.md` with `.synthesis.md`: it is the first reading of the
+human review (step 8), so write it on the frontier tier. Archive the spec,
+work and synthesis documents together. Add the dated journal entry. Run the `retro` skill and put its proposals in the
 report. Stop everything you started — Docker containers, dev servers,
 background processes — each by its own identifier (container name or id,
 PID), and only those: never by pattern (`pkill -f`, `--all`), which stops
@@ -94,9 +99,48 @@ Architect: what landed, which criteria are met, what is left. Status:
 `done`.
 
 **After the close — Architect.** Read the close report and rule on anything
-left. Open the pull request. Merge and publish as the merge and publish
-section of `.agents/project.md` says; by default, ask the human, whose
-explicit word on that very action is the only go.
+left. Open the pull request, and run the human review (step 8) on it. Once
+the review is done, merge and publish as the merge and publish section of
+`.agents/project.md` says; by default, ask the human, whose explicit word
+on that very action is the only go.
+
+**8. Human review — Architect.** The pull request is open and the
+synthesis is committed in it. The human reads in three readings, in this
+order, and may stop after the first.
+
+- **Strategic: the synthesis.** One page at most, written at step 7: what
+  changed and why, the critical decisions, the data schema before and
+  after, the architecture change. The human may stop there with comments,
+  and the review goes no further.
+- **Proofs: what the floor demands.** The proofs the project's floor
+  asks for, as the human reads them.
+- **Reading guide: the crit story.** The Architect writes it with
+  `crit story --guide` and the project's guide, on the PR diff. Its first
+  chapter holds only the synthesis file's hunk, and its prologue says to
+  read that first and that the review may stop there. The code chapters
+  come last.
+
+How far the human goes is the spec's `**Review depth:**` line, or §J ·
+Review of `.agents/project.md` when the spec has none. `strategic` is the
+synthesis plus the proofs the floor demands; `full` goes down to the
+reading guide. The diff stays a floor: `strategic` never skips the proofs.
+
+The base is read from the pull request, never assumed to be `main`:
+`gh pr view <n> --json number,baseRefName`. The story is prepared and
+ingested with `--pr <n> --base-branch <base>`, and the wait is
+`crit --pr <n> --base-branch <base>`, run in the background. Without a
+forge pull request, review the branch diff with `--base-branch <base>`,
+where the base is the branch the work was cut from.
+
+The Architect waits for the human and answers every comment. No question
+goes into crit: questions go to the human, in conversation. An expired
+wait is not a blocker: re-run the same crit command, or `crit --session
+<id>`, and wait again. Only another failure is a blocker. If `crit` is not
+installed, say where to get it (https://crit.md, then `crit install
+<agent>`) and stop for the human.
+
+The review ends when the human approves, or when every comment is answered
+and addressed. Merging then follows `.agents/project.md`.
 
 ## Where the work stops
 
@@ -105,6 +149,7 @@ explicit word on that very action is the only go.
 | Mason | Architect | After the plan; after the close, with its report; on a blocker it cannot rule on |
 | Typist | Mason | After its part of the plan; on anything the plan does not answer |
 | Architect | Human | On an unclear intent; on a spec that carries decisions the task did not state; on a plan that departs from the human's decisions; on a blocker above what it owns |
+| Architect | Human | At the human review, waiting for the human's reading of the pull request |
 | Architect | Human | Before a merge or a publish, unless the project lets the agent do it |
 
 Everything else runs without a stop. A question that is not one of these is

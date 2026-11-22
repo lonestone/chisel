@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Turn `.agents/project.md`'s defaults into this repo's actual glue, pose the
 current dev's personal file, and leave `AGENTS.md` speaking with one voice.
-One pass, sections A through I, each confirmed before the next. Re-running
+One pass, sections A through J, each confirmed before the next. Re-running
 later to revisit a single section is normal — treat the current file as the
 starting recommendation, not as done-forever. On a repo that already had a
 method of its own, a first `init` stages instead of installing, and this skill
@@ -73,7 +73,7 @@ established is *stated* to the user, not asked. Only genuine decisions —
 things the scan cannot determine on its own, or choices with real
 alternatives — get a question.
 
-## Step 2 — Walk sections A through I, one at a time
+## Step 2 — Walk sections A through J, one at a time
 
 For each section, in letter order:
 
@@ -84,7 +84,7 @@ For each section, in letter order:
    `apps/documentation`; living docs = `apps/documentation` for
    boilerplate else `doc/**`; gate commands from `package.json`; glossary/ADRs
    into `apps/documentation` for boilerplate else root `CONTEXT.md` +
-   `docs/adr/`; model tiers unset; merge and publish left to the human).
+   `docs/adr/`; model tiers unset; merge and publish left to the human; review depth `full`).
 3. Wait for the user's answer before moving to the next section. Accepting a
    recommendation in one word ("yes", "ok", "sounds good") is enough to move
    on — do not demand elaboration when the user is happy with the default.
@@ -169,6 +169,21 @@ Write the answer on §I's two lines: *ask the human* for what stays with the
 human, *the agent, once the review is clean and the gates pass* for what is
 handed over.
 
+### §J — ask this, verbatim
+
+> **When you review a pull request, how far down do you go?**
+>
+> 1. **Full** — you read the synthesis, the proofs, then the whole diff
+>    through the reading guide.
+> 2. **Strategic** — you read the synthesis and the proofs, and stop there
+>    unless something calls you further.
+>
+> A task can say otherwise for itself in its spec.
+>
+> Recommended: **1 — full**.
+
+Write the answer on §J's one line, *Default depth*.
+
 ## Step 3 — §E is read-back only, never asked
 
 Section E (Adapters) is written by `chisel init`, not by this questionnaire.
@@ -186,8 +201,8 @@ until the end of the walk. Each write is scoped to exactly one section:
 - Replace everything from immediately after that heading line up to (but not
   including) the next `## ` heading, or end of file if there is none.
 - Leave every byte outside that span untouched: other sections, any content
-  a human added above §A or after §I, custom sections the file doesn't
-  define (e.g. a hand-added `## I · ...`).
+  a human added above §A or after §J, custom sections the file doesn't
+  define (e.g. a hand-added `## K · ...`).
 
 **Never rewrite the whole file.** A full-file rewrite is the one mistake
 that would silently discard user edits living outside the questionnaire's
@@ -267,7 +282,7 @@ that page first, then follow it command by command, watching each output.
 
 This step stands alone. "Reconcile my `AGENTS.md`" runs THIS step and nothing
 else — no questionnaire, no sections, no network. In the walk it comes after
-§I is written and before the summary.
+§J is written and before the summary.
 
 A repo that had an `AGENTS.md` before chisel now has two voices in one file:
 the text it already carried, often describing its own way of working, and the
@@ -379,8 +394,8 @@ project's own — and the step reports that and changes nothing.
 
 ## Step 8 — Closing summary
 
-After §I is written, print a one-screen summary of what got written: one
-line per section, A–I; one line for the personal file; one line for
+After §J is written, print a one-screen summary of what got written: one
+line per section, A–J; one line for the personal file; one line for
 `AGENTS.md`, saying what was deleted, what moved to the reading list and what
 stayed, or that the file already spoke with one voice; and, when §B named a
 tracker still to set up, the one thing still to do. Then suggest the natural next move:

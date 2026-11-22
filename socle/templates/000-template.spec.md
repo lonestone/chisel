@@ -75,6 +75,7 @@ All spec documents MUST follow this structure:
 # <Task name>
 
 **Status:** draft
+**Review depth:** full
 
 ---
 
@@ -168,6 +169,13 @@ the `**Status:**` line:
 - **The thread doing a step writes the status it leaves.**
 - **When a tracker holds the status**, the line says so —
   `**Status:** tracked as <id>` — and the status lives in the tracker only.
+
+## Review depth
+
+The `**Review depth:**` line is `full` or `strategic`. It says how far down
+the human goes at the human review (step 8 of
+[workflow.md](/.agents/workflow.md)). Omit it and the review section of
+`.agents/project.md` gives the default.
 
 ## When Creating New Tasks
 
