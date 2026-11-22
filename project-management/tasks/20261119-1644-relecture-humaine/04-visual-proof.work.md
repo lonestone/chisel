@@ -1181,3 +1181,11 @@ order; each waits for its owner's yes.
   recent Depth lines, the greedy reflow): answered. The first two serve the
   spec's « an agent that always asks more than the floor shows »; the
   reflow is noise the Typist recorded in the worklog.
+
+**Human review (PR #9)**
+
+- **« Est-ce que tous les skills ont utilisé /writing-for-agents ? »**, on
+  `visual-proof/SKILL.md`. No: the slice wrote it without that skill.
+  Fixed in 17932f7, the task's Mason, 2026-11-22. The skill, the retro
+  depth check and chisel-setup's proof-command question went through
+  `writing-for-agents`, with no change of meaning; gates green.
