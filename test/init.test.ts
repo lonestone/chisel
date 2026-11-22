@@ -302,5 +302,18 @@ Deno.test("init: the review section and the synthesis template are installed", a
       "full",
       "§J declares a default review depth",
     );
+    for (
+      const label of [
+        "E2E command",
+        "Recording command",
+        "Screenshot command",
+        "Proofs folder",
+      ]
+    ) {
+      assert(
+        glueItem(glueSection(glue, "J"), label) !== undefined,
+        `§J declares the ${label} line`,
+      );
+    }
   });
 });

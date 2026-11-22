@@ -80,11 +80,12 @@ For each section, in letter order:
 1. State any relevant facts from Step 1's scan.
 2. Give your **recommended** value — prefilled from the scan plus the
    questionnaire defaults (root `/project-management/`; the task files as
-   the tracker; boilerplate reading list into
-   `apps/documentation`; living docs = `apps/documentation` for
-   boilerplate else `doc/**`; gate commands from `package.json`; glossary/ADRs
-   into `apps/documentation` for boilerplate else root `CONTEXT.md` +
-   `docs/adr/`; model tiers unset; merge and publish left to the human; review depth `full`).
+   the tracker; boilerplate reading list into `apps/documentation`; living
+   docs = `apps/documentation` for boilerplate else `doc/**`; gate commands
+   from `package.json`; glossary/ADRs into `apps/documentation` for
+   boilerplate else root `CONTEXT.md` + `docs/adr/`; model tiers unset;
+   merge and publish left to the human; review depth `full`; proof commands
+   from `package.json`, else none).
 3. Wait for the user's answer before moving to the next section. Accepting a
    recommendation in one word ("yes", "ok", "sounds good") is enough to move
    on — do not demand elaboration when the user is happy with the default.
@@ -182,7 +183,31 @@ handed over.
 >
 > Recommended: **1 — full**.
 
-Write the answer on §J's one line, *Default depth*.
+Write the answer on §J's line *Default depth*. Then ask the second
+question.
+
+### §J — then ask this, verbatim
+
+> **Which commands prove a screen in this project? Each one is optional.**
+>
+> 1. **E2E**: the command that runs the end-to-end tests (example:
+>    `npm run test:e2e`).
+> 2. **Recording**: the command that runs them and keeps a video
+>    (example: `npx playwright test --video on`).
+> 3. **Screenshots**: the command that captures pages and compares them
+>    before → after.
+>
+> Answer « none » for any the project lacks: the task has no proof of that
+> kind, and the review says so.
+>
+> Recommended: the e2e and recording commands found in `package.json`, else
+> none; for screenshots, the capture command chisel ships,
+> `node .agents/skills/visual-proof/scripts/captures.ts`, when Playwright
+> is among the project's dependencies, else none.
+
+Write each answer on its §J line: *E2E command*, *Recording command*,
+*Screenshot command*. Leave *Proofs folder* as the reference writes it,
+unless the human names another folder.
 
 ## Step 3 — §E is read-back only, never asked
 

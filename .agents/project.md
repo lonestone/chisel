@@ -160,6 +160,14 @@ without this section means the default. -->
 
 <!-- How far down the human goes at the human review: `full` or
 `strategic`, as step 8 of `.agents/workflow.md` defines them. A spec's own
-`**Review depth:**` line wins over this default. -->
+`**Review depth:**` line wins over this default. The commands prove a
+screen, and each is optional: a command left at none means no proof of
+that kind, and the review says so. They run against the app started as
+§F's Browser check says. The proofs go in the folder named here, committed
+with the work. The visual-proof skill reads this section. -->
 
 - **Default depth:** full
+- **E2E command:** _(none — example: `npm run test:e2e`)_
+- **Recording command:** _(none — example: `npx playwright test --video on`)_
+- **Screenshot command:** _(none — example: `node .agents/skills/visual-proof/scripts/captures.ts`)_
+- **Proofs folder:** beside the spec, named by replacing `.spec.md` with `.proofs/`
