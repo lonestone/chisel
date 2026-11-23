@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.0](https://github.com/lonestone/chisel/compare/v0.4.0...v0.5.0) (2026-11-23)
+
+
+### Added
+
+* **socle:** human review, who fixes the comments, one shot, visual proof ([#9](https://github.com/lonestone/chisel/issues/9)) ([d5a89ad](https://github.com/lonestone/chisel/commit/d5a89adb11d3272747562c5f1d76d1c8372866c3))
+* **socle:** sub-agent briefs carry the runtime rules ([#7](https://github.com/lonestone/chisel/issues/7)) ([e5e1d0d](https://github.com/lonestone/chisel/commit/e5e1d0d7934a8843e4bc15ca166eb4c512df4f35))
+* **socle:** the launcher names the resolved model of a Mason or a Typist ([#8](https://github.com/lonestone/chisel/issues/8)) ([cf5ce5f](https://github.com/lonestone/chisel/commit/cf5ce5f7a1f81d4f6decf37233164673c118fbc0))
+
 ## [0.4.0](https://github.com/lonestone/chisel/compare/v0.3.0...v0.4.0) (2026-11-03)
 
 
