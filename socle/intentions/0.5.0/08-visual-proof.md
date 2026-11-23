@@ -1,5 +1,5 @@
 ---
-id: unreleased/visual-proof
+id: 0.5.0/visual-proof
 classification: informational
 ---
 

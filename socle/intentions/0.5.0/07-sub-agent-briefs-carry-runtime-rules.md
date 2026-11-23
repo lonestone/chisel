@@ -1,5 +1,5 @@
 ---
-id: unreleased/sub-agent-briefs-carry-runtime-rules
+id: 0.5.0/sub-agent-briefs-carry-runtime-rules
 classification: informational
 ---
 

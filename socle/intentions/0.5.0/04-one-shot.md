@@ -1,5 +1,5 @@
 ---
-id: unreleased/one-shot
+id: 0.5.0/one-shot
 classification: informational
 ---
 
