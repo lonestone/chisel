@@ -179,6 +179,11 @@ What the Architect writes when it launches a Mason:
 - the gate commands;
 - the steps it owns: plan, then stop for the reading; code, through a
   Typist; `code-review`; close;
+- the model tiers, resolved to concrete models (`.agents/reference.md`,
+  "Model tiers"): the Mason's own, which the Architect **names explicitly
+  when it launches the Mason**, and the Typist's, for the Mason to name
+  at launch: a sub-agent launched without a model inherits its
+  launcher's;
 - what it reports at each stop: the plan in a few lines and its questions;
   at the close, the commits, the criteria met or not, and what is left;
 - two reports, so the first must not be lost: the plan report is written
@@ -190,7 +195,10 @@ What the Mason writes when it launches a Typist:
 
 - the approved work document's path, and the part of the plan to type;
 - its tier: *cheap* when the plan is mechanical, *mid* otherwise
-  (`.agents/reference.md`, "Model tiers", which also resolves the model);
+  (`.agents/reference.md`, "Model tiers", which also resolves the model).
+  The launcher **names that model explicitly when it launches the
+  Typist**: a sub-agent launched without one inherits its launcher's, and
+  the tier is lost;
 - the branch, the gate commands, the commit rule;
 - type the plan and decide nothing: anything the plan does not answer is
   reported, not guessed;

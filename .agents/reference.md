@@ -65,5 +65,9 @@ that answers for a tier wins it:
    tool offers, *mid* its standard everyday model, *cheap* its fastest and
    least expensive one.
 
+Resolving is not enough: whoever launches a sub-agent **names the resolved
+model explicitly at launch**. A sub-agent launched without one inherits its
+launcher's model, and the tier is lost.
+
 A dev with no `user.md` is never blocked: resolution falls through to the
 next level, which every tool can satisfy. Nothing may require that file.
