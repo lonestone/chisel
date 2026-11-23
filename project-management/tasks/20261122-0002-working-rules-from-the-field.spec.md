@@ -105,13 +105,22 @@ table and who raised it.
    push, il en a le droit sur sa branche » (decision `rebase-own-branch`).
    It reverses the table's line `rebase-demande-push-force-interdit`,
    09/11.
-7. **the-commit-rule-is-in-the-glue** — `project.md` carries the repo's
-   commit rule: the format, the accepted scopes, the scope for the task
-   files, the body's line length. `chisel-setup` fills it from the repo's
-   commit linter; the briefs point to it instead of saying "the commit rule"
-   with no place to read it. *Where:* a new `project.md` section, Commits;
-   `chisel-setup`, exploration and writes; the Mason and Typist briefs.
-   *Source:* Olympe, 17/11, a spec commit refused for its scope.
+7. **the-commit-rule-is-in-the-glue** — the repo's commit rule (the
+   format, the accepted scopes, the scope for the task files, the body's
+   line length) is written in the repo's `CONTRIBUTING.md`, where a human
+   contributor looks too. When the repo has no `CONTRIBUTING.md`,
+   `chisel-setup` writes one, with a single section, Commits, filled from
+   the repo's commit linter or, without one, from what its history shows;
+   when it has one without a commit rule, it adds that section; the
+   migration intention does the same for an equipped repo. The file is
+   then the repo's own: `update` never touches it. `project.md` only
+   points to it, and the briefs read the rule there instead of saying "the
+   commit rule" with no place to read it. *Where:* `CONTRIBUTING.md`, from a
+   new template `socle/templates/CONTRIBUTING.md.tpl`; a new `project.md`
+   section, Commits, one pointer line; `chisel-setup`, exploration and
+   writes; the Mason and Typist briefs. *Source:* Olympe, 17/11, a spec
+   commit refused for its scope; Pierrick, 23/11, in review: « Je préfère
+   un CONTRIBUTING.md écrit par Chisel si il n'y en a pas ».
 8. **the-commands-are-in-the-glue** — `project.md` names the commands a
    sub-agent needs beyond the gates: regenerate a generated client, create a
    migration, start and stop the dev stack. `chisel-setup` looks for them as
@@ -149,13 +158,19 @@ table and who raised it.
     "Blockers and questions" and the close step of `workflow.md`. *Source:*
     raised by Apollon for Pierrick, 11/11: on music-downloader #33 a
     deferral stayed in the spec's Notes and was archived with the task.
-14. **the-retro-is-written-down** — the retro writes its proposals in the
-    spec's Retrospective, archived with the task, not only in the close
-    report. A proposal that targets chisel's socle (`.agents/`, its skills)
-    names chisel's maintainers as its owner: `update` overwrites a local
-    edit there. *Where:* `retro`, steps 4 and 5; the close step of
-    `workflow.md`. *Source:* Pierrick, 18/11: « si on ne les utilise pas on
-    s'en sortira pas ».
+14. **the-retro-is-written-down** — the retro writes its proposals in a
+    third document beside the spec and the work document,
+    `<time-id>-<intention>.retro.md`, not only in the close report; the
+    close archives the three together. A slice's retro sits beside the
+    slice it closes. The spec template loses its Retrospective section. A
+    proposal that targets chisel's socle (`.agents/`, its skills) names
+    chisel's maintainers as its owner: `update` overwrites a local edit
+    there. *Where:* `retro`, steps 4 and 5; the close step of
+    `workflow.md`; `socle/templates/000-template.spec.md` (the section and
+    its two mentions in the zone tables); `reference.md`, the Task and Spec
+    document entries and a new Retro document entry. *Source:* Pierrick,
+    18/11: « si on ne les utilise pas on s'en sortira pas »; 23/11, in
+    review, on where it goes: « a coté du spec et work ? ».
 15. **skills-go-through-the-writing-guide** — the agent that writes or
     edits a skill goes through the skill-writing guide chisel ships before
     its commit; the Standards axis of `code-review` checks that a skill
@@ -202,9 +217,11 @@ table and who raised it.
   byte-identical to its `.agents/` copy.
 - [ ] **glue-sections** — `socle/agents/project.md.tpl` and this repo's
   `.agents/project.md` have the Branches, Commits and Other commands
-  sections; Branches says worktree by default.
+  sections; Branches says worktree by default; Commits points to
+  `CONTRIBUTING.md`.
 - [ ] **setup-fills-them** — `chisel-setup` explores the commit linter and
-  the extra commands, and asks the worktree question of decision
+  the extra commands, writes the commit rule into `CONTRIBUTING.md` (the
+  whole file when the repo has none), and asks the worktree question of decision
   `branches-each-project-chooses`, and sets `origin/HEAD` when it is
   missing.
 - [ ] **docs-growth-flagged** — the Standards axis of `code-review` flags,
@@ -212,7 +229,9 @@ table and who raised it.
   of decision `docs-growth-in-review`, read from §D when a project sets
   one.
 - [ ] **close-checks** — the close step of `workflow.md` checks the orphan
-  "later" and writes the retro into the spec.
+  "later", writes the retro document beside the spec and the work
+  document, and archives the three together; the spec template has no
+  Retrospective section left.
 - [ ] **no-harness-word** — no changed socle file names the Harness, crit's
   script, a secondmate, a machine of ours or one of our projects.
 - [ ] **forks-recorded** — each edit to a vendored skill (`retro`,
@@ -249,7 +268,9 @@ flowchart LR
   S[chisel-setup] -->|fills on install| P
   I[migration intention] -->|fills on update| P
   C[code-review · Standards<br/>docs growth] -->|reads threshold| P
-  R[retro skill] -->|writes into| SP[spec · Retrospective]
+  P -->|Commits points to| CO[CONTRIBUTING.md<br/>the commit rule]
+  S -->|writes when missing| CO
+  R[retro skill] -->|writes| RD[retro document<br/>beside spec and work]
 ```
 
 ---
@@ -316,6 +337,11 @@ maintainer.
 - The new `project.md` sections take the letters after §J, which
   `relecture-humaine` reserves for Review: K · Branches, L · Commits,
   M · Other commands, unless an earlier merge takes a letter first.
+- The commit rule lives once, in `CONTRIBUTING.md`; §L · Commits is one
+  line that names that file and its section. A repo whose commit rule
+  lives elsewhere (a docs page) says so in that line, and `chisel-setup`
+  writes no `CONTRIBUTING.md` then. This repo's own `CONTRIBUTING.md`
+  already has the section.
 - The end-to-end test command lives once: in §J of `relecture-humaine` when
   it lands, which "Other commands" then points to; in "Other commands"
   until then.
@@ -349,8 +375,8 @@ order, not separate pull requests: the task applies its own rule
 2. **The glue: branches, commits, commands** (blocked by: none) —
    rules `a-branch-per-task`,
    `an-agent-rebases-only-its-own-branch`, `the-commit-rule-is-in-the-glue`,
-   `the-commands-are-in-the-glue`; the three sections, `chisel-setup`, the
-   migration intention.
+   `the-commands-are-in-the-glue`; the three sections, the
+   `CONTRIBUTING.md` template, `chisel-setup`, the migration intention.
 3. **The workflow steps** (blocked by: 2, and pull requests #7, #8 and
    `lead-ux` merged, which edit the same paragraphs of `workflow.md`) —
    rules `the-typist-sees-red-first`, `small-feedback-is-one-pass`,
@@ -358,7 +384,7 @@ order, not separate pull requests: the task applies its own rule
    `a-deferral-has-a-home`, `skills-go-through-the-writing-guide` (with
    its `code-review` criterion), and the close checks.
 4. **The retro written down** (blocked by: none) — rule
-   `the-retro-is-written-down`.
+   `the-retro-is-written-down`, with the spec template and `reference.md`.
 
 Chapters 1, 2 and 4 can be typed before #7, #8 and `lead-ux` merge;
 chapter 3 waits for them, and the pull request opens once it is done.
@@ -408,4 +434,5 @@ chapter 3 waits for them, and the pull request opens once it is done.
 
 ## Retrospective
 
-_At the close._
+_At the close, in `20261122-0002-working-rules-from-the-field.retro.md`
+beside this spec, as rule `the-retro-is-written-down` asks._
