@@ -66,6 +66,7 @@ always asks for more than the diff needs.
   update.
 - `.agents/workflow.md` — **copy**, by the update.
 - `.agents/skills/retro/SKILL.md` — **copy**, by the update.
+- `project-management/000-template.work.md` — **copy**, by the update.
 
 ## Validation
 
