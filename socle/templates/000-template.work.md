@@ -33,6 +33,11 @@ own — only its slices do.
 the Mason, then the approval goes on the `**Plan:**` line. Plan approval
 is that line, not a status.
 
+**The close records the depth.** At the close the Mason writes the
+`**Depth:**` line: the depth the spec chose, the floor the diff computed
+with the `visual-proof` skill, and why the task went above the floor when
+it did. The `retro` skill compares the two across tasks.
+
 **The review writes into it.** `code-review` reports its findings, and the
 Mason records each one in the Diff-Review Findings section with its fix
 or its answer.
@@ -49,6 +54,11 @@ Created by the Mason at the plan step, <date>. Spec:
 
 **Plan:** waiting for the Architect's reading.
 <!-- Once approved: approved by <who>, <date>[, with the corrections below]. -->
+
+**Depth:** written at the close.
+<!-- chosen <the spec's Review depth line, or §J's default>; floor
+<captures, or none>, from <the screens the diff touches, or "no screen
+touched">; at the floor, or above it: <what was added>, because <why>. -->
 
 ## Program Design
 
