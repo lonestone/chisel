@@ -1,5 +1,5 @@
 ---
-id: unreleased/review-proofs
+id: 0.5.0/review-proofs
 classification: migration
 ---
 

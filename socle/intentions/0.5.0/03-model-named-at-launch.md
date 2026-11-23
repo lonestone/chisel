@@ -1,5 +1,5 @@
 ---
-id: unreleased/model-named-at-launch
+id: 0.5.0/model-named-at-launch
 classification: informational
 ---
 
