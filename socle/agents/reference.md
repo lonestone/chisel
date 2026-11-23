@@ -20,7 +20,8 @@ for every session are `.agents/discipline.md`.
 | **Status** | The task's single state, one of the seven values of "Statuses" in `.agents/workflow.md`. |
 | **Frontier** | The set of slices whose blockers are all done — what can be worked on right now; a task on it has the status `ready`. |
 | **Expand–contract** | The sequencing for wide mechanical refactors (rename a column, retype a shared symbol): add the new form beside the old → migrate call sites in batches → delete the old form. The exception to vertical slicing. |
-| **One-shot** | Work done without a task artifact. The discipline still applies; only the file bookkeeping is skipped. |
+| **Quick fix** | Work done without a task artifact. The discipline still applies; only the file bookkeeping is skipped. |
+| **One shot** | The lane where a task's only possible human stop is the final review, and that one only when its spec's `**One shot:**` line keeps it ("The one shot" in `.agents/workflow.md`). The other lane is the full lane. |
 
 The roles — Architect, Mason, Typist, reviewers — are defined in "The
 roles" of `.agents/workflow.md`.
@@ -36,9 +37,11 @@ decision tickets and resolves them one at a time).
 A 🧑 zone belongs to whoever **approved** it. The human approves a spec that
 carries decisions the task did not state; the Architect approves one written
 from a clear task, and then the zones carry the task's own decisions, which
-are the human's. The work document has no zone: it belongs to the Mason
-that wrote it. A 🧑 zone is never overridden silently — a conflict with one
-is surfaced, never edited sideways.
+are the human's. In one shot the Architect approves the spec even when it
+carries decisions of its own, and those decisions are then its own. The
+work document has no zone: it belongs to the Mason that wrote it. A 🧑 zone
+is never overridden silently — a conflict with one is surfaced, never
+edited sideways.
 
 ## Model tiers
 

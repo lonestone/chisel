@@ -5,6 +5,149 @@ ships.
 
 ---
 
+## 56. 2026-11-22 — A touched screen has a proof
+
+Slice 04 of the human-review task gives the review its second reading.
+Two pieces ship in the socle:
+
+- the capture command, `.agents/skills/visual-proof/scripts/captures.ts`,
+  a copy of the Harness's `captures.ts` at a05b1092 with Olympe's
+  agreement and her three changes. It is the socle's first Node file;
+- the `visual-proof` skill, the method of `verification-visuelle` made
+  generic: the text report first, never a capture read in the agent's own
+  thread, a fresh sub-agent when an image must be looked at.
+
+§J · Review declares the E2E, Recording and Screenshot commands, each
+optional, and a committed proofs folder beside the spec; `chisel-setup`
+asks for them. The spec's `**Review depth:**` line can ask for proofs, the
+diff adds a floor (a screen touched means captures), the work document's
+`**Depth:**` line records both at the close, and `retro` compares them.
+The intentions `unreleased/review-proofs` (migration) and
+`unreleased/visual-proof` tell updated repos.
+
+The Mason wrote the plan and a Sonnet Typist typed it; the browser test
+ran for real against a local `playwright-core`. The fresh reviewers found
+private names and topics left in the copied script's comments, which the
+Mason removed as a retouch, with a test that now refuses them. This repo
+has no front, so the slice's own close was the no-screen dry run: no
+capture. The dry run on music-downloader is left open: there is no
+checkout here, and `review-videos` is in no history.
+
+---
+
+## 55. 2026-11-22 — A task can run in one shot
+
+Slice 03 of the human-review task gives a task a second lane. On
+Pierrick's « En oneshot je n'interviens que pour la review finale. Et
+encore. », `workflow.md` has a section called "The one shot". In it:
+
+- the Architect takes the one shot when it writes the spec, if it judges
+  the task small or the human asks;
+- it writes a `**One shot:**` line in the spec, with the reason and
+  whether the final review is kept or skipped, and the pull request opens
+  with that line;
+- the human's reading of the spec and the ruling on a plan that departs
+  from the human's decisions are removed, and the Architect rules on both;
+- the code review, the gates, the close, the synthesis and the pull request
+  stay.
+
+The stops table gains an "In one shot" column. When the final review is
+kept, the Architect says in so many words that approving it is the word for
+the merge. Step 2 names `wayfinder` for a spec interview that tangles. The
+old "one-shot", work done without a task artifact, is now "quick fix" in
+`reference.md`, `discipline.md`, `methodology.md` and `PHILOSOPHY.md`. The
+informational intention `unreleased/one-shot` tells updated repos.
+
+The Mason wrote the exact text and a Sonnet Typist typed it, with the gates
+green. The Typist replaced discipline rule 3 with the plan's text, which had
+missed the case of a spec with no new decision; the fresh reviewers caught
+it. They also found the glossary defining a task where the workflow meant a
+lane, and the roles paragraph and step 4 missing the one-shot exception. The
+Mason fixed ten findings as retouches and answered six. One is left to the
+Architect: the spec's Note says the one shot removes nothing at the plan,
+and ruling 2a removes a stop there.
+
+---
+
+## 54. 2026-11-22 — The Mason who did the work fixes the review's comments
+
+Slice 02 of the human-review task answers who fixes the human review's
+comments. On Pierrick's « toujours le maçon qui a bossé ! Toujours. », step
+8 of the workflow now has a paragraph called "Who fixes the comments". It
+says:
+
+- the task's Mason is woken in its own session, however long ago it
+  closed;
+- a fresh Mason starts from the archived documents only when that session
+  is lost;
+- a comment that changes a spec decision goes into the spec first, written
+  by the Architect.
+
+The fix follows the discipline of a review finding. It goes through a
+Typist unless it is a retouch, runs the gates and a fresh `code-review` on
+its diff, and records each comment in the work document. The status stays
+`done`.
+
+The rest of the workflow was brought into line. Step 7's "stop everything"
+no longer ends the Mason's session. The Sub-agents section keeps a Mason
+for its whole task, which replaces "a resumed task starts fresh". Step 4
+writes, on the `**Plan:**` line, the id the Mason's harness resumes it by,
+so the Architect can find it after a compaction. This repo's `AGENTS.md`
+widens ruling G16 to match. The informational intention
+`unreleased/mason-fixes-the-comments` tells updated repos.
+
+The Mason wrote the exact text and a Sonnet Typist typed it, with the gates
+green. Two fresh reviewers then found the following, all fixed by the Mason
+as retouches:
+
+- a decision cited by its number;
+- a bare step number;
+- lines patched in place rather than reflowed;
+- the lost-session rule written twice;
+- "handle", which is not a glossary term.
+
+---
+
+## 53. 2026-11-22 — The workflow gains a human review, opened on a synthesis
+
+The workflow used to end when the pull request opened, and the human then
+read the diff with nothing to guide them. Slice 01 of the human-review task
+adds step 8, *Human review*, which the Architect runs after the close. It
+puts three readings in order:
+
+- the **synthesis**, one article page that the Mason writes at the close on
+  the frontier tier, where the human may stop with comments;
+- the **proofs**, a place kept for the slice that fills it;
+- the **reading guide**, the crit story on the pull request's diff, which
+  opens on the synthesis.
+
+A review depth, `full` or `strategic`, sets how far down the human goes.
+Its default is in a new glue section, §J · Review, and a spec can change it
+with a `**Review depth:**` line. Two rules come from the Harness:
+
+- the diff's base is read from the pull request, never assumed to be `main`;
+- an expired wait resumes on the same review, so it is not a blocker.
+
+The synthesis template ships as `.agents/synthesis.md.tpl`, so every
+update refreshes it.
+
+Two intentions cover the change. `unreleased/human-review-step` is
+informational. `unreleased/review-section` is a migration that adds §J to
+existing glues. The setup skill now asks the §J question.
+
+A Sonnet Typist typed the approved plan, and the gates were green. Two
+fresh reviewers then found the following, and the Mason fixed each as a
+retouch:
+
+- this repo's own `.agents/` lacked the template, so step 7 pointed at
+  nothing;
+- the spec template pinned `full`, which would override a `strategic`
+  project;
+- the meaning of the depth was restated in several files;
+- the `init` test pinned the template's text.
+
+---
+
 ## 52. 2026-11-19 — Sub-agent briefs carry the runtime rules
 
 Sub-agents get only their brief, so the rules of the Harness that runs

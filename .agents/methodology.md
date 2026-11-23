@@ -71,8 +71,8 @@ the answer demands them.
   folder with one slice that duplicates the spec document.
 - What slicing adds is **decomposition**: blocking edges, the frontier, the
   order. That only has value when there are several pieces.
-- Real-world distribution (dex): ~40% of work is one-shot, medium work gets a
-  single spec/work pair, only large work gets the full breakdown.
+- Real-world distribution (dex): ~40% of work is a quick fix, medium work
+  gets a single spec/work pair, only large work gets the full breakdown.
 
 What IS unconditional: the check itself, stated out loud — "this fits in one
 pass" or "this needs slicing, here is the breakdown". And **vertical-slice
