@@ -49,17 +49,23 @@ underneath: new domain terms land in the glossary and hard-to-reverse decisions
 in an ADR, where the glossary and decisions section of `.agents/project.md` puts
 them. When the interview tangles — each answer opens more questions than it
 settles — switch to the `wayfinder` skill: a map of decision tickets, resolved
-one at a time, whose destination is the spec. Either way the seams are named,
-and the sizing check is said out loud: the task fits one pass, or it is cut into
-slices with the `slice-task` skill. The spec carries a `**Review depth:**` line
-when the task departs from the default of §J · Review of `.agents/project.md`.
-The line gives `full` or `strategic`, then each proof the Architect asks for
-after a `+` (`captures`, `recording`, `e2e`), as in `strategic + captures`. The
-spec also carries a `**One shot:**` line when the Architect takes the one shot
-("The one shot", below). The human approves the spec when it carries decisions
-the task did not state, unless the task runs in one shot. In every other case
-the Architect moves it to `ready` itself. Commit the spec. Status: `draft`, then
-`ready`.
+one at a time, whose destination is the spec. When the task touches what a
+person sees or does, the analysis starts from usage — the journey, the screens,
+the interface — before the technique. The Architect names the size in one line,
+and the human can overrule it: a new screen, a new flow or a redesign runs the
+full rounds of the `lead-ux` skill before the spec leaves `draft`; a small
+request on an existing screen runs one quick round of it; a light change — a
+colour, a label, a value — writes its journey in the spec in one line and goes
+on. Either way the seams are named, and the sizing check is said out loud: the
+task fits one pass, or it is cut into slices with the `slice-task` skill. The
+spec carries a `**Review depth:**` line when the task departs from the default
+of §J · Review of `.agents/project.md`. The line gives `full` or `strategic`,
+then each proof the Architect asks for after a `+` (`captures`, `recording`,
+`e2e`), as in `strategic + captures`. The spec also carries a `**One shot:**`
+line when the Architect takes the one shot ("The one shot", below). The human
+approves the spec when it carries decisions the task did not state, unless the
+task runs in one shot. In every other case the Architect moves it to `ready`
+itself. Commit the spec. Status: `draft`, then `ready`.
 
 **3. Plan — Mason.** The Architect launches a Mason with the brief below. The
 Mason reads the spec document and what it links to, creates the work document
@@ -217,6 +223,7 @@ the critical decisions.
 | Mason | Architect | After the plan; after the close, with its report; after fixing the human review's comments; on a blocker it cannot rule on | Kept; no comments to fix when the final review is skipped |
 | Typist | Mason | After its part of the plan; on anything the plan does not answer | Kept |
 | Architect | Human | On an unclear intent | Kept: the intent is settled before the lane is chosen |
+| Architect | Human | After each round of `lead-ux`, with its directions page | Removed: the preferred direction counts as chosen, and the page stays for the human to read |
 | Architect | Human | On a spec that carries decisions the task did not state | Removed: the Architect approves the spec |
 | Architect | Human | On a plan that departs from the human's decisions | Removed: the Architect rules, and the synthesis says so |
 | Architect | Human | On a blocker above what it owns | Kept |
@@ -266,7 +273,10 @@ write. Three earn it:
 - **The reviewers** bring fresh eyes to the diff.
 
 A brief is artifacts and paths, never the conversation: whatever the
-sub-agent needs must already be in the repo. Reviewers are always fresh. A
+sub-agent needs must already be in the repo.
+A brief for an analysis states the usage first — who does what, on which
+screen — then the code that serves it; a brief for a screen that went through
+`lead-ux` cites its chosen direction by path. Reviewers are always fresh. A
 Mason is kept for its whole task: the one that wrote the plan launches its
 Typist, runs the review, closes, and fixes the human review's comments.
 "Who fixes the comments", in step 8, says when a fresh one replaces it.

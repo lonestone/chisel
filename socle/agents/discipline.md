@@ -88,6 +88,7 @@ Not everything starts as a feature idea:
 |---|---|---|
 | Something's broken (hard bug, flake, regression) | `diagnosing-bugs` — build a repeatable failing check first, THEN theorize; regression test before the fix | the fix lands as normal work |
 | A design question that talking cannot settle | `prototype` — throwaway code, one command to run; keep the answer, and keep the code on a throwaway branch out of main with a pointer to that branch | back into the spec |
+| A task that touches what a person sees or does: a new screen, a new flow, a redesign, a small request on a screen | `lead-ux` — usage before technique, in short rounds before any code: the ask restated, real data and a survey, directions side by side with one preferred, a fresh eye on the captures, the feedback verbatim | the chosen direction, cited by path in the spec |
 | Reading legwork (docs, API facts) | `research` — background agent, cited markdown file | feeds the spec |
 | So big and foggy it cannot even be sliced, or a spec interview that tangles | `wayfinder` — map the open DECISIONS first, resolve them one by one | then the spec document and its slices |
 | A spare moment to make the codebase nicer to work in | `improve-codebase-architecture` | produces an idea → normal flow |

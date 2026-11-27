@@ -70,6 +70,7 @@ export const SOCLE_FILES: readonly string[] = [
   "intentions/0.5.0/06-review-section.md",
   "intentions/0.5.0/07-sub-agent-briefs-carry-runtime-rules.md",
   "intentions/0.5.0/08-visual-proof.md",
+  "intentions/unreleased/lead-ux-before-screens.md",
   "intentions/TEMPLATE.md",
   "intentions/baseline.md",
   "scripts/sync-upstream.sh",
