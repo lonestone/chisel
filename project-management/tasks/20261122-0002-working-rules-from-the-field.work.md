@@ -546,6 +546,14 @@ The plan, the commit order and the questions are in this document. Questions:
   `## Commands` after the block (six commands, no E2E pointer line: §J has
   none). Intention `glue-commands` added and listed. Gates: check 35 files,
   test 82 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Typist. Item 14 the-retro-is-written-down (no render test, per the plan):
+  retro SKILL steps 4 and 5 and `x-upstream.changes`; workflow step 7 only (retro
+  writes `.retro.md`, archive moves spec, work, synthesis and retro); the spec
+  template loses `## Retrospective` and the zone-table and documents-table mentions,
+  the archive rows name the retro, copied to `project-management/`; reference.md
+  Task, Spec document and new Retro document entries; `.agents` copies synced.
+  Intention `retro-is-written-down` (informational) added and listed. Gates: check
+  35 files, test 82 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
@@ -560,7 +568,7 @@ The plan, the commit order and the questions are in this document. Questions:
 - [x] 6 an-agent-rebases-only-its-own-branch
 - [x] 7 the-commit-rule-is-in-the-glue
 - [x] 8 the-commands-are-in-agents-md
-- [ ] 14 the-retro-is-written-down
+- [x] 14 the-retro-is-written-down
 - [ ] Merge `origin/main` after `lead-ux` merges
 - [ ] 9 the-typist-sees-red-first
 - [ ] 10 small-feedback-is-one-pass

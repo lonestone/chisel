@@ -103,9 +103,10 @@ rule "Docs present and point" of `.agents/discipline.md` says: what and why,
 not a text version of the code. Write
 the synthesis from `.agents/synthesis.md.tpl`, beside the spec and named by
 replacing `.spec.md` with `.synthesis.md`: it is the first reading of the human
-review (step 8), so write it on the frontier tier. Archive the spec, work and
-synthesis documents together. Add the dated journal entry. Run the `retro` skill
-and put its proposals in the report. Stop everything you started — Docker
+review (step 8), so write it on the frontier tier. Run the `retro` skill: it
+writes the retro document beside the spec, named by replacing `.spec.md` with
+`.retro.md`, and its proposals go in the report too. Archive the spec, work,
+synthesis and retro documents together. Add the dated journal entry. Stop everything you started — Docker
 containers, dev servers, background processes — each by its own identifier
 (container name or id, PID), and only those: never by pattern (`pkill -f`,
 `--all`), which stops the work of others. This does not end the Mason itself:

@@ -24,7 +24,7 @@ copying it. A spec with no work document beside it has never been planned.
 | Zone | Who reads it | What belongs there |
 |---|---|---|
 | 🧑 **REVIEW CAREFULLY** | The zone's owner, before any code | Context, Scope, named Acceptance Criteria, Seams, Architecture / system design |
-| 🧑 **REVIEW IF RELEVANT** | The zone's owner, for medium/large tasks | Implementation Decisions, Testing Strategy, Slices & Dependencies, Deliverables, References, Notes, Retrospective |
+| 🧑 **REVIEW IF RELEVANT** | The zone's owner, for medium/large tasks | Implementation Decisions, Testing Strategy, Slices & Dependencies, Deliverables, References, Notes |
 
 - The 🧑 REVIEW CAREFULLY zone must fit in working memory. Prefer a diagram or
   mockup over three paragraphs.
@@ -44,7 +44,7 @@ copying it. A spec with no work document beside it has never been planned.
 | Implementation Decisions | Implementation checkboxes |
 | Testing Strategy · Slices & Dependencies | Notes & Snippets |
 | Deliverables · References | Review findings from `code-review` |
-| Notes (written before the plan) · Retrospective | |
+| Notes (written before the plan) | |
 
 Before a work document exists, a blocker or a question goes into this
 file's **Notes**. Once the plan starts, notes go into the work document's
@@ -52,7 +52,7 @@ file's **Notes**. Once the plan starts, notes go into the work document's
 
 One work document exists for every spec actually planned, created beside
 this file by replacing `.spec.md` with `.work.md`. A parent spec of a sliced
-task has none; each slice has its own. At the close, both files are archived
+task has none; each slice has its own. At the close, the spec, work, synthesis and retro documents are archived
 together.
 
 ## Where each kind of content lives
@@ -65,7 +65,7 @@ together.
 | Slice list + blockers | — | parent spec |
 | Worklog, checkboxes, Notes & Snippets | work document | each slice's work document |
 | Status | this spec, or the tracker | each slice's spec, or the tracker |
-| Archive | spec + work together | parent + slice folder together |
+| Archive | spec + work + synthesis + retro together | parent + slice folder together |
 
 ## Spec Document Template
 
@@ -143,10 +143,6 @@ belongs wholly to the work document.
 Only material written into this file before a work document exists. The
 Mason's notes, snippets and worklog belong in the work document's
 **Notes & Snippets**.
-
-## Retrospective
-
-Added at the close: lessons and proposals. The human rules on its proposals.
 ```
 
 ## File Naming Conventions

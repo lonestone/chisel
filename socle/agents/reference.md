@@ -10,9 +10,10 @@ for every session are `.agents/discipline.md`.
 
 | Term | Meaning |
 |---|---|
-| **Task** | The unit of work. Its spec document lives in the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`), named `<time-id>-<intention>.spec.md`, whatever tracker also carries it; once planned it has a matching `<time-id>-<intention>.work.md` beside it. |
-| **Spec document** | The review surface and the requirement: intent, acceptance criteria, seams, system design, decisions, testing strategy, slices, deliverables, references, pre-plan Notes and retrospective. It carries the task's status line and the reading gradient's two 🧑 zones. |
+| **Task** | The unit of work. Its spec document lives in the task workspace declared in `.agents/project.md` (default `/project-management/tasks/`), named `<time-id>-<intention>.spec.md`, whatever tracker also carries it; once planned it has a matching `<time-id>-<intention>.work.md` beside it, and once closed a `<time-id>-<intention>.retro.md`. |
+| **Spec document** | The review surface and the requirement: intent, acceptance criteria, seams, system design, decisions, testing strategy, slices, deliverables, references and pre-plan Notes. It carries the task's status line and the reading gradient's two 🧑 zones. |
 | **Work document** | The Mason's companion file, created at the plan step beside the spec document. It carries the program design and its approval line, the worklog, the implementation checkboxes, Notes & Snippets and the review findings. No zone marker. |
+| **Retro document** | Written at the close by the `retro` skill, beside the spec document and named by replacing `.spec.md` with `.retro.md`: the proposals for the working rules, each with its target file and owner. It is archived with the spec, work and synthesis documents. |
 | **Slice** | A child task produced by cutting a large task: a tracer-bullet vertical cut through every layer, demoable on its own, sized for one fresh context window. Lives as `tasks/<time-id>-<feature>/<NN>-<slug>.spec.md`. A small task IS its own single slice. |
 | **Seam** | The public boundary where a feature is tested — named in the spec BEFORE implementation. Tests live at seams, never against internals. Fewer is better (ideal: one). |
 | **Reading gradient** | The ordering of the spec document by review criticality: 🧑 REVIEW CAREFULLY (short, decision-rich) → 🧑 REVIEW IF RELEVANT. Detail is never cut, it is ordered. |

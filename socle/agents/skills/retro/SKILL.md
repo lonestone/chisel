@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/in-progress/retro
   sha: 6654f6b60cd9d5be8b54c6fafe44346dabeb3b76
-  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (the task's spec document, and its work document with the program design, the checkboxes and the worklog, plus the diff and the journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by the rule "The repo is the only memory" in discipline.md; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of the workflow, not only on user request; a blocker is read where the task's own documents keep it rather than in the project journal; compares the depth each task chose with the floor its diff computed, from the work documents' Depth lines."
+  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (the task's spec document, and its work document with the program design, the checkboxes and the worklog, plus the diff and the journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by the rule "The repo is the only memory" in discipline.md; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of the workflow, not only on user request; a blocker is read where the task's own documents keep it rather than in the project journal; compares the depth each task chose with the floor its diff computed, from the work documents' Depth lines; writes its proposals to a retro document beside the spec and the work document; a proposal targeting the installed socle names chisel's maintainers as owner."
 ---
 
 You are suggesting improvements to the **working rules** — the steering
@@ -96,9 +96,16 @@ discussed:
    path — the same rule applies to a socle skill, a project doc, or
    `.agents/discipline.md` itself. Name the **zone owner** who accepts it:
    the human for anything ambient, the touched zone's owner for anything
-   scoped to that zone.
+   scoped to that zone. A proposal that targets the installed socle (a file
+   under `.agents/` that chisel ships) names chisel's maintainers as its
+   owner: `update` overwrites a local edit there, so the fix has to be made
+   upstream.
 
-5. Present the candidates to the human or zone owner, in severity order.
+5. Write the candidates, in severity order, to the **retro document**: the
+   spec's path with `.spec.md` replaced by `.retro.md` (a slice's retro sits
+   beside the slice). Put them in the close report too, and present them to
+   the human or zone owner. The rule "The repo is the only memory" of
+   `.agents/discipline.md` is why they are written down and not only said.
    **Nothing is auto-applied.** An accepted proposal is written in by its
    owner (or by the agent, once the owner has said yes) as a normal edit to
    the target file. A proposal that is deferred rather than accepted gets a
