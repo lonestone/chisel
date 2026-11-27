@@ -118,14 +118,16 @@ to fix the comments. Commit, update the tracker, and report to the Architect:
 what landed, which criteria are met, what is left. Status: `done`.
 
 **After the close — Architect.** Read the close report and rule on anything
-left. Open the pull request; in one shot, its description opens with the
-spec's `**One shot:**` line, copied as is. Run the human review (step 8) on
-it, unless that line skips the final review. Once the review is done or
-skipped, merge and publish as the merge and publish section of
-`.agents/project.md` says; by default, ask the human, whose explicit word
-on that very action is the only go. In one shot with the final review, the
-Architect says in so many words, as it hands the review, that approving it
-is the word for the merge; the approval is then that word.
+left. Push only once the gate commands of `.agents/project.md` pass
+locally: CI confirms, it does not discover. Open the pull request; in one
+shot, its description opens with the spec's `**One shot:**` line, copied as
+is. Run the human review (step 8) on it, unless that line skips the final
+review. Once the review is done or skipped, merge and publish as the merge
+and publish section of `.agents/project.md` says; by default, ask the human,
+whose explicit word on that very action is the only go. In one shot with
+the final review, the Architect says in so many words, as it hands the
+review, that approving it is the word for the merge; the approval is then
+that word.
 
 **8. Human review — Architect.** The pull request is open and the
 synthesis is committed in it. The human reads in three readings, in this
