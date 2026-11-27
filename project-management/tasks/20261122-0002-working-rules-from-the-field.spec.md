@@ -116,8 +116,8 @@ table and who raised it.
    then the repo's own: `update` never touches it. `project.md` only
    points to it, and the briefs read the rule there instead of saying "the
    commit rule" with no place to read it. *Where:* `CONTRIBUTING.md`, from a
-   new template `socle/templates/CONTRIBUTING.md.tpl`; a new `project.md`
-   section, Commits, one pointer line; `chisel-setup`, exploration and
+   new template `socle/agents/skills/chisel-setup/CONTRIBUTING.md.tpl`; a
+   new `project.md` section, Commits, one pointer line; `chisel-setup`, exploration and
    writes; the Mason and Typist briefs. *Source:* Olympe, 17/11, a spec
    commit refused for its scope; Pierrick, 23/11, in review: « Je préfère
    un CONTRIBUTING.md écrit par Chisel si il n'y en a pas ».
@@ -447,6 +447,13 @@ chapter 3 waits for them, and the pull request opens once it is done.
 - The base of a branch diff in a human review (the pull request's base, not
   `main`, on stacked pull requests) is not written in `relecture-humaine`:
   to pass to that task, whose spec this task does not touch.
+
+- **Two departures from this spec, settled at the plan (Architect, 27/11).**
+  The CONTRIBUTING template ships inside the `chisel-setup` skill, not in
+  `socle/templates/`: `init` does not install that folder, and a CLI change
+  is out of scope. Chapter 4 is typed before chapter 3, which waits for
+  `lead-ux`; the pull request is squash-merged, so its commit order does not
+  last.
 
 ## Retrospective
 

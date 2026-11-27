@@ -3,8 +3,26 @@
 Created by the Mason at the plan step, 2026-11-27. Spec:
 `project-management/tasks/20261122-0002-working-rules-from-the-field.spec.md`.
 
-**Plan:** waiting for the Architect's reading.
-<!-- Once approved: approved by <who>, <date>[, with the corrections below]. -->
+**Plan:** approved by the Architect, 2026-11-27, with the corrections below.
+
+Corrections (Architect, 2026-11-27, on the six questions):
+
+1. **Merge, don't rebase.** Bring `origin/main` in with `git merge
+   origin/main`, after a fetch, each command alone; the same once `lead-ux`
+   merges. No forced push in this task: the session that launched the
+   Architect forbids it. The pull request is squash-merged, and commit-lint
+   skips merge commits, so the merge commit does not last.
+2. **Chapters 1, 2, 4, 3:** accepted. Recorded in the spec's Notes.
+3. **Rule 2 and the renumbering:** accepted. `retro` cites the rule by its
+   title, "The repo is the only memory" in `.agents/discipline.md`, not by
+   a number, in both places, the `x-upstream` `changes` line included. The
+   writing rule asks to cite by file and title, and a number breaks at the
+   next renumbering.
+4. **The CONTRIBUTING template in the chisel-setup skill:** accepted. The
+   spec's rule 7 now names that path, and its Notes record why.
+5. **The E2E command stays in §J:** accepted.
+6. **Reword the `captures.ts` comment, with an `automatic` intention:**
+   accepted.
 
 **Depth:** written at the close.
 
@@ -448,7 +466,7 @@ The plan, the commit order and the questions are in this document. Questions:
 
 ## Implementation Checkboxes
 
-- [ ] Rebase onto `origin/main` (on approval of Question 1)
+- [ ] Merge `origin/main` (Question 1, as corrected)
 - [ ] 1 proof-before-cause
 - [ ] 2 readme-presents-and-points (+ docs growth in code-review, §D line)
 - [ ] 3 agent-docs-say-what-and-why
@@ -460,7 +478,7 @@ The plan, the commit order and the questions are in this document. Questions:
 - [ ] 7 the-commit-rule-is-in-the-glue
 - [ ] 8 the-commands-are-in-agents-md
 - [ ] 14 the-retro-is-written-down
-- [ ] Rebase onto `origin/main` after `lead-ux` merges
+- [ ] Merge `origin/main` after `lead-ux` merges
 - [ ] 9 the-typist-sees-red-first
 - [ ] 10 small-feedback-is-one-pass
 - [ ] 11 the-full-suite-runs-once
