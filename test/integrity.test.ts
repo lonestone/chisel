@@ -203,6 +203,58 @@ async function* walkFiles(directory: string): AsyncGenerator<string> {
   }
 }
 
+// The socle ships to other teams: it names no private setup. Case-sensitive on
+// purpose, so that the generic lowercase "harness" (a runtime) stays legal.
+const PRIVATE_SETUP = [
+  /\bHarness\b/,
+  /crit-review/,
+  /secondmate/,
+  /\bOlympe\b/,
+  /\bHermes\b/,
+  /music-downloader/,
+];
+
+/** The private names found in every file under the given folders. */
+async function privateNames(folders: string[]): Promise<string[]> {
+  const hits: string[] = [];
+  for (const folder of folders) {
+    for await (const path of walkFiles(folder)) {
+      const text = await Deno.readTextFile(path);
+      for (const name of PRIVATE_SETUP) {
+        if (name.test(text)) hits.push(`${name} in ${path}`);
+      }
+    }
+  }
+  return hits;
+}
+
+Deno.test("integrity: the installed socle names no private setup", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.install("brownfield");
+    const folders = [
+      join(target, ".agents"),
+      join(REPO_ROOT, "socle", "intentions", "unreleased"),
+    ];
+    const found = (await privateNames(folders)).map((hit) =>
+      hit.replace(target, "<target>")
+    );
+    assertEquals(found, [], "no installed file names a private setup");
+
+    // Mutation test: plant one word and demand it is caught.
+    const mutant = await workspace.install("brownfield");
+    await Deno.writeTextFile(
+      join(mutant, ".agents", "discipline.md"),
+      "\nAsk the Harness first.\n",
+      { append: true },
+    );
+    const planted = await privateNames([join(mutant, ".agents")]);
+    assert(
+      planted.some((hit) => hit.includes("discipline.md")),
+      "a planted private name is caught",
+    );
+  });
+});
+
 const INTENTION_SECTIONS = [
   "Goal",
   "Why",

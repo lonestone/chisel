@@ -487,6 +487,16 @@ The plan, the commit order and the questions are in this document. Questions:
 - 2026-11-27 — Typist. Item 4 actions-carry-a-verb: one sentence added to the writing rule
   (rule 11) of discipline; intention added and listed. Gates: check 35 files,
   test 80 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Typist. No-harness-word test: "integrity: the installed socle names no private
+  setup" added to test/integrity.test.ts, a deny-list over the installed `.agents/`
+  tree and `socle/intentions/unreleased/`, with a mutant planting "Harness". Seen
+  RED first on the real file: it failed on the captures.ts header comment, naming
+  `Harness` and `Olympe`. Deny-list: Harness, crit-review, secondmate, Olympe,
+  Hermes, music-downloader (names of private agents and projects taken from the
+  hits and the harness skills; to be confirmed by the Architect). Then the
+  comment reworded to a neutral origin, with the `automatic` intention
+  `captures-comment-names-no-private-setup`, and the test went green. Gates:
+  check 35 files, test 81 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
@@ -495,7 +505,7 @@ The plan, the commit order and the questions are in this document. Questions:
 - [x] 2 readme-presents-and-points (+ docs growth in code-review, §D line)
 - [x] 3 agent-docs-say-what-and-why
 - [x] 4 actions-carry-a-verb
-- [ ] no-harness-word test (+ captures.ts comment, per Question 6)
+- [x] no-harness-word test (+ captures.ts comment, per Question 6)
 - [ ] render test red for §K
 - [ ] 5 a-branch-per-task
 - [ ] 6 an-agent-rebases-only-its-own-branch

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: MIT
-// Copied into Chisel from the Harness (vault commit a05b1092), with Olympe's
-// agreement of 21/11/2026, under Chisel's licence. A copy, not a link.
+// Copied into Chisel from an earlier internal tool, under Chisel's licence.
+// A copy, not a link.
 // captures : prendre les captures d'une page et dire, en texte, ce qui a changé.
 //
 // Pourquoi : une capture lue par l'outil Read reste dans le contexte de la session et se relit
