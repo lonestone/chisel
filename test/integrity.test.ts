@@ -236,6 +236,8 @@ Deno.test("integrity: the installed socle names no private setup", async () => {
     const folders = [
       join(target, ".agents"),
       join(REPO_ROOT, "socle", "intentions", "unreleased"),
+      join(REPO_ROOT, "socle", "templates"),
+      join(REPO_ROOT, "socle", "scripts"),
     ];
     const found = (await privateNames(folders)).map((hit) =>
       hit.replace(target, "<target>")

@@ -554,6 +554,11 @@ The plan, the commit order and the questions are in this document. Questions:
   Task, Spec document and new Retro document entries; `.agents` copies synced.
   Intention `retro-is-written-down` (informational) added and listed. Gates: check
   35 files, test 82 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Mason. Chapters 2 and 4 verified (copies identical, §K/§L/§M, rule 6 not
+  softened). `code-review` on chapters 1, 2 and 4: findings and answers below; fixes are
+  the retro frontmatter quotes, three reflowed paragraphs, and the private-names test now
+  scanning templates and scripts. Gates: check 35 files, test 82 passed, 0 failed,
+  1 ignored. The "Full suite, then `code-review`" box stays open: it runs after chapter 3.
 
 ## Implementation Checkboxes
 
@@ -592,4 +597,41 @@ The plan, the commit order and the questions are in this document. Questions:
 
 ## Diff-Review Findings
 
-_Written at step 6._
+`code-review`, 2026-11-27, on `6038b2f...HEAD` (chapters 1, 2 and 4 only; chapter 3 is
+blocked by `lead-ux`, so this review is partial and runs again after chapter 3).
+
+### Standards
+
+1. Hard: retro's `x-upstream.changes` held unescaped double quotes around the rule's
+   title, so the frontmatter no longer parsed as YAML. **Fixed:** single quotes inside
+   the string; every socle `SKILL.md` frontmatter checked to parse. No test parses
+   skill frontmatter (it would need a YAML dependency); left as a follow-up proposal.
+2. Docs grown above 10 %: discipline +26 %, project.md(.tpl) +22 %, chisel-setup +20 %,
+   AGENTS.md +23 %. **Answered:** the spec asks for these rules and glue sections; each
+   addition is the rule itself, not a restatement.
+3. Lines left unwrapped by the edits (workflow step 7, retro Sources, spec template).
+   **Fixed:** reflowed at about 80 columns.
+4. The §K comment restates rule "A branch per task". **Answered:** it carries what the
+   rule does not (worktree removal after merge, the `forbidden` value of the rebase
+   line); the glue comments explain their own lines, as §H's does.
+5. The commit-rule pointer repeated in the Mason and Typist briefs; `deno task hooks`
+   in both AGENTS.md and CONTRIBUTING.md. **Answered:** each brief is a self-contained
+   list by design; the Commands list is the plan's (rule 8).
+6. The private-names test does not scan `socle/intentions/0.*` or `socle/templates`.
+   **Fixed** for `socle/templates` and `socle/scripts`, now scanned (both clean).
+   Released intentions stay out: they are frozen history, never edited.
+7. Possible Primitive Obsession in `PRIVATE_SETUP`. **Answered:** fine at this size.
+
+### Spec
+
+1. Rule "A branch per task" does not say `origin/HEAD` must be set. **Answered:** the
+   spec puts that on `chisel-setup`, which does it; the intention carries it too.
+2. Scope: the `captures.ts` comment and its intention. **Answered:** approved in the
+   plan (correction 6); needed for the no-harness-word test to pass.
+3. Scope: the no-harness-word test scans the whole installed tree, not only changed
+   files, and names private agents. **Answered:** the plan's design, stronger than the
+   spec's minimum; d4f5ed5 added Apollon and Dédale.
+4. §D ships the `Docs growth flagged above: 10 %` line filled in. **Answered:** the
+   plan's choice (it makes the threshold visible); the skill falls back to 10 % without it.
+5. Rule 14 says the close archives "the three"; the socle says four (synthesis came with
+   0.5.0). **Answered:** consistent with today's socle.
