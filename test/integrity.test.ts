@@ -211,6 +211,8 @@ const PRIVATE_SETUP = [
   /secondmate/,
   /\bOlympe\b/,
   /\bHermes\b/,
+  /\bApollon\b/,
+  /\bDédale\b/,
   /music-downloader/,
 ];
 

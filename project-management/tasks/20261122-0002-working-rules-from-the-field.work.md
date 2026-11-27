@@ -497,6 +497,11 @@ The plan, the commit order and the questions are in this document. Questions:
   comment reworded to a neutral origin, with the `automatic` intention
   `captures-comment-names-no-private-setup`, and the test went green. Gates:
   check 35 files, test 81 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Mason. Chapter 1 verified: copies identical, intentions listed. Deny-list
+  ruled: Apollon and Dédale added (private agent names cited in the spec); Atlas left
+  out, a common word that a socle text may use for something else. The chapter 1
+  commits carry a `Co-Authored-By: Claude Sonnet` trailer instead of the repo's
+  Opus 5.5 line (a brief error, left as is: no history rewrite on this branch).
 
 ## Implementation Checkboxes
 
