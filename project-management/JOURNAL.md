@@ -5,6 +5,40 @@ ships.
 
 ---
 
+## 57. 2026-11-27 — Usage before technique: the lead-ux skill
+
+On Pierrick's requests of 2026-11-20, an analysis now starts from usage.
+When a task touches what a person sees or does, step 2 of the workflow
+names its size. A new screen, flow or redesign runs the full rounds of
+the new `lead-ux` skill before the spec leaves `draft`. A small request
+runs one quick round. A light change writes its journey in one line.
+
+The skill carries the method of the Olympe research of 2026-11-21:
+- the ask restated, and real data;
+- a survey written before drawing;
+- two to six directions side by side, one of them preferred;
+- a bounded fresh eye on the captures;
+- the feedback written verbatim, round after round.
+
+It ships its own means, because Chisel works without the Harness:
+- a Playwright capture script under Deno;
+- a directions page template;
+- the researcher's and the eye's briefs;
+- the formats of the survey and the feedback.
+
+Each round is a stop for the human. A brief for an analysis states the
+usage first. A second, small rule: the Architect pushes only once the
+gates pass locally. The intentions `unreleased/lead-ux-before-screens` and
+`unreleased/push-after-local-gates` tell updated repos.
+
+The Mason planned and a Sonnet Typist typed. The fresh eye saw a block
+cut at 1280 px that the script's report called clean. The script now also
+names a box that clips its content, and a block that passes its
+direction's box. The reviewers' other findings were fixed or answered.
+The Typist's commits carry a Sonnet trailer, left for the squash.
+
+---
+
 ## 56. 2026-11-22 — A touched screen has a proof
 
 Slice 04 of the human-review task gives the review its second reading.
