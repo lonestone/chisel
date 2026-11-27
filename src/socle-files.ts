@@ -71,6 +71,7 @@ export const SOCLE_FILES: readonly string[] = [
   "intentions/unreleased/agent-docs-say-what-and-why.md",
   "intentions/unreleased/captures-comment-names-no-private-setup.md",
   "intentions/unreleased/glue-branches.md",
+  "intentions/unreleased/glue-commands.md",
   "intentions/unreleased/glue-commits.md",
   "intentions/unreleased/origin-head-and-own-rebase.md",
   "intentions/unreleased/proof-before-cause.md",

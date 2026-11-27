@@ -535,6 +535,17 @@ The plan, the commit order and the questions are in this document. Questions:
   Mason brief had no literal "the commit rule": the phrase was added to its
   "how to commit" bullet (reported to the Mason). Intention `glue-commits`
   added and listed. Gates: check 35 files, test 82 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Typist. Item 8 the-commands-are-in-agents-md: the render test gained
+  the §M `Other commands` check, seen RED first on the real file
+  ("AssertionError: §M points to AGENTS.md for the other commands"). Then: §M
+  in the template and in this repo, header "A–M", the comment says the gates
+  of §F and the commands of §J are not in the list; chisel-setup: step 1
+  exploration, §M stated with the candidate list put to the user once, the
+  write after `<!-- chisel:end -->` under `## Commands`, one sentence in step 7,
+  "A through M" and "after §M" throughout; this repo's `AGENTS.md` gets
+  `## Commands` after the block (six commands, no E2E pointer line: §J has
+  none). Intention `glue-commands` added and listed. Gates: check 35 files,
+  test 82 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
@@ -548,7 +559,7 @@ The plan, the commit order and the questions are in this document. Questions:
 - [x] 5 a-branch-per-task
 - [x] 6 an-agent-rebases-only-its-own-branch
 - [x] 7 the-commit-rule-is-in-the-glue
-- [ ] 8 the-commands-are-in-agents-md
+- [x] 8 the-commands-are-in-agents-md
 - [ ] 14 the-retro-is-written-down
 - [ ] Merge `origin/main` after `lead-ux` merges
 - [ ] 9 the-typist-sees-red-first

@@ -56,3 +56,15 @@ through `.agents/project.md`. The vocabulary and the model tiers are
 `.agents/reference.md`; the reasoning is `.agents/methodology.md`. This block
 only routes; the socle at `.agents/` carries the content.
 <!-- chisel:end -->
+
+## Commands
+
+The gates are in §F of `.agents/project.md`, and the end-to-end command in
+§J · Review. The rest:
+
+- `deno task hooks` — install the commit-msg hook that lints each commit message
+- `deno task commit-lint` — lint commit messages (the "Commits" check runs it)
+- `deno task promote-intentions <version>` — at a release, move the unreleased intentions into the release's folder
+- `deno task release-check` — the release checks: gate, promoted, publish, notes
+- `scripts/task-id.sh <intention>` — print the time-sorted id that prefixes a task's files
+- `scripts/configure-github-repo.sh` — dry-run the GitHub settings the release needs; `--apply` makes them

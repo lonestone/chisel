@@ -307,6 +307,12 @@ Deno.test("init: the branches, commits and other commands sections are installed
       ),
       "§L points to CONTRIBUTING.md for the commit rule",
     );
+    assert(
+      glueItem(glueSection(glue, "M"), "Other commands")?.value.includes(
+        "AGENTS.md",
+      ),
+      "§M points to AGENTS.md for the other commands",
+    );
   });
 });
 
