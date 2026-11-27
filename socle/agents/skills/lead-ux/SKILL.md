@@ -1,12 +1,12 @@
 ---
 name: lead-ux
-description: Lead a UX research in short rounds before any code, when a task touches what a person sees or does — a new screen, a new flow, a redesign, a small request on a screen. Not for a light change — a colour, a label, a value. Use at step 2 of `.agents/workflow.md`, or when the user asks what a screen should look like or wants UX directions.
+description: Lead a UX research in short rounds before any code, when a task touches what a person sees or does — a new screen, a new flow, a redesign, a small request on a screen. Not for a light change — a colour, a label, a value. Use at step 2 of `.agents/workflow.md` ("Write or sharpen the spec"), or when the user asks what a screen should look like or wants UX directions.
 ---
 
 # lead-ux — usage before technique
 
-The Architect runs it at step 2 of `.agents/workflow.md`, before the spec
-leaves `draft`. It leaves its deliverables beside the spec, and those files
+The Architect runs it at step 2 of `.agents/workflow.md` ("Write or sharpen
+the spec"), before the spec leaves `draft`. It leaves its deliverables beside the spec, and those files
 are the memory: a round restarts from them, never from the session.
 
 When `.agents/project.md` declares a screenshot command, it replaces the
@@ -78,8 +78,8 @@ In git:
   anonymised data, `survey-captures/` and `round-<n>/captures/`;
 - out: `data/private/`, a record that names a person or holds a client's
   data, and `round-<n>/eye/`. Each of those two folders holds a
-  `.gitignore` with `*`. The skill writes those two files itself and
-  touches no other ignore file.
+  `.gitignore` with `*`. Steps 2 and 4 write those two files and touch no
+  other ignore file.
 
 ## Who does what
 
@@ -145,6 +145,8 @@ The Architect launches the researcher with the first-round brief of
 
 - gathers the real records the screen will show, from a demo or an
   anonymised copy, never written to production;
+- writes `ux/data/private/.gitignore` with `*` before any record goes
+  there;
 - finds prior art the way `.agents/skills/research/SKILL.md` says;
 - writes `survey.md` from [SURVEY.md](./SURVEY.md), *To keep* carried over
   from round 0.
@@ -164,7 +166,8 @@ The Architect launches the researcher with the first-round brief of
   alone.
 - Each is named in two or three words, never a letter. Under each go its
   idea, what it sacrifices, and "answers: …", the human's request it
-  answers, or the mark "proposal" when no request names it.
+  answers and the gesture that follows it, or the mark "proposal" when no
+  request names it.
 - *Asked for or placed* is re-read for each direction before it removes,
   lightens or moves anything.
 - For an existing screen, "As it is" is the first column.
@@ -193,7 +196,7 @@ The Architect launches the researcher with the first-round brief of
 
 - The free check comes first: run the capture script with `--for-eye` and
   `--each "[data-direction]"`, adding `--keyboard` when the usage says so,
-  into `round-<n>/eye/`, and read `report.md`, which is text.
+  into `round-<n>/eye/`, after writing its `.gitignore` with `*`, and read `report.md`, which is text.
 - Then one fresh eye at *mid* for every direction at once, briefed from
   [EYE.md](./EYE.md). In a quick round, the eye runs only when the report
   flags something.
@@ -205,14 +208,16 @@ The Architect launches the researcher with the first-round brief of
 *Done when:*
 
 - the last `report.md` shows no overflow, no console error and, with
-  `--keyboard`, no control the Tab key misses — or each one is carried to
-  the human;
+  `--keyboard`, no control the Tab key misses — or each one is written on
+  the page, in what it does not show yet;
 - the last eye marked every checklist item on every capture as clean, a
   defect with its position, or unverified;
-- every defect is fixed or carried to the human as unverified.
+- every defect is fixed or written on the page as unverified.
 
 ### 5. Show, then write the feedback — Architect
 
+- Capture the page at scale 2 into `round-<n>/captures/` (the capture
+  script, without `--for-eye`).
 - Give the human the **absolute path** of `round-<n>/directions.html`, and
   open it when the session can: a browser tool of the host, or the
   system's `open` on the human's own machine.

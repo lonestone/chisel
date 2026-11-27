@@ -36,9 +36,11 @@ Usage: <the keyboard, the phone, touch, the mouse — when it matters>.
      and desktop width.
  3.5 The directions page. Start from
      .agents/skills/lead-ux/templates/directions.html. Under each
-     direction: its idea, what it sacrifices, its "answers: …" line or its
-     "proposal" mark, and the Asked for or placed table re-read for it.
-     Mark one direction preferred, with its reason in one line.
+     direction: its idea, what it sacrifices, its "answers: …" line, the
+     request it answers and the gesture that follows it, or its "proposal"
+     mark. Re-read the Asked for or placed table for each direction before
+     it removes, lightens or moves anything. Mark one direction preferred,
+     with its reason in one line.
 
 4. The project's rules for mockups
 <The rules the project keeps, or "none".>

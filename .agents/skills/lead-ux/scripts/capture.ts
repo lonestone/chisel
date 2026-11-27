@@ -16,6 +16,10 @@
  * The browser is installed once per machine:
  *   deno run -A npm:playwright@1.65.1 install chromium
  *
+ * Exit codes: 0 = the report is written, its findings are in the text;
+ * 1 = a usage error, no browser, or at least one capture failed (the report
+ * is still written, and lists the failures under "## Failures").
+ *
  * A repo whose own checker scans every `.ts` excludes `.agents/`. This
  * script is checked by a real run, not by the suite.
  */
@@ -140,7 +144,7 @@ interface Measure {
 }
 
 /** Runs in each frame: the measures. */
-function measureFrame(): Measure {
+function measureFrame(each: string | null): Measure {
   const describe = (el: Element): string => {
     const id = el.id ? `#${el.id}` : "";
     const cls = typeof el.className === "string" && el.className.trim()
@@ -161,6 +165,32 @@ function measureFrame(): Measure {
   const overflow = leaves.slice(0, 10).map((el) =>
     `${describe(el)} (${Math.round(el.getBoundingClientRect().width)} px wide)`
   );
+  for (const el of Array.from(document.querySelectorAll("body *"))) {
+    const x = getComputedStyle(el).overflowX;
+    if (
+      (x === "hidden" || x === "clip") && el.scrollWidth > el.clientWidth + 1
+    ) {
+      overflow.push(
+        `${describe(el)} clips its content ` +
+          `(${el.scrollWidth} px in ${el.clientWidth} px)`,
+      );
+    }
+  }
+  if (each) {
+    for (const box of Array.from(document.querySelectorAll(each))) {
+      const edge = box.getBoundingClientRect().right;
+      const past = new Set<Element>();
+      for (const child of Array.from(box.querySelectorAll("*"))) {
+        const r = child.getBoundingClientRect();
+        if (r.width > 0 && r.right > edge + 1) past.add(child);
+      }
+      for (const child of past) {
+        if (Array.from(child.children).some((c) => past.has(c))) continue;
+        const n = Math.round(child.getBoundingClientRect().right - edge);
+        overflow.push(`${describe(child)} passes ${describe(box)} by ${n} px`);
+      }
+    }
+  }
   const below: string[] = [];
   const watched = document.querySelectorAll(
     'h1, h2, h3, h4, h5, h6, button, a[class*="btn"], a[class*="button"], a[role="button"], input, textarea, select, [data-direction]',
@@ -267,6 +297,7 @@ async function captureOne(
   scale: number,
   opts: Options,
   name: string,
+  seen: Set<string>,
 ): Promise<Section> {
   const height = width < 600 ? 844 : 800;
   const context = await browser.newContext({
@@ -297,7 +328,10 @@ async function captureOne(
 
     const frames = page.frames();
     for (let i = 0; i < frames.length; i++) {
-      const m: Measure = await frames[i].evaluate(measureFrame);
+      const m: Measure = await frames[i].evaluate(
+        measureFrame,
+        opts.each ?? null,
+      );
       const tag = i === 0 ? "" : ` [frame ${i}]`;
       if (m.scrollWidth > m.innerWidth) {
         section.overflow.push(
@@ -323,6 +357,7 @@ async function captureOne(
         const el = loc.nth(i);
         const attr = await el.getAttribute("data-direction");
         const dir = (attr && slug(attr)) || String(i + 1);
+        seen.add(dir);
         if (opts.only && !opts.only.includes(dir)) continue;
         const file = `${base}-${dir}-${width}-${scheme}.png`;
         await el.screenshot({ path: file });
@@ -340,18 +375,22 @@ function list(items: string[]): string {
   return items.length ? items.map((i) => `- ${i}`).join("\n") : "none";
 }
 
-function renderReport(head: string[], sections: Section[]): string {
+function renderReport(
+  head: string[],
+  sections: Section[],
+  failures: string[],
+): string {
   const out = ["# Capture report", "", ...head, ""];
   for (const s of sections) {
     out.push(`## ${s.title}`, "");
     out.push(`Files: ${s.files.length ? s.files.join(", ") : "none"}`, "");
-    const overflow = s.overflow.length ? s.overflow : [];
-    out.push("### Overflow", "", list(overflow), "");
+    out.push("### Overflow", "", list(s.overflow), "");
     out.push("### Console errors", "", list(s.errors), "");
     out.push("### Below the fold", "", list(s.below), "");
     out.push("### Images", "", list(s.images), "");
     if (s.keyboard) out.push("### Keyboard", "", list(s.keyboard), "");
   }
+  if (failures.length) out.push("## Failures", "", list(failures), "");
   return out.join("\n");
 }
 
@@ -364,7 +403,7 @@ async function main(): Promise<number> {
     return 1;
   }
   const url = toUrl(opts.target);
-  const name = opts.name ?? defaultName(url);
+  const name = slug(opts.name ?? "") || defaultName(url);
   const scale = opts.forEye ? 1 : 2;
   const schemes: Scheme[] = opts.forEye ? ["light"] : ["light", "dark"];
   await Deno.mkdir(opts.outDir, { recursive: true });
@@ -384,30 +423,52 @@ async function main(): Promise<number> {
     return 1;
   }
   const sections: Section[] = [];
+  const failures: string[] = [];
+  const seen = new Set<string>();
   try {
     for (const width of opts.widths) {
       for (const scheme of schemes) {
-        sections.push(
-          await captureOne(browser, url, width, scheme, scale, opts, name),
-        );
+        try {
+          sections.push(
+            await captureOne(
+              browser,
+              url,
+              width,
+              scheme,
+              scale,
+              opts,
+              name,
+              seen,
+            ),
+          );
+        } catch (e) {
+          const message = (e as Error).message.split("\n")[0];
+          failures.push(`${name} ${width} ${scheme}: ${message}`);
+          console.error(`capture failed (${width} ${scheme}): ${message}`);
+        }
       }
     }
-  } catch (e) {
-    console.error(`capture failed: ${(e as Error).message}`);
-    return 1;
   } finally {
     await browser.close();
   }
+  if (opts.only && sections.length) {
+    const unmatched = opts.only.filter((o) => !seen.has(o));
+    if (unmatched.length) {
+      console.error(
+        `warning: --only matches no data-direction: ${unmatched.join(", ")}`,
+      );
+    }
+  }
   const head = [
     `URL: ${url}`,
-    `Scale: ${scale} (scale ${scale}, deviceScaleFactor ${scale})`,
+    `Scale: ${scale}`,
     `Schemes: ${schemes.join(", ")}`,
   ];
   await Deno.writeTextFile(
     `${opts.outDir}/report.md`,
-    renderReport(head, sections),
+    renderReport(head, sections, failures),
   );
-  return 0;
+  return failures.length ? 1 : 0;
 }
 
 if (import.meta.main) Deno.exit(await main());

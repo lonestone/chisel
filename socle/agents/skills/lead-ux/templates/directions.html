@@ -11,7 +11,8 @@
 
   {{title}}          the screen or flow the page is about
   {{round}}          the round number; 0 is the state of the place
-  {{understanding}}  the "I understand: ..." line that heads a quick round
+  {{understanding}}  the "I understand: ..." line that heads a quick round;
+                     it stays empty in a full round, and is then hidden
   {{shows}}          what the page shows, and what it does not show yet
 
   One article per direction, written before the DIRECTIONS marker:
@@ -60,6 +61,7 @@
   h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
   h2 { font-size: 1.15rem; margin: 0 0 .5rem; }
   .round { color: var(--muted); margin: 0 0 1rem; }
+  .understanding:empty { display: none; }
   .understanding, .shows, .questions {
     background: var(--card); border: 1px solid var(--line);
     border-radius: .5rem; padding: .75rem 1rem; margin: 0 0 1rem;
@@ -134,7 +136,7 @@
 </main>
 <script>
 (function () {
-  var title = "{{title}}";
+  var title = document.querySelector("h1").textContent.trim();
   var round = "{{round}}";
   var key = "lead-ux:" + title + ":" + round;
   var fields = Array.prototype.slice.call(document.querySelectorAll("textarea[data-for]"));
@@ -185,8 +187,14 @@
       box.focus();
       box.select();
     };
+    var button = document.getElementById("copy");
+    var label = button.textContent;
+    var done = function () {
+      button.textContent = "Copied";
+      setTimeout(function () { button.textContent = label; }, 2000);
+    };
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(md).catch(show);
+      navigator.clipboard.writeText(md).then(done, show);
     } else {
       show();
     }
