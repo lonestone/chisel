@@ -82,6 +82,10 @@ feature; the only difference is the paperwork.
     its reference doc, which goes in the living docs root of §D ·
     Documentation reference of `.agents/project.md`.
 
+    A doc an agent writes is concise. It says what and why, the overall
+    architecture and the delicate points; diagrams are welcome, and never a
+    text version of the code.
+
 ## The workflow, for real scoped work
 
 `.agents/workflow.md` says how one task goes from intent to commit: the

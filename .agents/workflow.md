@@ -98,7 +98,9 @@ the task touches a screen, take the after captures into the proofs folder of §J
 · Review. Write the work document's `**Depth:**` line: the depth chosen, the
 floor the diff computed with the `visual-proof` skill, and why the task went
 above the floor when it did. Promote evergreen material into the living docs
-declared in `.agents/project.md`, the glossary and the ADRs among them. Write
+declared in `.agents/project.md`, the glossary and the ADRs among them, as the
+rule "Docs present and point" of `.agents/discipline.md` says: what and why,
+not a text version of the code. Write
 the synthesis from `.agents/synthesis.md.tpl`, beside the spec and named by
 replacing `.spec.md` with `.synthesis.md`: it is the first reading of the human
 review (step 8), so write it on the frontier tier. Archive the spec, work and
