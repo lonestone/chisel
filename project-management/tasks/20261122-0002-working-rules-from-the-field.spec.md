@@ -1,7 +1,7 @@
 # Working rules from the field: branches, commits, gates, docs and the retro
 
-**Status:** approved — the Owner approved this spec in review on 23/11
-and answered rule 8 on 26/11; the plan comes next
+**Status:** in-progress — the Owner approved this spec in review on 23/11
+and answered rule 8 on 26/11; a Mason writes the plan
 
 ---
 
