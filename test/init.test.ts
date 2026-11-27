@@ -8,6 +8,7 @@ import {
   assertStringIncludes,
 } from "@std/assert";
 import { join } from "@std/path";
+import { glueItem, glueSection, parseGlue } from "../src/glue.ts";
 import {
   goldenTree,
   installedTree,
@@ -280,5 +281,39 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
       "a pre-existing journal is left byte for byte",
     );
     assertNotEquals(handWritten, journal);
+  });
+});
+
+Deno.test("init: the review section and the synthesis template are installed", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.copy("boilerplate");
+    const result = await runChisel(["init", target]);
+    assertEquals(result.code, 0, result.output);
+
+    assert(
+      (await Deno.stat(join(target, ".agents", "synthesis.md.tpl"))).isFile,
+      "the synthesis template is installed",
+    );
+    const glue = parseGlue(
+      await Deno.readTextFile(join(target, ".agents", "project.md")),
+    );
+    assertEquals(
+      glueItem(glueSection(glue, "J"), "Default depth")?.value,
+      "full",
+      "§J declares a default review depth",
+    );
+    for (
+      const label of [
+        "E2E command",
+        "Recording command",
+        "Screenshot command",
+        "Proofs folder",
+      ]
+    ) {
+      assert(
+        glueItem(glueSection(glue, "J"), label) !== undefined,
+        `§J declares the ${label} line`,
+      );
+    }
   });
 });

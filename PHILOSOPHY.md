@@ -75,7 +75,7 @@ These are the beliefs chisel is built on:
 - **Ambient by default, ceremony on demand.** The discipline applies to
   every conversation (read the project context, plan first, verify before
   "done"). The agent detects when a chat has become real work and proposes
-  a task file — it never forces one. The one-shot fix stays cheap.
+  a task file — it never forces one. The quick fix stays cheap.
 - **Two designs, two moments.** The system design (how the pieces talk) is
   settled at creation time and reviewed there — a slice is ready to produce
   when it is settled, not before. The program design (files, signatures,
