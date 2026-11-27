@@ -1,7 +1,7 @@
 # Working rules from the field: branches, commits, gates, docs and the retro
 
-**Status:** draft — the Owner answered on 22/11; waits on his approval of
-this spec; no plan before
+**Status:** approved — the Owner approved this spec in review on 23/11
+and answered rule 8 on 26/11; the plan comes next
 
 ---
 
@@ -121,12 +121,22 @@ table and who raised it.
    writes; the Mason and Typist briefs. *Source:* Olympe, 17/11, a spec
    commit refused for its scope; Pierrick, 23/11, in review: « Je préfère
    un CONTRIBUTING.md écrit par Chisel si il n'y en a pas ».
-8. **the-commands-are-in-the-glue** — `project.md` names the commands a
-   sub-agent needs beyond the gates: regenerate a generated client, create a
-   migration, start and stop the dev stack. `chisel-setup` looks for them as
-   it looks for the gates. *Where:* a new `project.md` section, Other
-   commands; `chisel-setup`, step 1. *Source:* a Mason's retro, passed on by
-   Pierrick on 09/11: each sub-agent looked for them alone.
+8. **the-commands-are-in-agents-md** — the commands a sub-agent needs
+   beyond the gates (regenerate a generated client, create a migration,
+   start and stop the dev stack) are listed in the repo's `AGENTS.md`,
+   outside chisel's managed block, one per line: the place every agent
+   tool reads, in every session, with or without a task. A command that is
+   a real procedure (preconditions, an order, a check) becomes a skill of
+   the project, and its line in the list names that skill. `project.md`
+   only points to the list. `chisel-setup` looks for the commands as it
+   looks for the gates and writes the list outside the markers, where
+   `update` never writes; the migration intention does the same for an
+   equipped repo. *Where:* the repo's `AGENTS.md`, outside the block; a new
+   `project.md` section, Other commands, one pointer line; `chisel-setup`,
+   steps 1 and 4. *Source:* a Mason's retro, passed on by Pierrick on
+   09/11: each sub-agent looked for them alone. Pierrick, 26/11, after the
+   research `project-management/research-2026-11-23-project-commands-for-agents.md`:
+   « AGENTS.md ».
 9. **the-typist-sees-red-first** — the Typist writes the test, runs it and
    sees it fail before writing the code. *Where:* "The Typist brief" of
    `workflow.md`. *Source:* the same retro, 09/11.
@@ -191,7 +201,7 @@ table and who raised it.
 | `crit-client-expire-24h-daemon-parasite` | fixed in the Harness's script. The rule chisel keeps (an expired wait is not a blocker) is not written in `relecture-humaine`; it belongs to its review skills, decision 8, open |
 | the branch rules | rule `a-branch-per-task` |
 | `chisel-gates-avant-revue` | rule `the-full-suite-runs-once`; `lead-ux` adds the push after the local gates |
-| the commands of a sub-agent | rule `the-commands-are-in-the-glue` |
+| the commands of a sub-agent | rule `the-commands-are-in-agents-md` |
 | the Typist brief | rule `the-typist-sees-red-first`; the commit rule with its limits by rule `the-commit-rule-is-in-the-glue` |
 | the deferrals | rule `a-deferral-has-a-home` |
 | `preuve-avant-diagnostic` | rule `proof-before-cause` |
@@ -218,10 +228,11 @@ table and who raised it.
 - [ ] **glue-sections** — `socle/agents/project.md.tpl` and this repo's
   `.agents/project.md` have the Branches, Commits and Other commands
   sections; Branches says worktree by default; Commits points to
-  `CONTRIBUTING.md`.
+  `CONTRIBUTING.md`; Other commands points to the list in `AGENTS.md`.
 - [ ] **setup-fills-them** — `chisel-setup` explores the commit linter and
   the extra commands, writes the commit rule into `CONTRIBUTING.md` (the
-  whole file when the repo has none), and asks the worktree question of decision
+  whole file when the repo has none) and the commands into `AGENTS.md`,
+  outside the managed block, and asks the worktree question of decision
   `branches-each-project-chooses`, and sets `origin/HEAD` when it is
   missing.
 - [ ] **docs-growth-flagged** — the Standards axis of `code-review` flags,
@@ -270,6 +281,8 @@ flowchart LR
   C[code-review · Standards<br/>docs growth] -->|reads threshold| P
   P -->|Commits points to| CO[CONTRIBUTING.md<br/>the commit rule]
   S -->|writes when missing| CO
+  P -->|Other commands points to| AG[AGENTS.md, outside the block<br/>one command per line]
+  S -->|writes the list| AG
   R[retro skill] -->|writes| RD[retro document<br/>beside spec and work]
 ```
 
@@ -342,9 +355,12 @@ maintainer.
   lives elsewhere (a docs page) says so in that line, and `chisel-setup`
   writes no `CONTRIBUTING.md` then. This repo's own `CONTRIBUTING.md`
   already has the section.
-- The end-to-end test command lives once: in §J of `relecture-humaine` when
-  it lands, which "Other commands" then points to; in "Other commands"
-  until then.
+- The commands live once, in the `AGENTS.md` list; §M · Other commands is
+  one line that points to it. This repo's own `AGENTS.md` gets its list in
+  the same pull request.
+- The end-to-end test command is written once: in the `AGENTS.md` list
+  until `relecture-humaine` lands; when its §J lands, one of the two points
+  to the other, which the plan settles.
 - The skill-writing guide chisel ships is `writing-great-skills`, the
   upstream skill now named `writing-for-agents`, vendored under its former
   name (see `retro`, step 1). The rule names the shipped skill. It is
@@ -375,7 +391,7 @@ order, not separate pull requests: the task applies its own rule
 2. **The glue: branches, commits, commands** (blocked by: none) —
    rules `a-branch-per-task`,
    `an-agent-rebases-only-its-own-branch`, `the-commit-rule-is-in-the-glue`,
-   `the-commands-are-in-the-glue`; the three sections, the
+   `the-commands-are-in-agents-md`; the three sections, the
    `CONTRIBUTING.md` template, `chisel-setup`, the migration intention.
 3. **The workflow steps** (blocked by: 2, and pull requests #7, #8 and
    `lead-ux` merged, which edit the same paragraphs of `workflow.md`) —
