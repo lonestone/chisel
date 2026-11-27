@@ -67,6 +67,7 @@ export const SOCLE_FILES: readonly string[] = [
   "intentions/TEMPLATE.md",
   "intentions/baseline.md",
   "intentions/unreleased/proof-before-cause.md",
+  "intentions/unreleased/readme-presents-and-points.md",
   "scripts/sync-upstream.sh",
   "scripts/sync-upstream/SKILL.md",
   "scripts/task-id.sh",

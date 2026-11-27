@@ -77,6 +77,11 @@ feature; the only difference is the paperwork.
     `.agents/reference.md` defines, is never translated, whatever language
     the text is written in.
 
+12. **Docs present and point.** The README presents the repo and points to
+    the docs. A feature adds a line and a link to it in the README, never
+    its reference doc, which goes in the living docs root of §D ·
+    Documentation reference of `.agents/project.md`.
+
 ## The workflow, for real scoped work
 
 `.agents/workflow.md` says how one task goes from intent to commit: the

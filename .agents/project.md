@@ -83,7 +83,8 @@ repos get scanned and the list built with assistance. -->
 ## D · Documentation reference
 
 <!-- Questionnaire asks: where do the living, evergreen docs (as-built
-architecture, domain pages) live, outside the task workspace? -->
+architecture, domain pages) live, outside the task workspace? The last
+line is optional: `code-review` reads it, and keeps 10 % without it. -->
 
 - **Living docs root:** `doc/**` (outside the task workspace declared in
   Section A)
@@ -91,6 +92,7 @@ architecture, domain pages) live, outside the task workspace? -->
   close step of `.agents/workflow.md` starts a promotion from
 - Boilerplate variant: `apps/documentation` (THE doc reference — business +
   architecture, no split)
+- **Docs growth flagged above:** 10 %
 
 ## E · Adapters
 

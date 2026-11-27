@@ -476,12 +476,17 @@ The plan, the commit order and the questions are in this document. Questions:
   title in body and `x-upstream` line (the only references by number, found by
   grep over socle, .agents, src, test), intention added and listed. Gates:
   `deno task check` 35 files, `deno task test` 80 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Typist. Item 2 readme-presents-and-points: rule 12 "Docs present and point"
+  in discipline; code-review gets the docs growth criterion (step 3, the
+  Standards prompt, `changes` line); §D gets the optional `Docs growth flagged
+  above` line in the template and in this repo's project.md; intention added
+  and listed. Gates: check 35 files, test 80 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
 - [x] Merge `origin/main` (Question 1, as corrected)
 - [x] 1 proof-before-cause
-- [ ] 2 readme-presents-and-points (+ docs growth in code-review, §D line)
+- [x] 2 readme-presents-and-points (+ docs growth in code-review, §D line)
 - [ ] 3 agent-docs-say-what-and-why
 - [ ] 4 actions-carry-a-verb
 - [ ] no-harness-word test (+ captures.ts comment, per Question 6)

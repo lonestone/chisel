@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/engineering/code-review
   sha: 2ab958093e83e0ec752e6c1c5932da465bf23e0c
-  changes: "adapted: spec source is the task's spec document, not the originating issue/PRD; project paths resolve via .agents/project.md; a task is now two documents — the whole spec document, system design included, is the requirement of the Spec axis, and its matching work document is evidence only, never a requirement to judge against"
+  changes: "adapted: spec source is the task's spec document, not the originating issue/PRD; project paths resolve via .agents/project.md; a task is now two documents — the whole spec document, system design included, is the requirement of the Spec axis, and its matching work document is evidence only, never a requirement to judge against; flags, as a judgement call, an existing doc the diff grows beyond a threshold (10 % unless §D of .agents/project.md sets another)"
 ---
 
 Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
@@ -68,6 +68,8 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 - **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
 - **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
 
+The Standards axis also carries the **docs growth** criterion, from the "Docs present and point" rule of `.agents/discipline.md`. A doc that existed before the diff and grows by more than the threshold is flagged as a judgement call, never a hard violation. The threshold is the line `Docs growth flagged above` of §D · Documentation reference of `.agents/project.md` when it is there, and 10 % of the doc's size before the diff otherwise, with no floor in characters.
+
 ### 4. Spawn both sub-agents in parallel
 
 Spawn both in a single turn, with whatever parallel sub-agent mechanism your tool provides — a general-purpose sub-agent is enough for each, since the briefs below carry everything they need.
@@ -81,8 +83,8 @@ strongest model.
 **Standards sub-agent prompt** — include:
 
 - The full diff command and commit list.
-- The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it.
-- The brief: "Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
+- The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it, and the docs growth threshold you resolved.
+- The brief: "Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); (b) any baseline smell you spot: name it and quote the hunk; and (c) every existing doc the diff grows by more than the docs growth threshold, which you are given: name the doc and its growth. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Docs growth is always a judgement call. Skip anything tooling enforces. Under 400 words."
 
 **Spec sub-agent prompt** — include:
 
