@@ -11,7 +11,9 @@ Corrections (Architect, 2026-11-27, on the six questions):
    origin/main`, after a fetch, each command alone; the same once `lead-ux`
    merges. No forced push in this task: the session that launched the
    Architect forbids it. The pull request is squash-merged, and commit-lint
-   skips merge commits, so the merge commit does not last.
+   skips merge commits, so the merge commit does not last. This is about
+   this task's branch only: rule 6 still ships as planned, rebase of one's
+   own branch with `--force-with-lease` allowed (the Owner, 22/11, Q4).
 2. **Chapters 1, 2, 4, 3:** accepted. Recorded in the spec's Notes.
 3. **Rule 2 and the renumbering:** accepted. `retro` cites the rule by its
    title, "The repo is the only memory" in `.agents/discipline.md`, not by
@@ -40,9 +42,9 @@ step 2, "Where the work stops", "Sub-agents" and "After the close" of
 
 So this plan targets `origin/main`, not the branch as it stands:
 
-- **Rebase first.** Before the Typist starts, the branch is rebased onto
-  `origin/main` (Question 1). Every file and section named below is the one
-  on `origin/main`.
+- **Merge first.** Before the Typist starts, `origin/main` is merged into
+  the branch (Question 1, as corrected). Every file and section named below
+  is the one on `origin/main`.
 - **§J exists.** The new sections take the letters K, L and M, as the spec
   says.
 - **Chapter 3 is blocked only by `lead-ux`** (#7 and #8 are merged). Its
@@ -52,9 +54,8 @@ So this plan targets `origin/main`, not the branch as it stands:
 ### Commit order
 
 There is one commit per rule, with the rule's intention in the same commit.
-Chapters 1, 2 and 4 are typed now; chapter 3 waits for `lead-ux`. History is
-never reordered (that would take an interactive rebase), so the pull request
-reads chapters 1, 2, 4, 3 (Question 2).
+Chapters 1, 2 and 4 are typed now; chapter 3 waits for `lead-ux`, so the
+pull request reads chapters 1, 2, 4, 3 (Question 2).
 
 Every commit that changes `socle/agents/X` also writes `.agents/X`, byte for
 byte, and adds its intention to `src/socle-files.ts` in sorted order. Each
@@ -73,10 +74,12 @@ Commit headers follow `CONTRIBUTING.md`, "Commits and pull request titles":
 1. **proof-before-cause** — `docs(socle): cite the proof before a cause`
    - `socle/agents/discipline.md` gets a new rule 2, **Proof before cause**,
      right after "Read before acting". Rules 2 to 10 become 3 to 11.
-   - `socle/agents/skills/retro/SKILL.md` gets its two "rule 8" mentions moved
-     to "rule 9": the body sentence, and the `x-upstream` `changes` line,
-     which names that rule. No `changes` entry is added: this keeps a
-     chisel-made reference current, it does not change upstream behaviour.
+   - `socle/agents/skills/retro/SKILL.md` stops citing "rule 8" by number:
+     both the body sentence and the `x-upstream` `changes` line cite the
+     rule by its title, "The repo is the only memory" in
+     `.agents/discipline.md` (correction 3). No `changes` entry is added:
+     this keeps a chisel-made reference current, it does not change
+     upstream behaviour.
    - The rule's text: before you give a cause to the human, or ask them to
      act, cite in one line the proof you read (the command and its message,
      the output, their words). Without a proof, write "not verified". When
@@ -325,7 +328,7 @@ The commit with the no-harness-word test goes at the end of chapter 1 (see
 
 #### Chapter 3 — The workflow steps (blocked by `lead-ux`)
 
-Rebase onto `origin/main` once `lead-ux` merges, then type in this order:
+Merge `origin/main` once `lead-ux` merges, then type in this order:
 
 9. **the-typist-sees-red-first** — `workflow.md`, "The Typist brief", one
    bullet: write the test, run it, see it fail, then write the code.
@@ -405,7 +408,7 @@ the markdown follows the repo's existing wrap by hand.
   E2E command of §J · Review in `.agents/project.md`"). §M's comment says
   that the gates of §F and the commands of §J live there, not in the list.
 - **CONTRIBUTING template's place:** inside the chisel-setup skill (Question 4).
-- **Discipline numbering:** new rule 2, renumber, fix the references in
+- **Discipline numbering:** new rule 2, renumber, cite the rule by title in
   `retro` (Question 3). The other two new rules, docs and branches, go at
   the end (12, 13), so that only one renumbering happens.
 - **Intentions:**
@@ -463,10 +466,15 @@ The plan, the commit order and the questions are in this document. Questions:
 - 2026-11-27 — Mason. Read the spec, the research on commands, and the socle
   on the branch and on `origin/main`. Found the branch two releases behind
   `origin/main`, so the plan targets `origin/main`. Wrote this plan. No code.
+- 2026-11-27 — Mason. Plan approved with corrections (the `**Plan:**` line).
+  Fetched and merged `origin/main` (0.5.0). Both gates green on the merged
+  base: `deno task check` checked 35 files, `deno task test` 80 passed, 0
+  failed, 1 ignored. The plan text follows the corrections (merge, retro
+  cites the rule by title). Next: a Typist for chapters 1, 2 and 4.
 
 ## Implementation Checkboxes
 
-- [ ] Merge `origin/main` (Question 1, as corrected)
+- [x] Merge `origin/main` (Question 1, as corrected)
 - [ ] 1 proof-before-cause
 - [ ] 2 readme-presents-and-points (+ docs growth in code-review, §D line)
 - [ ] 3 agent-docs-say-what-and-why
