@@ -5,7 +5,7 @@ x-upstream:
   repo: mattpocock/skills
   path: skills/in-progress/retro
   sha: 6654f6b60cd9d5be8b54c6fafe44346dabeb3b76
-  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (the task's spec document, and its work document with the program design, the checkboxes and the worklog, plus the diff and the journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by discipline.md rule 8; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of the workflow, not only on user request; a blocker is read where the task's own documents keep it rather than in the project journal; compares the depth each task chose with the floor its diff computed, from the work documents' Depth lines."
+  changes: "adapted: sources are the session transcript AND those of its subagents first, then the repo artifacts that corroborate them (the task's spec document, and its work document with the program design, the checkboxes and the worklog, plus the diff and the journal entry) — reading is unrestricted, only the WRITING of conclusions is bound to the repo by the rule "The repo is the only memory" in discipline.md; calls writing-great-skills, which is this same upstream skill vendored under its former name; target files resolve via .agents/project.md instead of hardcoded paths; each proposal names its target file and zone owner; nothing is ever auto-applied, and a deferred proposal gets a dated line instead of being dropped; drops disable-model-invocation — this skill is invoked by the close step of the workflow, not only on user request; a blocker is read where the task's own documents keep it rather than in the project journal; compares the depth each task chose with the floor its diff computed, from the work documents' Depth lines."
 ---
 
 You are suggesting improvements to the **working rules** — the steering
@@ -15,8 +15,8 @@ code's findings already went through `code-review`; this is about making the
 
 ## Sources
 
-Rule 8 of `.agents/discipline.md` governs where conclusions are WRITTEN, not
-what may be READ: reading the session back is the point of a retrospective;
+The rule "The repo is the only memory" in `.agents/discipline.md` governs
+where conclusions are WRITTEN, not what may be READ: reading the session back is the point of a retrospective;
 what it produces goes in the repo, never in a harness memory.
 
 **Primary — the session itself, and its subagents.** Where the friction

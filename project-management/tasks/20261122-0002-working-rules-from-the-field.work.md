@@ -471,11 +471,16 @@ The plan, the commit order and the questions are in this document. Questions:
   base: `deno task check` checked 35 files, `deno task test` 80 passed, 0
   failed, 1 ignored. The plan text follows the corrections (merge, retro
   cites the rule by title). Next: a Typist for chapters 1, 2 and 4.
+- 2026-11-27 — Typist. Item 1 proof-before-cause: new rule 2 in discipline, rules
+  2 to 10 renumbered 3 to 11, retro cites "The repo is the only memory" by
+  title in body and `x-upstream` line (the only references by number, found by
+  grep over socle, .agents, src, test), intention added and listed. Gates:
+  `deno task check` 35 files, `deno task test` 80 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
 - [x] Merge `origin/main` (Question 1, as corrected)
-- [ ] 1 proof-before-cause
+- [x] 1 proof-before-cause
 - [ ] 2 readme-presents-and-points (+ docs growth in code-review, §D line)
 - [ ] 3 agent-docs-say-what-and-why
 - [ ] 4 actions-carry-a-verb
