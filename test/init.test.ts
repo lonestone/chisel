@@ -301,6 +301,12 @@ Deno.test("init: the branches, commits and other commands sections are installed
       glueItem(glueSection(glue, "K"), "Rebase own branch") !== undefined,
       "§K declares the Rebase own branch line",
     );
+    assert(
+      glueItem(glueSection(glue, "L"), "Commit rule")?.value.includes(
+        "CONTRIBUTING.md",
+      ),
+      "§L points to CONTRIBUTING.md for the commit rule",
+    );
   });
 });
 

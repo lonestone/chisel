@@ -523,6 +523,18 @@ The plan, the commit order and the questions are in this document. Questions:
   `origin/HEAD` is missing (skipped without `origin`). Intention
   `origin-head-and-own-rebase` added and listed. Nothing was rebased or pushed.
   Gates: check 35 files, test 82 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Typist. Item 7 the-commit-rule-is-in-the-glue: the render test gained
+  the §L `Commit rule` check, seen RED first on the real file ("AssertionError:
+  §L points to CONTRIBUTING.md for the commit rule"). Then: template
+  `socle/agents/skills/chisel-setup/CONTRIBUTING.md.tpl` (copy in `.agents/`),
+  listed in `src/socle-files.ts` and `test/fixtures/golden-tree.txt`; §L in the
+  template and in this repo (pointing to "Commits and pull request titles"),
+  header "A–L"; chisel-setup: exploration, §L stated not asked, the three
+  write cases in step 4, "after §L" in steps 4, 7 and 8; chisel-update never
+  touches `CONTRIBUTING.md`; both briefs read the rule where §L points. The
+  Mason brief had no literal "the commit rule": the phrase was added to its
+  "how to commit" bullet (reported to the Mason). Intention `glue-commits`
+  added and listed. Gates: check 35 files, test 82 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
@@ -535,7 +547,7 @@ The plan, the commit order and the questions are in this document. Questions:
 - [x] render test red for §K
 - [x] 5 a-branch-per-task
 - [x] 6 an-agent-rebases-only-its-own-branch
-- [ ] 7 the-commit-rule-is-in-the-glue
+- [x] 7 the-commit-rule-is-in-the-glue
 - [ ] 8 the-commands-are-in-agents-md
 - [ ] 14 the-retro-is-written-down
 - [ ] Merge `origin/main` after `lead-ux` merges

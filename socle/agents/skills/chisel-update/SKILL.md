@@ -129,6 +129,8 @@ Say it at the start and hold to it:
 - **The content of open task files**, beyond what an intention names.
 - **The project's own answers** in its glue: its paths, reading list and
   gate commands.
+- **`CONTRIBUTING.md`.** The repo's own once written, its commit rule
+  included.
 - **A skill chisel does not ship**, linked or not.
 - **Anything that is not the method:** source code, CI, dependencies, git
   history.

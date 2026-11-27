@@ -293,7 +293,8 @@ brief, so every brief below also carries these:
 What the Architect writes when it launches a Mason:
 
 - the spec document's path, and the work template's;
-- the branch to work on, and how to commit (explicit paths, no push);
+- the branch to work on, and how to commit (explicit paths, no push; the
+  commit rule, read where §L · Commits of `.agents/project.md` points);
 - the gate commands;
 - the steps it owns: plan, then stop for the reading; code, through a
   Typist; `code-review`; close; then, when woken, the human review's
@@ -320,7 +321,8 @@ What the Mason writes when it launches a Typist:
   The launcher **names that model explicitly when it launches the
   Typist**: a sub-agent launched without one inherits its launcher's, and
   the tier is lost;
-- the branch, the gate commands, the commit rule;
+- the branch, the gate commands, the commit rule, read where §L · Commits
+  of `.agents/project.md` points;
 - type the plan and decide nothing: anything the plan does not answer is
   reported, not guessed;
 - tick a box only for what really ran, on the real target; a dry run, or

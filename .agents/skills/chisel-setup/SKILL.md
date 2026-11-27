@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Turn `.agents/project.md`'s defaults into this repo's actual glue, pose the
 current dev's personal file, and leave `AGENTS.md` speaking with one voice.
-One pass, sections A through K, each confirmed before the next. Re-running
+One pass, sections A through L, each confirmed before the next. Re-running
 later to revisit a single section is normal — treat the current file as the
 starting recommendation, not as done-forever. On a repo that already had a
 method of its own, a first `init` stages instead of installing, and this skill
@@ -64,6 +64,11 @@ facts when you reach the section they affect.
   there, §B's recommendation becomes "keep what you have".
 - **`.agents/user.md`**: if it already exists, Step 5 reports it and touches
   nothing.
+- **Commit rule**: a commit linter (a commitlint config, a `commit-msg` hook,
+  a lint script) gives the format, the types and the scopes. Without one,
+  read `git log` for the shape of the recent headers. Note an existing
+  `CONTRIBUTING.md`, whether it holds a commit rule, and whether the rule
+  lives in a docs page instead.
 - **Worktrees**: a `.worktrees/` folder, or a team habit of one worktree per
   task. If one is there, it is §K's answer, stated and not asked.
 - **`AGENTS.md`**: does anything stand outside chisel's own `chisel:begin` /
@@ -75,7 +80,7 @@ established is *stated* to the user, not asked. Only genuine decisions —
 things the scan cannot determine on its own, or choices with real
 alternatives — get a question.
 
-## Step 2 — Walk sections A through K, one at a time
+## Step 2 — Walk sections A through L, one at a time
 
 For each section, in letter order:
 
@@ -233,9 +238,15 @@ When `git symbolic-ref refs/remotes/origin/HEAD` fails, run
 `git remote set-head origin -a` and say so in one line: it writes only a
 local ref, and with it every tool knows the repo's default branch, which
 the rebase of one's own branch needs. A repo with no `origin` remote skips
-this. A `.worktrees/` folder or a
-team habit found in Step 1 is stated as the answer, and the question is
-skipped.
+this. A `.worktrees/` folder or a team habit found in Step 1 is stated as
+the answer, and the question is skipped.
+
+### §L — state this, never ask it
+
+The commit rule is a fact the scan established. State where it lives and
+which section: `CONTRIBUTING.md`, section "Commits" when the file holds
+the rule or Step 4 writes it; the docs page when the rule lives in one.
+Write it on §L's *Commit rule* line. Step 4 says what is written where.
 
 ## Step 3 — §E is read-back only, never asked
 
@@ -254,8 +265,21 @@ until the end of the walk. Each write is scoped to exactly one section:
 - Replace everything from immediately after that heading line up to (but not
   including) the next `## ` heading, or end of file if there is none.
 - Leave every byte outside that span untouched: other sections, any content
-  a human added above §A or after §K, custom sections the file doesn't
+  a human added above §A or after §L, custom sections the file doesn't
   define (e.g. a hand-added `## N · ...`).
+
+**The commit rule is written in `CONTRIBUTING.md`, not in the glue.** When
+§L is accepted, write by case:
+
+- no `CONTRIBUTING.md`: copy [CONTRIBUTING.md.tpl](CONTRIBUTING.md.tpl) to
+  the repo's root as `CONTRIBUTING.md`, each placeholder filled from the
+  linter or the history;
+- a `CONTRIBUTING.md` with no commit rule: add its Commits section only,
+  filled the same way, and touch nothing else in the file;
+- the rule lives elsewhere (a docs page): write no file, and §L's line
+  points there.
+
+The file is then the repo's own, and `chisel update` never touches it.
 
 **Never rewrite the whole file.** A full-file rewrite is the one mistake
 that would silently discard user edits living outside the questionnaire's
@@ -335,7 +359,7 @@ that page first, then follow it command by command, watching each output.
 
 This step stands alone. "Reconcile my `AGENTS.md`" runs THIS step and nothing
 else — no questionnaire, no sections, no network. In the walk it comes after
-§K is written and before the summary.
+§L is written and before the summary.
 
 A repo that had an `AGENTS.md` before chisel now has two voices in one file:
 the text it already carried, often describing its own way of working, and the
@@ -447,8 +471,8 @@ project's own — and the step reports that and changes nothing.
 
 ## Step 8 — Closing summary
 
-After §K is written, print a one-screen summary of what got written: one
-line per section, A–K; one line for the personal file; one line for
+After §L is written, print a one-screen summary of what got written: one
+line per section, A–L; one line for the personal file; one line for
 `AGENTS.md`, saying what was deleted, what moved to the reading list and what
 stayed, or that the file already spoke with one voice; and, when §B named a
 tracker still to set up, the one thing still to do. Then suggest the natural next move:
