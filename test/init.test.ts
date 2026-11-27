@@ -284,6 +284,22 @@ Deno.test("journal: written once, and never beside a journal the repo already ha
   });
 });
 
+Deno.test("init: the branches, commits and other commands sections are installed", async () => {
+  await withRepo(async (workspace) => {
+    const target = await workspace.copy("boilerplate");
+    const result = await runChisel(["init", target]);
+    assertEquals(result.code, 0, result.output);
+
+    const glue = parseGlue(
+      await Deno.readTextFile(join(target, ".agents", "project.md")),
+    );
+    assert(
+      glueItem(glueSection(glue, "K"), "Worktree")?.value.startsWith("yes"),
+      "§K says a worktree per task by default",
+    );
+  });
+});
+
 Deno.test("init: the review section and the synthesis template are installed", async () => {
   await withRepo(async (workspace) => {
     const target = await workspace.copy("boilerplate");

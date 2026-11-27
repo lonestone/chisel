@@ -502,6 +502,18 @@ The plan, the commit order and the questions are in this document. Questions:
   out, a common word that a socle text may use for something else. The chapter 1
   commits carry a `Co-Authored-By: Claude Sonnet` trailer instead of the repo's
   Opus 5.5 line (a brief error, left as is: no history rewrite on this branch).
+- 2026-11-27 — Typist. Render test written first in test/init.test.ts ("init: the
+  branches, commits and other commands sections are installed"), §K Worktree
+  starts with `yes`. Seen RED on the real file: "AssertionError: §K says a
+  worktree per task by default". It is committed with item 5, since a red test
+  alone cannot pass the gates.
+- 2026-11-27 — Typist. Item 5 a-branch-per-task: rule 13 in discipline; §K in the
+  template and in this repo's project.md, header "A–K"; chisel-setup walks A
+  through K, notes `.worktrees/` at step 1, asks the §K question verbatim, says
+  "after §K" in steps 4, 7 and 8 (the step 4 example of a hand-added section
+  `## K` became `## N`, since K is now taken). The §K comment cites the rule by
+  its title, not "Rule 13", as the approval asks. Intention `glue-branches`
+  added and listed. Gates: check 35 files, test 82 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
@@ -511,8 +523,8 @@ The plan, the commit order and the questions are in this document. Questions:
 - [x] 3 agent-docs-say-what-and-why
 - [x] 4 actions-carry-a-verb
 - [x] no-harness-word test (+ captures.ts comment, per Question 6)
-- [ ] render test red for §K
-- [ ] 5 a-branch-per-task
+- [x] render test red for §K
+- [x] 5 a-branch-per-task
 - [ ] 6 an-agent-rebases-only-its-own-branch
 - [ ] 7 the-commit-rule-is-in-the-glue
 - [ ] 8 the-commands-are-in-agents-md

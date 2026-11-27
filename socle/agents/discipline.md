@@ -88,6 +88,11 @@ feature; the only difference is the paperwork.
     architecture and the delicate points; diagrams are welcome, and never a
     text version of the code.
 
+13. **A branch per task.** Each task works on its own branch, named and
+    based as §K · Branches of `.agents/project.md` says, in a worktree when
+    §K says so. In a fresh worktree, install the dependencies first, before
+    any other command. A dev stack started there picks free ports.
+
 ## The workflow, for real scoped work
 
 `.agents/workflow.md` says how one task goes from intent to commit: the
