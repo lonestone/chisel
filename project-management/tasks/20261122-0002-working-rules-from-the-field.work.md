@@ -514,6 +514,15 @@ The plan, the commit order and the questions are in this document. Questions:
   `## K` became `## N`, since K is now taken). The §K comment cites the rule by
   its title, not "Rule 13", as the approval asks. Intention `glue-branches`
   added and listed. Gates: check 35 files, test 82 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Typist. Item 6 an-agent-rebases-only-its-own-branch: the render test
+  gained the `Rebase own branch` check, seen RED first on the real file
+  ("AssertionError: §K declares the Rebase own branch line"). Then: second
+  paragraph of rule 13 in discipline, text as planned; the `Rebase own branch`
+  line in §K of the template and of this repo, the comment says a project may
+  write `forbidden`; chisel-setup runs `git remote set-head origin -a` when
+  `origin/HEAD` is missing (skipped without `origin`). Intention
+  `origin-head-and-own-rebase` added and listed. Nothing was rebased or pushed.
+  Gates: check 35 files, test 82 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
@@ -525,7 +534,7 @@ The plan, the commit order and the questions are in this document. Questions:
 - [x] no-harness-word test (+ captures.ts comment, per Question 6)
 - [x] render test red for §K
 - [x] 5 a-branch-per-task
-- [ ] 6 an-agent-rebases-only-its-own-branch
+- [x] 6 an-agent-rebases-only-its-own-branch
 - [ ] 7 the-commit-rule-is-in-the-glue
 - [ ] 8 the-commands-are-in-agents-md
 - [ ] 14 the-retro-is-written-down

@@ -228,7 +228,12 @@ On §K's *Worktree* line, write *yes, in `.worktrees/<branch>`* or *no, a
 branch in the main checkout*. The branch name, its base and the cleanup are
 stated, not asked: the task's slug, from the freshly fetched main branch
 (the parent's branch when stacked), the worktree removed by the agent once
-merged. Keep §K's *Branch* line as it stands. A `.worktrees/` folder or a
+merged. Keep §K's *Branch* and *Rebase own branch* lines as they stand.
+When `git symbolic-ref refs/remotes/origin/HEAD` fails, run
+`git remote set-head origin -a` and say so in one line: it writes only a
+local ref, and with it every tool knows the repo's default branch, which
+the rebase of one's own branch needs. A repo with no `origin` remote skips
+this. A `.worktrees/` folder or a
 team habit found in Step 1 is stated as the answer, and the question is
 skipped.
 

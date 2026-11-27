@@ -93,6 +93,13 @@ feature; the only difference is the paperwork.
     §K says so. In a fresh worktree, install the dependencies first, before
     any other command. A dev stack started there picks free ports.
 
+    The agent may rebase its own branch onto the main branch and push it
+    with `--force-with-lease`. It never does this to a branch that is not
+    its own: another session's, a parent pull request's branch that others
+    build on, or the main branch. The forced push runs alone in its call,
+    as the "Sub-agents" list of `.agents/workflow.md` says of every command
+    that can erase. §K · Branches may forbid it.
+
 ## The workflow, for real scoped work
 
 `.agents/workflow.md` says how one task goes from intent to commit: the

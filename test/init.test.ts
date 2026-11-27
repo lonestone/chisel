@@ -297,6 +297,10 @@ Deno.test("init: the branches, commits and other commands sections are installed
       glueItem(glueSection(glue, "K"), "Worktree")?.value.startsWith("yes"),
       "§K says a worktree per task by default",
     );
+    assert(
+      glueItem(glueSection(glue, "K"), "Rebase own branch") !== undefined,
+      "§K declares the Rebase own branch line",
+    );
   });
 });
 

@@ -181,7 +181,10 @@ cut from the freshly fetched main branch (from the parent's branch
 when stacked). The worktree line is the project's choice; the setup
 skill asks it. The agent removes the worktree once the branch is
 merged. The rule "A branch per task" of `.agents/discipline.md` reads
-this section. -->
+this section. The rebase line says whether the agent may rebase its own
+branch onto the main branch and push it with `--force-with-lease`; a
+project may write `forbidden`. -->
 
 - **Branch:** the task's slug, from the freshly fetched main branch
 - **Worktree:** yes, in `.worktrees/<branch>`
+- **Rebase own branch:** allowed (pushed with --force-with-lease)
