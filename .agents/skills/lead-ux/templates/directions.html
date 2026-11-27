@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}} — round {{round}}</title>
+<!--
+  The directions page of the lead-ux skill. One file: no network, no build
+  step, no library. A generator replaces the {{placeholders}} and the two
+  markers (QUESTIONS, DIRECTIONS).
+
+  {{title}}          the screen or flow the page is about
+  {{round}}          the round number; 0 is the state of the place
+  {{understanding}}  the "I understand: ..." line that heads a quick round
+  {{shows}}          what the page shows, and what it does not show yet
+
+  One article per direction, written before the DIRECTIONS marker:
+
+  <article class="direction" id="d-<slug>" data-direction="<name>" data-preferred>
+    <h2>Name in two or three words</h2>
+    <p class="idea">The idea.</p>
+    <p class="sacrifices">What it sacrifices.</p>
+    <p class="answers">answers: the request it answers</p>
+    <p class="preferred">Preferred: the reason in one line</p>
+    <div class="frame">the direction itself: inline markup, an
+      <iframe srcdoc> to isolate its styles, or an <img> of its capture
+      (captures/...)</div>
+    <label>Your words <textarea data-for="<name>"></textarea></label>
+  </article>
+
+  - data-preferred and p.preferred go on one article only, the preferred
+    one. A direction no request names carries
+    <p class="answers">proposal — no request names it yet</p>.
+  - "As it is" comes first for an existing screen:
+    <article class="direction as-it-is" id="d-as-it-is"
+      data-direction="as-it-is">, with no preferred mark and no "answers"
+    line.
+  - Round 0 ({{round}} set to 0) holds only the "As it is" article, whose
+    frame holds the captures and the audit tables, and a field
+    <textarea data-for="to-keep"> labelled "What must not move".
+-->
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #fafafa; --fg: #1b1b1f; --muted: #5c5c66; --line: #d6d6dc;
+    --card: #ffffff; --accent: #2a5bd7; --mark: #e9f0ff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17171a; --fg: #ececf0; --muted: #a0a0ab; --line: #3a3a42;
+      --card: #202025; --accent: #8fb0ff; --mark: #252c40;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 1rem; background: var(--bg); color: var(--fg);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 90rem; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+  h2 { font-size: 1.15rem; margin: 0 0 .5rem; }
+  .round { color: var(--muted); margin: 0 0 1rem; }
+  .understanding, .shows, .questions {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: .5rem; padding: .75rem 1rem; margin: 0 0 1rem;
+  }
+  .questions ul { margin: .25rem 0 0; padding-left: 1.25rem; }
+  a { color: var(--accent); }
+  .directions {
+    display: grid; gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    align-items: start;
+  }
+  .direction {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: .5rem; padding: 1rem; min-width: 0;
+  }
+  .direction[data-preferred] { border-color: var(--accent); border-width: 2px; }
+  .direction.as-it-is { border-style: dashed; }
+  .idea, .sacrifices, .answers, .preferred { margin: 0 0 .5rem; }
+  .sacrifices, .answers { color: var(--muted); }
+  .preferred { background: var(--mark); border-radius: .25rem; padding: .25rem .5rem; }
+  .frame {
+    border: 1px solid var(--line); border-radius: .25rem; margin: .75rem 0;
+    padding: .5rem; overflow: auto; max-width: 100%;
+  }
+  .frame iframe { width: 100%; border: 0; min-height: 20rem; }
+  .frame img { max-width: 100%; height: auto; }
+  label { display: block; font-weight: 600; margin-top: .5rem; }
+  textarea {
+    display: block; width: 100%; min-height: 5rem; margin-top: .25rem;
+    font: inherit; color: inherit; background: var(--bg);
+    border: 1px solid var(--line); border-radius: .25rem; padding: .5rem;
+  }
+  .page-field, .copy { margin-top: 1rem; }
+  button {
+    font: inherit; padding: .5rem 1rem; border-radius: .25rem; cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--bg);
+  }
+  .fallback { display: none; }
+  .fallback.on { display: block; }
+</style>
+</head>
+<body>
+<main>
+  <h1>{{title}}</h1>
+  <p class="round">Round {{round}}</p>
+  <p class="understanding">{{understanding}}</p>
+  <div class="shows">{{shows}}</div>
+  <section class="questions" aria-label="Questions">
+    <h2>Questions for you</h2>
+    <!-- Blocking questions first, each a link to its direction's anchor:
+         <li><a href="#d-<slug>">the question</a></li> -->
+    <ul>
+<!-- QUESTIONS -->
+    </ul>
+  </section>
+  <div class="directions">
+<!-- DIRECTIONS -->
+  </div>
+  <div class="page-field">
+    <label>The whole page
+      <textarea data-for="page"></textarea>
+    </label>
+  </div>
+  <div class="copy">
+    <button type="button" id="copy">Copy my answers as markdown</button>
+    <div class="fallback" id="fallback">
+      <label>Copy this by hand
+        <textarea id="fallback-text" readonly></textarea>
+      </label>
+    </div>
+  </div>
+</main>
+<script>
+(function () {
+  var title = "{{title}}";
+  var round = "{{round}}";
+  var key = "lead-ux:" + title + ":" + round;
+  var fields = Array.prototype.slice.call(document.querySelectorAll("textarea[data-for]"));
+
+  var preferred = document.querySelectorAll("article[data-preferred]").length;
+  if (round !== "0" && preferred !== 1) {
+    console.error("lead-ux: mark exactly one preferred direction");
+  }
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { saved = {}; }
+  fields.forEach(function (f) {
+    var k = f.getAttribute("data-for");
+    if (saved[k]) f.value = saved[k];
+    f.addEventListener("input", function () {
+      saved[k] = f.value;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) { /* storage refused */ }
+    });
+  });
+
+  function text(f) { return f.value.trim() || "(nothing)"; }
+
+  function build() {
+    var md = ["# Round " + round + " — " + title, ""];
+    var page = document.querySelector('textarea[data-for="page"]');
+    md.push("## The whole page", "", text(page), "");
+    if (round === "0") {
+      var keep = document.querySelector('textarea[data-for="to-keep"]');
+      md.push("## What must not move", "", keep ? text(keep) : "(nothing)", "");
+    } else {
+      document.querySelectorAll("article.direction").forEach(function (a) {
+        var f = a.querySelector("textarea[data-for]");
+        if (!f) return;
+        var name = a.querySelector("h2").textContent.trim();
+        var mark = a.hasAttribute("data-preferred") ? " (preferred)" : "";
+        md.push("## " + name + mark, "", text(f), "");
+      });
+    }
+    return md.join("\n");
+  }
+
+  document.getElementById("copy").addEventListener("click", function () {
+    var md = build();
+    var show = function () {
+      var box = document.getElementById("fallback-text");
+      document.getElementById("fallback").className = "fallback on";
+      box.value = md;
+      box.focus();
+      box.select();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(md).catch(show);
+    } else {
+      show();
+    }
+  });
+})();
+</script>
+</body>
+</html>
