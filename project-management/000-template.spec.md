@@ -52,8 +52,8 @@ file's **Notes**. Once the plan starts, notes go into the work document's
 
 One work document exists for every spec actually planned, created beside
 this file by replacing `.spec.md` with `.work.md`. A parent spec of a sliced
-task has none; each slice has its own. At the close, the spec, work, synthesis and retro documents are archived
-together.
+task has none; each slice has its own. At the close, the spec,
+work, synthesis and retro documents are archived together.
 
 ## Where each kind of content lives
 

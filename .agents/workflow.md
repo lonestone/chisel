@@ -106,13 +106,14 @@ replacing `.spec.md` with `.synthesis.md`: it is the first reading of the human
 review (step 8), so write it on the frontier tier. Run the `retro` skill: it
 writes the retro document beside the spec, named by replacing `.spec.md` with
 `.retro.md`, and its proposals go in the report too. Archive the spec, work,
-synthesis and retro documents together. Add the dated journal entry. Stop everything you started — Docker
-containers, dev servers, background processes — each by its own identifier
-(container name or id, PID), and only those: never by pattern (`pkill -f`,
-`--all`), which stops the work of others. This does not end the Mason itself:
-its session is kept, so that the Architect can wake it at step 8, Human review,
-to fix the comments. Commit, update the tracker, and report to the Architect:
-what landed, which criteria are met, what is left. Status: `done`.
+synthesis and retro documents together. Add the dated journal entry. Stop
+everything you started — Docker containers, dev servers, background
+processes — each by its own identifier (container name or id, PID), and
+only those: never by pattern (`pkill -f`, `--all`), which stops the work of
+others. This does not end the Mason itself: its session is kept, so that
+the Architect can wake it at step 8, Human review, to fix the comments.
+Commit, update the tracker, and report to the Architect: what landed,
+which criteria are met, what is left. Status: `done`.
 
 **After the close — Architect.** Read the close report and rule on anything
 left. Open the pull request; in one shot, its description opens with the
