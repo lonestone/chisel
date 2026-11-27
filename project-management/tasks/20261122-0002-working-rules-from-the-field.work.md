@@ -484,6 +484,9 @@ The plan, the commit order and the questions are in this document. Questions:
 - 2026-11-27 — Typist. Item 3 agent-docs-say-what-and-why: second paragraph of rule 12 in
   discipline; step 7 of workflow points to the rule by its title; intention
   added and listed. Gates: check 35 files, test 80 passed, 0 failed, 1 ignored.
+- 2026-11-27 — Typist. Item 4 actions-carry-a-verb: one sentence added to the writing rule
+  (rule 11) of discipline; intention added and listed. Gates: check 35 files,
+  test 80 passed, 0 failed, 1 ignored.
 
 ## Implementation Checkboxes
 
@@ -491,7 +494,7 @@ The plan, the commit order and the questions are in this document. Questions:
 - [x] 1 proof-before-cause
 - [x] 2 readme-presents-and-points (+ docs growth in code-review, §D line)
 - [x] 3 agent-docs-say-what-and-why
-- [ ] 4 actions-carry-a-verb
+- [x] 4 actions-carry-a-verb
 - [ ] no-harness-word test (+ captures.ts comment, per Question 6)
 - [ ] render test red for §K
 - [ ] 5 a-branch-per-task

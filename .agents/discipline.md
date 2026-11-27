@@ -75,7 +75,9 @@ feature; the only difference is the paperwork.
     sentence what the reader finds there.** **The socle's words stay in the
     socle's language:** `seam`, and every term the glossary of
     `.agents/reference.md` defines, is never translated, whatever language
-    the text is written in.
+    the text is written in. **A command or a function that acts is named
+    with a verb:** `library retag-artists-from-tidal`, not `library
+    artists`.
 
 12. **Docs present and point.** The README presents the repo and points to
     the docs. A feature adds a line and a link to it in the README, never
